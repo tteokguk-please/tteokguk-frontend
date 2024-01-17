@@ -11,6 +11,9 @@ dependencies:
   jotai:
     specifier: ^2.6.2
     version: 2.6.2(@types/react@18.2.48)(react@18.2.0)
+  jotai-tanstack-query:
+    specifier: ^0.8.2
+    version: 0.8.2(@tanstack/query-core@5.17.15)(jotai@2.6.2)(wonka@6.3.4)
   ky:
     specifier: ^1.2.0
     version: 1.2.0
@@ -1448,6 +1451,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@tanstack/query-core@5.17.15:
+    resolution: {integrity: sha512-QURxpu77/ICA4d61aPvV7EcJ2MwmksxUejKBaq/xLcO2TUJAlXf4PFKHC/WxnVFI/7F1jeLx85AO3Vpk0+uBXw==}
+    dev: false
 
   /@ts-morph/common@0.20.0:
     resolution: {integrity: sha512-7uKjByfbPpwuzkstL3L5MQyuXPSKdoNG93Fmi2JoDcTf3pEP731JdRFAduRVkOs8oqxPsXKA+ScrWkdQ8t/I+Q==}
@@ -3346,6 +3353,18 @@ packages:
     hasBin: true
     dev: true
 
+  /jotai-tanstack-query@0.8.2(@tanstack/query-core@5.17.15)(jotai@2.6.2)(wonka@6.3.4):
+    resolution: {integrity: sha512-NXHbfSTBdH1M+NrnEVG0pUcUcPHzEtqhRJl8JHHoay33whvGkQZW93/ETj4fa1vgA/N7gzScPMRPQFzpp68P+g==}
+    peerDependencies:
+      '@tanstack/query-core': '*'
+      jotai: '>=2.0.0'
+      wonka: ^6.3.4
+    dependencies:
+      '@tanstack/query-core': 5.17.15
+      jotai: 2.6.2(@types/react@18.2.48)(react@18.2.0)
+      wonka: 6.3.4
+    dev: false
+
   /jotai@2.6.2(@types/react@18.2.48)(react@18.2.0):
     resolution: {integrity: sha512-kl4KguU1Fr+tFiLi3A3h9qPEzhvLTTDA10DO3QZAz6k7BEaQJ+qvSBwolzonnfNI4QzEovyQfUqVgnRxfnnQVQ==}
     engines: {node: '>=12.20.0'}
@@ -5018,6 +5037,10 @@ packages:
     dependencies:
       isexe: 2.0.0
     dev: true
+
+  /wonka@6.3.4:
+    resolution: {integrity: sha512-CjpbqNtBGNAeyNS/9W6q3kSkKE52+FjIj7AkFlLr11s/VWGUu6a2CdYSdGxocIhIVjaW/zchesBQUKPVU69Cqg==}
+    dev: false
 
   /wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
