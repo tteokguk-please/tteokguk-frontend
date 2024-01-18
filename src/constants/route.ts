@@ -7,4 +7,4 @@ export const MY_ACTIVITY_PAGE = "/my-page/activity";
 export const MAIN_PAGE = "/tteokguks";
 export const TTEOKGUK_PAGE = "/tteokguks/:id";
 export const TTEOKGUK_COOKING_PAGE = "/tteokguk/create";
-export const RANDOM_TTEOKGUK_PAGE = "/random-tteokguk";
+export const RANDOM_USER_PAGE = "/users/:id";
