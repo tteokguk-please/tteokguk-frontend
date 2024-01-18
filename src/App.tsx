@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import EmailLogin from "./pages/EmailLogin";
 import Signup from "./pages/Signup";
-import TteokgukGallery from "./pages/TteokgukGallery";
 import TteokgukCooking from "./pages/TteokgukCooking";
 import IngredientAddition from "./pages/IngredientAddition";
 import MyPage from "./pages/MyPage";
@@ -16,13 +15,14 @@ import {
   HOME_PAGE,
   INGREDIENT_ADDITION_PAGE,
   LOGIN_PAGE,
+  MAIN_PAGE,
   MY_ACTIVITY_PAGE,
   MY_PAGE,
   RANDOM_TTEOKGUK_PAGE,
   SIGNUP_PAGE,
   TTEOKGUK_COOKING_PAGE,
-  TTEOKGUK_GALLERY_PAGE,
 } from "./constants/route";
+import MainPage from "./pages/MainPage";
 
 const App = () => {
   return (
@@ -33,7 +33,7 @@ const App = () => {
         <Route path={LOGIN_PAGE} element={<Login />} />
         <Route path={EMAIL_LOGIN_PAGE} element={<EmailLogin />} />
         <Route path={SIGNUP_PAGE} element={<Signup />} />
-        <Route path={TTEOKGUK_GALLERY_PAGE} element={<TteokgukGallery />} />
+        <Route path={MAIN_PAGE} element={<MainPage />} />
         <Route path={TTEOKGUK_COOKING_PAGE} element={<TteokgukCooking />} />
         <Route path={INGREDIENT_ADDITION_PAGE} element={<IngredientAddition />} />
         <Route path={MY_PAGE} element={<MyPage />} />
