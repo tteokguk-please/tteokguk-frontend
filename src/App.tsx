@@ -5,7 +5,6 @@ import Login from "./pages/Login";
 import EmailLogin from "./pages/EmailLogin";
 import Signup from "./pages/Signup";
 import TteokgukCooking from "./pages/TteokgukCooking";
-import IngredientAddition from "./pages/IngredientAddition";
 import MyPage from "./pages/MyPage";
 import MyActivity from "./pages/MyActivity";
 import RandomTteokguk from "./pages/RandomTteokguk";
@@ -13,7 +12,7 @@ import NotFound from "./pages/NotFound";
 import {
   EMAIL_LOGIN_PAGE,
   HOME_PAGE,
-  INGREDIENT_ADDITION_PAGE,
+  INGREDIENTS_ADDITION_PAGE,
   LOGIN_PAGE,
   MAIN_PAGE,
   MY_ACTIVITY_PAGE,
@@ -23,6 +22,7 @@ import {
   TTEOKGUK_COOKING_PAGE,
 } from "./constants/route";
 import MainPage from "./pages/MainPage";
+import IngredientsAddition from "./pages/IngredientsAddition";
 
 const App = () => {
   return (
@@ -35,7 +35,7 @@ const App = () => {
         <Route path={SIGNUP_PAGE} element={<Signup />} />
         <Route path={MAIN_PAGE} element={<MainPage />} />
         <Route path={TTEOKGUK_COOKING_PAGE} element={<TteokgukCooking />} />
-        <Route path={INGREDIENT_ADDITION_PAGE} element={<IngredientAddition />} />
+        <Route path={INGREDIENTS_ADDITION_PAGE} element={<IngredientsAddition />} />
         <Route path={MY_PAGE} element={<MyPage />} />
         <Route path={MY_ACTIVITY_PAGE} element={<MyActivity />} />
         <Route path={RANDOM_TTEOKGUK_PAGE} element={<RandomTteokguk />} />
