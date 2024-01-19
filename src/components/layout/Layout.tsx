@@ -2,23 +2,10 @@ import { Outlet } from "react-router-dom";
 
 import { css } from "@styled-system/css";
 
-const container = css({
-  maxWidth: "50rem",
-  width: "100%",
-  height: "100vh",
-  margin: "0 auto",
-});
-
-const main = css({
-  width: "100%",
-  height: "100vh",
-  flexGrow: 1,
-});
-
 const Layout = () => {
   return (
-    <div className={container}>
-      <main className={main}>
+    <div className={styles.container}>
+      <main className={styles.main}>
         <Outlet />
       </main>
     </div>
@@ -26,3 +13,18 @@ const Layout = () => {
 };
 
 export default Layout;
+
+const styles = {
+  container: css({
+    maxWidth: "50rem",
+    width: "100%",
+    height: "100vh",
+    margin: "0 auto",
+  }),
+
+  main: css({
+    width: "100%",
+    height: "100vh",
+    flexGrow: 1,
+  }),
+};
