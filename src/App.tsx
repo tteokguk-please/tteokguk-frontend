@@ -1,5 +1,7 @@
+import { OverlayProvider } from "@toss/use-overlay";
+
 const App = () => {
-  return <></>;
+  return <OverlayProvider></OverlayProvider>;
 };
 
 export default App;
