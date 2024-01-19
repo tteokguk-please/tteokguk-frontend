@@ -1,16 +1,10 @@
-import { ReactNode } from "react";
+import { ButtonHTMLAttributes } from "react";
 
 import classnames from "classnames";
 
 import { css } from "@styled-system/css";
 
-interface Props {
-  children: ReactNode;
-  onClick?: () => void;
-  className?: string;
-}
-
-const BaseButton = ({ children, onClick, className }: Props) => {
+const BaseButton = ({ children, onClick, className }: ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
     <button className={classnames(styles.button, className)} onClick={onClick}>
       {children}
