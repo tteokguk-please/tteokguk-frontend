@@ -3,13 +3,13 @@ import { useNavigate as useReactNavigate, NavigateOptions } from "react-router-d
 import { RoutePath } from "./Routes";
 
 const useNavigate = () => {
-  const navigate = useReactNavigate();
+  const ReactNavigate = useReactNavigate();
 
-  const typedNavigate = (to: RoutePath, options?: NavigateOptions) => {
-    navigate(to, options);
+  const navigate = (to: RoutePath, options?: NavigateOptions) => {
+    ReactNavigate(to, options);
   };
 
-  return typedNavigate;
+  return navigate;
 };
 
 export default useNavigate;
