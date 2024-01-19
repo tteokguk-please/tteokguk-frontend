@@ -2,11 +2,10 @@ import { ReactNode } from "react";
 
 import classnames from "classnames";
 
-import CloseIcon from "@/assets/svg/close.svg";
-
 import { css } from "@styled-system/css";
 
 import BaseButton from "@/components/common/BaseButton";
+import CloseIcon from "@/assets/svg/close.svg";
 
 const overlay = css({
   position: "fixed",
