@@ -1,16 +1,16 @@
 import { Routes as ReactRoutes, Route } from "react-router-dom";
 
-import Home from "@/pages/Home";
-import Login from "@/pages/Login";
-import EmailLogin from "@/pages/EmailLogin";
-import Signup from "@/pages/Signup";
+import HomePage from "@/pages/HomePage";
+import LoginPage from "@/pages/LoginPage";
+import EmailLoginPage from "@/pages/EmailLoginPage";
+import SignupPage from "@/pages/SignupPage";
 import MainPage from "@/pages/MainPage";
-import Tteokguk from "@/pages/Tteokguk";
-import TteokgukCooking from "@/pages/TteokgukCooking";
+import TteokgukPage from "@/pages/TteokgukPage";
+import TteokgukCookingPage from "@/pages/TteokgukCookingPage";
 import MyPage from "@/pages/MyPage";
-import MyActivity from "@/pages/MyActivity";
-import RandomUser from "@/pages/RandomUser";
-import NotFound from "@/pages/NotFound";
+import MyActivityPage from "@/pages/MyActivityPage";
+import RandomUserPage from "@/pages/RandomUserPage";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 export type RoutePath =
   | "/"
@@ -30,17 +30,17 @@ export const Routes = () => {
   return (
     <ReactRoutes>
       <Route path="/" />
-      <Route index element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="login/email" element={<EmailLogin />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route index element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="login/email" element={<EmailLoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
       <Route path="/tteokguks" element={<MainPage />} />
-      <Route path="/tteokguks/:id" element={<Tteokguk />} />
-      <Route path="/tteokguk/create" element={<TteokgukCooking />} />
+      <Route path="/tteokguks/:id" element={<TteokgukPage />} />
+      <Route path="/tteokguk/create" element={<TteokgukCookingPage />} />
       <Route path="/my-page" element={<MyPage />} />
-      <Route path="/my-page/activity" element={<MyActivity />} />
-      <Route path="/users/:id" element={<RandomUser />} />
-      <Route path="/*" element={<NotFound />} />
+      <Route path="/my-page/activity" element={<MyActivityPage />} />
+      <Route path="/users/:id" element={<RandomUserPage />} />
+      <Route path="/*" element={<NotFoundPage />} />
     </ReactRoutes>
   );
 };
