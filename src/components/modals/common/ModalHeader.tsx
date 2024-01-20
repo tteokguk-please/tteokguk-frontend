@@ -25,7 +25,7 @@ export default ModalHeader;
 const styles = {
   container: css({
     display: "flex",
-    position: "relative",
+    alignItems: "flex-start",
   }),
   title: css({
     flex: 1,
@@ -33,11 +33,9 @@ const styles = {
     fontWeight: 700,
     textAlign: "center",
     marginTop: "1.2rem",
+    paddingLeft: "2.4rem",
   }),
   closeButton: css({
-    position: "absolute",
-    right: 0,
-    top: 0,
     cursor: "pointer",
   }),
 };
