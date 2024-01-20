@@ -27,9 +27,10 @@ const styles = {
     display: "flex",
     position: "relative",
   }),
-
   title: css({
     flex: 1,
+    fontSize: "2rem",
+    fontWeight: 700,
     textAlign: "center",
     marginTop: "1.2rem",
   }),
