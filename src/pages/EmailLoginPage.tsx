@@ -1,11 +1,12 @@
 import { FormEvent } from "react";
 
 import { toast } from "sonner";
-import classnames from "classnames";
 
 import { css } from "@styled-system/css";
 
 import { Link } from "@/routes/Link";
+import Label from "@/components/common/Label";
+import Input from "@/components/common/Input";
 
 const EmailLoginPage = () => {
   const handleSubmit = (event: FormEvent) => {
@@ -17,24 +18,15 @@ const EmailLoginPage = () => {
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} noValidate>
-        <label htmlFor="email" className={styles.label}>
-          이메일
-        </label>
-        <input
+        <Label htmlFor="email">이메일</Label>
+        <Input
           id="email"
           type="email"
           placeholder="이메일을 입력해주세요"
-          className={classnames(styles.input, styles.emailInput)}
+          className={styles.emailInput}
         />
-        <label htmlFor="password" className={styles.label}>
-          비밀번호
-        </label>
-        <input
-          id="password"
-          type="password"
-          placeholder="비밀번호를 입력해주세요"
-          className={styles.input}
-        />
+        <Label htmlFor="password">비밀번호</Label>
+        <Input id="password" type="password" placeholder="비밀번호를 입력해주세요" />
         <button type="submit" className={styles.button}>
           로그인 하기
         </button>
@@ -55,24 +47,6 @@ const styles = {
     height: "100%",
     padding: "10rem 4rem 0 4rem",
     position: "relative",
-  }),
-  label: css({
-    display: "block",
-    fontSize: "1.4rem",
-    fontWeight: 700,
-    marginBottom: "0.6rem",
-  }),
-  input: css({
-    width: "100%",
-    height: "3.7rem",
-    backgroundColor: "primary.20",
-    borderRadius: "1rem",
-    paddingX: "1.6rem",
-    outline: "none",
-    _placeholder: {
-      color: "black",
-      fontSize: "1.2rem",
-    },
   }),
   emailInput: css({
     marginBottom: "1.6rem",
