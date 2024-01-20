@@ -5,7 +5,7 @@ const ToastContainer = () => {
     <Toaster
       position="bottom-center"
       visibleToasts={1}
-      toastOptions={{ duration: 20000, style: styles.container }}
+      toastOptions={{ duration: 2000, style: styles.container }}
     />
   );
 };
