@@ -20,6 +20,7 @@ export default defineConfig({
         gray: { 50: { value: "#929292" } },
         primary: {
           10: { value: "#F5EFDF" },
+          20: { value: "#F4ECD4" },
           45: { value: "#E8E3D2" },
           60: { value: "#EEE2BE" },
           100: { value: "#F8D97E" },
@@ -30,6 +31,7 @@ export default defineConfig({
         },
         red: { 100: { value: "#F63333" } },
         green: { 100: { value: "#37C35E" } },
+        yellow: { 100: { value: "#FEE500" } },
       },
     },
     extend: {},
