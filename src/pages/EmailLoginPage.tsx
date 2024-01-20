@@ -17,14 +17,24 @@ const EmailLoginPage = () => {
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} noValidate>
-        <label className={styles.label}>이메일</label>
+        <label htmlFor="email" className={styles.label}>
+          이메일
+        </label>
         <input
+          id="email"
           type="email"
           placeholder="이메일을 입력해주세요"
           className={classnames(styles.input, styles.emailInput)}
         />
-        <label className={styles.label}>비밀번호</label>
-        <input type="password" placeholder="비밀번호를 입력해주세요" className={styles.input} />
+        <label htmlFor="password" className={styles.label}>
+          비밀번호
+        </label>
+        <input
+          id="password"
+          type="password"
+          placeholder="비밀번호를 입력해주세요"
+          className={styles.input}
+        />
         <button type="submit" className={styles.button}>
           로그인 하기
         </button>
