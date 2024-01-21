@@ -7,6 +7,7 @@ import { css } from "@styled-system/css";
 import { Link } from "@/routes/Link";
 import Label from "@/components/common/Label";
 import Input from "@/components/common/Input";
+import Header from "@/components/common/Header";
 
 const EmailLoginPage = () => {
   const handleSubmit = (event: FormEvent) => {
@@ -17,6 +18,9 @@ const EmailLoginPage = () => {
 
   return (
     <div className={styles.container}>
+      <Header hasPreviousPage className={styles.header}>
+        이메일로 로그인
+      </Header>
       <form onSubmit={handleSubmit} noValidate>
         <Label htmlFor="email">이메일</Label>
         <Input
@@ -45,8 +49,11 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     height: "100%",
-    padding: "10rem 4rem 0 4rem",
+    padding: "0 4rem",
     position: "relative",
+  }),
+  header: css({
+    marginBottom: "10rem",
   }),
   emailInput: css({
     marginBottom: "1.6rem",
