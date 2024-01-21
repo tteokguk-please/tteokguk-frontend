@@ -7,11 +7,10 @@ import { css } from "@styled-system/css";
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   color: "primary.100" | "primary.45" | "secondary" | "white" | "yellow";
   applyColorTo: "background" | "outline";
-  size: "large" | "medium";
 }
 
-const Button = ({ children, onClick, className, color, applyColorTo, size }: Props) => {
-  const buttonStyle = classnames(styles.button, styles[applyColorTo][color], styles[size]);
+const Button = ({ children, onClick, className, color, applyColorTo }: Props) => {
+  const buttonStyle = classnames(styles.button, styles[applyColorTo][color]);
 
   return (
     <button className={classnames(buttonStyle, className)} onClick={onClick}>
@@ -24,10 +23,11 @@ export default Button;
 
 const styles = {
   button: css({
+    width: "100%",
+    height: "5.1rem",
     fontSize: "1.6rem",
     fontWeight: 700,
     borderRadius: "1.2rem",
-    backgroundColor: "white",
     cursor: "pointer",
   }),
   background: {
@@ -44,12 +44,4 @@ const styles = {
     white: css({ borderColor: "white" }),
     yellow: css({ borderColor: "yellow.100" }),
   },
-  large: css({
-    width: "31.2rem",
-    height: "5.1rem",
-  }),
-  medium: css({
-    width: "28rem",
-    height: "5.1rem",
-  }),
 };
