@@ -38,10 +38,10 @@ const styles = {
     yellow: css({ backgroundColor: "yellow.100" }),
   },
   outline: {
-    "primary.100": css({ borderColor: "primary.100" }),
-    "primary.45": css({ borderColor: "primary.45" }),
-    secondary: css({ borderColor: "secondary.100" }),
-    white: css({ borderColor: "white" }),
-    yellow: css({ borderColor: "yellow.100" }),
+    "primary.100": css({ borderWidth: "0.1rem", borderColor: "primary.100" }),
+    "primary.45": css({ borderWidth: "0.1rem", borderColor: "primary.45" }),
+    secondary: css({ borderWidth: "0.1rem", borderColor: "secondary.100" }),
+    white: css({ borderWidth: "0.1rem", borderColor: "white" }),
+    yellow: css({ borderWidth: "0.1rem", borderColor: "yellow.100" }),
   },
 };
