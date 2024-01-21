@@ -10,7 +10,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size: "large" | "medium";
 }
 
-const BaseButton = ({ children, onClick, className, color, applyColorTo, size }: Props) => {
+const Button = ({ children, onClick, className, color, applyColorTo, size }: Props) => {
   const buttonStyle = classnames(styles.button, styles[applyColorTo][color], styles[size]);
 
   return (
@@ -20,7 +20,7 @@ const BaseButton = ({ children, onClick, className, color, applyColorTo, size }:
   );
 };
 
-export default BaseButton;
+export default Button;
 
 const styles = {
   button: css({
