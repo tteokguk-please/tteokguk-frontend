@@ -14,7 +14,7 @@ export default ToastContainer;
 
 const styles = {
   container: {
-    diplay: "flex",
+    display: "flex",
     justifyContent: "center",
     fontSize: "1.5rem",
     height: "4.2rem",
