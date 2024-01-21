@@ -27,7 +27,7 @@ const styles = {
     outline: "none",
     _placeholder: {
       color: "black",
-      fontSize: "1.2rem",
+      fontSize: "1.4rem",
     },
   }),
 };
