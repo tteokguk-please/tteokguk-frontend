@@ -27,6 +27,7 @@ const styles = {
     height: "5.1rem",
     fontSize: "1.6rem",
     fontWeight: 700,
+    backgroundColor: "white",
     borderRadius: "1.2rem",
     cursor: "pointer",
   }),
