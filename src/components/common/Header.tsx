@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
 
 import classnames from "classnames";
 
 import { css } from "@styled-system/css";
 
+import useRouter from "@/routes/useRouter";
 import BeforeIcon from "@/assets/svg/before.svg";
 
 interface Props {
@@ -15,10 +15,10 @@ interface Props {
 }
 
 const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => {
-  const navigate = useNavigate();
+  const navigation = useRouter();
 
   const handleClickBefore = () => {
-    navigate(-1);
+    navigation.back();
   };
 
   return (
