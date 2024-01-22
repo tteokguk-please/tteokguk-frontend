@@ -10,7 +10,7 @@ import Input from "@/components/common/Input";
 import Header from "@/components/common/Header";
 
 const EmailLoginPage = () => {
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmitLogin = (event: FormEvent) => {
     event.preventDefault();
 
     toast("아이디 혹은 비밀번호를 확인해주세요.");
@@ -21,7 +21,7 @@ const EmailLoginPage = () => {
       <Header hasPreviousPage className={styles.header}>
         이메일로 로그인
       </Header>
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleSubmitLogin} noValidate>
         <Label htmlFor="email">이메일</Label>
         <Input
           id="email"
@@ -50,7 +50,6 @@ const styles = {
     flexDirection: "column",
     height: "100%",
     padding: "0 4rem",
-    position: "relative",
   }),
   header: css({
     marginBottom: "10rem",
