@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 
 import classnames from "classnames";
 
@@ -14,9 +15,17 @@ interface Props {
 }
 
 const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => {
+  const navigate = useNavigate();
+
+  const handleClickBefore = () => {
+    navigate(-1);
+  };
+
   return (
     <header className={classnames(styles.header, className)}>
-      <div>{hasPreviousPage && <BeforeIcon />}</div>
+      <div onClick={handleClickBefore} className={styles.beforeIcon}>
+        {hasPreviousPage && <BeforeIcon />}
+      </div>
       <div className={styles.title}>
         <h1>{children}</h1>
       </div>
@@ -33,6 +42,9 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     height: "4.8rem",
+  }),
+  beforeIcon: css({
+    cursor: "pointer",
   }),
   title: css({
     fontSize: "1.6rem",
