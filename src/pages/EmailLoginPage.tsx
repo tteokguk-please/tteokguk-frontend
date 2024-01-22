@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, Fragment } from "react";
 
 import { toast } from "sonner";
 
@@ -17,28 +17,30 @@ const EmailLoginPage = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <Fragment>
       <Header hasPreviousPage className={styles.header}>
         이메일로 로그인
       </Header>
-      <form onSubmit={handleSubmitLogin} noValidate>
-        <Label htmlFor="email">이메일</Label>
-        <Input
-          id="email"
-          type="email"
-          placeholder="이메일을 입력해주세요"
-          className={styles.emailInput}
-        />
-        <Label htmlFor="password">비밀번호</Label>
-        <Input id="password" type="password" placeholder="비밀번호를 입력해주세요" />
-        <button type="submit" className={styles.button}>
-          로그인 하기
-        </button>
-      </form>
-      <Link to="/signup" className={styles.signupLink}>
-        회원가입 하러가기&gt;
-      </Link>
-    </div>
+      <div className={styles.container}>
+        <form onSubmit={handleSubmitLogin} noValidate>
+          <Label htmlFor="email">이메일</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="이메일을 입력해주세요"
+            className={styles.emailInput}
+          />
+          <Label htmlFor="password">비밀번호</Label>
+          <Input id="password" type="password" placeholder="비밀번호를 입력해주세요" />
+          <button type="submit" className={styles.button}>
+            로그인 하기
+          </button>
+        </form>
+        <Link to="/signup" className={styles.signupLink}>
+          회원가입 하러가기&gt;
+        </Link>
+      </div>
+    </Fragment>
   );
 };
 
