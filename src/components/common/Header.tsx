@@ -23,7 +23,7 @@ const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => 
 
   return (
     <header className={classnames(styles.header, className)}>
-      <div onClick={handleClickBefore} className={styles.beforeIcon}>
+      <div onClick={handleClickBefore} className={styles.beforeIcon} aria-label="뒤로 가기">
         {hasPreviousPage && <BeforeIcon />}
       </div>
       <div className={styles.title}>
