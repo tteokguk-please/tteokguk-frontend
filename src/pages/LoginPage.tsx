@@ -33,13 +33,14 @@ export default LoginPage;
 const styles = {
   container: css({
     height: "100%",
-    padding: "0 4rem 12.3rem",
+    paddingBottom: "12.3rem",
   }),
   header: css({
     marginBottom: "5rem",
   }),
   buttonContainer: css({
     width: "100%",
+    padding: "0 4rem",
   }),
   emailLoginButton: css({
     marginTop: "21.6rem",
