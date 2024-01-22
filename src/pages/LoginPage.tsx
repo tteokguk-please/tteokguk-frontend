@@ -32,10 +32,6 @@ export default LoginPage;
 
 const styles = {
   container: css({
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-between",
     height: "100%",
     padding: "0 4rem 12.3rem",
   }),
