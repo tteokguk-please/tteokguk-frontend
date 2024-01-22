@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
@@ -7,8 +9,8 @@ import { Link } from "@/routes/Link";
 
 const LoginPage = () => {
   return (
-    <div className={styles.container}>
-      <Header hasPreviousPage className={styles.header}>
+    <Fragment>
+      <Header hasPreviousPage>
         <img src={headerLogo} alt="용용이 로고" />
       </Header>
       <div className={styles.buttonContainer}>
@@ -24,26 +26,22 @@ const LoginPage = () => {
           회원가입 하러가기&gt;
         </Link>
       </div>
-    </div>
+    </Fragment>
   );
 };
 
 export default LoginPage;
 
 const styles = {
-  container: css({
-    height: "100%",
-    paddingBottom: "12.3rem",
-  }),
-  header: css({
-    marginBottom: "5rem",
-  }),
   buttonContainer: css({
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
     width: "100%",
+    height: "calc(100% - 4.8rem)",
     padding: "0 4rem",
   }),
   emailLoginButton: css({
-    marginTop: "21.6rem",
     marginBottom: "1rem",
   }),
   kakaoLoginButton: css({
