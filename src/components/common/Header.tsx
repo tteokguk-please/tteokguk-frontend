@@ -42,6 +42,7 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     height: "4.8rem",
+    padding: "0 1.6rem",
   }),
   beforeIcon: css({
     cursor: "pointer",
