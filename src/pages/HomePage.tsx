@@ -34,7 +34,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
     padding: "6.8rem 4rem 11.2rem",
   }),
   buttonContainer: css({
