@@ -2,8 +2,7 @@ import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
-import Button from "../common/Button";
-
+import Button from "@/components/common/Button";
 import Modal from "@/components/common/modal/Modal";
 
 interface Props {
