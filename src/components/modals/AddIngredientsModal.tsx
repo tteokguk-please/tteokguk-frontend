@@ -18,11 +18,11 @@ const AddIngredientsModal = ({ isOpen, close }: Props) => {
         </Modal.Header>
         <Modal.Body className={styles.contentContainer}>
           <div className={styles.bodyTitle}>내가 가지고 있는 재료</div>
-          <div className={styles.content}>
+          <ol className={styles.content}>
             {[...Array(12)].map(() => (
               <Ingredient />
             ))}
-          </div>
+          </ol>
           <Button onClick={close} color="primary.100" applyColorTo="background">
             추가하기
           </Button>
@@ -36,10 +36,10 @@ export default AddIngredientsModal;
 
 const Ingredient = () => {
   return (
-    <div className={styles.ingredient} aria-label="만두">
+    <li className={styles.ingredient} aria-label="만두">
       <div className={styles.ingredientNumber}>1</div>
       <DumplingIngredientIcon />
-    </div>
+    </li>
   );
 };
 
@@ -86,6 +86,7 @@ const styles = {
     height: "5.6rem",
     borderRadius: "50%",
     backgroundColor: "secondary.100",
+    cursor: "pointer",
   }),
   ingredientNumber: css({
     position: "absolute",
