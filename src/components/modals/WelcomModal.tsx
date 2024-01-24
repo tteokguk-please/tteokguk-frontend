@@ -57,7 +57,7 @@ const WelcomModal = ({ isOpen, close, nickname, uniqueIngredient }: Props) => {
             <DumplingIcon />
           </div>
           <Button onClick={handleClickNextButton} color="primary.100" applyColorTo="background">
-            다음
+            {modalContents[step].buttonContent}
           </Button>
         </Modal.Body>
       </Modal>
