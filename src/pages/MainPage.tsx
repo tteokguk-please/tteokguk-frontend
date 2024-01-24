@@ -58,12 +58,12 @@ const styles = {
     borderBottomWidth: "0.1rem",
     borderBottomColor: "primary.45",
     padding: "0.8rem 5.6rem 0.9rem",
+    marginBottom: "2rem",
     cursor: "pointer",
   }),
   tabPanel: css({
     display: "flex",
     flexFlow: "column wrap",
-    marginTop: "2rem",
     paddingLeft: "1.6rem",
   }),
 
