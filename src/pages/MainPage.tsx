@@ -74,7 +74,7 @@ const styles = {
   }),
   button: css({
     position: "sticky",
-    width: "calc(100% - 5rem)",
+    width: "calc(100% - 5.1rem)",
     bottom: "3rem",
     marginX: "2.4rem",
   }),
