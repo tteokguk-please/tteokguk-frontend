@@ -29,7 +29,7 @@ const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => 
       <div className={styles.title}>
         <h1>{children}</h1>
       </div>
-      <div>{actionIcon}</div>
+      <div className={styles.actionIcon}>{actionIcon}</div>
     </header>
   );
 };
@@ -41,14 +41,19 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    flex: 1,
     height: "4.8rem",
     padding: "0 1.6rem",
   }),
   beforeIcon: css({
+    flex: 1,
     cursor: "pointer",
   }),
   title: css({
     fontSize: "1.6rem",
     fontWeight: 700,
+  }),
+  actionIcon: css({
+    flex: 1,
   }),
 };
