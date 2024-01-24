@@ -5,29 +5,37 @@ import { css } from "@styled-system/css";
 
 import TteokgukList from "@/components/common/Tteokguks/TteokgukList";
 import Button from "@/components/common/Button";
+import Header from "@/components/common/Header";
+import ProfileIcon from "@/assets/svg/profile.svg";
+import headerLogo from "@/assets/images/header-logo.png";
 
 const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    <div className={styles.container}>
-      <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-        <TabList className={styles.tabList}>
-          <Tab className={tabIndex === 0 ? styles.selectedTab : ""}>새로운 떡국</Tab>
-          <Tab className={tabIndex === 1 ? styles.selectedTab : ""}>완성된 떡국</Tab>
-        </TabList>
-        <TabPanel className={styles.tabPanel}>
-          <TteokgukList />
-        </TabPanel>
-        <TabPanel className={styles.tabPanel}>
-          <TteokgukList />
-        </TabPanel>
-      </Tabs>
+    <>
+      <Header actionIcon={<ProfileIcon />}>
+        <img src={headerLogo} alt="로고" />
+      </Header>
+      <div className={styles.container}>
+        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+          <TabList className={styles.tabList}>
+            <Tab className={tabIndex === 0 ? styles.selectedTab : ""}>새로운 떡국</Tab>
+            <Tab className={tabIndex === 1 ? styles.selectedTab : ""}>완성된 떡국</Tab>
+          </TabList>
+          <TabPanel className={styles.tabPanel}>
+            <TteokgukList />
+          </TabPanel>
+          <TabPanel className={styles.tabPanel}>
+            <TteokgukList />
+          </TabPanel>
+        </Tabs>
 
-      <Button color="secondary" applyColorTo="background" className={styles.button}>
-        소원 떡국 만들기
-      </Button>
-    </div>
+        <Button color="secondary" applyColorTo="background" className={styles.button}>
+          소원 떡국 만들기
+        </Button>
+      </div>
+    </>
   );
 };
 
@@ -36,7 +44,7 @@ export default MainPage;
 const styles = {
   container: css({
     position: "relative",
-    height: "100%",
+    height: "calc(100% - 4.8rem)",
     overflow: "auto",
     _scrollbar: {
       display: "none",
