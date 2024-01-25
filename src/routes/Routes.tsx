@@ -25,8 +25,8 @@ export type RoutePath =
   | "/tteokguk/create"
   | "/my-page"
   | "/my-page/activity"
-  | "users/:id"
-  | `users/${number}`;
+  | "/users/:id"
+  | `/users/${number}`;
 
 export const Routes = () => {
   return (
