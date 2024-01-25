@@ -1,5 +1,7 @@
 import ky, { Input, Options } from "ky";
 
+import { getLocalStorage } from "@/utils/localStorage";
+
 const HTTP_METHODS = {
   GET: "get",
   POST: "post",
@@ -19,7 +21,7 @@ const kyInstance = ky.create({
   hooks: {
     beforeRequest: [
       (request) => {
-        const token = localStorage.getItem("token");
+        const token = getLocalStorage("token");
 
         if (token) {
           request.headers.set("Authorization", `Bearer ${token}`);
