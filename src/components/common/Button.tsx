@@ -29,7 +29,6 @@ const styles = {
     fontWeight: 700,
     backgroundColor: "white",
     borderRadius: "1.2rem",
-    cursor: "pointer",
   }),
   background: {
     "primary.100": css({ backgroundColor: "primary.100" }),

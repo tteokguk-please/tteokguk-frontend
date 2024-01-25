@@ -54,6 +54,8 @@ const styles = {
     fontWeight: 700,
   }),
   actionIcon: css({
+    display: "flex",
+    justifyContent: "flex-end",
     flex: 1,
   }),
 };
