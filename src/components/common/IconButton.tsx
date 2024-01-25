@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
-import classnames from "classnames";
+import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
@@ -11,10 +11,10 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const IconButton = ({ children, onClick, className, color, applyColorTo, layout }: Props) => {
-  const buttonStyle = classnames(styles.button(layout), styles[applyColorTo][color]);
+  const buttonStyle = classNames(styles.button(layout), styles[applyColorTo][color]);
 
   return (
-    <button onClick={onClick} className={classnames(buttonStyle, className)}>
+    <button onClick={onClick} className={classNames(buttonStyle, className)}>
       {children}
     </button>
   );
