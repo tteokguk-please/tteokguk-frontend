@@ -6,7 +6,6 @@ import Header from "@/components/common/Header";
 import headerLogo from "@/assets/images/header-logo.png";
 import Button from "@/components/common/Button";
 import { Link } from "@/routes/Link";
-
 const LoginPage = () => {
   return (
     <Fragment>
@@ -38,7 +37,7 @@ const styles = {
     flexDirection: "column",
     justifyContent: "center",
     width: "100%",
-    height: "calc(100% - 4.8rem)",
+    height: "calc(100vh - 4.8rem)",
     padding: "0 4rem",
   }),
   emailLoginButton: css({
