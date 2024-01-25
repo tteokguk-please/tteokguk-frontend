@@ -1,13 +1,6 @@
-<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_343_1516)">
-<path d="M43.4085 16.0735L46.7507 7.45306C48.0637 4.02086 45 0.508844 41.4191 1.42676L37.7984 2.34467C36.6446 2.62404 35.4111 2.4644 34.3767 1.86576L32.3077 0.628571C30.8753 -0.209524 29.1247 -0.209524 27.6923 0.628571L25.6233 1.86576C24.5889 2.4644 23.3554 2.66395 22.2016 2.34467L18.5809 1.42676C15.0398 0.508844 11.9363 4.02086 13.2493 7.45306L16.5915 16.0735C6.76392 21.0222 0 31.1991 0 42.9723C0 59.5746 13.4085 66 30 66C46.5915 66 60 59.5746 60 42.9723C60 31.1991 53.2361 21.0222 43.4085 16.0735Z" fill="white" stroke="#1B1B1B" stroke-width="2" stroke-miterlimit="10"/>
-<path d="M30 22V24" stroke="#1B1B1B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M24 22L22 24" stroke="#1B1B1B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M36 22L38 24" stroke="#1B1B1B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
-<defs>
-<clipPath id="clip0_343_1516">
-<rect width="80" height="80" fill="white"/>
-</clipPath>
-</defs>
+<svg width="32" height="35" viewBox="0 0 32 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.7042 9.03673L24.3753 4.72653C25.0318 3.01043 23.5 1.25442 21.7096 1.71338L19.8992 2.17234C19.3223 2.31202 18.7056 2.2322 18.1883 1.93288L17.1538 1.31429C16.4377 0.895238 15.5623 0.895238 14.8462 1.31429L13.8117 1.93288C13.2944 2.2322 12.6777 2.33197 12.1008 2.17234L10.2904 1.71338C8.51989 1.25442 6.96817 3.01043 7.62467 4.72653L9.29575 9.03673C4.38196 11.5111 1 16.5995 1 22.4862C1 30.7873 7.70425 34 16 34C24.2958 34 31 30.7873 31 22.4862C31 16.5995 27.618 11.5111 22.7042 9.03673Z" fill="white" stroke="#1B1B1B" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M16 12V13" stroke="#1B1B1B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 12L12 13" stroke="#1B1B1B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M19 12L20 13" stroke="#1B1B1B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
