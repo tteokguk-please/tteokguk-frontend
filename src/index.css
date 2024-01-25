@@ -20,6 +20,15 @@
 }
 
 @layer utilities {
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   .a11y-hidden {
     clip: rect(0 0 0 0);
     clip-path: polygon(0 0, 0 0, 0 0);
