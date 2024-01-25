@@ -19,6 +19,5 @@ const styles = {
     display: "block",
     fontSize: "1.4rem",
     fontWeight: 700,
-    marginBottom: "0.6rem",
   }),
 };
