@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import classnames from "classnames";
+import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
@@ -15,7 +15,7 @@ interface Props {
 const Modal = ({ className, children }: Props) => {
   return (
     <div className={styles.overlay}>
-      <div className={classnames(styles.container, className)}>{children}</div>
+      <div className={classNames(styles.container, className)}>{children}</div>
     </div>
   );
 };
