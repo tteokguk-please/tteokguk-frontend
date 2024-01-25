@@ -1,9 +1,10 @@
-import { ChangeEvent, ReactNode, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 import { css } from "@styled-system/css";
 
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
+import Ingredient from "@/components/common/Ingredient";
 import WishIcon from "@/assets/svg/wish.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
 import DumplingIcon from "@/assets/svg/dumpling.svg";
@@ -51,18 +52,18 @@ const TteokgukCookingPage = () => {
             <span>떡국 재료 추가하기</span>
           </div>
           <div className={styles.meterialContainer}>
-            <Ingredient icon={<DumplingIcon />} label="희망떡" />
-            <Ingredient icon={<DumplingIcon />} label="사랑계란" />
-            <Ingredient icon={<DumplingIcon />} label="해피김" />
-            <Ingredient icon={<DumplingIcon />} label="행운파" />
-            <Ingredient icon={<DumplingIcon />} label="튼튼고기" />
-            <Ingredient icon={<DumplingIcon />} label="용기버섯" />
-            <Ingredient icon={<DumplingIcon />} label="스마일두부" />
-            <Ingredient icon={<DumplingIcon />} label="성공마늘" />
-            <Ingredient icon={<DumplingIcon />} label="응원어묵" />
-            <Ingredient icon={<DumplingIcon />} label="일등사탕" />
-            <Ingredient icon={<DumplingIcon />} label="당첨만두" />
-            <Ingredient icon={<DumplingIcon />} label="붕어빵" />
+            <Ingredient ingredientIcon={<DumplingIcon />} label="희망떡" />
+            <Ingredient ingredientIcon={<DumplingIcon />} label="사랑계란" />
+            <Ingredient ingredientIcon={<DumplingIcon />} label="해피김" />
+            <Ingredient ingredientIcon={<DumplingIcon />} label="행운파" />
+            <Ingredient ingredientIcon={<DumplingIcon />} label="튼튼고기" />
+            <Ingredient ingredientIcon={<DumplingIcon />} label="용기버섯" />
+            <Ingredient ingredientIcon={<DumplingIcon />} label="스마일두부" />
+            <Ingredient ingredientIcon={<DumplingIcon />} label="성공마늘" />
+            <Ingredient ingredientIcon={<DumplingIcon />} label="응원어묵" />
+            <Ingredient ingredientIcon={<DumplingIcon />} label="일등사탕" />
+            <Ingredient ingredientIcon={<DumplingIcon />} label="당첨만두" />
+            <Ingredient ingredientIcon={<DumplingIcon />} label="붕어빵" />
           </div>
           <label htmlFor="private" className={styles.privateLabel}>
             {isPrivate ? <CheckIcon /> : <NoCheckIcon />}
@@ -85,15 +86,6 @@ const TteokgukCookingPage = () => {
 };
 
 export default TteokgukCookingPage;
-
-const Ingredient = ({ icon, label }: { icon: ReactNode; label: string }) => {
-  return (
-    <div className={styles.ingredientContainer}>
-      <div className={styles.ingredientIcon}>{icon}</div>
-      <div className={styles.ingredientLabel}>{label}</div>
-    </div>
-  );
-};
 
 const styles = {
   container: css({
@@ -143,31 +135,6 @@ const styles = {
     padding: "2.3rem 2.4rem",
     borderRadius: "0.8rem",
     backgroundColor: "primary.20",
-  }),
-  ingredientContainer: css({
-    position: "relative",
-    cursor: "pointer",
-  }),
-  ingredientIcon: css({
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "7.6rem",
-    height: "7.6rem",
-    backgroundColor: "primary.45",
-    borderRadius: "50%",
-    overflow: "hidden",
-  }),
-  ingredientLabel: css({
-    position: "absolute",
-    left: "0.5rem",
-    bottom: "-1rem",
-    width: "6.8rem",
-    height: "2.2rem",
-    fontSize: "1.2rem",
-    backgroundColor: "white",
-    borderRadius: "0.4rem",
-    textAlign: "center",
   }),
   privateLabel: css({
     display: "flex",
