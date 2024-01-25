@@ -17,7 +17,7 @@ const ModalHeader = ({ children, className, hasCloseButton = false, handleClickC
   return (
     <div className={styles.container}>
       <div className={styles.spacer} />
-      <div className={classnames(className, styles.title)}>{children}</div>
+      <div className={classnames(styles.title, className)}>{children}</div>
       <div className={styles.spacer}>
         {hasCloseButton && (
           <button onClick={handleClickClose} className={styles.closeButton}>
