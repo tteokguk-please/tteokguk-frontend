@@ -68,8 +68,9 @@ export default TteokgukPage;
 
 const styles = {
   container: css({
-    height: "calc(100% - 4.8rem)",
+    height: "calc(100% - 5.9rem)",
     paddingX: "2.4rem",
+    marginTop: "1.1rem",
   }),
   titleContainer: css({
     display: "flex",
