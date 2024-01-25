@@ -43,6 +43,7 @@ const WelcomModal = ({ isOpen, close, nickname, uniqueIngredient }: Props) => {
 
     if (step === modalContents.length - 1) {
       close();
+      setStep(0);
       navigate("/tteokguk/create");
     }
   };

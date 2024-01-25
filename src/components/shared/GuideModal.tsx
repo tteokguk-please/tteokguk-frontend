@@ -39,6 +39,7 @@ const GuideModal = ({ isOpen, close }: Props) => {
 
     if (step === modalContents.length - 1) {
       close();
+      setStep(0);
     }
   };
 
