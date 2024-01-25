@@ -18,9 +18,7 @@ const EmailLoginPage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage className={styles.header}>
-        이메일로 로그인
-      </Header>
+      <Header hasPreviousPage>이메일로 로그인</Header>
       <div className={styles.container}>
         <form onSubmit={handleSubmitLogin} noValidate>
           <Label htmlFor="email">이메일</Label>
@@ -52,9 +50,7 @@ const styles = {
     flexDirection: "column",
     height: "calc(100% - 4.8rem)",
     padding: "0 4rem",
-  }),
-  header: css({
-    marginBottom: "10rem",
+    paddingTop: "10rem",
   }),
   emailInput: css({
     marginBottom: "1.6rem",
