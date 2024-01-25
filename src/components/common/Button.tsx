@@ -1,7 +1,5 @@
 import { ButtonHTMLAttributes } from "react";
 
-import classNames from "classnames";
-
 import { css } from "@styled-system/css";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,7 +12,7 @@ const Button = ({
   children,
   onClick,
   className,
-  disabled,
+  disabled = false,
   color,
   applyColorTo,
   size = "full",
@@ -24,7 +22,7 @@ const Button = ({
   });
 
   return (
-    <button className={classNames(buttonStyle, className)} onClick={onClick}>
+    <button className={buttonStyle} onClick={onClick}>
       {children}
     </button>
   );
@@ -41,7 +39,8 @@ const styles = {
     borderRadius: "1.2rem",
   }),
   background: {
-    "primary.100": css({ backgroundColor: "primary.100" }),
+    // FIX ME: !important를 안하면 disabled false임에도 배경색이 흰색
+    "primary.100": css({ backgroundColor: "primary.100 !important" }),
     "primary.45": css({ backgroundColor: "primary.45" }),
     secondary: css({ backgroundColor: "secondary.100" }),
     yellow: css({ backgroundColor: "yellow.100" }),
