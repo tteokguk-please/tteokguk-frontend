@@ -2,7 +2,7 @@ import { css } from "@styled-system/css";
 
 import Modal from "@/components/common/modal/Modal";
 import Button from "@/components/common/Button";
-import DumplingIngredientIcon from "@/assets/svg/dumplingIngredient.svg";
+import DumplingIcon from "@/assets/svg/dumpling.svg";
 
 interface Props {
   isOpen: boolean;
@@ -40,7 +40,7 @@ const Ingredient = () => {
   return (
     <li className={styles.ingredient} aria-label="만두">
       <div className={styles.ingredientNumber}>1</div>
-      <DumplingIngredientIcon />
+      <DumplingIcon />
     </li>
   );
 };
