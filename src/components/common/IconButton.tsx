@@ -46,7 +46,6 @@ const styles = {
       backgroundColor: "white",
       borderRadius: "0.8rem",
       padding: "0 2.2rem 0 1rem",
-      cursor: "pointer",
     }),
   background: {
     "primary.45": css({ backgroundColor: "primary.45" }),
