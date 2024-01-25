@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import classnames from "classnames";
+import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
@@ -22,7 +22,7 @@ const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => 
   };
 
   return (
-    <header className={classnames(styles.header, className)}>
+    <header className={classNames(styles.header, className)}>
       <div onClick={handleClickBefore} className={styles.beforeIcon} aria-label="뒤로 가기">
         {hasPreviousPage && <BeforeIcon />}
       </div>
