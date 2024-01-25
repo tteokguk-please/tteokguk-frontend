@@ -33,11 +33,10 @@ export default MyActivityPage;
 const styles = {
   container: css({
     height: "calc(100% - 4.8rem)",
-    paddingX: "2.4rem",
   }),
   tabList: css({
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     fontSize: "1.6rem",
     fontWeight: 700,
     borderBottomWidth: "0.1rem",
@@ -49,6 +48,7 @@ const styles = {
   tabPanel: css({
     display: "flex",
     flexFlow: "column wrap",
+    paddingX: "1.8rem",
   }),
   selectedTab: css({
     position: "relative",
