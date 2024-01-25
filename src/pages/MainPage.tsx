@@ -59,7 +59,7 @@ const styles = {
   }),
   tabList: css({
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     fontSize: "1.6rem",
     fontWeight: 700,
     borderBottomWidth: "0.1rem",
