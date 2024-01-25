@@ -31,7 +31,6 @@ const TteokgukCookingPage = () => {
       <Header hasPreviousPage actionIcon={<GuideIcon />}>
         떡국 만들기
       </Header>
-      <div className={styles.image}>이미지 예정</div>
       <div className={styles.container}>
         <div className={styles.title}>
           <WishIcon />
@@ -90,7 +89,7 @@ export default TteokgukCookingPage;
 const styles = {
   container: css({
     width: "100%",
-    height: "calc(100vh - 13.2rem)",
+    minHeight: "calc(100% - 4.8rem)",
     backgroundColor: "back",
     paddingX: "2.4rem",
   }),
@@ -130,7 +129,7 @@ const styles = {
     display: "flex",
     flexFlow: "column wrap",
     alignItems: "center",
-    gap: "2.7rem",
+    gap: "1.8rem",
     height: "43.8rem",
     padding: "2.3rem 2.4rem",
     borderRadius: "0.8rem",
