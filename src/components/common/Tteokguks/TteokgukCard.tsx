@@ -1,16 +1,18 @@
 import { css } from "@styled-system/css";
 
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
+import { Link } from "@/routes/Link";
 
 interface Props {
+  id: number;
   tteokgukNumber: number;
   nickname: string;
   hasBadge?: boolean;
 }
 
-const TteokgukCard = ({ tteokgukNumber, nickname, hasBadge }: Props) => {
+const TteokgukCard = ({ id, tteokgukNumber, nickname, hasBadge }: Props) => {
   return (
-    <div className={styles.container}>
+    <Link to={`/tteokguks/${id}`} className={styles.container}>
       {hasBadge && <div className={styles.badge}>응원요청</div>}
       <div className={styles.imageContainer}>
         <img src={tteokgukIncomplete} alt="미완성된 떡국" />
@@ -19,7 +21,7 @@ const TteokgukCard = ({ tteokgukNumber, nickname, hasBadge }: Props) => {
         <div className={styles.cardTitle}>{tteokgukNumber}번째 소원떡국</div>
         <div className={styles.cardNickname}>@ {nickname}</div>
       </div>
-    </div>
+    </Link>
   );
 };
 

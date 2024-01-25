@@ -5,8 +5,8 @@ import TteokgukCard from "./TteokgukCard";
 const TteokgukList = () => {
   return (
     <ul className={styles.container}>
-      {[...Array(12)].map(() => (
-        <TteokgukCard tteokgukNumber={1178} nickname="재민" />
+      {[...Array(12)].map((_, index) => (
+        <TteokgukCard id={index} tteokgukNumber={1178} nickname="재민" />
       ))}
     </ul>
   );
