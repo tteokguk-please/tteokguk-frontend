@@ -14,19 +14,23 @@ const Button = ({
   children,
   onClick,
   className,
-  disabled,
+  disabled = false,
   color,
   applyColorTo,
   size = "full",
 }: Props) => {
-  console.log(disabled);
-
-  const buttonStyle = classnames(styles.button, styles[applyColorTo][color], styles[size], {
-    [styles.disabled]: disabled,
-  });
+  const buttonStyle = classnames(
+    styles.button,
+    {
+      [styles[applyColorTo][color]]: !disabled,
+      [styles.disabled]: disabled,
+    },
+    styles[size],
+    className,
+  );
 
   return (
-    <button className={classnames(buttonStyle, className)} onClick={onClick}>
+    <button className={buttonStyle} onClick={onClick}>
       {children}
     </button>
   );
@@ -44,7 +48,8 @@ const styles = {
     cursor: "pointer",
   }),
   background: {
-    "primary.100": css({ backgroundColor: "primary.100" }),
+    // FIX ME: !important를 안하면 disabled false임에도 배경색이 흰색
+    "primary.100": css({ backgroundColor: "primary.100 !important" }),
     "primary.45": css({ backgroundColor: "primary.45" }),
     secondary: css({ backgroundColor: "secondary.100" }),
     yellow: css({ backgroundColor: "yellow.100" }),
