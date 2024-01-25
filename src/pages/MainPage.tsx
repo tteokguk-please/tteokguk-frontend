@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
+import classNames from "classnames";
+
 import { css } from "@styled-system/css";
 
 import TteokgukList from "@/components/common/Tteokguks/TteokgukList";
@@ -11,6 +13,7 @@ import headerLogo from "@/assets/images/header-logo.png";
 
 const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
+  const isSelectedTab = (index: number) => index === tabIndex;
 
   return (
     <>
@@ -18,10 +21,14 @@ const MainPage = () => {
         <img src={headerLogo} alt="로고" />
       </Header>
       <div className={styles.container}>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+        <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
           <TabList className={styles.tabList}>
-            <Tab className={tabIndex === 0 ? styles.selectedTab : ""}>새로운 떡국</Tab>
-            <Tab className={tabIndex === 1 ? styles.selectedTab : ""}>완성된 떡국</Tab>
+            <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
+              새로운 떡국
+            </Tab>
+            <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(1) })}>
+              완성된 떡국
+            </Tab>
           </TabList>
           <TabPanel className={styles.tabPanel}>
             <TteokgukList />
@@ -57,7 +64,7 @@ const styles = {
     fontWeight: 700,
     borderBottomWidth: "0.1rem",
     borderBottomColor: "primary.45",
-    padding: "0.8rem 5.6rem 0.9rem",
+    padding: "0.8rem 0 0.9rem",
     marginBottom: "2rem",
     cursor: "pointer",
   }),
