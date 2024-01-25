@@ -50,7 +50,7 @@ const styles = {
   container: css({
     display: "flex",
     flexDirection: "column",
-    height: "100%",
+    height: "calc(100% - 4.8rem)",
     padding: "0 4rem",
   }),
   header: css({
