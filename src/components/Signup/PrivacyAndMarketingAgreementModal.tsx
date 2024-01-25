@@ -10,7 +10,7 @@ interface Props {
   close: () => void;
 }
 
-const PrivacyAndMarketingAgreement = ({ isOpen, close }: Props) => {
+const PrivacyAndMarketingAgreementModal = ({ isOpen, close }: Props) => {
   return (
     isOpen && (
       <Modal>
@@ -80,7 +80,7 @@ const PrivacyAndMarketingAgreement = ({ isOpen, close }: Props) => {
   );
 };
 
-export default PrivacyAndMarketingAgreement;
+export default PrivacyAndMarketingAgreementModal;
 
 const styles = {
   header: css({
