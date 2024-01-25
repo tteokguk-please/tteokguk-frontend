@@ -1,6 +1,8 @@
 import { Fragment, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
+import classNames from "classnames";
+
 import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
@@ -8,6 +10,7 @@ import ReceivedIngredientsList from "@/components/MyActivityPage/ReceivedIngredi
 
 const MyActivityPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
+  const isSelectedTab = (index: number) => index === tabIndex;
 
   return (
     <Fragment>
@@ -15,8 +18,12 @@ const MyActivityPage = () => {
       <div className={styles.container}>
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList className={styles.tabList}>
-            <Tab className={tabIndex === 0 ? styles.selectedTab : ""}>받은 떡국 재료</Tab>
-            <Tab className={tabIndex === 1 ? styles.selectedTab : ""}>내가 응원한 떡국</Tab>
+            <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
+              새로운 떡국
+            </Tab>
+            <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(1) })}>
+              완성된 떡국
+            </Tab>
           </TabList>
           <TabPanel className={styles.tabPanel}>
             <ReceivedIngredientsList />
