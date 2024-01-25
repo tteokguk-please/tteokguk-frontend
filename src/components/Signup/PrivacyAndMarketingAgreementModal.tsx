@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
@@ -39,7 +39,7 @@ const PrivacyAndMarketingAgreementModal = ({ isOpen, close }: Props) => {
               </table>
             </div>
           </div>
-          <div className={classnames(styles.content, styles.marketing)}>
+          <div className={classNames(styles.content, styles.marketing)}>
             <div className={styles.header}>마케팅 · 홍보 활용 동의서 (선택)</div>
             <div className={styles.guide}>
               사용자가 ‘떡국을 부탁해’에서 작성한 내용은 마케팅 및 홍보에 활용 될 수 있습니다.
