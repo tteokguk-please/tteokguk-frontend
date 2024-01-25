@@ -1,12 +1,12 @@
 import { InputHTMLAttributes, forwardRef } from "react";
 
-import classnames from "classnames";
+import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
 const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
   ({ className, ...props }, ref) => {
-    return <input {...props} ref={ref} className={classnames(styles.input, className)} />;
+    return <input {...props} ref={ref} className={classNames(styles.input, className)} />;
   },
 );
 

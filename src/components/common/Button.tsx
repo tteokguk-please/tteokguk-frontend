@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from "react";
 
-import classnames from "classnames";
+import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
@@ -10,27 +10,11 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "full";
 }
 
-const Button = ({
-  children,
-  onClick,
-  className,
-  disabled = false,
-  color,
-  applyColorTo,
-  size = "full",
-}: Props) => {
-  const buttonStyle = classnames(
-    styles.button,
-    {
-      [styles[applyColorTo][color]]: !disabled,
-      [styles.disabled]: disabled,
-    },
-    styles[size],
-    className,
-  );
+const Button = ({ children, onClick, className, color, applyColorTo, size = "full" }: Props) => {
+  const buttonStyle = classNames(styles.button, styles[applyColorTo][color], styles[size]);
 
   return (
-    <button className={buttonStyle} onClick={onClick}>
+    <button className={classNames(buttonStyle, className)} onClick={onClick}>
       {children}
     </button>
   );
@@ -45,11 +29,9 @@ const styles = {
     fontWeight: 700,
     backgroundColor: "white",
     borderRadius: "1.2rem",
-    cursor: "pointer",
   }),
   background: {
-    // FIX ME: !important를 안하면 disabled false임에도 배경색이 흰색
-    "primary.100": css({ backgroundColor: "primary.100 !important" }),
+    "primary.100": css({ backgroundColor: "primary.100" }),
     "primary.45": css({ backgroundColor: "primary.45" }),
     secondary: css({ backgroundColor: "secondary.100" }),
     yellow: css({ backgroundColor: "yellow.100" }),
@@ -64,7 +46,7 @@ const styles = {
     width: "100%",
   }),
   disabled: css({
-    backgroundColor: "white",
+    backgroundColor: "white !important",
     borderWidth: "0.1rem",
     borderColor: "primary.45",
     color: "gray.50",

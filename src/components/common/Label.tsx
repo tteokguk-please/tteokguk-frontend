@@ -1,12 +1,12 @@
 import { LabelHTMLAttributes } from "react";
 
-import classnames from "classnames";
+import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
 const Label = ({ htmlFor, children, className }: LabelHTMLAttributes<HTMLLabelElement>) => {
   return (
-    <label htmlFor={htmlFor} className={classnames(styles.label, className)}>
+    <label htmlFor={htmlFor} className={classNames(styles.label, className)}>
       {children}
     </label>
   );
