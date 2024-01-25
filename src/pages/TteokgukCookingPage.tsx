@@ -129,7 +129,7 @@ const styles = {
     display: "flex",
     flexFlow: "column wrap",
     alignItems: "center",
-    gap: "1.8rem",
+    gap: "2.5rem 1.8rem",
     height: "43.8rem",
     padding: "2.3rem 2.4rem",
     borderRadius: "0.8rem",
