@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { css } from "@styled-system/css";
 
-import useNavigate from "@/routes/useNavigate";
+import useRouter from "@/routes/useRouter";
 import Modal from "@/components/common/modal/Modal";
 import Button from "@/components/common/Button";
 import DumplingIcon from "@/assets/svg/dumpling.svg";
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const WelcomModal = ({ isOpen, close, nickname, uniqueIngredient }: Props) => {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [step, setStep] = useState(0);
 
   const modalContents = [
@@ -44,7 +44,7 @@ const WelcomModal = ({ isOpen, close, nickname, uniqueIngredient }: Props) => {
     if (step === modalContents.length - 1) {
       close();
       setStep(0);
-      navigate("/tteokguk/create");
+      navigate.push("/tteokguk/create");
     }
   };
 
