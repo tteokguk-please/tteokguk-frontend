@@ -3,12 +3,12 @@ import { useForm } from "react-hook-form";
 
 import { css } from "@styled-system/css";
 
-import NoCheckIcon from "@/assets/svg/no-check.svg";
-import CheckIcon from "@/assets/svg/check.svg";
 import Input from "@/components/common/Input";
 import Label from "@/components/common/Label";
 import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
+import NoCheckIcon from "@/assets/svg/no-check.svg";
+import CheckIcon from "@/assets/svg/check.svg";
 
 interface FormValues {
   email: string;
@@ -36,6 +36,7 @@ const SignupPage = () => {
       passwordConfirm: "",
       nickname: "",
       privacy: true,
+      marketing: false,
     },
   });
 
