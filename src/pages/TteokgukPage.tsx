@@ -3,11 +3,13 @@ import { Fragment } from "react";
 import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
+import Button from "@/components/common/Button";
+import Ingredient from "@/components/common/Ingredient";
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
 import ProfileIcon from "@/assets/svg/profile.svg";
 import ActivityIcon from "@/assets/svg/activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
-import Button from "@/components/common/Button";
+import DumplingIcon from "@/assets/svg/dumpling.svg";
 
 const TteokgukPage = () => {
   return (
@@ -39,7 +41,17 @@ const TteokgukPage = () => {
             </div>
             <div>0/5</div>
           </div>
-          <div className={styles.meterialContainer}></div>
+          <div className={styles.meterialContainer}>
+            <div className={styles.ingredientFirstRow}>
+              <Ingredient ingredientIcon={<DumplingIcon />} label="희망떡" />
+              <Ingredient ingredientIcon={<DumplingIcon />} label="사랑계란" />
+              <Ingredient ingredientIcon={<DumplingIcon />} label="해피김" />
+            </div>
+            <div className={styles.ingredientSecondRow}>
+              <Ingredient ingredientIcon={<DumplingIcon />} label="행운파" />
+              <Ingredient ingredientIcon={<DumplingIcon />} label="튼튼고기" />
+            </div>
+          </div>
         </article>
         <Button color="primary.45" applyColorTo="outline">
           떡국 재료 추가하기
@@ -101,6 +113,16 @@ const styles = {
     backgroundColor: "primary.20",
     borderRadius: "0.8rem",
     marginBottom: "2.4rem",
+    padding: "2.4rem",
+  }),
+  ingredientFirstRow: css({
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: "2rem",
+  }),
+  ingredientSecondRow: css({
+    display: "flex",
+    justifyContent: "space-evenly",
   }),
   wishDeleteButton: css({
     display: "flex",
