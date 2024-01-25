@@ -9,10 +9,10 @@ interface Props {
 
 const Ingredient = ({ ingredientIcon, label }: Props) => {
   return (
-    <div className={styles.ingredientContainer}>
+    <button className={styles.ingredientContainer}>
       <div className={styles.ingredientIcon}>{ingredientIcon}</div>
       <div className={styles.ingredientLabel}>{label}</div>
-    </div>
+    </button>
   );
 };
 
