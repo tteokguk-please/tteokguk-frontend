@@ -10,8 +10,18 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "full";
 }
 
-const Button = ({ children, onClick, className, color, applyColorTo, size = "full" }: Props) => {
-  const buttonStyle = classnames(styles.button, styles[applyColorTo][color], styles[size]);
+const Button = ({
+  children,
+  onClick,
+  className,
+  disabled,
+  color,
+  applyColorTo,
+  size = "full",
+}: Props) => {
+  const buttonStyle = classnames(styles.button, styles[applyColorTo][color], styles[size], {
+    [styles.disabled]: disabled,
+  });
 
   return (
     <button className={classnames(buttonStyle, className)} onClick={onClick}>
@@ -45,5 +55,11 @@ const styles = {
   },
   full: css({
     width: "100%",
+  }),
+  disabled: css({
+    backgroundColor: "white !important",
+    borderWidth: "0.1rem",
+    borderColor: "primary.45",
+    color: "gray.50",
   }),
 };
