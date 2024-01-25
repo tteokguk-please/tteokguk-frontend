@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from "react";
 
-import classnames from "classnames";
+import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
@@ -11,10 +11,10 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = ({ children, onClick, className, color, applyColorTo, size = "full" }: Props) => {
-  const buttonStyle = classnames(styles.button, styles[applyColorTo][color], styles[size]);
+  const buttonStyle = classNames(styles.button, styles[applyColorTo][color], styles[size]);
 
   return (
-    <button className={classnames(buttonStyle, className)} onClick={onClick}>
+    <button className={classNames(buttonStyle, className)} onClick={onClick}>
       {children}
     </button>
   );

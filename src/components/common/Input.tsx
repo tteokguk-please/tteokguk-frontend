@@ -1,19 +1,14 @@
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, forwardRef } from "react";
 
-import classnames from "classnames";
+import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
-const Input = ({ id, type, placeholder, className }: InputHTMLAttributes<HTMLInputElement>) => {
-  return (
-    <input
-      id={id}
-      type={type}
-      placeholder={placeholder}
-      className={classnames(styles.input, className)}
-    />
-  );
-};
+const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
+  ({ className, ...props }, ref) => {
+    return <input {...props} ref={ref} className={classNames(styles.input, className)} />;
+  },
+);
 
 export default Input;
 
