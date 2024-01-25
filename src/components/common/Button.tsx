@@ -19,6 +19,8 @@ const Button = ({
   applyColorTo,
   size = "full",
 }: Props) => {
+  console.log(disabled);
+
   const buttonStyle = classnames(styles.button, styles[applyColorTo][color], styles[size], {
     [styles.disabled]: disabled,
   });
@@ -57,7 +59,7 @@ const styles = {
     width: "100%",
   }),
   disabled: css({
-    backgroundColor: "white !important",
+    backgroundColor: "white",
     borderWidth: "0.1rem",
     borderColor: "primary.45",
     color: "gray.50",
