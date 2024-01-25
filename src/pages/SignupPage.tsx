@@ -1,4 +1,5 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
+import { useForm } from "react-hook-form";
 
 import { css } from "@styled-system/css";
 
@@ -9,47 +10,126 @@ import Label from "@/components/common/Label";
 import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
 
+interface FormValues {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  nickname: string;
+  privacy: boolean;
+  marketing: boolean;
+}
+
+const EMAIL_REGEX = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/;
+
 const SignupPage = () => {
-  const [isPrivacyChecked, setIsPrivacyChecked] = useState(true);
-  const [isMarketingChecked, setIsMarketingChecked] = useState(false);
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<FormValues>({
+    mode: "onChange",
+    defaultValues: {
+      email: "",
+      password: "",
+      passwordConfirm: "",
+      nickname: "",
+      privacy: true,
+    },
+  });
 
-  const handleChangePrivacyCheckbox = () => {
-    setIsPrivacyChecked(!isPrivacyChecked);
-  };
+  const { password, privacy, marketing } = watch();
 
-  const handleChangeMarketingCheckbox = () => {
-    setIsMarketingChecked(!isMarketingChecked);
+  const emailRegister = register("email", {
+    required: true,
+    pattern: {
+      value: EMAIL_REGEX,
+      message: "이메일 형식을 확인해주세요.",
+    },
+  });
+
+  const passwordRegister = register("password", {
+    required: true,
+    validate: (password) => {
+      if (!PASSWORD_REGEX.test(password)) {
+        return "영어/숫자/특수문자를 사용해주세요.";
+      }
+      if (password.length < 8) {
+        return "8자 이상 입력해주세요.";
+      }
+      return true;
+    },
+  });
+
+  const passwordConfirmRegister = register("passwordConfirm", {
+    validate: (value) => value === password || "비밀번호가 일치하지 않습니다.",
+  });
+
+  const nicknameRegister = register("nickname", {
+    required: true,
+    validate: (nickname) => {
+      return (nickname.length >= 2 && nickname.length <= 6) || "닉네임은 2~6자 사이여야 합니다.";
+    },
+  });
+
+  const onSubmit = (data: FormValues) => {
+    console.log(data);
   };
 
   return (
     <Fragment>
       <Header hasPreviousPage>회원가입</Header>
-      <form className={styles.container}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
         <div>
-          <Label htmlFor="email">이메일</Label>
+          <div className={styles.labelContainer}>
+            <Label htmlFor="email">이메일</Label>
+            {errors.email && <p className={styles.errorMessage}>{errors.email.message}</p>}
+          </div>
           <div className={styles.emailContainer}>
-            <Input id="email" type="email" placeholder="이메일을 입력해주세요" />
+            <Input {...emailRegister} id="email" type="email" placeholder="이메일을 입력해주세요" />
             <button type="button" className={styles.checkDuplicateButton}>
               중복확인
             </button>
           </div>
-          <Label htmlFor="password">비밀번호</Label>
+
+          <div className={styles.labelContainer}>
+            <Label htmlFor="password">비밀번호</Label>
+            {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
+          </div>
           <Input
+            {...passwordRegister}
             id="password"
             type="password"
             placeholder="영어/숫자/특수문자 사용 8자 이상"
             className={styles.passwordInput}
           />
-          <Label htmlFor="passwordConfirm">비밀번호 확인</Label>
+
+          <div className={styles.labelContainer}>
+            <Label htmlFor="passwordConfirm">비밀번호 확인</Label>
+            {errors.passwordConfirm && (
+              <p className={styles.errorMessage}>{errors.passwordConfirm.message}</p>
+            )}
+          </div>
           <Input
+            {...passwordConfirmRegister}
             id="passwordConfirm"
             type="password"
-            placeholder="영어/숫자/특수문자 사용 8자 이상"
+            placeholder="비밀번호를 다시 입력해주세요"
             className={styles.passwordInput}
           />
-          <Label htmlFor="nickname">닉네임</Label>
+
+          <div className={styles.labelContainer}>
+            <Label htmlFor="nickname">닉네임</Label>
+            {errors.nickname && <p className={styles.errorMessage}>{errors.nickname.message}</p>}
+          </div>
           <div className={styles.nicknameContainer}>
-            <Input id="nickname" type="text" placeholder="닉네임 2~6자를 입력해주세요" />
+            <Input
+              {...nicknameRegister}
+              id="nickname"
+              type="text"
+              placeholder="닉네임 2~6자를 입력해주세요"
+            />
             <button type="button" className={styles.checkDuplicateButton}>
               중복확인
             </button>
@@ -62,33 +142,37 @@ const SignupPage = () => {
               aria-label="개인정보 수집 및 활용 동의"
               className={styles.privacyCheck}
             >
-              {isPrivacyChecked ? <CheckIcon /> : <NoCheckIcon />}
+              {privacy ? <CheckIcon /> : <NoCheckIcon />}
               <span className={styles.checkTitle}>(필수) 개인정보 수집 · 활용 동의</span>
             </label>
             <input
+              {...register("privacy", { required: true })}
               id="privacy"
               type="checkbox"
               className="a11y-hidden"
-              checked={isPrivacyChecked}
-              onChange={handleChangePrivacyCheckbox}
             />
+
             <label
               htmlFor="marketing"
               aria-label="마케팅 및 홍보 활용 동의"
               className={styles.privacyCheck}
             >
-              {isMarketingChecked ? <CheckIcon /> : <NoCheckIcon />}
+              {marketing ? <CheckIcon /> : <NoCheckIcon />}
               <span className={styles.checkTitle}>(선택) 마케팅 · 홍보 활용 동의</span>
             </label>
             <input
+              {...register("marketing")}
               id="marketing"
               type="checkbox"
               className="a11y-hidden"
-              checked={isMarketingChecked}
-              onChange={handleChangeMarketingCheckbox}
             />
           </div>
-          <Button color="primary.100" applyColorTo="background" className={styles.signupButton}>
+          <Button
+            color="primary.100"
+            applyColorTo="background"
+            disabled={!isValid}
+            className={styles.signupButton}
+          >
             회원가입 하기
           </Button>
         </div>
@@ -103,7 +187,6 @@ const styles = {
   container: css({
     display: "flex",
     flexDirection: "column",
-
     height: "100%",
     padding: "10rem 4rem 7.2rem 4rem",
   }),
@@ -142,5 +225,15 @@ const styles = {
   }),
   signupButton: css({
     marginTop: "1.6rem",
+  }),
+  labelContainer: css({
+    display: "flex",
+    alignItems: "baseline",
+    marginBottom: "0.6rem",
+  }),
+  errorMessage: css({
+    fontSize: "1.2rem",
+    color: "red.100",
+    marginLeft: "0.4rem",
   }),
 };
