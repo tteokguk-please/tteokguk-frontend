@@ -44,6 +44,7 @@ const styles = {
       height: "5.2rem",
       fontSize: "1.6rem",
       borderRadius: "0.8rem",
+      backgroundColor: "white",
       padding: "0 2.2rem 0 1rem",
       cursor: "pointer",
     }),
