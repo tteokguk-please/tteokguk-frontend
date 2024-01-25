@@ -43,6 +43,7 @@ const styles = {
       width: "100%",
       height: "5.2rem",
       fontSize: "1.6rem",
+      backgroundColor: "white",
       borderRadius: "0.8rem",
       padding: "0 2.2rem 0 1rem",
       cursor: "pointer",
