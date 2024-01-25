@@ -30,7 +30,7 @@ const WelcomModal = ({ isOpen, close, nickname, uniqueIngredient }: Props) => {
       buttonContent: "다음",
     },
     {
-      title: "복주머니를 열어보세요.",
+      title: "복주머니를 열어보세요!",
       content: "복주머니를 열면 새로운 떡국 재료를 랜덤으로 얻을 수 있어요.",
       buttonContent: "소원 떡국 만들러 가기",
     },
