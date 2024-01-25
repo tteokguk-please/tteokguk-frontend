@@ -27,6 +27,8 @@ const CheerSuccessModal = ({ isOpen, close }: Props) => {
   ];
 
   const handleClickNextButton = () => {
+    if (step === 1) close();
+
     setStep(step + 1);
   };
 
