@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import classnames from "classnames";
 
 import { css } from "@styled-system/css";
 
@@ -14,7 +14,9 @@ const PrivacyAndMarketingAgreement = ({ isOpen, close }: Props) => {
   return (
     isOpen && (
       <Modal>
-        <Modal.Header className={styles.header}>개인정보 수집·이용 동의서 (필수)</Modal.Header>
+        <Modal.Header className={classnames(styles.header)}>
+          개인정보 수집·이용 동의서 (필수)
+        </Modal.Header>
         <Modal.Body className={styles.content}>
           <div className={styles.guide}>
             ‘떡국을 부탁해’의 개인정보 수집 이용 목적은 다음과 같습니다.
@@ -38,7 +40,7 @@ const PrivacyAndMarketingAgreement = ({ isOpen, close }: Props) => {
             </table>
           </div>
         </Modal.Body>
-        <Modal.Header className={classNames(styles.header, styles.marketingHeader)}>
+        <Modal.Header className={classnames(styles.header, styles.marketingHeader)}>
           마케팅 · 홍보 활용 동의서 (선택)
         </Modal.Header>
         <Modal.Body className={styles.content}>
@@ -83,8 +85,8 @@ export default PrivacyAndMarketingAgreement;
 const styles = {
   header: css({
     flex: 1,
-    fontSize: "1.6rem",
     fontWeight: 700,
+    fontSize: "1.6rem !important",
     textAlign: "center",
     marginBottom: "0.4rem",
   }),
