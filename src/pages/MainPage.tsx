@@ -74,7 +74,11 @@ const MainPage = () => {
         </Tabs>
 
         <Link to="/tteokguk/create">
-          <Button color="secondary.100" applyColorTo="background" className={styles.button}>
+          <Button
+            color="secondary"
+            applyColorTo="background"
+            className={classNames(styles.button, { [styles.buttonHidden]: !buttonVisible })}
+          >
             소원 떡국 만들기
           </Button>
         </Link>
