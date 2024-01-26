@@ -11,7 +11,9 @@ const LoginPage = () => {
   return (
     <Fragment>
       <Header hasPreviousPage>
-        <img src={headerLogo} alt="용용이 로고" />
+        <Link to="/">
+          <img src={headerLogo} alt="용용이 로고" />
+        </Link>
       </Header>
       <div className={styles.buttonContainer}>
         <Link to="/login/email">

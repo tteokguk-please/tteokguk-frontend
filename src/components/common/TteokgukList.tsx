@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { css } from "@styled-system/css";
 
 import tteokgukComplete from "@/assets/images/tteokguk-complete.png";
+import { Link } from "@/routes/Link";
 
 interface Props {
   className?: string;
@@ -12,9 +13,11 @@ const TteokgukList = ({ className }: Props) => {
   return (
     <ul className={classNames(styles.tteokgukList, className)}>
       {[...Array(26)].map(() => (
-        <li className={styles.tteokgukListItem}>
-          <img src={tteokgukComplete} alt="완성된 떡국" />
-        </li>
+        <Link to="/tteokguks/:id">
+          <li className={styles.tteokgukListItem}>
+            <img src={tteokgukComplete} alt="완성된 떡국" />
+          </li>
+        </Link>
       ))}
     </ul>
   );
