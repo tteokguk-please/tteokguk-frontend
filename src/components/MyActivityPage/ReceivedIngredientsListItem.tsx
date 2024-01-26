@@ -26,7 +26,11 @@ const ReceivedIngredientsListItem = () => {
         </div>
       </div>
       <div className={styles.message}>
-        잘먹고 잘지내야 건강하게 잘 살 수 있다. 건강의 비결은
+        잘먹고 잘지내야 건강하게 잘 살 수 있다. 건강의 비결은 잘먹고 잘지내야 건강하게 잘 살 수
+        있다. 건강의 비결은 잘먹고 잘지내야 건강하게 잘 살 수 있다. 건강의 비결은 잘먹고 잘지내야
+        건강하게 잘 살 수 있다. 건강의 비결은 잘먹고 잘지내야 건강하게 잘 살 수 있다. 건강의 비결은
+        잘먹고 잘지내야 건강하게 잘 살 수 있다. 건강의 비결은 잘먹고 잘지내야 건강하게 잘 살 수
+        있다. 건강의 비결은 잘먹고 잘지내야 건강하게 잘 살 수 있다. 건강의 비결은
         <button className={styles.moreButton}>더보기</button>
       </div>
     </li>
@@ -37,6 +41,8 @@ export default ReceivedIngredientsListItem;
 
 const styles = {
   list: css({
+    maxWidth: "46.5rem",
+    width: "100%",
     height: "21.1rem",
     marginBottom: "1.6rem",
     borderRadius: "0.8rem",
@@ -85,6 +91,10 @@ const styles = {
     backgroundColor: "primary.20",
     fontSize: "1.4rem",
     padding: "1.6rem",
+    paddingRight: "8.7rem",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
   }),
   moreButton: css({
     position: "absolute",
