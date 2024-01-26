@@ -1,27 +1,30 @@
 import { css } from "@styled-system/css";
 
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
+import { Link } from "@/routes/Link";
 
-const TteokgukCardsWithCaption = () => {
+const TteokgukWithCaptionList = () => {
   return (
     <ul className={styles.container}>
       {[...Array(12)].map(() => (
-        <div className={styles.cardContainer}>
-          <div className={styles.badge}>응원요청</div>
-          <div className={styles.imageContainer}>
-            <img src={tteokgukIncomplete} alt="미완성된 떡국" />
+        <Link to="/tteokguks/:id" className={styles.cardContainer}>
+          <div>
+            <div className={styles.badge}>응원요청</div>
+            <div className={styles.imageContainer}>
+              <img src={tteokgukIncomplete} alt="미완성된 떡국" />
+            </div>
+            <div className={styles.cardContent}>
+              <div className={styles.cardTitle}>{1178}번째 소원떡국</div>
+              <div className={styles.cardNickname}>@ {"재민"}</div>
+            </div>
           </div>
-          <div className={styles.cardContent}>
-            <div className={styles.cardTitle}>{1178}번째 소원떡국</div>
-            <div className={styles.cardNickname}>@ {"재민"}</div>
-          </div>
-        </div>
+        </Link>
       ))}
     </ul>
   );
 };
 
-export default TteokgukCardsWithCaption;
+export default TteokgukWithCaptionList;
 
 const styles = {
   container: css({
