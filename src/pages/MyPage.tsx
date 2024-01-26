@@ -7,7 +7,6 @@ import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
 import IngredientList from "@/components/Mypage/IngredientList";
 import TteokgukList from "@/components/common/TteokgukList";
-import GuideIcon from "@/assets/svg/profile.svg";
 import DumplingIcon from "@/assets/svg/dumpling.svg";
 import VisitIcon from "@/assets/svg/visit.svg";
 import ActivityIcon from "@/assets/svg/activity.svg";
@@ -15,7 +14,7 @@ import ActivityIcon from "@/assets/svg/activity.svg";
 const MyPage = () => {
   return (
     <Fragment>
-      <Header hasPreviousPage actionIcon={<GuideIcon />}>
+      <Header hasPreviousPage actionIcon="guide">
         마이페이지
       </Header>
       <div className={styles.container}>
@@ -29,18 +28,22 @@ const MyPage = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <IconButton color="primary.45" applyColorTo="outline">
-            <IconButton.Icon>
-              <VisitIcon />
-            </IconButton.Icon>
-            랜덤 방문
-          </IconButton>
-          <IconButton color="primary.45" applyColorTo="outline">
-            <IconButton.Icon>
-              <ActivityIcon />
-            </IconButton.Icon>
-            활동 내역
-          </IconButton>
+          <Link to="/users/:id">
+            <IconButton color="primary.45" applyColorTo="outline">
+              <IconButton.Icon>
+                <VisitIcon />
+              </IconButton.Icon>
+              랜덤 방문
+            </IconButton>
+          </Link>
+          <Link to="/my-page/activity">
+            <IconButton color="primary.45" applyColorTo="outline">
+              <IconButton.Icon>
+                <ActivityIcon />
+              </IconButton.Icon>
+              활동 내역
+            </IconButton>
+          </Link>
         </div>
         <div>
           <div className={styles.wishTteokgukTitle}>

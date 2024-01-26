@@ -6,14 +6,13 @@ import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
 import UserProfileSection from "@/components/common/UserProfileSection";
 import TteokgukList from "@/components/common/TteokgukList";
-import GuideIcon from "@/assets/svg/profile.svg";
 import DumplingIcon from "@/assets/svg/dumpling.svg";
 import VisitIcon from "@/assets/svg/visit.svg";
 
 const RandomUserPage = () => {
   return (
     <Fragment>
-      <Header hasPreviousPage actionIcon={<GuideIcon />}>
+      <Header hasPreviousPage actionIcon="profile">
         프로필
       </Header>
       <div className={styles.container}>

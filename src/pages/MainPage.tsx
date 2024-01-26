@@ -5,11 +5,11 @@ import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
-import TteokgukCardsWithCaption from "@/components/common/TteokgukCardsWithCaption";
+import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
-import ProfileIcon from "@/assets/svg/profile.svg";
 import headerLogo from "@/assets/images/header-logo.png";
+import { Link } from "@/routes/Link";
 
 const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -17,8 +17,10 @@ const MainPage = () => {
 
   return (
     <>
-      <Header actionIcon={<ProfileIcon />}>
-        <img src={headerLogo} alt="로고" />
+      <Header actionIcon="profile">
+        <Link to="/">
+          <img src={headerLogo} alt="로고" />
+        </Link>
       </Header>
       <div className={styles.container}>
         <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
@@ -31,16 +33,18 @@ const MainPage = () => {
             </Tab>
           </TabList>
           <TabPanel className={styles.tabPanel}>
-            <TteokgukCardsWithCaption />
+            <TteokgukWithCaptionList />
           </TabPanel>
           <TabPanel className={styles.tabPanel}>
-            <TteokgukCardsWithCaption />
+            <TteokgukWithCaptionList />
           </TabPanel>
         </Tabs>
 
-        <Button color="secondary" applyColorTo="background" className={styles.button}>
-          소원 떡국 만들기
-        </Button>
+        <Link to="/tteokguk/create">
+          <Button color="secondary" applyColorTo="background" className={styles.button}>
+            소원 떡국 만들기
+          </Button>
+        </Link>
       </div>
     </>
   );
