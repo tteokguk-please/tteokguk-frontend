@@ -41,8 +41,5 @@ const styles = {
     borderColor: "primary.45",
     borderRadius: "0.8rem",
     overflow: "hidden",
-    _scrollbar: {
-      display: "none",
-    },
   }),
 };
