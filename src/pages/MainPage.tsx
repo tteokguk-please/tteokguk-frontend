@@ -85,9 +85,11 @@ const styles = {
     },
   }),
   button: css({
-    position: "sticky",
-    width: "calc(100% - 5.1rem)",
+    position: "fixed",
+    left: "50%",
+    transform: "translateX(-50%)",
     bottom: "3rem",
-    marginX: "2.4rem",
+    width: "calc(100% - 4.8rem)",
+    maxWidth: "45.2rem",
   }),
 };
