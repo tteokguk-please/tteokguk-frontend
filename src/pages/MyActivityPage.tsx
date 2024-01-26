@@ -6,7 +6,8 @@ import classNames from "classnames";
 import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
-import ReceivedIngredientsList from "@/components/MyActivityPage/ReceivedIngredientsList";
+import ReceivedIngredientsList from "@/components/common/ReceivedIngredientsList";
+import TteokgukCardsWithCaption from "@/components/common/TteokgukCardsWithCaption";
 
 const MyActivityPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -28,7 +29,9 @@ const MyActivityPage = () => {
           <TabPanel className={styles.tabPanel}>
             <ReceivedIngredientsList />
           </TabPanel>
-          <TabPanel className={styles.tabPanel}></TabPanel>
+          <TabPanel className={styles.tabPanel}>
+            <TteokgukCardsWithCaption />
+          </TabPanel>
         </Tabs>
       </div>
     </Fragment>
@@ -56,6 +59,7 @@ const styles = {
     display: "flex",
     flexFlow: "column wrap",
     paddingX: "1.8rem",
+    width: "100%",
   }),
   selectedTab: css({
     position: "relative",
@@ -70,5 +74,11 @@ const styles = {
       height: "0.4rem",
       backgroundColor: "primary.100",
     },
+  }),
+  tteokgukList: css({
+    display: "flex",
+    flexFlow: "row wrap",
+    gap: "1.6rem",
+    width: "100%",
   }),
 };

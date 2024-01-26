@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
-import TteokgukList from "@/components/common/Tteokguks/TteokgukList";
+import TteokgukCardsWithCaption from "@/components/common/TteokgukCardsWithCaption";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
 import ProfileIcon from "@/assets/svg/profile.svg";
@@ -31,10 +31,10 @@ const MainPage = () => {
             </Tab>
           </TabList>
           <TabPanel className={styles.tabPanel}>
-            <TteokgukList />
+            <TteokgukCardsWithCaption />
           </TabPanel>
           <TabPanel className={styles.tabPanel}>
-            <TteokgukList />
+            <TteokgukCardsWithCaption />
           </TabPanel>
         </Tabs>
 
@@ -53,9 +53,6 @@ const styles = {
     position: "relative",
     height: "calc(100% - 4.8rem)",
     overflow: "auto",
-    _scrollbar: {
-      display: "none",
-    },
   }),
   tabList: css({
     display: "flex",
