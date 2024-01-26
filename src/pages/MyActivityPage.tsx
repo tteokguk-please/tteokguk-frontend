@@ -7,7 +7,7 @@ import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
 import ReceivedIngredientsList from "@/components/common/ReceivedIngredientsList";
-import TteokgukCardsWithCaption from "@/components/common/TteokgukCardsWithCaption";
+import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
 
 const MyActivityPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -30,7 +30,7 @@ const MyActivityPage = () => {
             <ReceivedIngredientsList />
           </TabPanel>
           <TabPanel className={styles.tabPanel}>
-            <TteokgukCardsWithCaption />
+            <TteokgukWithCaptionList />
           </TabPanel>
         </Tabs>
       </div>
