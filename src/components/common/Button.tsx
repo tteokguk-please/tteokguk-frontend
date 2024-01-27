@@ -7,14 +7,11 @@ import { ColorToken } from "@styled-system/tokens";
 
 import { Filter } from "@/types/utils.ts";
 
-type ButtonColor = Filter<
-  ColorToken,
-  "primary.100" | "primary.45" | "secondary.100" | "yellow.100"
->;
+type ButtonColor = Filter<ColorToken, "primary.100" | "primary.45" | "secondary.100">;
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  color: ButtonColor;
-  applyColorTo: "background" | "outline";
+  color?: ButtonColor;
+  applyColorTo?: "background" | "outline";
   size?: "full";
 }
 
@@ -23,8 +20,8 @@ const Button = ({
   onClick,
   className,
   disabled = false,
-  color,
-  applyColorTo,
+  color = "primary.100",
+  applyColorTo = "background",
   size = "full",
 }: Props) => {
   const buttonStyle = classNames(

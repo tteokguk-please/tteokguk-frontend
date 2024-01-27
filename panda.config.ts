@@ -32,7 +32,6 @@ export default defineConfig({
         },
         red: { 100: { value: "#F63333" } },
         green: { 100: { value: "#37C35E" } },
-        yellow: { 100: { value: "#FEE500" } },
       },
     },
     extend: {},
