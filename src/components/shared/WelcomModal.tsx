@@ -6,12 +6,13 @@ import useRouter from "@/routes/useRouter";
 import Modal from "@/components/common/modal/Modal";
 import Button from "@/components/common/Button";
 import DumplingIcon from "@/assets/svg/dumpling.svg";
+import { IngredientName } from "@/types/ingredient";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   nickname: string;
-  uniqueIngredient: string;
+  uniqueIngredient: IngredientName;
 }
 
 const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => {
@@ -87,7 +88,7 @@ const styles = {
   content: css({
     fontSize: "1.4rem",
     textAlign: "center",
-    paddingX: "3.6rem",
+    whiteSpace: "pre-line",
   }),
   ingredientImage: css({
     display: "flex",
