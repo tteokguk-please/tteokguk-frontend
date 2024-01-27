@@ -1,15 +1,16 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { css } from "@styled-system/css";
 
 import Input from "@/components/common/Input";
 import Label from "@/components/common/Label";
-import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import { SignupFormValues } from "@/types/form/signup";
+import { useAtomValue } from "jotai";
+import { $checkEmail, $checkNickname } from "@/store/auth";
 
 interface Props {
   defaultValues: SignupFormValues;
@@ -23,6 +24,7 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
   const {
     register,
     watch,
+    setError,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<SignupFormValues>({
@@ -30,7 +32,7 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
     defaultValues,
   });
 
-  const { password, privacy, marketing } = watch();
+  const { password, passwordConfirm, privacy, marketing, email, nickname } = watch();
 
   const emailRegister = register("email", {
     required: true,
@@ -65,18 +67,65 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
     },
   });
 
+  const { data: checkEmailReponse, mutate: checkEmail } = useAtomValue($checkEmail);
+  const { data: checkNicknameReponse, mutate: checkNickname } = useAtomValue($checkNickname);
+
+  const [isExistEmail, setIsExistEmail] = useState<boolean | null>(null);
+  const [isExistNickname, setIsExistNickname] = useState<boolean | null>(null);
+  const isDisabledSignupButton = !isValid || isExistEmail !== false || isExistNickname !== false;
+
+  const handleCheckEmail = () => {
+    checkEmail(email);
+  };
+
+  const handleCheckNickname = () => {
+    checkNickname(nickname);
+  };
+
+  useEffect(() => {
+    if (checkEmailReponse) {
+      setIsExistEmail(checkEmailReponse.isExist);
+    }
+    if (checkEmailReponse?.isExist) {
+      setError("email", { message: "이미 사용 중인 이메일입니다." });
+    }
+  }, [checkEmailReponse, setIsExistEmail, setError]);
+
+  useEffect(() => {
+    if (checkNicknameReponse) {
+      setIsExistNickname(checkNicknameReponse.isExist);
+    }
+    if (checkNicknameReponse?.isExist) {
+      setError("nickname", { message: "이미 사용 중인 닉네임입니다." });
+    }
+  }, [checkNicknameReponse, setIsExistNickname, setError]);
+
+  useEffect(() => {
+    setIsExistEmail(null);
+  }, [email, setIsExistEmail]);
+
+  useEffect(() => {
+    setIsExistNickname(null);
+  }, [nickname, setIsExistNickname]);
+
   return (
     <Fragment>
-      <Header hasPreviousPage>회원가입</Header>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
         <div>
           <div className={styles.labelContainer}>
             <Label htmlFor="email">이메일</Label>
             {errors.email && <p className={styles.errorMessage}>{errors.email.message}</p>}
+            {isExistEmail === false && (
+              <p className={styles.successMessage}>사용 가능한 이메일입니다.</p>
+            )}
           </div>
           <div className={styles.emailContainer}>
             <Input {...emailRegister} id="email" type="email" placeholder="이메일을 입력해주세요" />
-            <button type="button" className={styles.checkDuplicateButton}>
+            <button
+              type="button"
+              className={styles.checkDuplicateButton}
+              onClick={handleCheckEmail}
+            >
               중복확인
             </button>
           </div>
@@ -98,6 +147,9 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
             {errors.passwordConfirm && (
               <p className={styles.errorMessage}>{errors.passwordConfirm.message}</p>
             )}
+            {passwordConfirm && !errors.passwordConfirm && (
+              <p className={styles.successMessage}>비밀번호가 일치합니다.</p>
+            )}
           </div>
           <Input
             {...passwordConfirmRegister}
@@ -110,6 +162,9 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
           <div className={styles.labelContainer}>
             <Label htmlFor="nickname">닉네임</Label>
             {errors.nickname && <p className={styles.errorMessage}>{errors.nickname.message}</p>}
+            {isExistNickname === false && (
+              <p className={styles.successMessage}>사용 가능한 닉네임입니다.</p>
+            )}
           </div>
           <div className={styles.nicknameContainer}>
             <Input
@@ -118,7 +173,11 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
               type="text"
               placeholder="닉네임 2~6자를 입력해주세요"
             />
-            <button type="button" className={styles.checkDuplicateButton}>
+            <button
+              type="button"
+              className={styles.checkDuplicateButton}
+              onClick={handleCheckNickname}
+            >
               중복확인
             </button>
           </div>
@@ -158,7 +217,7 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
           <Button
             color="primary.100"
             applyColorTo="background"
-            disabled={!isValid}
+            disabled={isDisabledSignupButton}
             className={styles.signupButton}
           >
             회원가입 하기
@@ -222,6 +281,11 @@ const styles = {
   errorMessage: css({
     fontSize: "1.2rem",
     color: "red.100",
+    marginLeft: "0.4rem",
+  }),
+  successMessage: css({
+    fontSize: "1.2rem",
+    color: "green.100",
     marginLeft: "0.4rem",
   }),
 };
