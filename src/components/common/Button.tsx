@@ -1,9 +1,17 @@
 import { ButtonHTMLAttributes } from "react";
 
 import { css } from "@styled-system/css";
+import { ColorToken } from "@styled-system/tokens";
+
+import { Filter } from "@/types/utils.ts";
+
+type ButtonColor = Filter<
+  ColorToken,
+  "primary.100" | "primary.45" | "secondary.100" | "yellow.100"
+>;
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  color: "primary.100" | "primary.45" | "secondary" | "yellow";
+  color: ButtonColor;
   applyColorTo: "background" | "outline";
   size?: "full";
 }
@@ -22,7 +30,7 @@ const Button = ({
   });
 
   return (
-    <button className={buttonStyle} onClick={onClick}>
+    <button className={buttonStyle} disabled={disabled} onClick={onClick}>
       {children}
     </button>
   );
@@ -31,33 +39,27 @@ const Button = ({
 export default Button;
 
 const styles = {
-  button: css({
+  base: css({
     height: "5.1rem",
     fontSize: "1.6rem",
     fontWeight: 700,
-    backgroundColor: "white",
     borderRadius: "1.2rem",
+    cursor: "pointer",
+
+    _disabled: {
+      backgroundColor: "white",
+      cursor: "default",
+      borderWidth: "0.1rem",
+      borderColor: "primary.45",
+      color: "gray.50",
+    },
   }),
-  background: {
-    // FIX ME: !important를 안하면 disabled false임에도 배경색이 흰색
-    "primary.100": css({ backgroundColor: "primary.100 !important" }),
-    "primary.45": css({ backgroundColor: "primary.45" }),
-    secondary: css({ backgroundColor: "secondary.100" }),
-    yellow: css({ backgroundColor: "yellow.100" }),
+  variants: {
+    background: (color: ButtonColor) => css({ backgroundColor: color }),
+    outline: (color: ButtonColor) =>
+      css({ borderColor: color, borderWidth: "0.1rem", backgroundColor: "white" }),
+    full: css({
+      width: "100%",
+    }),
   },
-  outline: {
-    "primary.100": css({ borderWidth: "0.1rem", borderColor: "primary.100" }),
-    "primary.45": css({ borderWidth: "0.1rem", borderColor: "primary.45" }),
-    secondary: css({ borderWidth: "0.1rem", borderColor: "secondary.100" }),
-    yellow: css({ borderWidth: "0.1rem", borderColor: "yellow.100" }),
-  },
-  full: css({
-    width: "100%",
-  }),
-  disabled: css({
-    backgroundColor: "white !important",
-    borderWidth: "0.1rem",
-    borderColor: "primary.45",
-    color: "gray.50",
-  }),
 };
