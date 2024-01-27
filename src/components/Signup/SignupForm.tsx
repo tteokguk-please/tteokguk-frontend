@@ -1,11 +1,9 @@
-import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 
 import { css } from "@styled-system/css";
 
 import Input from "@/components/common/Input";
 import Label from "@/components/common/Label";
-import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
@@ -66,106 +64,103 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
   });
 
   return (
-    <Fragment>
-      <Header hasPreviousPage>회원가입</Header>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
+      <div>
+        <div className={styles.labelContainer}>
+          <Label htmlFor="email">이메일</Label>
+          {errors.email && <p className={styles.errorMessage}>{errors.email.message}</p>}
+        </div>
+        <div className={styles.emailContainer}>
+          <Input {...emailRegister} id="email" type="email" placeholder="이메일을 입력해주세요" />
+          <button type="button" className={styles.checkDuplicateButton}>
+            중복확인
+          </button>
+        </div>
+
+        <div className={styles.labelContainer}>
+          <Label htmlFor="password">비밀번호</Label>
+          {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
+        </div>
+        <Input
+          {...passwordRegister}
+          id="password"
+          type="password"
+          placeholder="영어/숫자/특수문자 사용 8자 이상"
+          className={styles.passwordInput}
+        />
+
+        <div className={styles.labelContainer}>
+          <Label htmlFor="passwordConfirm">비밀번호 확인</Label>
+          {errors.passwordConfirm && (
+            <p className={styles.errorMessage}>{errors.passwordConfirm.message}</p>
+          )}
+        </div>
+        <Input
+          {...passwordConfirmRegister}
+          id="passwordConfirm"
+          type="password"
+          placeholder="비밀번호를 다시 입력해주세요"
+          className={styles.passwordInput}
+        />
+
+        <div className={styles.labelContainer}>
+          <Label htmlFor="nickname">닉네임</Label>
+          {errors.nickname && <p className={styles.errorMessage}>{errors.nickname.message}</p>}
+        </div>
+        <div className={styles.nicknameContainer}>
+          <Input
+            {...nicknameRegister}
+            id="nickname"
+            type="text"
+            placeholder="닉네임 2~6자를 입력해주세요"
+          />
+          <button type="button" className={styles.checkDuplicateButton}>
+            중복확인
+          </button>
+        </div>
+      </div>
+      <div className={styles.signupButtonContainer}>
         <div>
-          <div className={styles.labelContainer}>
-            <Label htmlFor="email">이메일</Label>
-            {errors.email && <p className={styles.errorMessage}>{errors.email.message}</p>}
-          </div>
-          <div className={styles.emailContainer}>
-            <Input {...emailRegister} id="email" type="email" placeholder="이메일을 입력해주세요" />
-            <button type="button" className={styles.checkDuplicateButton}>
-              중복확인
-            </button>
-          </div>
-
-          <div className={styles.labelContainer}>
-            <Label htmlFor="password">비밀번호</Label>
-            {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
-          </div>
-          <Input
-            {...passwordRegister}
-            id="password"
-            type="password"
-            placeholder="영어/숫자/특수문자 사용 8자 이상"
-            className={styles.passwordInput}
-          />
-
-          <div className={styles.labelContainer}>
-            <Label htmlFor="passwordConfirm">비밀번호 확인</Label>
-            {errors.passwordConfirm && (
-              <p className={styles.errorMessage}>{errors.passwordConfirm.message}</p>
-            )}
-          </div>
-          <Input
-            {...passwordConfirmRegister}
-            id="passwordConfirm"
-            type="password"
-            placeholder="비밀번호를 다시 입력해주세요"
-            className={styles.passwordInput}
-          />
-
-          <div className={styles.labelContainer}>
-            <Label htmlFor="nickname">닉네임</Label>
-            {errors.nickname && <p className={styles.errorMessage}>{errors.nickname.message}</p>}
-          </div>
-          <div className={styles.nicknameContainer}>
-            <Input
-              {...nicknameRegister}
-              id="nickname"
-              type="text"
-              placeholder="닉네임 2~6자를 입력해주세요"
-            />
-            <button type="button" className={styles.checkDuplicateButton}>
-              중복확인
-            </button>
-          </div>
-        </div>
-        <div className={styles.signupButtonContainer}>
-          <div>
-            <label
-              htmlFor="privacy"
-              aria-label="개인정보 수집 및 활용 동의"
-              className={styles.privacyCheck}
-            >
-              {privacy ? <CheckIcon /> : <NoCheckIcon />}
-              <span className={styles.checkTitle}>(필수) 개인정보 수집 · 활용 동의</span>
-            </label>
-            <input
-              {...register("privacy", { required: true })}
-              id="privacy"
-              type="checkbox"
-              className="a11y-hidden"
-            />
-
-            <label
-              htmlFor="marketing"
-              aria-label="마케팅 및 홍보 활용 동의"
-              className={styles.privacyCheck}
-            >
-              {marketing ? <CheckIcon /> : <NoCheckIcon />}
-              <span className={styles.checkTitle}>(선택) 마케팅 · 홍보 활용 동의</span>
-            </label>
-            <input
-              {...register("marketing")}
-              id="marketing"
-              type="checkbox"
-              className="a11y-hidden"
-            />
-          </div>
-          <Button
-            color="primary.100"
-            applyColorTo="background"
-            disabled={!isValid}
-            className={styles.signupButton}
+          <label
+            htmlFor="privacy"
+            aria-label="개인정보 수집 및 활용 동의"
+            className={styles.privacyCheck}
           >
-            회원가입 하기
-          </Button>
+            {privacy ? <CheckIcon /> : <NoCheckIcon />}
+            <span className={styles.checkTitle}>(필수) 개인정보 수집 · 활용 동의</span>
+          </label>
+          <input
+            {...register("privacy", { required: true })}
+            id="privacy"
+            type="checkbox"
+            className="a11y-hidden"
+          />
+
+          <label
+            htmlFor="marketing"
+            aria-label="마케팅 및 홍보 활용 동의"
+            className={styles.privacyCheck}
+          >
+            {marketing ? <CheckIcon /> : <NoCheckIcon />}
+            <span className={styles.checkTitle}>(선택) 마케팅 · 홍보 활용 동의</span>
+          </label>
+          <input
+            {...register("marketing")}
+            id="marketing"
+            type="checkbox"
+            className="a11y-hidden"
+          />
         </div>
-      </form>
-    </Fragment>
+        <Button
+          color="primary.100"
+          applyColorTo="background"
+          disabled={!isValid}
+          className={styles.signupButton}
+        >
+          회원가입 하기
+        </Button>
+      </div>
+    </form>
   );
 };
 
