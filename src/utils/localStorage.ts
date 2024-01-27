@@ -1,10 +1,8 @@
 export const getLocalStorage = (key: string) => {
   try {
-    const item = localStorage.getItem(key);
+    const value = localStorage.getItem(key);
 
-    if (!item) return null;
-
-    return JSON.parse(item);
+    return value ? JSON.parse(value) : null;
   } catch (error) {
     console.error(`Error parsing localStorage item with key "${key}":`, error);
   }
