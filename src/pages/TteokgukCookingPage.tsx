@@ -17,6 +17,7 @@ import NoCheckIcon from "@/assets/svg/no-check.svg";
 import GuideIcon from "@/assets/svg/guide.svg";
 import { INGREDIENTS } from "@/constants/ingredient";
 import { $postTteokguk } from "@/store/tteokguk";
+import useRouter from "@/routes/useRouter";
 
 interface IngredientItem {
   name: IngredientName;
@@ -91,7 +92,8 @@ const ingredients: IngredientItem[] = [
 ];
 
 const TteokgukCookingPage = () => {
-  const { mutate: createTteokguk } = useAtomValue($postTteokguk);
+  const navigate = useRouter();
+  const { mutate: createTteokguk, isSuccess, data: createdTteokguk } = useAtomValue($postTteokguk);
 
   const [wish, setWish] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState<IngredientName[]>([]);
@@ -125,6 +127,12 @@ const TteokgukCookingPage = () => {
       ingredients: selectedIngredients,
       access: isPrivate,
     });
+
+    if (isSuccess) {
+      const { tteokgukId } = createdTteokguk;
+
+      navigate.push(`/tteokguks/${tteokgukId}`);
+    }
   };
 
   return (
