@@ -32,8 +32,7 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "black",
-    opacity: 0.7,
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -43,7 +42,6 @@ const styles = {
   container: css({
     width: "31.2rem",
     padding: "1.6rem",
-    opacity: 1,
     paddingBottom: "2.4rem",
     borderRadius: "0.8rem",
     backgroundColor: "back",
