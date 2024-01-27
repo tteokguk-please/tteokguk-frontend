@@ -5,12 +5,16 @@ import { css } from "@styled-system/css";
 interface Props {
   ingredientIcon: ReactNode;
   label: string;
+  onClick: () => void;
+  isSelected: boolean;
 }
 
-const Ingredient = ({ ingredientIcon, label }: Props) => {
+const Ingredient = ({ ingredientIcon, label, onClick, isSelected }: Props) => {
   return (
-    <button className={styles.ingredientContainer}>
-      <div className={styles.ingredientIcon}>{ingredientIcon}</div>
+    <button type="button" className={styles.ingredientContainer} onClick={onClick}>
+      <div className={styles.ingredientIcon(isSelected)} aria-label={label}>
+        {ingredientIcon}
+      </div>
       <div className={styles.ingredientLabel}>{label}</div>
     </button>
   );
@@ -23,16 +27,17 @@ const styles = {
     position: "relative",
     cursor: "pointer",
   }),
-  ingredientIcon: css({
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "7.6rem",
-    height: "7.6rem",
-    backgroundColor: "primary.45",
-    borderRadius: "50%",
-    overflow: "hidden",
-  }),
+  ingredientIcon: (isSelected: boolean) =>
+    css({
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "7.6rem",
+      height: "7.6rem",
+      backgroundColor: isSelected ? "secondary.50" : "primary.45",
+      borderRadius: "50%",
+      overflow: "hidden",
+    }),
   ingredientLabel: css({
     position: "absolute",
     left: "0.5rem",
