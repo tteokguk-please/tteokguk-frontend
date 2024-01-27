@@ -7,10 +7,10 @@ import Button from "../common/Button";
 
 interface Props {
   isOpen: boolean;
-  close: () => void;
+  onClose: () => void;
 }
 
-const CheerSuccessModal = ({ isOpen, close }: Props) => {
+const CheerSuccessModal = ({ isOpen, onClose }: Props) => {
   const [step, setStep] = useState(0);
 
   const modalContents = [
@@ -28,7 +28,7 @@ const CheerSuccessModal = ({ isOpen, close }: Props) => {
 
   const handleClickNextButton = () => {
     if (step === 1) {
-      close();
+      onClose();
       setStep(0);
     }
 
@@ -38,7 +38,7 @@ const CheerSuccessModal = ({ isOpen, close }: Props) => {
   return (
     isOpen && (
       <Modal>
-        <Modal.Header hasCloseButton handleClickClose={close}>
+        <Modal.Header hasCloseButton onClose={onClose}>
           {modalContents[step].title}
         </Modal.Header>
         <Modal.Body>

@@ -9,12 +9,12 @@ import DumplingIcon from "@/assets/svg/dumpling.svg";
 
 interface Props {
   isOpen: boolean;
-  close: () => void;
+  onClose: () => void;
   nickname: string;
   uniqueIngredient: string;
 }
 
-const WelcomModal = ({ isOpen, close, nickname, uniqueIngredient }: Props) => {
+const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => {
   const navigate = useRouter();
   const [step, setStep] = useState(0);
 
@@ -42,7 +42,7 @@ const WelcomModal = ({ isOpen, close, nickname, uniqueIngredient }: Props) => {
     }
 
     if (step === modalContents.length - 1) {
-      close();
+      onClose();
       setStep(0);
       navigate.push("/tteokguk/create");
     }
