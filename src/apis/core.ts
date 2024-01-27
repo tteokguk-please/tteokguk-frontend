@@ -1,16 +1,6 @@
-import ky, { Input, Options } from "ky";
+import ky, { Input, KyResponse } from "ky";
 
 import { getLocalStorage } from "@/utils/localStorage";
-
-const HTTP_METHODS = {
-  GET: "get",
-  POST: "post",
-  PATCH: "patch",
-  PUT: "put",
-  DELETE: "delete",
-} as const;
-
-type HttpMethod = "get" | "post" | "put" | "patch" | "delete";
 
 const kyInstance = ky.create({
   prefixUrl: import.meta.env.VITE_BASE_URL,
@@ -38,17 +28,17 @@ const kyInstance = ky.create({
     ],
   },
 });
-const createApiMethod =
-  (method: HttpMethod) =>
-  async <T>(url: Input, options: Options = {}): Promise<T> => {
-    const response = await kyInstance(url, { ...options, method });
-    return response.json<T>();
-  };
+
+const handleResponse = <Response>(response: KyResponse) => response.json<Response>();
 
 export default {
-  get: createApiMethod(HTTP_METHODS.GET),
-  post: createApiMethod(HTTP_METHODS.POST),
-  patch: createApiMethod(HTTP_METHODS.PATCH),
-  put: createApiMethod(HTTP_METHODS.PUT),
-  delete: createApiMethod(HTTP_METHODS.DELETE),
+  get: <Response>(url: Input) => kyInstance.get(url).then(handleResponse<Response>),
+  post: <Response>(url: Input, json: unknown) =>
+    kyInstance.post(url, { json }).then(handleResponse<Response>),
+  patch: <Response>(url: Input, json: unknown) =>
+    kyInstance.patch(url, { json }).then(handleResponse<Response>),
+  put: <Response>(url: Input, json: unknown) =>
+    kyInstance.patch(url, { json }).then(handleResponse<Response>),
+  delete: <Response>(url: Input, json: unknown) =>
+    kyInstance.patch(url, { json }).then(handleResponse<Response>),
 };
