@@ -35,8 +35,8 @@ const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => 
         <h1>{children}</h1>
       </div>
       <div className={styles.actionIcon}>
-        {actionIcon === "profile" && <Profile />}
-        {actionIcon === "guide" && <Guide />}
+        {actionIcon === "profile" && <ProfileIconLink />}
+        {actionIcon === "guide" && <GuideModalButton />}
       </div>
     </header>
   );
@@ -44,7 +44,7 @@ const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => 
 
 export default Header;
 
-const Profile = () => {
+const ProfileIconLink = () => {
   return (
     <Link to="/my-page">
       <ProfileIcon />
@@ -52,7 +52,7 @@ const Profile = () => {
   );
 };
 
-const Guide = () => {
+const GuideModalButton = () => {
   const guideOverlay = useOverlay();
 
   const handleClickGuideIcon = () => {
@@ -60,9 +60,9 @@ const Guide = () => {
   };
 
   return (
-    <div onClick={handleClickGuideIcon}>
+    <button onClick={handleClickGuideIcon}>
       <GuideIcon />
-    </div>
+    </button>
   );
 };
 
