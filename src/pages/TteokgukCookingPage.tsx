@@ -155,9 +155,14 @@ const TteokgukCookingPage = () => {
           <div className={styles.charCount}>
             {wish.length}/{MAX_CHARACTERS}
           </div>
-          <div className={styles.title}>
-            <MeterialIcon />
-            <span>떡국 재료 추가하기</span>
+          <div className={styles.titleContainer}>
+            <div className={styles.title}>
+              <MeterialIcon />
+              <span>떡국 재료 추가하기</span>
+            </div>
+            <div>
+              {selectedIngredients.length}/{MAX_INGREDIENTS}
+            </div>
           </div>
           <div className={styles.meterialContainer}>
             {ingredients.map(({ name, icon, label }) => (
@@ -206,8 +211,15 @@ const styles = {
     height: "8.4rem",
     border: "0.1rem solid",
   }),
+  titleContainer: css({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingRight: "0.8rem",
+  }),
   title: css({
     display: "flex",
+    alignItems: "center",
     fontWeight: 700,
     marginTop: "1.6rem",
     marginBottom: "1rem",
