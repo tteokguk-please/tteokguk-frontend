@@ -18,7 +18,7 @@ const LoginPage = () => {
             이메일로 로그인
           </Button>
         </Link>
-        <Button color="yellow" applyColorTo="background" className={styles.kakaoLoginButton}>
+        <Button color="yellow.100" applyColorTo="background" className={styles.kakaoLoginButton}>
           카카오로 로그인
         </Button>
         <Link to="/signup" className={styles.signupLink}>
