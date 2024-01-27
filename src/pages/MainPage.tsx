@@ -75,7 +75,7 @@ const MainPage = () => {
 
         <Link to="/tteokguk/create">
           <Button
-            color="secondary"
+            color="secondary.100"
             applyColorTo="background"
             className={classNames(styles.button, { [styles.buttonHidden]: !buttonVisible })}
           >
