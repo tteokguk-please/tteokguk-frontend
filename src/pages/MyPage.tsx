@@ -28,7 +28,7 @@ const MyPage = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <Link to="/users/:id">
+          <Link to="/users/:id" className={styles.full}>
             <IconButton color="primary.45" applyColorTo="outline">
               <IconButton.Icon>
                 <VisitIcon />
@@ -36,7 +36,7 @@ const MyPage = () => {
               랜덤 방문
             </IconButton>
           </Link>
-          <Link to="/my-page/activity">
+          <Link to="/my-page/activity" className={styles.full}>
             <IconButton color="primary.45" applyColorTo="outline">
               <IconButton.Icon>
                 <ActivityIcon />
@@ -122,5 +122,8 @@ const styles = {
   accountContainer: css({
     display: "flex",
     justifyContent: "space-around",
+  }),
+  full: css({
+    width: "100%",
   }),
 };
