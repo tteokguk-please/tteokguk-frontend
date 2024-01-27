@@ -165,8 +165,9 @@ const TteokgukCookingPage = () => {
             </div>
           </div>
           <div className={styles.meterialContainer}>
-            {ingredients.map(({ name, icon, label }) => (
+            {ingredients.map(({ name, icon, label }, index) => (
               <Ingredient
+                key={`${index}-${name}`}
                 ingredientIcon={icon}
                 label={label}
                 onClick={handleClickIngredient(name)}
