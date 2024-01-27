@@ -237,8 +237,9 @@ const styles = {
   meterialContainer: css({
     display: "flex",
     flexFlow: "row wrap",
+    justifyContent: "center",
     alignItems: "center",
-    gap: "1.8rem 2.5rem",
+    gap: "1.8rem",
     height: "43.8rem",
     padding: "2.3rem 2.4rem",
     borderRadius: "0.8rem",
