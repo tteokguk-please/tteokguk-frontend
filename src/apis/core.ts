@@ -29,7 +29,7 @@ const kyInstance = ky.create({
       },
     ],
     afterResponse: [
-      (_, __, response) => {
+      (_request, _options, response) => {
         if (!response.ok) {
           return Promise.reject(response);
         }
