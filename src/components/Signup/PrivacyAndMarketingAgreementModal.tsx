@@ -7,10 +7,10 @@ import Modal from "@/components/common/modal/Modal";
 
 interface Props {
   isOpen: boolean;
-  close: () => void;
+  onClose: () => void;
 }
 
-const PrivacyAndMarketingAgreementModal = ({ isOpen, close }: Props) => {
+const PrivacyAndMarketingAgreementModal = ({ isOpen, onClose }: Props) => {
   return (
     isOpen && (
       <Modal>
@@ -69,7 +69,7 @@ const PrivacyAndMarketingAgreementModal = ({ isOpen, close }: Props) => {
             <span className={styles.block}>*사용자는 동의를 거부할 권리가 있으며, </span>
             필수 동의 거부 시 서비스가 제한될 수 있습니다.
           </div>
-          <Button onClick={close} color="primary.100" applyColorTo="background">
+          <Button onClick={onClose} color="primary.100" applyColorTo="background">
             확인
           </Button>
         </Modal.Body>
