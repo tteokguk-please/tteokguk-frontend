@@ -52,7 +52,7 @@ const SignupPage = () => {
 
   const passwordRegister = register("password", {
     required: true,
-    validate: (password) => {
+    validate: (password: string) => {
       if (!PASSWORD_REGEX.test(password)) {
         return "영어/숫자/특수문자를 사용해주세요.";
       }
@@ -64,12 +64,13 @@ const SignupPage = () => {
   });
 
   const passwordConfirmRegister = register("passwordConfirm", {
-    validate: (value) => value === password || "비밀번호가 일치하지 않습니다.",
+    validate: (passwordConfirm: string) =>
+      passwordConfirm === password || "비밀번호가 일치하지 않습니다.",
   });
 
   const nicknameRegister = register("nickname", {
     required: true,
-    validate: (nickname) => {
+    validate: (nickname: string) => {
       return (nickname.length >= 2 && nickname.length <= 6) || "닉네임은 2~6자 사이여야 합니다.";
     },
   });
