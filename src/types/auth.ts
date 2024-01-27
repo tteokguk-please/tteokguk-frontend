@@ -1,3 +1,5 @@
+import { IngredientKey } from "./ingredient";
+
 export interface CheckEmailNicknameResponse {
   isExist: boolean;
 }
@@ -12,5 +14,5 @@ export interface SignupRequest {
 export interface SignupResponse {
   id: number;
   nickname: string;
-  primaryIngredient: string;
+  primaryIngredient: IngredientKey;
 }
