@@ -6,16 +6,16 @@ import DumplingIcon from "@/assets/svg/dumpling.svg";
 
 interface Props {
   isOpen: boolean;
-  close: () => void;
+  onClose: () => void;
   title: "떡국 재료 추가하기" | "떡국 재료 보내기";
   buttonContent: "추가하기" | "다음";
 }
 
-const AddIngredientsModal = ({ isOpen, close, title, buttonContent }: Props) => {
+const AddIngredientsModal = ({ isOpen, onClose, title, buttonContent }: Props) => {
   return (
     isOpen && (
       <Modal className={styles.container}>
-        <Modal.Header handleClickClose={close} className={styles.title}>
+        <Modal.Header onClose={onClose} className={styles.title}>
           {title}
         </Modal.Header>
         <Modal.Body className={styles.contentContainer}>
@@ -25,7 +25,7 @@ const AddIngredientsModal = ({ isOpen, close, title, buttonContent }: Props) => 
               <Ingredient />
             ))}
           </ol>
-          <Button onClick={close} color="primary.100" applyColorTo="background">
+          <Button onClick={onClose} color="primary.100" applyColorTo="background">
             {buttonContent}
           </Button>
         </Modal.Body>

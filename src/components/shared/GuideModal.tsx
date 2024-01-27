@@ -8,10 +8,10 @@ import DumplingIcon from "@/assets/svg/dumpling.svg";
 
 interface Props {
   isOpen: boolean;
-  close: () => void;
+  onClose: () => void;
 }
 
-const GuideModal = ({ isOpen, close }: Props) => {
+const GuideModal = ({ isOpen, onClose }: Props) => {
   const [step, setStep] = useState(0);
 
   const modalContents = [
@@ -38,7 +38,7 @@ const GuideModal = ({ isOpen, close }: Props) => {
     }
 
     if (step === modalContents.length - 1) {
-      close();
+      onClose();
       setStep(0);
     }
   };
