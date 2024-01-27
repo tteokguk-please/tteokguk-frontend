@@ -5,7 +5,6 @@ import { css } from "@styled-system/css";
 
 import Input from "@/components/common/Input";
 import Label from "@/components/common/Label";
-import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
@@ -111,7 +110,6 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage>회원가입</Header>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
         <div>
           <div className={styles.labelContainer}>
