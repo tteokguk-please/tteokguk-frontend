@@ -1,5 +1,7 @@
 import { ButtonHTMLAttributes } from "react";
 
+import classNames from "classnames";
+
 import { css } from "@styled-system/css";
 import { ColorToken } from "@styled-system/tokens";
 
@@ -25,9 +27,12 @@ const Button = ({
   applyColorTo,
   size = "full",
 }: Props) => {
-  const buttonStyle = classnames(styles.button, styles[applyColorTo][color], styles[size], {
-    [styles.disabled]: disabled,
-  });
+  const buttonStyle = classNames(
+    styles.base,
+    styles.variants[applyColorTo](color),
+    styles.variants[size],
+    className,
+  );
 
   return (
     <button className={buttonStyle} disabled={disabled} onClick={onClick}>
