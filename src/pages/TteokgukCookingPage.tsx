@@ -1,6 +1,10 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, ReactNode, useState } from "react";
+
+import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
+
+import { IngredientName } from "@/types/ingredient";
 
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
@@ -11,11 +15,86 @@ import DumplingIcon from "@/assets/svg/dumpling.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import GuideIcon from "@/assets/svg/guide.svg";
+import { INGREDIENTS } from "@/constants/ingredient";
+import { $postTteokguk } from "@/store/tteokguk";
+
+interface IngredientItem {
+  name: IngredientName;
+  icon: ReactNode;
+  label: string;
+}
 
 const MAX_CHARACTERS = 100;
+const MAX_INGREDIENTS = 5;
+
+const ingredients: IngredientItem[] = [
+  {
+    name: INGREDIENTS.RICE_CAKE,
+    icon: <DumplingIcon />,
+    label: "희망떡",
+  },
+  {
+    name: INGREDIENTS.EGG,
+    icon: <DumplingIcon />,
+    label: "사랑계란",
+  },
+  {
+    name: INGREDIENTS.SEAWEED,
+    icon: <DumplingIcon />,
+    label: "해피김",
+  },
+  {
+    name: INGREDIENTS.GREEN_ONION,
+    icon: <DumplingIcon />,
+    label: "행운파",
+  },
+  {
+    name: INGREDIENTS.BEEF,
+    icon: <DumplingIcon />,
+    label: "튼튼고기",
+  },
+  {
+    name: INGREDIENTS.MUSHROOM,
+    icon: <DumplingIcon />,
+    label: "용기버섯",
+  },
+  {
+    name: INGREDIENTS.TOFU,
+    icon: <DumplingIcon />,
+    label: "스마일두부",
+  },
+  {
+    name: INGREDIENTS.FISH_CAKE,
+    icon: <DumplingIcon />,
+    label: "응원어묵",
+  },
+  {
+    name: INGREDIENTS.CANDY,
+    icon: <DumplingIcon />,
+    label: "일등사탕",
+  },
+  {
+    name: INGREDIENTS.DUMPLING,
+    icon: <DumplingIcon />,
+    label: "당첨만두",
+  },
+  {
+    name: INGREDIENTS.TAIYAKI,
+    icon: <DumplingIcon />,
+    label: "금붕어빵",
+  },
+  {
+    name: INGREDIENTS.GARLIC,
+    icon: <DumplingIcon />,
+    label: "성공마늘",
+  },
+];
 
 const TteokgukCookingPage = () => {
-  const [wishText, setWishText] = useState("");
+  const { mutate: createTteokguk } = useAtomValue($postTteokguk);
+
+  const [wish, setWish] = useState("");
+  const [selectedIngredients, setSelectedIngredients] = useState<IngredientName[]>([]);
   const [isPrivate, setIsPrivate] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -23,7 +102,29 @@ const TteokgukCookingPage = () => {
   };
 
   const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setWishText(event.target.value);
+    setWish(event.target.value);
+  };
+
+  const handleClickIngredient = (name: IngredientName) => () => {
+    setSelectedIngredients((previousSelected) => {
+      const isSelected = previousSelected.includes(name);
+
+      if (isSelected) {
+        return previousSelected.filter((selectedLabel) => selectedLabel !== name);
+      }
+
+      return previousSelected.length < 5 ? [...previousSelected, name] : previousSelected;
+    });
+  };
+
+  const handleSubmitForm = (event: FormEvent) => {
+    event.preventDefault();
+
+    createTteokguk({
+      wish,
+      ingredients: selectedIngredients,
+      access: isPrivate,
+    });
   };
 
   return (
@@ -36,33 +137,29 @@ const TteokgukCookingPage = () => {
           <WishIcon />
           나의 새해 소원
         </div>
-        <form className={styles.textareaContainer}>
+        <form onSubmit={handleSubmitForm} className={styles.textareaContainer}>
           <textarea
             onChange={handleTextChange}
             placeholder="이루고 싶은 소원을 입력하세요."
             maxLength={MAX_CHARACTERS}
-            className={styles.wishTextarea}
+            className={styles.wisharea}
           />
           <div className={styles.charCount}>
-            {wishText.length}/{MAX_CHARACTERS}
+            {wish.length}/{MAX_CHARACTERS}
           </div>
           <div className={styles.title}>
             <MeterialIcon />
             <span>떡국 재료 추가하기</span>
           </div>
           <div className={styles.meterialContainer}>
-            <Ingredient ingredientIcon={<DumplingIcon />} label="희망떡" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="사랑계란" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="해피김" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="행운파" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="튼튼고기" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="용기버섯" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="스마일두부" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="성공마늘" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="응원어묵" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="일등사탕" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="당첨만두" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="붕어빵" />
+            {ingredients.map(({ name, icon, label }) => (
+              <Ingredient
+                ingredientIcon={icon}
+                label={label}
+                onClick={handleClickIngredient(name)}
+                isSelected={selectedIngredients.includes(name)}
+              />
+            ))}
           </div>
           <label htmlFor="private" className={styles.privateLabel}>
             {isPrivate ? <CheckIcon /> : <NoCheckIcon />}
@@ -75,7 +172,11 @@ const TteokgukCookingPage = () => {
             onChange={handleCheckboxChange}
             className="a11y-hidden"
           />
-          <Button color="primary.45" applyColorTo="outline">
+          <Button
+            disabled={!wish || selectedIngredients.length !== MAX_INGREDIENTS}
+            color="primary.45"
+            applyColorTo="outline"
+          >
             소원 떡국 만들기
           </Button>
         </form>
@@ -107,7 +208,7 @@ const styles = {
     position: "relative",
     height: "16.9rem",
   }),
-  wishTextarea: css({
+  wisharea: css({
     width: "100%",
     height: "100%",
     borderWidth: "0.1rem",
@@ -127,9 +228,9 @@ const styles = {
   }),
   meterialContainer: css({
     display: "flex",
-    flexFlow: "column wrap",
+    flexFlow: "row wrap",
     alignItems: "center",
-    gap: "2.5rem 1.8rem",
+    gap: "1.8rem 2.5rem",
     height: "43.8rem",
     padding: "2.3rem 2.4rem",
     borderRadius: "0.8rem",
