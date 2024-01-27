@@ -4,16 +4,15 @@ import { CheckEmailNicknameResponse, SignupRequest, SignupResponse } from "@/typ
 
 export const $checkEmail = atomWithMutation(() => ({
   mutationKey: ["checkEmail"],
-  mutationFn: async (email: string): Promise<CheckEmailNicknameResponse> => checkEmail(email),
+  mutationFn: (email: string): Promise<CheckEmailNicknameResponse> => checkEmail(email),
 }));
 
 export const $checkNickname = atomWithMutation(() => ({
   mutationKey: ["checkNickname"],
-  mutationFn: async (nickname: string): Promise<CheckEmailNicknameResponse> =>
-    checkNickname(nickname),
+  mutationFn: (nickname: string): Promise<CheckEmailNicknameResponse> => checkNickname(nickname),
 }));
 
 export const $signup = atomWithMutation(() => ({
   mutationKey: ["signup"],
-  mutationFn: async (body: SignupRequest): Promise<SignupResponse> => postSignup(body),
+  mutationFn: (body: SignupRequest): Promise<SignupResponse> => postSignup(body),
 }));
