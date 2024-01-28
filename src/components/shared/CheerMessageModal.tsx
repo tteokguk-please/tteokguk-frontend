@@ -14,12 +14,12 @@ import NoCheckIcon from "@/assets/svg/no-check.svg";
 
 interface Props {
   isOpen: boolean;
-  close: () => void;
+  onClose: () => void;
 }
 
 const MAX_CHARACTER = 100;
 
-const CheerMessageModal = ({ isOpen, close }: Props) => {
+const CheerMessageModal = ({ isOpen, onClose }: Props) => {
   const cheerSuccessOverlay = useOverlay();
   const [message, setMessage] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
@@ -37,17 +37,17 @@ const CheerMessageModal = ({ isOpen, close }: Props) => {
   const handleSubmitCheerMessage = (event: FormEvent) => {
     event.preventDefault();
 
-    close();
+    onClose();
 
     cheerSuccessOverlay.open(({ isOpen, close }) => (
-      <CheerSuccessModal isOpen={isOpen} close={close} />
+      <CheerSuccessModal isOpen={isOpen} onClose={close} />
     ));
   };
 
   return (
     isOpen && (
       <Modal className={styles.container}>
-        <Modal.Header hasCloseButton handleClickClose={close}>
+        <Modal.Header hasCloseButton onClose={onClose}>
           응원 메시지 남기기
         </Modal.Header>
         <Modal.Body className={styles.bodyContainer}>

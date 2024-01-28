@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { css } from "@styled-system/css";
 
+import { IngredientName } from "@/types/ingredient";
+
 import useRouter from "@/routes/useRouter";
 import Modal from "@/components/common/modal/Modal";
 import Button from "@/components/common/Button";
@@ -9,12 +11,12 @@ import DumplingIcon from "@/assets/svg/dumpling.svg";
 
 interface Props {
   isOpen: boolean;
-  close: () => void;
+  onClose: () => void;
   nickname: string;
-  uniqueIngredient: string;
+  uniqueIngredient: IngredientName;
 }
 
-const WelcomModal = ({ isOpen, close, nickname, uniqueIngredient }: Props) => {
+const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => {
   const navigate = useRouter();
   const [step, setStep] = useState(0);
 
@@ -42,7 +44,7 @@ const WelcomModal = ({ isOpen, close, nickname, uniqueIngredient }: Props) => {
     }
 
     if (step === modalContents.length - 1) {
-      close();
+      onClose();
       setStep(0);
       navigate.push("/tteokguk/create");
     }
@@ -87,7 +89,7 @@ const styles = {
   content: css({
     fontSize: "1.4rem",
     textAlign: "center",
-    paddingX: "3.6rem",
+    whiteSpace: "pre-line",
   }),
   ingredientImage: css({
     display: "flex",

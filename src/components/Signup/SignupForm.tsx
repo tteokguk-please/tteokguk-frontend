@@ -1,4 +1,7 @@
+import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+
+import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
@@ -8,6 +11,7 @@ import Button from "@/components/common/Button";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import { SignupFormValues } from "@/types/form/signup";
+import { $checkEmail, $checkNickname } from "@/store/auth";
 
 interface Props {
   defaultValues: SignupFormValues;
@@ -21,6 +25,7 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
   const {
     register,
     watch,
+    setError,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<SignupFormValues>({
@@ -28,7 +33,7 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
     defaultValues,
   });
 
-  const { password, privacy, marketing } = watch();
+  const { password, passwordConfirm, privacy, marketing, email, nickname } = watch();
 
   const emailRegister = register("email", {
     required: true,
@@ -63,104 +68,164 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
     },
   });
 
+  const { data: checkEmailReponse, mutate: checkEmail } = useAtomValue($checkEmail);
+  const { data: checkNicknameReponse, mutate: checkNickname } = useAtomValue($checkNickname);
+
+  const [isExistEmail, setIsExistEmail] = useState<boolean | null>(null);
+  const [isExistNickname, setIsExistNickname] = useState<boolean | null>(null);
+  const isDisabledSignupButton = !isValid || isExistEmail !== false || isExistNickname !== false;
+
+  const handleCheckEmail = () => {
+    checkEmail(email);
+  };
+
+  const handleCheckNickname = () => {
+    checkNickname(nickname);
+  };
+
+  useEffect(() => {
+    if (checkEmailReponse) {
+      setIsExistEmail(checkEmailReponse.isExist);
+    }
+    if (checkEmailReponse?.isExist) {
+      setError("email", { message: "이미 사용 중인 이메일입니다." });
+    }
+  }, [checkEmailReponse, setIsExistEmail, setError]);
+
+  useEffect(() => {
+    if (checkNicknameReponse) {
+      setIsExistNickname(checkNicknameReponse.isExist);
+    }
+    if (checkNicknameReponse?.isExist) {
+      setError("nickname", { message: "이미 사용 중인 닉네임입니다." });
+    }
+  }, [checkNicknameReponse, setIsExistNickname, setError]);
+
+  useEffect(() => {
+    setIsExistEmail(null);
+  }, [email, setIsExistEmail]);
+
+  useEffect(() => {
+    setIsExistNickname(null);
+  }, [nickname, setIsExistNickname]);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
-      <div>
-        <div className={styles.labelContainer}>
-          <Label htmlFor="email">이메일</Label>
-          {errors.email && <p className={styles.errorMessage}>{errors.email.message}</p>}
-        </div>
-        <div className={styles.emailContainer}>
-          <Input {...emailRegister} id="email" type="email" placeholder="이메일을 입력해주세요" />
-          <button type="button" className={styles.checkDuplicateButton}>
-            중복확인
-          </button>
-        </div>
-
-        <div className={styles.labelContainer}>
-          <Label htmlFor="password">비밀번호</Label>
-          {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
-        </div>
-        <Input
-          {...passwordRegister}
-          id="password"
-          type="password"
-          placeholder="영어/숫자/특수문자 사용 8자 이상"
-          className={styles.passwordInput}
-        />
-
-        <div className={styles.labelContainer}>
-          <Label htmlFor="passwordConfirm">비밀번호 확인</Label>
-          {errors.passwordConfirm && (
-            <p className={styles.errorMessage}>{errors.passwordConfirm.message}</p>
-          )}
-        </div>
-        <Input
-          {...passwordConfirmRegister}
-          id="passwordConfirm"
-          type="password"
-          placeholder="비밀번호를 다시 입력해주세요"
-          className={styles.passwordInput}
-        />
-
-        <div className={styles.labelContainer}>
-          <Label htmlFor="nickname">닉네임</Label>
-          {errors.nickname && <p className={styles.errorMessage}>{errors.nickname.message}</p>}
-        </div>
-        <div className={styles.nicknameContainer}>
-          <Input
-            {...nicknameRegister}
-            id="nickname"
-            type="text"
-            placeholder="닉네임 2~6자를 입력해주세요"
-          />
-          <button type="button" className={styles.checkDuplicateButton}>
-            중복확인
-          </button>
-        </div>
-      </div>
-      <div className={styles.signupButtonContainer}>
+    <Fragment>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
         <div>
-          <label
-            htmlFor="privacy"
-            aria-label="개인정보 수집 및 활용 동의"
-            className={styles.privacyCheck}
-          >
-            {privacy ? <CheckIcon /> : <NoCheckIcon />}
-            <span className={styles.checkTitle}>(필수) 개인정보 수집 · 활용 동의</span>
-          </label>
-          <input
-            {...register("privacy", { required: true })}
-            id="privacy"
-            type="checkbox"
-            className="a11y-hidden"
+          <div className={styles.labelContainer}>
+            <Label htmlFor="email">이메일</Label>
+            {errors.email && <p className={styles.errorMessage}>{errors.email.message}</p>}
+            {isExistEmail === false && (
+              <p className={styles.successMessage}>사용 가능한 이메일입니다.</p>
+            )}
+          </div>
+          <div className={styles.emailContainer}>
+            <Input {...emailRegister} id="email" type="email" placeholder="이메일을 입력해주세요" />
+            <button
+              type="button"
+              className={styles.checkDuplicateButton}
+              onClick={handleCheckEmail}
+            >
+              중복확인
+            </button>
+          </div>
+
+          <div className={styles.labelContainer}>
+            <Label htmlFor="password">비밀번호</Label>
+            {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
+          </div>
+          <Input
+            {...passwordRegister}
+            id="password"
+            type="password"
+            placeholder="영어/숫자/특수문자 사용 8자 이상"
+            className={styles.passwordInput}
           />
 
-          <label
-            htmlFor="marketing"
-            aria-label="마케팅 및 홍보 활용 동의"
-            className={styles.privacyCheck}
-          >
-            {marketing ? <CheckIcon /> : <NoCheckIcon />}
-            <span className={styles.checkTitle}>(선택) 마케팅 · 홍보 활용 동의</span>
-          </label>
-          <input
-            {...register("marketing")}
-            id="marketing"
-            type="checkbox"
-            className="a11y-hidden"
+          <div className={styles.labelContainer}>
+            <Label htmlFor="passwordConfirm">비밀번호 확인</Label>
+            {errors.passwordConfirm && (
+              <p className={styles.errorMessage}>{errors.passwordConfirm.message}</p>
+            )}
+            {passwordConfirm && !errors.passwordConfirm && (
+              <p className={styles.successMessage}>비밀번호가 일치합니다.</p>
+            )}
+          </div>
+          <Input
+            {...passwordConfirmRegister}
+            id="passwordConfirm"
+            type="password"
+            placeholder="비밀번호를 다시 입력해주세요"
+            className={styles.passwordInput}
           />
+
+          <div className={styles.labelContainer}>
+            <Label htmlFor="nickname">닉네임</Label>
+            {errors.nickname && <p className={styles.errorMessage}>{errors.nickname.message}</p>}
+            {isExistNickname === false && (
+              <p className={styles.successMessage}>사용 가능한 닉네임입니다.</p>
+            )}
+          </div>
+          <div className={styles.nicknameContainer}>
+            <Input
+              {...nicknameRegister}
+              id="nickname"
+              type="text"
+              placeholder="닉네임 2~6자를 입력해주세요"
+            />
+            <button
+              type="button"
+              className={styles.checkDuplicateButton}
+              onClick={handleCheckNickname}
+            >
+              중복확인
+            </button>
+          </div>
         </div>
-        <Button
-          color="primary.100"
-          applyColorTo="background"
-          disabled={!isValid}
-          className={styles.signupButton}
-        >
-          회원가입 하기
-        </Button>
-      </div>
-    </form>
+        <div className={styles.signupButtonContainer}>
+          <div>
+            <label
+              htmlFor="privacy"
+              aria-label="개인정보 수집 및 활용 동의"
+              className={styles.privacyCheck}
+            >
+              {privacy ? <CheckIcon /> : <NoCheckIcon />}
+              <span className={styles.checkTitle}>(필수) 개인정보 수집 · 활용 동의</span>
+            </label>
+            <input
+              {...register("privacy", { required: true })}
+              id="privacy"
+              type="checkbox"
+              className="a11y-hidden"
+            />
+
+            <label
+              htmlFor="marketing"
+              aria-label="마케팅 및 홍보 활용 동의"
+              className={styles.privacyCheck}
+            >
+              {marketing ? <CheckIcon /> : <NoCheckIcon />}
+              <span className={styles.checkTitle}>(선택) 마케팅 · 홍보 활용 동의</span>
+            </label>
+            <input
+              {...register("marketing")}
+              id="marketing"
+              type="checkbox"
+              className="a11y-hidden"
+            />
+          </div>
+          <Button
+            color="primary.100"
+            applyColorTo="background"
+            disabled={isDisabledSignupButton}
+            className={styles.signupButton}
+          >
+            회원가입 하기
+          </Button>
+        </div>
+      </form>
+    </Fragment>
   );
 };
 
@@ -217,6 +282,11 @@ const styles = {
   errorMessage: css({
     fontSize: "1.2rem",
     color: "red.100",
+    marginLeft: "0.4rem",
+  }),
+  successMessage: css({
+    fontSize: "1.2rem",
+    color: "green.100",
     marginLeft: "0.4rem",
   }),
 };

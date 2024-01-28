@@ -1,3 +1,6 @@
+import { KeyOf, ValueOf } from "./utils";
+
 import { INGREDIENTS } from "@/constants/ingredient";
 
-export type IngredientName = (typeof INGREDIENTS)[keyof typeof INGREDIENTS];
+export type IngredientKey = KeyOf<typeof INGREDIENTS>;
+export type IngredientName = ValueOf<typeof INGREDIENTS>;

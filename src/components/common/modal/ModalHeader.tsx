@@ -10,17 +10,17 @@ interface Props {
   children: ReactNode;
   className?: string;
   hasCloseButton?: boolean;
-  handleClickClose?: () => void;
+  onClose?: () => void;
 }
 
-const ModalHeader = ({ children, className, hasCloseButton = false, handleClickClose }: Props) => {
+const ModalHeader = ({ children, className, hasCloseButton = false, onClose }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.spacer} />
       <div className={classNames(styles.title, className)}>{children}</div>
       <div className={styles.spacer}>
         {hasCloseButton && (
-          <button onClick={handleClickClose} className={styles.closeButton}>
+          <button onClick={onClose} className={styles.closeButton}>
             <CloseIcon />
           </button>
         )}
