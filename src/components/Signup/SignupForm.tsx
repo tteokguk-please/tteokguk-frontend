@@ -11,6 +11,7 @@ import Button from "@/components/common/Button";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import { SignupFormValues } from "@/types/form/signup";
+
 import { $checkEmail, $checkNickname } from "@/store/auth";
 
 interface Props {

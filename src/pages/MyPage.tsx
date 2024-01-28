@@ -5,9 +5,8 @@ import { css } from "@styled-system/css";
 import { Link } from "@/routes/Link";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
-import TteokgukList from "@/components/Mypage/TteokgukList";
 import IngredientList from "@/components/Mypage/IngredientList";
-import GuideIcon from "@/assets/svg/profile.svg";
+import TteokgukList from "@/components/common/TteokgukList";
 import DumplingIcon from "@/assets/svg/dumpling.svg";
 import VisitIcon from "@/assets/svg/visit.svg";
 import ActivityIcon from "@/assets/svg/activity.svg";
@@ -15,7 +14,7 @@ import ActivityIcon from "@/assets/svg/activity.svg";
 const MyPage = () => {
   return (
     <Fragment>
-      <Header hasPreviousPage actionIcon={<GuideIcon />}>
+      <Header hasPreviousPage actionIcon="guide">
         마이페이지
       </Header>
       <div className={styles.container}>
@@ -29,18 +28,22 @@ const MyPage = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <IconButton color="primary.45" applyColorTo="outline">
-            <IconButton.Icon>
-              <VisitIcon />
-            </IconButton.Icon>
-            랜덤 방문
-          </IconButton>
-          <IconButton color="primary.45" applyColorTo="outline">
-            <IconButton.Icon>
-              <ActivityIcon />
-            </IconButton.Icon>
-            활동 내역
-          </IconButton>
+          <Link to="/users/:id" className={styles.full}>
+            <IconButton color="primary.45" applyColorTo="outline">
+              <IconButton.Icon>
+                <VisitIcon />
+              </IconButton.Icon>
+              랜덤 방문
+            </IconButton>
+          </Link>
+          <Link to="/my-page/activity" className={styles.full}>
+            <IconButton color="primary.45" applyColorTo="outline">
+              <IconButton.Icon>
+                <ActivityIcon />
+              </IconButton.Icon>
+              활동 내역
+            </IconButton>
+          </Link>
         </div>
         <div>
           <div className={styles.wishTteokgukTitle}>
@@ -119,5 +122,8 @@ const styles = {
   accountContainer: css({
     display: "flex",
     justifyContent: "space-around",
+  }),
+  full: css({
+    width: "100%",
   }),
 };

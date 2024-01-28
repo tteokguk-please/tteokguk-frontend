@@ -5,11 +5,11 @@ import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
-import TteokgukList from "@/components/common/Tteokguks/TteokgukList";
+import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
-import ProfileIcon from "@/assets/svg/profile.svg";
 import headerLogo from "@/assets/images/header-logo.png";
+import { Link } from "@/routes/Link";
 
 const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -17,8 +17,10 @@ const MainPage = () => {
 
   return (
     <>
-      <Header actionIcon={<ProfileIcon />}>
-        <img src={headerLogo} alt="로고" />
+      <Header actionIcon="profile">
+        <Link to="/">
+          <img src={headerLogo} alt="로고" />
+        </Link>
       </Header>
       <div className={styles.container}>
         <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
@@ -31,16 +33,22 @@ const MainPage = () => {
             </Tab>
           </TabList>
           <TabPanel className={styles.tabPanel}>
-            <TteokgukList />
+            <TteokgukWithCaptionList />
           </TabPanel>
           <TabPanel className={styles.tabPanel}>
-            <TteokgukList />
+            <TteokgukWithCaptionList />
           </TabPanel>
         </Tabs>
 
-        <Button color="secondary.100" applyColorTo="background" className={styles.button}>
-          소원 떡국 만들기
-        </Button>
+        <Link to="/tteokguk/create">
+          <Button
+            color="secondary.100"
+            applyColorTo="background"
+            className={classNames(styles.button)}
+          >
+            소원 떡국 만들기
+          </Button>
+        </Link>
       </div>
     </>
   );
@@ -53,9 +61,6 @@ const styles = {
     position: "relative",
     height: "calc(100% - 4.8rem)",
     overflow: "auto",
-    _scrollbar: {
-      display: "none",
-    },
   }),
   tabList: css({
     display: "flex",
@@ -88,9 +93,14 @@ const styles = {
     },
   }),
   button: css({
-    position: "sticky",
-    width: "calc(100% - 5.1rem)",
+    position: "fixed",
+    left: "50%",
+    transform: "translateX(-50%)",
     bottom: "3rem",
-    marginX: "2.4rem",
+    width: "calc(100% - 4.8rem)",
+    maxWidth: "45.2rem",
+  }),
+  buttonHidden: css({
+    display: "none",
   }),
 };

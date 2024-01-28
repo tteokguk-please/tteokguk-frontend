@@ -1,15 +1,20 @@
 import { ReactNode } from "react";
 
 import classNames from "classnames";
+import { useOverlay } from "@toss/use-overlay";
 
 import { css } from "@styled-system/css";
 
 import useRouter from "@/routes/useRouter";
+import { Link } from "@/routes/Link";
+import GuideModal from "@/components/shared/GuideModal";
 import BeforeIcon from "@/assets/svg/before.svg";
+import ProfileIcon from "@/assets/svg/profile.svg";
+import GuideIcon from "@/assets/svg/guide.svg";
 
 interface Props {
   hasPreviousPage?: true;
-  actionIcon?: ReactNode;
+  actionIcon?: "profile" | "guide";
   className?: string;
   children: ReactNode;
 }
@@ -29,12 +34,37 @@ const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => 
       <div className={styles.title}>
         <h1>{children}</h1>
       </div>
-      <div className={styles.actionIcon}>{actionIcon}</div>
+      <div className={styles.actionIcon}>
+        {actionIcon === "profile" && <ProfileIconLink />}
+        {actionIcon === "guide" && <GuideModalButton />}
+      </div>
     </header>
   );
 };
 
 export default Header;
+
+const ProfileIconLink = () => {
+  return (
+    <Link to="/my-page">
+      <ProfileIcon />
+    </Link>
+  );
+};
+
+const GuideModalButton = () => {
+  const guideOverlay = useOverlay();
+
+  const handleClickGuideIcon = () => {
+    guideOverlay.open(({ isOpen, close }) => <GuideModal isOpen={isOpen} onClose={close} />);
+  };
+
+  return (
+    <button onClick={handleClickGuideIcon}>
+      <GuideIcon />
+    </button>
+  );
+};
 
 const styles = {
   header: css({
