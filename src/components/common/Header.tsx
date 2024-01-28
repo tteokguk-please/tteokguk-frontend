@@ -56,7 +56,7 @@ const GuideModalButton = () => {
   const guideOverlay = useOverlay();
 
   const handleClickGuideIcon = () => {
-    guideOverlay.open(({ isOpen, close }) => <GuideModal isOpen={isOpen} close={close} />);
+    guideOverlay.open(({ isOpen, close }) => <GuideModal isOpen={isOpen} onClose={close} />);
   };
 
   return (
