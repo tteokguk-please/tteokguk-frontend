@@ -5,6 +5,7 @@ import { useAtomValue } from "jotai";
 import { css } from "@styled-system/css";
 
 import { IngredientKey } from "@/types/ingredient";
+import { PostTteokgukResponse } from "@/types/tteokguk";
 
 import useRouter from "@/routes/useRouter";
 import { $postTteokguk } from "@/store/tteokguk";
@@ -92,7 +93,7 @@ const ingredients: IngredientItem[] = [
 
 const TteokgukCookingPage = () => {
   const navigate = useRouter();
-  const { mutate: createTteokguk, isSuccess, data: createdTteokguk } = useAtomValue($postTteokguk);
+  const { mutate: createTteokguk } = useAtomValue($postTteokguk);
 
   const [wish, setWish] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState<IngredientKey[]>([]);
@@ -121,17 +122,20 @@ const TteokgukCookingPage = () => {
   const handleSubmitForm = (event: FormEvent) => {
     event.preventDefault();
 
-    createTteokguk({
-      wish,
-      ingredients: selectedIngredients,
-      access: isPrivate,
-    });
+    createTteokguk(
+      {
+        wish,
+        ingredients: selectedIngredients,
+        access: isPrivate,
+      },
+      {
+        onSuccess: (createdTteokguk: PostTteokgukResponse) => {
+          const { tteokgukId } = createdTteokguk;
 
-    if (isSuccess) {
-      const { tteokgukId } = createdTteokguk;
-
-      navigate.push(`/tteokguks/${tteokgukId}`);
-    }
+          navigate.push(`/tteokguks/${tteokgukId}`);
+        },
+      },
+    );
   };
 
   return (
