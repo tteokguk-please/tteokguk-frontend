@@ -92,7 +92,7 @@ const ingredients: IngredientItem[] = [
 ];
 
 const TteokgukCookingPage = () => {
-  const navigate = useRouter();
+  const router = useRouter();
   const { mutate: createTteokguk } = useAtomValue($postTteokguk);
 
   const [wish, setWish] = useState("");
@@ -132,7 +132,7 @@ const TteokgukCookingPage = () => {
         onSuccess: (createdTteokguk: PostTteokgukResponse) => {
           const { tteokgukId } = createdTteokguk;
 
-          navigate.push(`/tteokguks/${tteokgukId}`);
+          router.push(`/tteokguks/${tteokgukId}`);
         },
       },
     );

@@ -17,7 +17,7 @@ interface Props {
 }
 
 const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => {
-  const navigate = useRouter();
+  const router = useRouter();
   const [step, setStep] = useState(0);
 
   const modalContents = [
@@ -46,7 +46,7 @@ const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => 
     if (step === modalContents.length - 1) {
       onClose();
       setStep(0);
-      navigate.push("/tteokguk/create");
+      router.push("/tteokguk/create");
     }
   };
 
