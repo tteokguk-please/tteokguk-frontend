@@ -1,4 +1,4 @@
-name: my-front
+name: tteokguk-please frontend continuous developments
 on:
   push:
     branches:
