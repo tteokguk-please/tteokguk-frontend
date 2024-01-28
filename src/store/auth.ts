@@ -1,6 +1,12 @@
 import { atomWithMutation } from "jotai-tanstack-query";
-import { checkEmail, checkNickname, postSignup } from "@/apis/auth";
-import { CheckEmailNicknameResponse, SignupRequest, SignupResponse } from "@/types/auth";
+import { checkEmail, checkNickname, postLogin, postSignup } from "@/apis/auth";
+import {
+  CheckEmailNicknameResponse,
+  LoginRequest,
+  LoginResponse,
+  SignupRequest,
+  SignupResponse,
+} from "@/types/auth";
 
 export const $checkEmail = atomWithMutation(() => ({
   mutationKey: ["checkEmail"],
@@ -15,4 +21,8 @@ export const $checkNickname = atomWithMutation(() => ({
 export const $signup = atomWithMutation(() => ({
   mutationKey: ["signup"],
   mutationFn: (body: SignupRequest): Promise<SignupResponse> => postSignup(body),
+}));
+
+export const $login = atomWithMutation(() => ({
+  mutationFn: (body: LoginRequest): Promise<LoginResponse> => postLogin(body),
 }));

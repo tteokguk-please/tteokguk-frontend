@@ -1,4 +1,10 @@
-import { CheckEmailNicknameResponse, SignupRequest, SignupResponse } from "@/types/auth";
+import {
+  CheckEmailNicknameResponse,
+  LoginRequest,
+  LoginResponse,
+  SignupRequest,
+  SignupResponse,
+} from "@/types/auth";
 import http from "./core";
 
 export const checkEmail = (email: string) => {
@@ -11,4 +17,8 @@ export const checkNickname = (nickname: string) => {
 
 export const postSignup = (body: SignupRequest) => {
   return http.post<SignupResponse>("api/v1/auth/join", body);
+};
+
+export const postLogin = (body: LoginRequest) => {
+  return http.post<LoginResponse>("api/v1/auth/login", body);
 };

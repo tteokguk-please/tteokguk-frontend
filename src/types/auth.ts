@@ -16,3 +16,14 @@ export interface SignupResponse {
   nickname: string;
   primaryIngredient: IngredientKey;
 }
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  id: number;
+  accessToken: string;
+  refreshToken: string;
+}
