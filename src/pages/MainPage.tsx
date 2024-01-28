@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 import classNames from "classnames";
-import debounce from "lodash.debounce";
 
 import { css } from "@styled-system/css";
 
@@ -15,38 +14,6 @@ import { Link } from "@/routes/Link";
 const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const isSelectedTab = (index: number) => index === tabIndex;
-
-  const [buttonVisible, setButtonVisible] = useState(true);
-  const lastScrollTop = useRef(0);
-
-  const handleScroll = () => {
-    const currentScrollTop = window.scrollY;
-
-    if (currentScrollTop > lastScrollTop.current) {
-      setButtonVisible(false);
-    }
-
-    if (currentScrollTop < lastScrollTop.current) {
-      setButtonVisible(true);
-    }
-
-    lastScrollTop.current = currentScrollTop;
-  };
-
-  const handleScrollStop = debounce(() => {
-    setButtonVisible(true);
-  }, 150);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("scroll", handleScrollStop);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("scroll", handleScrollStop);
-      handleScrollStop.cancel();
-    };
-  }, [handleScrollStop]);
 
   return (
     <>
@@ -75,9 +42,9 @@ const MainPage = () => {
 
         <Link to="/tteokguk/create">
           <Button
-            color="secondary"
+            color="secondary.100"
             applyColorTo="background"
-            className={classNames(styles.button, { [styles.buttonHidden]: !buttonVisible })}
+            className={classNames(styles.button)}
           >
             소원 떡국 만들기
           </Button>
