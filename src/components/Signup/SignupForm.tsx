@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { useAtomValue } from "jotai";
@@ -110,116 +110,122 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
   }, [nickname, setIsExistNickname]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
-      <div>
-        <div className={styles.labelContainer}>
-          <Label htmlFor="email">이메일</Label>
-          {errors.email && <p className={styles.errorMessage}>{errors.email.message}</p>}
-          {isExistEmail === false && (
-            <p className={styles.successMessage}>사용 가능한 이메일입니다.</p>
-          )}
-        </div>
-        <div className={styles.emailContainer}>
-          <Input {...emailRegister} id="email" type="email" placeholder="이메일을 입력해주세요" />
-          <button type="button" className={styles.checkDuplicateButton} onClick={handleCheckEmail}>
-            중복확인
-          </button>
-        </div>
-
-        <div className={styles.labelContainer}>
-          <Label htmlFor="password">비밀번호</Label>
-          {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
-        </div>
-        <Input
-          {...passwordRegister}
-          id="password"
-          type="password"
-          placeholder="영어/숫자/특수문자 사용 8자 이상"
-          className={styles.passwordInput}
-        />
-
-        <div className={styles.labelContainer}>
-          <Label htmlFor="passwordConfirm">비밀번호 확인</Label>
-          {errors.passwordConfirm && (
-            <p className={styles.errorMessage}>{errors.passwordConfirm.message}</p>
-          )}
-          {passwordConfirm && !errors.passwordConfirm && (
-            <p className={styles.successMessage}>비밀번호가 일치합니다.</p>
-          )}
-        </div>
-        <Input
-          {...passwordConfirmRegister}
-          id="passwordConfirm"
-          type="password"
-          placeholder="비밀번호를 다시 입력해주세요"
-          className={styles.passwordInput}
-        />
-
-        <div className={styles.labelContainer}>
-          <Label htmlFor="nickname">닉네임</Label>
-          {errors.nickname && <p className={styles.errorMessage}>{errors.nickname.message}</p>}
-          {isExistNickname === false && (
-            <p className={styles.successMessage}>사용 가능한 닉네임입니다.</p>
-          )}
-        </div>
-        <div className={styles.nicknameContainer}>
-          <Input
-            {...nicknameRegister}
-            id="nickname"
-            type="text"
-            placeholder="닉네임 2~6자를 입력해주세요"
-          />
-          <button
-            type="button"
-            className={styles.checkDuplicateButton}
-            onClick={handleCheckNickname}
-          >
-            중복확인
-          </button>
-        </div>
-      </div>
-      <div className={styles.signupButtonContainer}>
+    <Fragment>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
         <div>
-          <label
-            htmlFor="privacy"
-            aria-label="개인정보 수집 및 활용 동의"
-            className={styles.privacyCheck}
-          >
-            {privacy ? <CheckIcon /> : <NoCheckIcon />}
-            <span className={styles.checkTitle}>(필수) 개인정보 수집 · 활용 동의</span>
-          </label>
-          <input
-            {...register("privacy", { required: true })}
-            id="privacy"
-            type="checkbox"
-            className="a11y-hidden"
+          <div className={styles.labelContainer}>
+            <Label htmlFor="email">이메일</Label>
+            {errors.email && <p className={styles.errorMessage}>{errors.email.message}</p>}
+            {isExistEmail === false && (
+              <p className={styles.successMessage}>사용 가능한 이메일입니다.</p>
+            )}
+          </div>
+          <div className={styles.emailContainer}>
+            <Input {...emailRegister} id="email" type="email" placeholder="이메일을 입력해주세요" />
+            <button
+              type="button"
+              className={styles.checkDuplicateButton}
+              onClick={handleCheckEmail}
+            >
+              중복확인
+            </button>
+          </div>
+
+          <div className={styles.labelContainer}>
+            <Label htmlFor="password">비밀번호</Label>
+            {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
+          </div>
+          <Input
+            {...passwordRegister}
+            id="password"
+            type="password"
+            placeholder="영어/숫자/특수문자 사용 8자 이상"
+            className={styles.passwordInput}
           />
 
-          <label
-            htmlFor="marketing"
-            aria-label="마케팅 및 홍보 활용 동의"
-            className={styles.privacyCheck}
-          >
-            {marketing ? <CheckIcon /> : <NoCheckIcon />}
-            <span className={styles.checkTitle}>(선택) 마케팅 · 홍보 활용 동의</span>
-          </label>
-          <input
-            {...register("marketing")}
-            id="marketing"
-            type="checkbox"
-            className="a11y-hidden"
+          <div className={styles.labelContainer}>
+            <Label htmlFor="passwordConfirm">비밀번호 확인</Label>
+            {errors.passwordConfirm && (
+              <p className={styles.errorMessage}>{errors.passwordConfirm.message}</p>
+            )}
+            {passwordConfirm && !errors.passwordConfirm && (
+              <p className={styles.successMessage}>비밀번호가 일치합니다.</p>
+            )}
+          </div>
+          <Input
+            {...passwordConfirmRegister}
+            id="passwordConfirm"
+            type="password"
+            placeholder="비밀번호를 다시 입력해주세요"
+            className={styles.passwordInput}
           />
+
+          <div className={styles.labelContainer}>
+            <Label htmlFor="nickname">닉네임</Label>
+            {errors.nickname && <p className={styles.errorMessage}>{errors.nickname.message}</p>}
+            {isExistNickname === false && (
+              <p className={styles.successMessage}>사용 가능한 닉네임입니다.</p>
+            )}
+          </div>
+          <div className={styles.nicknameContainer}>
+            <Input
+              {...nicknameRegister}
+              id="nickname"
+              type="text"
+              placeholder="닉네임 2~6자를 입력해주세요"
+            />
+            <button
+              type="button"
+              className={styles.checkDuplicateButton}
+              onClick={handleCheckNickname}
+            >
+              중복확인
+            </button>
+          </div>
         </div>
-        <Button
-          color="primary.100"
-          applyColorTo="background"
-          disabled={isDisabledSignupButton}
-          className={styles.signupButton}
-        >
-          회원가입 하기
-        </Button>
-      </div>
-    </form>
+        <div className={styles.signupButtonContainer}>
+          <div>
+            <label
+              htmlFor="privacy"
+              aria-label="개인정보 수집 및 활용 동의"
+              className={styles.privacyCheck}
+            >
+              {privacy ? <CheckIcon /> : <NoCheckIcon />}
+              <span className={styles.checkTitle}>(필수) 개인정보 수집 · 활용 동의</span>
+            </label>
+            <input
+              {...register("privacy", { required: true })}
+              id="privacy"
+              type="checkbox"
+              className="a11y-hidden"
+            />
+
+            <label
+              htmlFor="marketing"
+              aria-label="마케팅 및 홍보 활용 동의"
+              className={styles.privacyCheck}
+            >
+              {marketing ? <CheckIcon /> : <NoCheckIcon />}
+              <span className={styles.checkTitle}>(선택) 마케팅 · 홍보 활용 동의</span>
+            </label>
+            <input
+              {...register("marketing")}
+              id="marketing"
+              type="checkbox"
+              className="a11y-hidden"
+            />
+          </div>
+          <Button
+            color="primary.100"
+            applyColorTo="background"
+            disabled={isDisabledSignupButton}
+            className={styles.signupButton}
+          >
+            회원가입 하기
+          </Button>
+        </div>
+      </form>
+    </Fragment>
   );
 };
 
