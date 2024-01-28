@@ -1,5 +1,5 @@
 import { FormEvent, Fragment } from "react";
-
+import { useAtomValue } from "jotai";
 import { toast } from "sonner";
 
 import { css } from "@styled-system/css";
@@ -8,34 +8,30 @@ import { Link } from "@/routes/Link";
 import Label from "@/components/common/Label";
 import Input from "@/components/common/Input";
 import Header from "@/components/common/Header";
-import { useAtomValue } from "jotai";
 import { $login } from "@/store/auth";
+import useRouter from "@/routes/useRouter";
 
 const EmailLoginPage = () => {
-  const {
-    mutateAsync: login,
-    data: loginResponse,
-    error: loginError,
-    isPending,
-  } = useAtomValue($login);
+  const router = useRouter();
+  const { mutate: login } = useAtomValue($login);
 
-  const handleSubmitLogin = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmitLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    await login({
-      email,
-      password,
-    });
-
-    console.log("isPending", isPending);
-    console.log("loginResponse", loginResponse);
-    console.log("loginError", loginError);
-    // mutate
-    // toast("아이디 혹은 비밀번호를 확인해주세요.");
+    login(
+      {
+        email,
+        password,
+      },
+      {
+        onSuccess: () => router.push("/tteokguks"),
+        onError: () => toast("아이디 혹은 비밀번호를 확인해주세요."),
+      },
+    );
   };
 
   return (
