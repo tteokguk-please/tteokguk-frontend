@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
+import { useAtomValue } from "jotai";
+
 import { css } from "@styled-system/css";
 
 import Input from "@/components/common/Input";
@@ -9,7 +11,6 @@ import Button from "@/components/common/Button";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import { SignupFormValues } from "@/types/form/signup";
-import { useAtomValue } from "jotai";
 import { $checkEmail, $checkNickname } from "@/store/auth";
 
 interface Props {
