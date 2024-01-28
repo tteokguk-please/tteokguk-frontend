@@ -8,12 +8,34 @@ import { Link } from "@/routes/Link";
 import Label from "@/components/common/Label";
 import Input from "@/components/common/Input";
 import Header from "@/components/common/Header";
+import { useAtomValue } from "jotai";
+import { $login } from "@/store/auth";
 
 const EmailLoginPage = () => {
-  const handleSubmitLogin = (event: FormEvent) => {
-    event.preventDefault();
+  const {
+    mutateAsync: login,
+    data: loginResponse,
+    error: loginError,
+    isPending,
+  } = useAtomValue($login);
 
-    toast("아이디 혹은 비밀번호를 확인해주세요.");
+  const handleSubmitLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    await login({
+      email,
+      password,
+    });
+
+    console.log("isPending", isPending);
+    console.log("loginResponse", loginResponse);
+    console.log("loginError", loginError);
+    // mutate
+    // toast("아이디 혹은 비밀번호를 확인해주세요.");
   };
 
   return (
@@ -24,12 +46,18 @@ const EmailLoginPage = () => {
           <Label htmlFor="email">이메일</Label>
           <Input
             id="email"
+            name="email"
             type="email"
             placeholder="이메일을 입력해주세요"
             className={styles.emailInput}
           />
           <Label htmlFor="password">비밀번호</Label>
-          <Input id="password" type="password" placeholder="비밀번호를 입력해주세요" />
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="비밀번호를 입력해주세요"
+          />
           <button type="submit" className={styles.button}>
             로그인 하기
           </button>
