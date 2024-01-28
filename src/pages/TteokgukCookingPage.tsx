@@ -4,8 +4,10 @@ import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
-import { IngredientName } from "@/types/ingredient";
+import { IngredientKey } from "@/types/ingredient";
 
+import useRouter from "@/routes/useRouter";
+import { $postTteokguk } from "@/store/tteokguk";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
 import Ingredient from "@/components/common/Ingredient";
@@ -15,12 +17,9 @@ import DumplingIcon from "@/assets/svg/dumpling.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import GuideIcon from "@/assets/svg/guide.svg";
-import { INGREDIENTS } from "@/constants/ingredient";
-import { $postTteokguk } from "@/store/tteokguk";
-import useRouter from "@/routes/useRouter";
 
 interface IngredientItem {
-  name: IngredientName;
+  name: IngredientKey;
   icon: ReactNode;
   label: string;
 }
@@ -30,62 +29,62 @@ const MAX_INGREDIENTS = 5;
 
 const ingredients: IngredientItem[] = [
   {
-    name: INGREDIENTS.RICE_CAKE,
+    name: "RICE_CAKE",
     icon: <DumplingIcon />,
     label: "희망떡",
   },
   {
-    name: INGREDIENTS.EGG,
+    name: "EGG",
     icon: <DumplingIcon />,
     label: "사랑계란",
   },
   {
-    name: INGREDIENTS.SEAWEED,
+    name: "SEAWEED",
     icon: <DumplingIcon />,
     label: "해피김",
   },
   {
-    name: INGREDIENTS.GREEN_ONION,
+    name: "GREEN_ONION",
     icon: <DumplingIcon />,
     label: "행운파",
   },
   {
-    name: INGREDIENTS.BEEF,
+    name: "BEEF",
     icon: <DumplingIcon />,
     label: "튼튼고기",
   },
   {
-    name: INGREDIENTS.MUSHROOM,
+    name: "MUSHROOM",
     icon: <DumplingIcon />,
     label: "용기버섯",
   },
   {
-    name: INGREDIENTS.TOFU,
+    name: "TOFU",
     icon: <DumplingIcon />,
     label: "스마일두부",
   },
   {
-    name: INGREDIENTS.FISH_CAKE,
+    name: "FISH_CAKE",
     icon: <DumplingIcon />,
     label: "응원어묵",
   },
   {
-    name: INGREDIENTS.CANDY,
+    name: "CANDY",
     icon: <DumplingIcon />,
     label: "일등사탕",
   },
   {
-    name: INGREDIENTS.DUMPLING,
+    name: "DUMPLING",
     icon: <DumplingIcon />,
     label: "당첨만두",
   },
   {
-    name: INGREDIENTS.TAIYAKI,
+    name: "TAIYAKI",
     icon: <DumplingIcon />,
     label: "금붕어빵",
   },
   {
-    name: INGREDIENTS.GARLIC,
+    name: "GARLIC",
     icon: <DumplingIcon />,
     label: "성공마늘",
   },
@@ -96,7 +95,7 @@ const TteokgukCookingPage = () => {
   const { mutate: createTteokguk, isSuccess, data: createdTteokguk } = useAtomValue($postTteokguk);
 
   const [wish, setWish] = useState("");
-  const [selectedIngredients, setSelectedIngredients] = useState<IngredientName[]>([]);
+  const [selectedIngredients, setSelectedIngredients] = useState<IngredientKey[]>([]);
   const [isPrivate, setIsPrivate] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -107,7 +106,7 @@ const TteokgukCookingPage = () => {
     setWish(event.target.value);
   };
 
-  const handleClickIngredient = (name: IngredientName) => () => {
+  const handleClickIngredient = (name: IngredientKey) => () => {
     setSelectedIngredients((previousSelected) => {
       const isSelected = previousSelected.includes(name);
 
