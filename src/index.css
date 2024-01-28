@@ -13,22 +13,9 @@
       "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     font-size: 16px;
   }
-
-  body::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 @layer utilities {
-  * {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
   .a11y-hidden {
     clip: rect(0 0 0 0);
     clip-path: polygon(0 0, 0 0, 0 0);

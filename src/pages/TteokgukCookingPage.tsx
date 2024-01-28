@@ -17,7 +17,6 @@ import MeterialIcon from "@/assets/svg/material.svg";
 import DumplingIcon from "@/assets/svg/dumpling.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
-import GuideIcon from "@/assets/svg/guide.svg";
 
 interface IngredientItem {
   name: IngredientKey;
@@ -140,7 +139,7 @@ const TteokgukCookingPage = () => {
 
   return (
     <div>
-      <Header hasPreviousPage actionIcon={<GuideIcon />}>
+      <Header hasPreviousPage actionIcon="guide">
         떡국 만들기
       </Header>
       <div className={styles.container}>

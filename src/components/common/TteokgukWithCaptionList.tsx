@@ -1,32 +1,38 @@
 import { css } from "@styled-system/css";
 
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
+import { Link } from "@/routes/Link";
 
-interface Props {
-  tteokgukNumber: number;
-  nickname: string;
-  hasBadge?: boolean;
-}
-
-const TteokgukCard = ({ tteokgukNumber, nickname, hasBadge }: Props) => {
+const TteokgukWithCaptionList = () => {
   return (
-    <div className={styles.container}>
-      {hasBadge && <div className={styles.badge}>응원요청</div>}
-      <div className={styles.imageContainer}>
-        <img src={tteokgukIncomplete} alt="미완성된 떡국" />
-      </div>
-      <div className={styles.cardContent}>
-        <div className={styles.cardTitle}>{tteokgukNumber}번째 소원떡국</div>
-        <div className={styles.cardNickname}>@ {nickname}</div>
-      </div>
-    </div>
+    <ul className={styles.container}>
+      {[...Array(12)].map(() => (
+        <Link to="/tteokguks/:id" className={styles.cardContainer}>
+          <div>
+            <div className={styles.badge}>응원요청</div>
+            <div className={styles.imageContainer}>
+              <img src={tteokgukIncomplete} alt="미완성된 떡국" />
+            </div>
+            <div className={styles.cardContent}>
+              <div className={styles.cardTitle}>{1178}번째 소원떡국</div>
+              <div className={styles.cardNickname}>@ {"재민"}</div>
+            </div>
+          </div>
+        </Link>
+      ))}
+    </ul>
   );
 };
 
-export default TteokgukCard;
+export default TteokgukWithCaptionList;
 
 const styles = {
   container: css({
+    display: "flex",
+    flexFlow: "row wrap",
+    gap: "1.6rem",
+  }),
+  cardContainer: css({
     position: "relative",
     maxWidth: "calc(50% - 1.6rem)",
     width: "100%",

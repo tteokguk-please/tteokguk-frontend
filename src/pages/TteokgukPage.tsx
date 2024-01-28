@@ -6,7 +6,6 @@ import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
 import Ingredient from "@/components/common/Ingredient";
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
-import ProfileIcon from "@/assets/svg/profile.svg";
 import ActivityIcon from "@/assets/svg/activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
 import DumplingIcon from "@/assets/svg/dumpling.svg";
@@ -14,7 +13,7 @@ import DumplingIcon from "@/assets/svg/dumpling.svg";
 const TteokgukPage = () => {
   return (
     <Fragment>
-      <Header hasPreviousPage actionIcon={<ProfileIcon />}>
+      <Header hasPreviousPage actionIcon="profile">
         소원 떡국
       </Header>
       <div className={styles.container}>
