@@ -1,7 +1,7 @@
 import { css } from "@styled-system/css";
 
 interface Props {
-  IngredientIcon: string;
+  IngredientIcon: string; // string 타입이지만 svg component로 사용
   label: string;
   onClick: () => void;
   isSelected: boolean;
