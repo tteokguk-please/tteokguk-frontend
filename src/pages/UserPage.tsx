@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { useParams } from "react-router-dom";
 
 import { css } from "@styled-system/css";
 
@@ -8,8 +9,16 @@ import UserProfileSection from "@/components/common/UserProfileSection";
 import TteokgukList from "@/components/common/TteokgukList";
 import DumplingIcon from "@/assets/svg/dumpling.svg";
 import VisitIcon from "@/assets/svg/visit.svg";
+import { $userDetail, $userIdAtom, useAtomFamilyQuery } from "@/store/user";
 
-const RandomUserPage = () => {
+const UserPage = () => {
+  const { id } = useParams();
+  const data = useAtomFamilyQuery($userDetail, $userIdAtom, id);
+  // const { data } = useAtomValue($user(Number(id)));
+
+  console.log(id);
+  console.log(data);
+
   return (
     <Fragment>
       <Header hasPreviousPage actionIcon="profile">
@@ -40,7 +49,7 @@ const RandomUserPage = () => {
   );
 };
 
-export default RandomUserPage;
+export default UserPage;
 
 const styles = {
   container: css({
