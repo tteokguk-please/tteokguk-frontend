@@ -1,4 +1,5 @@
 import { atomWithMutation } from "jotai-tanstack-query";
+
 import {
   checkEmail,
   checkNickname,
@@ -8,6 +9,7 @@ import {
   postLogin,
   postSignup,
 } from "@/apis/auth";
+
 import {
   CheckEmailNicknameResponse,
   PostKakaoUserSignupResponse,

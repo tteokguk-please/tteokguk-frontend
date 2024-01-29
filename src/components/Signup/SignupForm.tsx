@@ -5,13 +5,13 @@ import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
+import { SignupFormValues } from "@/types/form";
+
 import Input from "@/components/common/Input";
 import Label from "@/components/common/Label";
 import Button from "@/components/common/Button";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
-import { SignupFormValues } from "@/types/form";
-
 import { $checkEmail, $checkNickname } from "@/store/auth";
 
 interface Props {

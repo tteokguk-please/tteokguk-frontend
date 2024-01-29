@@ -1,11 +1,13 @@
 import { Fragment } from "react";
 
-import Header from "@/components/common/Header";
-import { NicknameFormValues } from "@/types/form";
-import NicknameForm from "@/components/Nickname/NicknameForm";
 import { useOverlay } from "@toss/use-overlay";
-import { $postKakaoUserSignup } from "@/store/auth";
 import { useAtomValue } from "jotai";
+
+import { NicknameFormValues } from "@/types/form";
+
+import Header from "@/components/common/Header";
+import NicknameForm from "@/components/Nickname/NicknameForm";
+import { $postKakaoUserSignup } from "@/store/auth";
 import WelcomModal from "@/components/shared/WelcomModal";
 import { INGREDIENTS } from "@/constants/ingredient";
 

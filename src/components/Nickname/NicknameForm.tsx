@@ -1,16 +1,19 @@
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+
+import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
+
+import { NicknameFormValues } from "@/types/form";
 
 import Label from "@/components/common/Label";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
-import { NicknameFormValues } from "@/types/form";
-import { useAtomValue } from "jotai";
 import { $checkNickname } from "@/store/auth";
-import { useEffect, useState } from "react";
+
 
 interface Props {
   defaultValues: NicknameFormValues;

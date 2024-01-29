@@ -1,15 +1,17 @@
 import { Fragment, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+
+import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
+
+import { PostKakaoLoginResponse, PostKakaoTokenReponse } from "@/types/auth";
 
 import Header from "@/components/common/Header";
 import headerLogo from "@/assets/images/header-logo.png";
 import Button from "@/components/common/Button";
 import { Link } from "@/routes/Link";
-import { useSearchParams } from "react-router-dom";
-import { useAtomValue } from "jotai";
 import { $postKakaoLogin, $postKakaoToken } from "@/store/auth";
-import { PostKakaoLoginResponse, PostKakaoTokenReponse } from "@/types/auth";
 import useRouter from "@/routes/useRouter";
 import { RoutePath } from "@/routes/Routes";
 

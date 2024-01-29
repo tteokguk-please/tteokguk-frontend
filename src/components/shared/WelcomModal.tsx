@@ -2,11 +2,12 @@ import { useState } from "react";
 
 import { css } from "@styled-system/css";
 
+import { IngredientName } from "@/types/ingredient";
+
 import useRouter from "@/routes/useRouter";
 import Modal from "@/components/common/modal/Modal";
 import Button from "@/components/common/Button";
 import DumplingIcon from "@/assets/svg/dumpling.svg";
-import { IngredientName } from "@/types/ingredient";
 
 interface Props {
   isOpen: boolean;
