@@ -1,4 +1,19 @@
-export const INGREDIENTS = {
+export const INGREDIENT_KEYS = [
+  "RICE_CAKE",
+  "EGG",
+  "SEAWEED",
+  "GREEN_ONION",
+  "BEEF",
+  "MUSHROOM",
+  "TOFU",
+  "FISH_CAKE",
+  "CANDY",
+  "DUMPLING",
+  "TAIYAKI",
+  "GARLIC",
+] as const;
+
+export const INGREDIENTS_LABEL_BY_KEYS = {
   RICE_CAKE: "희망떡",
   EGG: "사랑계란",
   SEAWEED: "해피김",
