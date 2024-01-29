@@ -31,13 +31,13 @@ const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => 
     {
       title: "재료를 선물해보세요!",
       content: "다른 사람들에게 떡국 재료를 나눠주면\n 복주머니를 얻을 수 있어요.",
-      icon: <GiftIcon />,
+      icon: <GiftIcon aria-label="선물" />,
       buttonContent: "다음",
     },
     {
       title: "복주머니를 열어보세요!",
       content: "복주머니를 열면 새로운 떡국 재료를\n 랜덤으로 얻을 수 있어요.",
-      icon: <LuckyBagIcon />,
+      icon: <LuckyBagIcon aria-label="복주머니" />,
       buttonContent: "소원 떡국 만들러 가기",
     },
   ];
@@ -60,9 +60,7 @@ const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => 
         <Modal.Header className={styles.title}>{modalContents[step].title}</Modal.Header>
         <Modal.Body className={styles.bodyContainer}>
           <div className={styles.content}>{modalContents[step].content}</div>
-          <div className={styles.ingredientImage} aria-label={uniqueIngredient}>
-            {modalContents[step].icon}
-          </div>
+          <div className={styles.imageContainer}>{modalContents[step].icon}</div>
           <Button onClick={handleClickNextButton} color="primary.100" applyColorTo="background">
             {modalContents[step].buttonContent}
           </Button>
@@ -95,7 +93,7 @@ const styles = {
     textAlign: "center",
     whiteSpace: "pre-line",
   }),
-  ingredientImage: css({
+  imageContainer: css({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
