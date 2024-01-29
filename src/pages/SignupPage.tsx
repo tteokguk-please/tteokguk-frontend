@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { useOverlay } from "@toss/use-overlay";
 
 import Header from "@/components/common/Header";
@@ -20,33 +20,30 @@ const SignupPage = () => {
     marketing: false,
   };
 
-  const { mutate: signup, data: signupResponse, error: signupError } = useAtomValue($signup);
+  const { mutate: signup } = useAtomValue($signup);
 
   const handleSubmit = async ({ email, password, nickname, marketing }: SignupFormValues) => {
-    signup({
-      email,
-      password,
-      nickname,
-      acceptsMarketing: marketing,
-    });
+    signup(
+      {
+        email,
+        password,
+        nickname,
+        acceptsMarketing: marketing,
+      },
+      {
+        onSuccess: ({ nickname, primaryIngredient }) => {
+          welcomModal.open(({ isOpen, close }) => (
+            <WelcomModal
+              isOpen={isOpen}
+              onClose={close}
+              nickname={nickname}
+              uniqueIngredient={INGREDIENTS[primaryIngredient]}
+            />
+          ));
+        },
+      },
+    );
   };
-
-  useEffect(() => {
-    if (signupResponse) {
-      welcomModal.open(({ isOpen, close }) => (
-        <WelcomModal
-          isOpen={isOpen}
-          onClose={close}
-          nickname={signupResponse.nickname}
-          uniqueIngredient={INGREDIENTS[signupResponse.primaryIngredient]}
-        />
-      ));
-    }
-    if (signupError) {
-      // TODO: 예외 처리
-      console.log("signup error");
-    }
-  }, [signupResponse, signupError]);
 
   return (
     <Fragment>
