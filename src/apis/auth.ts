@@ -1,5 +1,10 @@
+import ky from "ky";
+
 import {
   CheckEmailNicknameResponse,
+  KakaoLoginRequest,
+  KakaoLoginResponse,
+  KakaoTokenReponse,
   LoginRequest,
   LoginResponse,
   SignupRequest,
@@ -21,4 +26,26 @@ export const postSignup = (body: SignupRequest) => {
 
 export const postLogin = (body: LoginRequest) => {
   return http.post<LoginResponse>("api/v1/auth/login", body);
+};
+
+export const postKakaoToken = (code: string) => {
+  const searchParams = new URLSearchParams();
+  searchParams.append("grant_type", "authorization_code");
+  searchParams.append("client_id", import.meta.env.VITE_KAKAO_API_KEY);
+  searchParams.append("redirect_uri", import.meta.env.VITE_KAKAO_REDIRECT_URI);
+  searchParams.append("client_secret", import.meta.env.VITE_KAKAO_CLIENT_SECRET);
+  searchParams.append("code", code);
+
+  return ky
+    .post("https://kauth.kakao.com/oauth/token", {
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+      },
+      body: searchParams,
+    })
+    .then((reponse) => reponse.json<KakaoTokenReponse>());
+};
+
+export const postKakaoLogin = (body: KakaoLoginRequest) => {
+  return http.post<KakaoLoginResponse>("api/v1/oauth/kakao/login", body);
 };

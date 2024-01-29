@@ -1,7 +1,17 @@
 import { atomWithMutation } from "jotai-tanstack-query";
-import { checkEmail, checkNickname, postLogin, postSignup } from "@/apis/auth";
+import {
+  checkEmail,
+  checkNickname,
+  postKakaoLogin,
+  postKakaoToken,
+  postLogin,
+  postSignup,
+} from "@/apis/auth";
 import {
   CheckEmailNicknameResponse,
+  KakaoLoginRequest,
+  KakaoLoginResponse,
+  KakaoTokenReponse,
   LoginRequest,
   LoginResponse,
   SignupRequest,
@@ -25,4 +35,12 @@ export const $signup = atomWithMutation(() => ({
 
 export const $login = atomWithMutation(() => ({
   mutationFn: (body: LoginRequest): Promise<LoginResponse> => postLogin(body),
+}));
+
+export const $postKakaoToken = atomWithMutation(() => ({
+  mutationFn: (code: string): Promise<KakaoTokenReponse> => postKakaoToken(code),
+}));
+
+export const $postKakaoLogin = atomWithMutation(() => ({
+  mutationFn: (body: KakaoLoginRequest): Promise<KakaoLoginResponse> => postKakaoLogin(body),
 }));
