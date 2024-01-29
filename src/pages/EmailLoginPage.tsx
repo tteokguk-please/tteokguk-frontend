@@ -8,6 +8,7 @@ import { Link } from "@/routes/Link";
 import Label from "@/components/common/Label";
 import Input from "@/components/common/Input";
 import Header from "@/components/common/Header";
+import driveDragon from "@/assets/images/drive-dragon.png";
 
 const EmailLoginPage = () => {
   const handleSubmitLogin = (event: FormEvent) => {
@@ -20,23 +21,28 @@ const EmailLoginPage = () => {
     <Fragment>
       <Header hasPreviousPage>이메일로 로그인</Header>
       <div className={styles.container}>
-        <form onSubmit={handleSubmitLogin} noValidate>
-          <Label htmlFor="email">이메일</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="이메일을 입력해주세요"
-            className={styles.emailInput}
-          />
-          <Label htmlFor="password">비밀번호</Label>
-          <Input id="password" type="password" placeholder="비밀번호를 입력해주세요" />
-          <button type="submit" className={styles.button}>
-            로그인 하기
-          </button>
-        </form>
-        <Link to="/signup" className={styles.signupLink}>
-          회원가입 하러가기&gt;
-        </Link>
+        <div className={styles.content}>
+          <form onSubmit={handleSubmitLogin} noValidate>
+            <Label htmlFor="email">이메일</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="이메일을 입력해주세요"
+              className={styles.emailInput}
+            />
+            <Label htmlFor="password">비밀번호</Label>
+            <Input id="password" type="password" placeholder="비밀번호를 입력해주세요" />
+            <button type="submit" className={styles.button}>
+              로그인 하기
+            </button>
+          </form>
+          <Link to="/signup" className={styles.signupLink}>
+            회원가입 하러가기&gt;
+          </Link>
+        </div>
+        <div className={styles.imageContainer}>
+          <img src={driveDragon} alt="운전하는 용용이" />
+        </div>
       </div>
     </Fragment>
   );
@@ -48,9 +54,15 @@ const styles = {
   container: css({
     display: "flex",
     flexDirection: "column",
-    height: "calc(100% - 4.8rem)",
+    justifyContent: "space-between",
+    height: "calc(100vh - 4.8rem)",
     padding: "0 4rem",
-    paddingTop: "10rem",
+  }),
+  content: css({
+    display: "flex",
+    flexDirection: "column",
+    marginTop: "auto",
+    marginBottom: "auto",
   }),
   emailInput: css({
     marginBottom: "1.6rem",
@@ -65,5 +77,8 @@ const styles = {
   }),
   signupLink: css({
     textAlign: "center",
+  }),
+  imageContainer: css({
+    marginX: "-4rem",
   }),
 };
