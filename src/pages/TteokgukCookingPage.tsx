@@ -22,14 +22,14 @@ import {
   INGREDIENT_NAME_BY_KEY,
 } from "@/constants/ingredient";
 
-const MAX_CHARACTERS = 100;
+const MAX_WISH_LENGTH = 100;
 const MAX_INGREDIENTS = 5;
 
 const TteokgukCookingPage = () => {
   const router = useRouter();
   const { mutate: createTteokguk } = useAtomValue($postTteokguk);
 
-  const [wish, setWish] = useState("");
+  const [wishText, setWishText] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState<IngredientKey[]>([]);
   const [isPrivate, setIsPrivate] = useState(false);
 
@@ -37,8 +37,8 @@ const TteokgukCookingPage = () => {
     setIsPrivate(!isPrivate);
   };
 
-  const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setWish(event.target.value);
+  const handleChangeWishText = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setWishText(event.target.value);
   };
 
   const handleClickIngredient = (name: IngredientKey) => () => {
@@ -58,7 +58,7 @@ const TteokgukCookingPage = () => {
 
     createTteokguk(
       {
-        wish,
+        wish: wishText,
         ingredients: selectedIngredients,
         access: isPrivate,
       },
@@ -84,13 +84,13 @@ const TteokgukCookingPage = () => {
         </div>
         <form onSubmit={handleSubmitForm} className={styles.textareaContainer}>
           <textarea
-            onChange={handleTextChange}
+            onChange={handleChangeWishText}
             placeholder="이루고 싶은 소원을 입력하세요."
-            maxLength={MAX_CHARACTERS}
+            maxLength={MAX_WISH_LENGTH}
             className={styles.wisharea}
           />
           <div className={styles.charCount}>
-            {wish.length}/{MAX_CHARACTERS}
+            {wishText.length}/{MAX_WISH_LENGTH}
           </div>
           <div className={styles.titleContainer}>
             <div className={styles.title}>
@@ -124,7 +124,7 @@ const TteokgukCookingPage = () => {
             className="a11y-hidden"
           />
           <Button
-            disabled={!wish || selectedIngredients.length !== MAX_INGREDIENTS}
+            disabled={!wishText || selectedIngredients.length !== MAX_INGREDIENTS}
             color="primary.45"
             applyColorTo="outline"
           >
@@ -201,5 +201,6 @@ const styles = {
     gap: "0.8rem",
     marginTop: "3.1rem",
     marginBottom: "1.6rem",
+    cursor: "pointer",
   }),
 };
