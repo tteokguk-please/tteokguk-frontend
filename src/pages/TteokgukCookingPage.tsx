@@ -17,9 +17,9 @@ import MeterialIcon from "@/assets/svg/material.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import {
-  INGREDIENTS_ICON_BY_KEYS,
-  INGREDIENTS_LABEL_BY_KEYS,
+  INGREDIENT_ICON_BY_KEY,
   INGREDIENT_KEYS,
+  INGREDIENT_NAME_BY_KEY,
 } from "@/constants/ingredient";
 
 const MAX_CHARACTERS = 100;
@@ -105,8 +105,8 @@ const TteokgukCookingPage = () => {
             {INGREDIENT_KEYS.map((key, index) => (
               <Ingredient
                 key={`${index}-${key}`}
-                IngredientIcon={INGREDIENTS_ICON_BY_KEYS[key]}
-                label={INGREDIENTS_LABEL_BY_KEYS[key]}
+                IngredientIcon={INGREDIENT_ICON_BY_KEY[key]}
+                label={INGREDIENT_NAME_BY_KEY[key]}
                 onClick={handleClickIngredient(key)}
                 isSelected={selectedIngredients.includes(key)}
               />

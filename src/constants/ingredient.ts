@@ -15,7 +15,7 @@ export const INGREDIENT_KEYS = [
   "GARLIC",
 ] as const;
 
-export const INGREDIENTS_LABEL_BY_KEYS = {
+export const INGREDIENT_NAME_BY_KEY = {
   RICE_CAKE: "희망떡",
   EGG: "사랑계란",
   SEAWEED: "해피김",
@@ -30,7 +30,7 @@ export const INGREDIENTS_LABEL_BY_KEYS = {
   GARLIC: "성공마늘",
 } as const;
 
-export const INGREDIENTS_ICON_BY_KEYS = {
+export const INGREDIENT_ICON_BY_KEY = {
   RICE_CAKE: IngredientIcon.RICE_CAKE,
   EGG: IngredientIcon.EGG,
   SEAWEED: IngredientIcon.SEAWEED,
