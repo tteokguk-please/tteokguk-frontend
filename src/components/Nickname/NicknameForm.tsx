@@ -8,6 +8,9 @@ import Button from "@/components/common/Button";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import { NicknameFormValues } from "@/types/form";
+import { useAtomValue } from "jotai";
+import { $checkNickname } from "@/store/auth";
+import { useEffect, useState } from "react";
 
 interface Props {
   defaultValues: NicknameFormValues;
@@ -18,6 +21,7 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
   const {
     register,
     watch,
+    setError,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
@@ -25,7 +29,7 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
     defaultValues,
   });
 
-  const { privacy, marketing } = watch();
+  const { nickname, privacy, marketing } = watch();
 
   const nicknameRegister = register("nickname", {
     required: true,
@@ -34,12 +38,36 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
     },
   });
 
+  const { data: checkNicknameReponse, mutate: checkNickname } = useAtomValue($checkNickname);
+  const [isExistNickname, setIsExistNickname] = useState<boolean | null>(null);
+  const isDisabledSignupButton = !isValid || isExistNickname !== false;
+
+  const handleCheckNickname = () => {
+    checkNickname(nickname);
+  };
+
+  useEffect(() => {
+    if (checkNicknameReponse) {
+      setIsExistNickname(checkNicknameReponse.isExist);
+    }
+    if (checkNicknameReponse?.isExist) {
+      setError("nickname", { message: "이미 사용 중인 닉네임입니다." });
+    }
+  }, [checkNicknameReponse, setIsExistNickname, setError]);
+
+  useEffect(() => {
+    setIsExistNickname(null);
+  }, [nickname, setIsExistNickname]);
+
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.labelContainer}>
           <Label htmlFor="nickname">닉네임</Label>
           {errors.nickname && <p className={styles.errorMessage}>{errors.nickname.message}</p>}
+          {isExistNickname === false && (
+            <p className={styles.successMessage}>사용 가능한 닉네임입니다.</p>
+          )}
         </div>
         <div className={styles.nicknameContainer}>
           <Input
@@ -48,7 +76,11 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
             type="text"
             placeholder="닉네임 2~6자를 입력해주세요"
           />
-          <button type="button" className={styles.checkDuplicateButton}>
+          <button
+            type="button"
+            className={styles.checkDuplicateButton}
+            onClick={handleCheckNickname}
+          >
             중복확인
           </button>
         </div>
@@ -84,7 +116,7 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
             className="a11y-hidden"
           />
         </div>
-        <Button disabled={!isValid} color="primary.100" applyColorTo="background">
+        <Button disabled={isDisabledSignupButton} color="primary.100" applyColorTo="background">
           회원가입 완료하기
         </Button>
       </div>
@@ -107,6 +139,11 @@ const styles = {
   errorMessage: css({
     fontSize: "1.2rem",
     color: "red.100",
+    marginLeft: "0.4rem",
+  }),
+  successMessage: css({
+    fontSize: "1.2rem",
+    color: "green.100",
     marginLeft: "0.4rem",
   }),
   nicknameContainer: css({
