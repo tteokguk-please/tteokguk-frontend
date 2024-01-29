@@ -1,11 +1,12 @@
 import { Fragment, useEffect } from "react";
+
 import { useOverlay } from "@toss/use-overlay";
+import { useAtomValue } from "jotai";
 
 import Header from "@/components/common/Header";
 import SignupForm from "@/components/Signup/SignupForm";
 import WelcomModal from "@/components/shared/WelcomModal";
 import { SignupFormValues } from "@/types/form/signup";
-import { useAtomValue } from "jotai";
 import { $signup } from "@/store/auth";
 import { INGREDIENTS } from "@/constants/ingredient";
 
