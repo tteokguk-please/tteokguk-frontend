@@ -23,7 +23,7 @@ import {
   INGREDIENT_NAME_BY_KEY,
 } from "@/constants/ingredient";
 
-const MAX_WISH_LENGTH = 100;
+const MAX_WISH_TEXT_LENGTH = 100;
 const MAX_INGREDIENTS = 5;
 
 const TteokgukCookingPage = () => {
@@ -95,11 +95,11 @@ const TteokgukCookingPage = () => {
           <textarea
             onChange={handleChangeWishText}
             placeholder="이루고 싶은 소원을 입력하세요."
-            maxLength={MAX_WISH_LENGTH}
+            maxLength={MAX_WISH_TEXT_LENGTH}
             className={styles.wisharea}
           />
           <div className={styles.charCount}>
-            {wishText.length}/{MAX_WISH_LENGTH}
+            {wishText.length}/{MAX_WISH_TEXT_LENGTH}
           </div>
           <div className={styles.titleContainer}>
             <div className={styles.title}>
