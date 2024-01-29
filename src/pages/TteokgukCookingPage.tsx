@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
 import { useAtomValue } from "jotai";
+import { toast } from "sonner";
 
 import { css } from "@styled-system/css";
 
@@ -49,7 +50,15 @@ const TteokgukCookingPage = () => {
         return previousSelected.filter((selectedLabel) => selectedLabel !== name);
       }
 
-      return previousSelected.length < 5 ? [...previousSelected, name] : previousSelected;
+      if (previousSelected.length === MAX_INGREDIENTS) {
+        toast("선택 가능한 재료의 개수를 초과하였습니다.\n 삭제 후 다시 추가해주세요.", {
+          className: styles.toast,
+        });
+
+        return previousSelected;
+      }
+
+      return [...previousSelected, name];
     });
   };
 
@@ -202,5 +211,10 @@ const styles = {
     marginTop: "3.1rem",
     marginBottom: "1.6rem",
     cursor: "pointer",
+  }),
+  toast: css({
+    paddingY: "1.2rem",
+    whiteSpace: "pre-line",
+    textAlign: "center",
   }),
 };
