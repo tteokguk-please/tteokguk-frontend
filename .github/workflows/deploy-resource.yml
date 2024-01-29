@@ -10,22 +10,20 @@ jobs:
       - name: Checkout source code.
         uses: actions/checkout@v4
 
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
-      
-      - uses: actions/cache@v4
-        id: npm-cache
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-node-
+          node-version: "18.19.0"
+          cache: "pnpm"
 
-      - name: install npm dependencies
-        run: npm install
+      - name: Install pnpm
+        run: npm install -g pnpm
 
-      - name: react build
-        run: npm run build
+      - name: Install pnpm dependencies
+        run: pnpm install
+
+      - name: React build
+        run: pnpm run build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
