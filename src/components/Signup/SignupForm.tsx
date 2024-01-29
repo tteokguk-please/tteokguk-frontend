@@ -36,6 +36,9 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
 
   const { password, passwordConfirm, privacy, marketing, email, nickname } = watch();
 
+  const validateEmail = EMAIL_REGEX.test(email);
+  const validateNickname = (nickname: string) => nickname.length >= 2 && nickname.length <= 6;
+
   const emailRegister = register("email", {
     required: true,
     pattern: {
@@ -65,7 +68,7 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
   const nicknameRegister = register("nickname", {
     required: true,
     validate: (nickname: string) => {
-      return (nickname.length >= 2 && nickname.length <= 6) || "닉네임은 2~6자 사이여야 합니다.";
+      return validateNickname(nickname) || "닉네임은 2~6자 사이여야 합니다.";
     },
   });
 
@@ -126,6 +129,7 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
             <button
               type="button"
               className={styles.checkDuplicateButton}
+              disabled={!validateEmail}
               onClick={handleCheckEmail}
             >
               중복확인
@@ -178,6 +182,7 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
             <button
               type="button"
               className={styles.checkDuplicateButton}
+              disabled={!validateNickname(nickname)}
               onClick={handleCheckNickname}
             >
               중복확인

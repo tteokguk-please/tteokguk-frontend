@@ -31,10 +31,12 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
 
   const { nickname, privacy, marketing } = watch();
 
+  const validateNickname = (nickname: string) => nickname.length >= 2 && nickname.length <= 6;
+
   const nicknameRegister = register("nickname", {
     required: true,
     validate: (nickname: string) => {
-      return (nickname.length >= 2 && nickname.length <= 6) || "닉네임은 2~6자 사이여야 합니다.";
+      return validateNickname(nickname) || "닉네임은 2~6자 사이여야 합니다.";
     },
   });
 
@@ -79,6 +81,7 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
           <button
             type="button"
             className={styles.checkDuplicateButton}
+            disabled={!validateNickname(nickname)}
             onClick={handleCheckNickname}
           >
             중복확인
