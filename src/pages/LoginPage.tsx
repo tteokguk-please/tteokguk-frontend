@@ -1,14 +1,74 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+
+import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
-import { Link } from "@/routes/Link";
+import { PostKakaoLoginResponse, PostKakaoTokenReponse } from "@/types/auth";
+
 import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
+import { Link } from "@/routes/Link";
+import { $postKakaoLogin, $postKakaoToken } from "@/store/auth";
+import useRouter from "@/routes/useRouter";
+import { RoutePath } from "@/routes/Routes";
 import deliveryDragon from "@/assets/images/delivery-dragon.png";
 import KakaoIcon from "@/assets/svg/kakao.svg";
 
 const LoginPage = () => {
+  const [searchParams] = useSearchParams();
+  const router = useRouter();
+
+  const { mutate: postKakaoToken } = useAtomValue($postKakaoToken);
+  const { mutate: postKakaoLogin } = useAtomValue($postKakaoLogin);
+
+  const handleClickKakaoLogin = () => {
+    const kakaoToken = localStorage.getItem("kakaoToken");
+
+    if (kakaoToken) {
+      postKakaoLogin(
+        { accessToken: kakaoToken },
+        {
+          onSuccess: handleSuccessPostKakaoLogin,
+        },
+      );
+    } else {
+      window.location.href = import.meta.env.VITE_KAKAO_LOGIN_URI;
+    }
+  };
+
+  const handleSuccessPostKakaoToken = ({ access_token }: PostKakaoTokenReponse) => {
+    localStorage.setItem("kakaoToken", access_token);
+    postKakaoLogin(
+      { accessToken: access_token },
+      {
+        onSuccess: handleSuccessPostKakaoLogin,
+      },
+    );
+  };
+
+  const handleSuccessPostKakaoLogin = ({
+    accessToken,
+    refreshToken,
+    isInitialized,
+  }: PostKakaoLoginResponse) => {
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+
+    const nextPath: RoutePath = isInitialized ? "/tteokguks" : "/nickname/create";
+    router.push(nextPath);
+  };
+
+  useEffect(() => {
+    const kakaoUserCode = searchParams.get("code");
+    if (kakaoUserCode) {
+      postKakaoToken(kakaoUserCode, {
+        onSuccess: handleSuccessPostKakaoToken,
+      });
+    }
+  }, [searchParams, postKakaoToken]);
+
   return (
     <Fragment>
       <Header hasPreviousPage>
@@ -24,7 +84,7 @@ const LoginPage = () => {
               이메일로 로그인
             </Button>
           </Link>
-          <Button className={styles.kakaoLoginButton}>
+          <Button className={styles.kakaoLoginButton} onClick={handleClickKakaoLogin}>
             <div>
               <KakaoIcon />
             </div>

@@ -1,5 +1,6 @@
 import { FormEvent, Fragment } from "react";
 
+import { useAtomValue } from "jotai";
 import { toast } from "sonner";
 
 import { css } from "@styled-system/css";
@@ -8,13 +9,31 @@ import { Link } from "@/routes/Link";
 import Label from "@/components/common/Label";
 import Input from "@/components/common/Input";
 import Header from "@/components/common/Header";
+import { $login } from "@/store/auth";
+import useRouter from "@/routes/useRouter";
 import driveDragon from "@/assets/images/drive-dragon.png";
 
 const EmailLoginPage = () => {
-  const handleSubmitLogin = (event: FormEvent) => {
-    event.preventDefault();
+  const router = useRouter();
+  const { mutate: login } = useAtomValue($login);
 
-    toast("아이디 혹은 비밀번호를 확인해주세요.");
+  const handleSubmitLogin = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    login(
+      {
+        email,
+        password,
+      },
+      {
+        onSuccess: () => router.push("/tteokguks"),
+        onError: () => toast("아이디 혹은 비밀번호를 확인해주세요."),
+      },
+    );
   };
 
   return (

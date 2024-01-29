@@ -1,12 +1,13 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 
 import { useOverlay } from "@toss/use-overlay";
 import { useAtomValue } from "jotai";
 
+import { SignupFormValues } from "@/types/form";
+
 import Header from "@/components/common/Header";
 import SignupForm from "@/components/Signup/SignupForm";
 import WelcomModal from "@/components/shared/WelcomModal";
-import { SignupFormValues } from "@/types/form/signup";
 import { $signup } from "@/store/auth";
 import { INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 
@@ -21,33 +22,30 @@ const SignupPage = () => {
     marketing: false,
   };
 
-  const { mutate: signup, data: signupResponse, error: signupError } = useAtomValue($signup);
+  const { mutate: signup } = useAtomValue($signup);
 
   const handleSubmit = async ({ email, password, nickname, marketing }: SignupFormValues) => {
-    signup({
-      email,
-      password,
-      nickname,
-      acceptsMarketing: marketing,
-    });
+    signup(
+      {
+        email,
+        password,
+        nickname,
+        acceptsMarketing: marketing,
+      },
+      {
+        onSuccess: ({ nickname, primaryIngredient }) => {
+          welcomModal.open(({ isOpen, close }) => (
+            <WelcomModal
+              isOpen={isOpen}
+              onClose={close}
+              nickname={nickname}
+              uniqueIngredient={INGREDIENT_NAME_BY_KEY[primaryIngredient]}
+            />
+          ));
+        },
+      },
+    );
   };
-
-  useEffect(() => {
-    if (signupResponse) {
-      welcomModal.open(({ isOpen, close }) => (
-        <WelcomModal
-          isOpen={isOpen}
-          onClose={close}
-          nickname={signupResponse.nickname}
-          uniqueIngredient={INGREDIENT_NAME_BY_KEY[signupResponse.primaryIngredient]}
-        />
-      ));
-    }
-    if (signupError) {
-      // TODO: 예외 처리
-      console.log("signup error");
-    }
-  }, [signupResponse, signupError]);
 
   return (
     <Fragment>
