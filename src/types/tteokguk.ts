@@ -14,3 +14,10 @@ export interface PostTteokgukResponse {
   completion: boolean;
   ingredients: IngredientKey[];
 }
+
+export interface Tteokguk {
+  tteokgukId: number;
+  wish: string;
+  access: boolean;
+  tteokgukIngredients: IngredientKey[];
+}
