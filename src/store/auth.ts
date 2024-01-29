@@ -10,11 +10,11 @@ import {
 } from "@/apis/auth";
 import {
   CheckEmailNicknameResponse,
-  KaKaoUserSignupResponse,
-  KakaoLoginRequest,
-  KakaoLoginResponse,
-  KakaoTokenReponse,
-  KakaoUserSignupRequest,
+  PostKakaoUserSignupResponse,
+  PostKakaoLoginRequest,
+  PostKakaoLoginResponse,
+  PostKakaoTokenReponse,
+  PostKakaoUserSignupRequest,
   LoginRequest,
   LoginResponse,
   SignupRequest,
@@ -38,14 +38,15 @@ export const $login = atomWithMutation(() => ({
 }));
 
 export const $postKakaoToken = atomWithMutation(() => ({
-  mutationFn: (code: string): Promise<KakaoTokenReponse> => postKakaoToken(code),
+  mutationFn: (code: string): Promise<PostKakaoTokenReponse> => postKakaoToken(code),
 }));
 
 export const $postKakaoLogin = atomWithMutation(() => ({
-  mutationFn: (body: KakaoLoginRequest): Promise<KakaoLoginResponse> => postKakaoLogin(body),
+  mutationFn: (body: PostKakaoLoginRequest): Promise<PostKakaoLoginResponse> =>
+    postKakaoLogin(body),
 }));
 
 export const $postKakaoUserSignup = atomWithMutation(() => ({
-  mutationFn: (body: KakaoUserSignupRequest): Promise<KaKaoUserSignupResponse> =>
+  mutationFn: (body: PostKakaoUserSignupRequest): Promise<PostKakaoUserSignupResponse> =>
     postKakaoUserSignup(body),
 }));

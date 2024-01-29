@@ -9,7 +9,7 @@ import { Link } from "@/routes/Link";
 import { useSearchParams } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { $postKakaoLogin, $postKakaoToken } from "@/store/auth";
-import { KakaoLoginResponse, KakaoTokenReponse } from "@/types/auth";
+import { PostKakaoLoginResponse, PostKakaoTokenReponse } from "@/types/auth";
 import useRouter from "@/routes/useRouter";
 import { RoutePath } from "@/routes/Routes";
 
@@ -35,7 +35,7 @@ const LoginPage = () => {
     }
   };
 
-  const handleSuccessPostKakaoToken = ({ access_token }: KakaoTokenReponse) => {
+  const handleSuccessPostKakaoToken = ({ access_token }: PostKakaoTokenReponse) => {
     localStorage.setItem("kakaoToken", access_token);
     postKakaoLogin(
       { accessToken: access_token },
@@ -49,7 +49,7 @@ const LoginPage = () => {
     accessToken,
     refreshToken,
     isInitialized,
-  }: KakaoLoginResponse) => {
+  }: PostKakaoLoginResponse) => {
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
 

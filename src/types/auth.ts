@@ -28,7 +28,7 @@ export interface LoginResponse {
   refreshToken: string;
 }
 
-export interface KakaoTokenReponse {
+export interface PostKakaoTokenReponse {
   token_type: string; // 토큰 타입, bearer로 고정
   access_token: string; // 사용자 액세스 토큰 값
   id_token?: string; // ID 토큰 값 (OpenID Connect 확장 기능을 통해 발급되는 ID 토큰, Base64 인코딩 된 사용자 인증 정보 포함)
@@ -38,23 +38,23 @@ export interface KakaoTokenReponse {
   scope?: string; // 인증된 사용자의 정보 조회 권한 범위 (범위가 여러 개일 경우, 공백으로 구분)
 }
 
-export interface KakaoLoginRequest {
+export interface PostKakaoLoginRequest {
   accessToken: string;
 }
 
-export interface KakaoLoginResponse {
+export interface PostKakaoLoginResponse {
   id: number;
   accessToken: string;
   refreshToken: string;
   isInitialized: boolean;
 }
 
-export interface KakaoUserSignupRequest {
+export interface PostKakaoUserSignupRequest {
   nickname: string;
   acceptsMarketing: boolean;
 }
 
-export interface KaKaoUserSignupResponse {
+export interface PostKakaoUserSignupResponse {
   id: number;
   nickname: string;
   primaryIngredient: IngredientKey;
