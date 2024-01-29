@@ -8,7 +8,7 @@ import SignupForm from "@/components/Signup/SignupForm";
 import WelcomModal from "@/components/shared/WelcomModal";
 import { SignupFormValues } from "@/types/form/signup";
 import { $signup } from "@/store/auth";
-import { INGREDIENTS } from "@/constants/ingredient";
+import { INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 
 const SignupPage = () => {
   const welcomModal = useOverlay();
@@ -39,7 +39,7 @@ const SignupPage = () => {
           isOpen={isOpen}
           onClose={close}
           nickname={signupResponse.nickname}
-          uniqueIngredient={INGREDIENTS[signupResponse.primaryIngredient]}
+          uniqueIngredient={INGREDIENT_NAME_BY_KEY[signupResponse.primaryIngredient]}
         />
       ));
     }
