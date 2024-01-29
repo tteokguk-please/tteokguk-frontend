@@ -7,7 +7,8 @@ import { IngredientName } from "@/types/ingredient";
 import useRouter from "@/routes/useRouter";
 import Modal from "@/components/common/modal/Modal";
 import Button from "@/components/common/Button";
-import DumplingIcon from "@/assets/svg/dumpling.svg";
+import GiftIcon from "@/assets/svg/gift.svg";
+import LuckyBagIcon from "@/assets/svg/lucky-bag.svg";
 
 interface Props {
   isOpen: boolean;
@@ -24,16 +25,19 @@ const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => 
     {
       title: `${nickname}님 환영합니다!`,
       content: `${nickname}님의 고유 재료는 '${uniqueIngredient}' 이에요.\n 고유재료는 무제한으로 쓸 수 있어요.`,
+      icon: "",
       buttonContent: "다음",
     },
     {
       title: "재료를 선물해보세요!",
-      content: "다른 사람들에게 떡국 재료를 나눠주면 복주머니를 얻을 수 있어요.",
+      content: "다른 사람들에게 떡국 재료를 나눠주면\n 복주머니를 얻을 수 있어요.",
+      icon: <GiftIcon />,
       buttonContent: "다음",
     },
     {
       title: "복주머니를 열어보세요!",
-      content: "복주머니를 열면 새로운 떡국 재료를 랜덤으로 얻을 수 있어요.",
+      content: "복주머니를 열면 새로운 떡국 재료를\n 랜덤으로 얻을 수 있어요.",
+      icon: <LuckyBagIcon />,
       buttonContent: "소원 떡국 만들러 가기",
     },
   ];
@@ -57,7 +61,7 @@ const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => 
         <Modal.Body className={styles.bodyContainer}>
           <div className={styles.content}>{modalContents[step].content}</div>
           <div className={styles.ingredientImage} aria-label={uniqueIngredient}>
-            <DumplingIcon />
+            {modalContents[step].icon}
           </div>
           <Button onClick={handleClickNextButton} color="primary.100" applyColorTo="background">
             {modalContents[step].buttonContent}
