@@ -2,9 +2,11 @@ import ky from "ky";
 
 import {
   CheckEmailNicknameResponse,
+  KaKaoUserSignupResponse,
   KakaoLoginRequest,
   KakaoLoginResponse,
   KakaoTokenReponse,
+  KakaoUserSignupRequest,
   LoginRequest,
   LoginResponse,
   SignupRequest,
@@ -48,4 +50,8 @@ export const postKakaoToken = (code: string) => {
 
 export const postKakaoLogin = (body: KakaoLoginRequest) => {
   return http.post<KakaoLoginResponse>("api/v1/oauth/kakao/login", body);
+};
+
+export const postKakaoUserSignup = (body: KakaoUserSignupRequest) => {
+  return http.post<KaKaoUserSignupResponse>("api/v1/user/initialization", body);
 };

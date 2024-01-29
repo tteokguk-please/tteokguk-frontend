@@ -4,14 +4,17 @@ import {
   checkNickname,
   postKakaoLogin,
   postKakaoToken,
+  postKakaoUserSignup,
   postLogin,
   postSignup,
 } from "@/apis/auth";
 import {
   CheckEmailNicknameResponse,
+  KaKaoUserSignupResponse,
   KakaoLoginRequest,
   KakaoLoginResponse,
   KakaoTokenReponse,
+  KakaoUserSignupRequest,
   LoginRequest,
   LoginResponse,
   SignupRequest,
@@ -43,4 +46,9 @@ export const $postKakaoToken = atomWithMutation(() => ({
 
 export const $postKakaoLogin = atomWithMutation(() => ({
   mutationFn: (body: KakaoLoginRequest): Promise<KakaoLoginResponse> => postKakaoLogin(body),
+}));
+
+export const $postKakaoUserSignup = atomWithMutation(() => ({
+  mutationFn: (body: KakaoUserSignupRequest): Promise<KaKaoUserSignupResponse> =>
+    postKakaoUserSignup(body),
 }));

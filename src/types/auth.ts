@@ -48,3 +48,14 @@ export interface KakaoLoginResponse {
   refreshToken: string;
   isInitialized: boolean;
 }
+
+export interface KakaoUserSignupRequest {
+  nickname: string;
+  acceptsMarketing: boolean;
+}
+
+export interface KaKaoUserSignupResponse {
+  id: number;
+  nickname: string;
+  primaryIngredient: IngredientKey;
+}
