@@ -10,6 +10,7 @@ import MeterialIcon from "@/assets/svg/material.svg";
 import DumplingIcon from "@/assets/svg/dumpling.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
+import shoppingDragon from "@/assets/images/shopping-dragon.png";
 
 const MAX_CHARACTERS = 100;
 
@@ -30,6 +31,9 @@ const TteokgukCookingPage = () => {
       <Header hasPreviousPage actionIcon="guide">
         떡국 만들기
       </Header>
+      <div>
+        <img src={shoppingDragon} alt="쇼핑하는 용용이" />
+      </div>
       <div className={styles.container}>
         <div className={styles.title}>
           <WishIcon />
@@ -74,7 +78,7 @@ const TteokgukCookingPage = () => {
             onChange={handleCheckboxChange}
             className="a11y-hidden"
           />
-          <Button color="primary.45" applyColorTo="outline">
+          <Button color="primary.45" applyColorTo="outline" className={styles.button}>
             소원 떡국 만들기
           </Button>
         </form>
@@ -87,8 +91,7 @@ export default TteokgukCookingPage;
 
 const styles = {
   container: css({
-    width: "100%",
-    minHeight: "calc(100% - 4.8rem)",
+    height: "calc(100vh- 16.4rem)",
     backgroundColor: "back",
     paddingX: "2.4rem",
   }),
@@ -104,11 +107,10 @@ const styles = {
   }),
   textareaContainer: css({
     position: "relative",
-    height: "16.9rem",
   }),
   wishTextarea: css({
     width: "100%",
-    height: "100%",
+    height: "16.9rem",
     borderWidth: "0.1rem",
     borderColor: "primary.45",
     borderRadius: "0.8rem",
@@ -120,7 +122,7 @@ const styles = {
   charCount: css({
     position: "absolute",
     right: "1.2rem",
-    bottom: "1rem",
+    top: "14rem",
     fontSize: "1.2rem",
     color: "gray.50",
   }),
@@ -141,5 +143,8 @@ const styles = {
     gap: "0.8rem",
     marginTop: "3.1rem",
     marginBottom: "1.6rem",
+  }),
+  button: css({
+    marginBottom: "2rem",
   }),
 };
