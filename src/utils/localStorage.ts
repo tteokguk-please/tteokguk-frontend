@@ -2,7 +2,13 @@ export const getLocalStorage = (key: string) => {
   try {
     const value = localStorage.getItem(key);
 
-    return value ? JSON.parse(value) : null;
+    if (!value) {
+      return null;
+    }
+    if (typeof value === "string") {
+      return value;
+    }
+    return JSON.parse(value);
   } catch (error) {
     console.error(`Error parsing localStorage item with key "${key}":`, error);
   }
@@ -10,7 +16,7 @@ export const getLocalStorage = (key: string) => {
 
 export const setLocalStorage = <T>(key: string, value: T) => {
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value));
   } catch (error) {
     console.error(`Error serializing value for localStorage item with key "${key}":`, error);
   }
