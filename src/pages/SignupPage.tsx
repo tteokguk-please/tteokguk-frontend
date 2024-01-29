@@ -4,7 +4,7 @@ import { useOverlay } from "@toss/use-overlay";
 import Header from "@/components/common/Header";
 import SignupForm from "@/components/Signup/SignupForm";
 import WelcomModal from "@/components/shared/WelcomModal";
-import { SignupFormValues } from "@/types/form/signup";
+import { SignupFormValues } from "@/types/form";
 import { useAtomValue } from "jotai";
 import { $signup } from "@/store/auth";
 import { INGREDIENTS } from "@/constants/ingredient";

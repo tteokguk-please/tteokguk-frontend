@@ -10,7 +10,7 @@ import Label from "@/components/common/Label";
 import Button from "@/components/common/Button";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
-import { SignupFormValues } from "@/types/form/signup";
+import { SignupFormValues } from "@/types/form";
 
 import { $checkEmail, $checkNickname } from "@/store/auth";
 
