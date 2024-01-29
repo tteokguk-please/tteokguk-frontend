@@ -1,19 +1,17 @@
-import { ReactNode } from "react";
-
 import { css } from "@styled-system/css";
 
 interface Props {
-  ingredientIcon: ReactNode;
+  IngredientIcon: string;
   label: string;
   onClick: () => void;
   isSelected: boolean;
 }
 
-const Ingredient = ({ ingredientIcon, label, onClick, isSelected }: Props) => {
+const Ingredient = ({ IngredientIcon, label, onClick, isSelected }: Props) => {
   return (
     <button type="button" className={styles.ingredientContainer} onClick={onClick}>
       <div className={styles.ingredientIcon(isSelected)} aria-label={label}>
-        {ingredientIcon}
+        {<IngredientIcon />}
       </div>
       <div className={styles.ingredientLabel}>{label}</div>
     </button>
@@ -26,6 +24,8 @@ const styles = {
   ingredientContainer: css({
     position: "relative",
     cursor: "pointer",
+    width: "7.6rem",
+    height: "7.6rem",
   }),
   ingredientIcon: (isSelected: boolean) =>
     css({

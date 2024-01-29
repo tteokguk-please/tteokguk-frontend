@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, ReactNode, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 import { useAtomValue } from "jotai";
 
@@ -14,81 +14,16 @@ import Header from "@/components/common/Header";
 import Ingredient from "@/components/common/Ingredient";
 import WishIcon from "@/assets/svg/wish.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
-import DumplingIcon from "@/assets/svg/dumpling.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
-
-interface IngredientItem {
-  name: IngredientKey;
-  icon: ReactNode;
-  label: string;
-}
+import {
+  INGREDIENTS_ICON_BY_KEYS,
+  INGREDIENTS_LABEL_BY_KEYS,
+  INGREDIENT_KEYS,
+} from "@/constants/ingredient";
 
 const MAX_CHARACTERS = 100;
 const MAX_INGREDIENTS = 5;
-
-const ingredients: IngredientItem[] = [
-  {
-    name: "RICE_CAKE",
-    icon: <DumplingIcon />,
-    label: "희망떡",
-  },
-  {
-    name: "EGG",
-    icon: <DumplingIcon />,
-    label: "사랑계란",
-  },
-  {
-    name: "SEAWEED",
-    icon: <DumplingIcon />,
-    label: "해피김",
-  },
-  {
-    name: "GREEN_ONION",
-    icon: <DumplingIcon />,
-    label: "행운파",
-  },
-  {
-    name: "BEEF",
-    icon: <DumplingIcon />,
-    label: "튼튼고기",
-  },
-  {
-    name: "MUSHROOM",
-    icon: <DumplingIcon />,
-    label: "용기버섯",
-  },
-  {
-    name: "TOFU",
-    icon: <DumplingIcon />,
-    label: "스마일두부",
-  },
-  {
-    name: "FISH_CAKE",
-    icon: <DumplingIcon />,
-    label: "응원어묵",
-  },
-  {
-    name: "CANDY",
-    icon: <DumplingIcon />,
-    label: "일등사탕",
-  },
-  {
-    name: "DUMPLING",
-    icon: <DumplingIcon />,
-    label: "당첨만두",
-  },
-  {
-    name: "TAIYAKI",
-    icon: <DumplingIcon />,
-    label: "금붕어빵",
-  },
-  {
-    name: "GARLIC",
-    icon: <DumplingIcon />,
-    label: "성공마늘",
-  },
-];
 
 const TteokgukCookingPage = () => {
   const router = useRouter();
@@ -167,13 +102,13 @@ const TteokgukCookingPage = () => {
             </div>
           </div>
           <div className={styles.meterialContainer}>
-            {ingredients.map(({ name, icon, label }, index) => (
+            {INGREDIENT_KEYS.map((key, index) => (
               <Ingredient
-                key={`${index}-${name}`}
-                ingredientIcon={icon}
-                label={label}
-                onClick={handleClickIngredient(name)}
-                isSelected={selectedIngredients.includes(name)}
+                key={`${index}-${key}`}
+                IngredientIcon={INGREDIENTS_ICON_BY_KEYS[key]}
+                label={INGREDIENTS_LABEL_BY_KEYS[key]}
+                onClick={handleClickIngredient(key)}
+                isSelected={selectedIngredients.includes(key)}
               />
             ))}
           </div>
@@ -230,6 +165,7 @@ const styles = {
   textareaContainer: css({
     position: "relative",
     height: "16.9rem",
+    paddingBottom: "2rem",
   }),
   wisharea: css({
     width: "100%",
@@ -245,15 +181,13 @@ const styles = {
   charCount: css({
     position: "absolute",
     right: "1.2rem",
-    bottom: "1rem",
+    bottom: "3rem",
     fontSize: "1.2rem",
     color: "gray.50",
   }),
   meterialContainer: css({
-    display: "flex",
-    flexFlow: "row wrap",
-    justifyContent: "center",
-    alignItems: "center",
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(7.6rem, 1fr))",
     gap: "1.8rem",
     height: "43.8rem",
     padding: "2.3rem 2.4rem",
