@@ -8,7 +8,9 @@ const HomePage = () => {
   return (
     <div className={styles.container}>
       <h1>
-        <img src={homeLogo} alt="로고" />
+        <Link to="/">
+          <img src={homeLogo} alt="로고" />
+        </Link>
       </h1>
       <div className={styles.buttonContainer}>
         <Link to="/login">

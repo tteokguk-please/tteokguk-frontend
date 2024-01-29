@@ -11,6 +11,7 @@ import MyPage from "@/pages/MyPage";
 import MyActivityPage from "@/pages/MyActivityPage";
 import RandomUserPage from "@/pages/RandomUserPage";
 import NotFoundPage from "@/pages/NotFoundPage";
+import NicknamePage from "@/pages/NicknamePage";
 
 import Layout from "@/components/layout/Layout";
 
@@ -18,6 +19,7 @@ export type RoutePath =
   | "/"
   | "/login"
   | "/login/email"
+  | "/nickname/create"
   | "/signup"
   | "/tteokguks"
   | "/tteokguks/:id"
@@ -35,6 +37,7 @@ export const Routes = () => {
         <Route index element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="login/email" element={<EmailLoginPage />} />
+        <Route path="/nickname/create" element={<NicknamePage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/tteokguks" element={<MainPage />} />
         <Route path="/tteokguks/:id" element={<TteokgukPage />} />
