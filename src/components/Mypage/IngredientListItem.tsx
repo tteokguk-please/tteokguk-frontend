@@ -1,6 +1,6 @@
 import { css } from "@styled-system/css";
 
-import DumplingIcon from "@/assets/svg/dumpling.svg";
+import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
 
 interface Props {
   ingredientCount: number;

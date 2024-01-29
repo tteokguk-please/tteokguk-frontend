@@ -11,10 +11,10 @@ const kyInstance = ky.create({
   hooks: {
     beforeRequest: [
       (request) => {
-        const token = getLocalStorage("token");
+        const accessToken = getLocalStorage("accessToken");
 
-        if (token) {
-          request.headers.set("Authorization", `Bearer ${token}`);
+        if (accessToken) {
+          request.headers.set("Authorization", `Bearer ${accessToken}`);
         }
       },
     ],

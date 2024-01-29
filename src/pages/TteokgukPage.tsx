@@ -8,7 +8,7 @@ import Ingredient from "@/components/common/Ingredient";
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
 import ActivityIcon from "@/assets/svg/activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
-import DumplingIcon from "@/assets/svg/dumpling.svg";
+import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
 
 const TteokgukPage = () => {
   return (
@@ -42,13 +42,38 @@ const TteokgukPage = () => {
           </div>
           <div className={styles.meterialContainer}>
             <div className={styles.ingredientFirstRow}>
-              <Ingredient ingredientIcon={<DumplingIcon />} label="희망떡" />
-              <Ingredient ingredientIcon={<DumplingIcon />} label="사랑계란" />
-              <Ingredient ingredientIcon={<DumplingIcon />} label="해피김" />
+              <Ingredient
+                IngredientIcon={DumplingIcon}
+                label="희망떡"
+                isSelected
+                onClick={() => {}}
+              />
+              <Ingredient
+                IngredientIcon={DumplingIcon}
+                label="사랑계란"
+                isSelected
+                onClick={() => {}}
+              />
+              <Ingredient
+                IngredientIcon={DumplingIcon}
+                label="해피김"
+                isSelected
+                onClick={() => {}}
+              />
             </div>
             <div className={styles.ingredientSecondRow}>
-              <Ingredient ingredientIcon={<DumplingIcon />} label="행운파" />
-              <Ingredient ingredientIcon={<DumplingIcon />} label="튼튼고기" />
+              <Ingredient
+                IngredientIcon={DumplingIcon}
+                label="행운파"
+                isSelected
+                onClick={() => {}}
+              />
+              <Ingredient
+                IngredientIcon={DumplingIcon}
+                label="튼튼고기"
+                isSelected
+                onClick={() => {}}
+              />
             </div>
           </div>
         </article>

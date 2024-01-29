@@ -6,3 +6,9 @@ export interface SignupFormValues {
   privacy: boolean;
   marketing: boolean;
 }
+
+export interface NicknameFormValues {
+  nickname: string;
+  privacy: boolean;
+  marketing: boolean;
+}

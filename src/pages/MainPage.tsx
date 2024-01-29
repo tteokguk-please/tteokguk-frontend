@@ -5,11 +5,11 @@ import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
+import { Link } from "@/routes/Link";
 import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
-import headerLogo from "@/assets/images/header-logo.png";
-import { Link } from "@/routes/Link";
+import HeaderLogo from "@/assets/svg/header-logo.svg";
 
 const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -18,8 +18,8 @@ const MainPage = () => {
   return (
     <>
       <Header actionIcon="profile">
-        <Link to="/">
-          <img src={headerLogo} alt="로고" />
+        <Link to="/tteokguks">
+          <HeaderLogo aria-label="용용이" />
         </Link>
       </Header>
       <div className={styles.container}>

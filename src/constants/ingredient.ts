@@ -1,3 +1,5 @@
+import * as IngredientIcon from "@/assets/svg/ingredients";
+
 export const INGREDIENT_KEYS = [
   "RICE_CAKE",
   "EGG",
@@ -13,7 +15,7 @@ export const INGREDIENT_KEYS = [
   "GARLIC",
 ] as const;
 
-export const INGREDIENTS_LABEL_BY_KEYS = {
+export const INGREDIENT_NAME_BY_KEY = {
   RICE_CAKE: "희망떡",
   EGG: "사랑계란",
   SEAWEED: "해피김",
@@ -27,3 +29,18 @@ export const INGREDIENTS_LABEL_BY_KEYS = {
   TAIYAKI: "금붕어빵",
   GARLIC: "성공마늘",
 } as const;
+
+export const INGREDIENT_ICON_BY_KEY = {
+  RICE_CAKE: IngredientIcon.RICE_CAKE,
+  EGG: IngredientIcon.EGG,
+  SEAWEED: IngredientIcon.SEAWEED,
+  GREEN_ONION: IngredientIcon.GREEN_ONION,
+  BEEF: IngredientIcon.BEEF,
+  MUSHROOM: IngredientIcon.MUSHROOM,
+  TOFU: IngredientIcon.TOFU,
+  FISH_CAKE: IngredientIcon.FISH_CAKE,
+  CANDY: IngredientIcon.CANDY,
+  DUMPLING: IngredientIcon.DUMPLING,
+  TAIYAKI: IngredientIcon.TAIYAKI,
+  GARLIC: IngredientIcon.GARLIC,
+};

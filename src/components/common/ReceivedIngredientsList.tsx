@@ -1,13 +1,13 @@
 import { css } from "@styled-system/css";
 
 import { Link } from "@/routes/Link";
-import DumplingIcon from "@/assets/svg/dumpling.svg";
+import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
 
 const ReceivedIngredientsList = () => {
   return (
-    <ul>
+    <ul className={styles.list}>
       {[...Array(9)].map(() => (
-        <li className={styles.list}>
+        <li className={styles.listItem}>
           <div className={styles.ingredientContainer}>
             <div className={styles.ingredientContent}>
               <div className={styles.iconContainer}>
@@ -46,8 +46,9 @@ export default ReceivedIngredientsList;
 
 const styles = {
   list: css({
-    maxWidth: "46.5rem",
     width: "100%",
+  }),
+  listItem: css({
     height: "21.1rem",
     marginBottom: "1.6rem",
     borderRadius: "0.8rem",
