@@ -9,7 +9,7 @@ import Header from "@/components/common/Header";
 import NicknameForm from "@/components/Nickname/NicknameForm";
 import { $postKakaoUserSignup } from "@/store/auth";
 import WelcomModal from "@/components/shared/WelcomModal";
-import { INGREDIENTS } from "@/constants/ingredient";
+import { INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 
 const NicknamePage = () => {
   const welcomModal = useOverlay();
@@ -30,7 +30,7 @@ const NicknamePage = () => {
               isOpen={isOpen}
               onClose={close}
               nickname={nickname}
-              uniqueIngredient={INGREDIENTS[primaryIngredient]}
+              uniqueIngredient={INGREDIENT_NAME_BY_KEY[primaryIngredient]}
             />
           ));
         },
