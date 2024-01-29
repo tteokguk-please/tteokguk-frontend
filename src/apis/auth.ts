@@ -1,4 +1,5 @@
 import { CheckEmailNicknameResponse, SignupRequest, SignupResponse } from "@/types/auth";
+
 import http from "./core";
 
 export const checkEmail = (email: string) => {
