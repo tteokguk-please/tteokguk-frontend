@@ -1,28 +1,84 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+
+import { useAtomValue } from "jotai";
+import { toast } from "sonner";
 
 import { css } from "@styled-system/css";
 
+import { IngredientKey } from "@/types/ingredient";
+import { PostTteokgukResponse } from "@/types/tteokguk";
+
+import useRouter from "@/routes/useRouter";
+import { $postTteokguk } from "@/store/tteokguk";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
 import Ingredient from "@/components/common/Ingredient";
 import WishIcon from "@/assets/svg/wish.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
-import DumplingIcon from "@/assets/svg/dumpling.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
+import {
+  INGREDIENT_ICON_BY_KEY,
+  INGREDIENT_KEYS,
+  INGREDIENT_NAME_BY_KEY,
+} from "@/constants/ingredient";
 
-const MAX_CHARACTERS = 100;
+const MAX_WISH_TEXT_LENGTH = 100;
+const MAX_INGREDIENTS = 5;
 
 const TteokgukCookingPage = () => {
+  const router = useRouter();
+  const { mutate: createTteokguk } = useAtomValue($postTteokguk);
+
   const [wishText, setWishText] = useState("");
+  const [selectedIngredients, setSelectedIngredients] = useState<IngredientKey[]>([]);
   const [isPrivate, setIsPrivate] = useState(false);
 
   const handleCheckboxChange = () => {
     setIsPrivate(!isPrivate);
   };
 
-  const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChangeWishText = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setWishText(event.target.value);
+  };
+
+  const handleClickIngredient = (name: IngredientKey) => () => {
+    setSelectedIngredients((previousSelected) => {
+      const isSelected = previousSelected.includes(name);
+
+      if (isSelected) {
+        return previousSelected.filter((selectedLabel) => selectedLabel !== name);
+      }
+
+      if (previousSelected.length === MAX_INGREDIENTS) {
+        toast("선택 가능한 재료의 개수를 초과하였습니다.\n 삭제 후 다시 추가해주세요.", {
+          className: styles.toast,
+        });
+
+        return previousSelected;
+      }
+
+      return [...previousSelected, name];
+    });
+  };
+
+  const handleSubmitForm = (event: FormEvent) => {
+    event.preventDefault();
+
+    createTteokguk(
+      {
+        wish: wishText,
+        ingredients: selectedIngredients,
+        access: isPrivate,
+      },
+      {
+        onSuccess: (createdTteokguk: PostTteokgukResponse) => {
+          const { tteokgukId } = createdTteokguk;
+
+          router.push(`/tteokguks/${tteokgukId}`);
+        },
+      },
+    );
   };
 
   return (
@@ -35,33 +91,35 @@ const TteokgukCookingPage = () => {
           <WishIcon />
           나의 새해 소원
         </div>
-        <form className={styles.textareaContainer}>
+        <form onSubmit={handleSubmitForm} className={styles.textareaContainer}>
           <textarea
-            onChange={handleTextChange}
+            onChange={handleChangeWishText}
             placeholder="이루고 싶은 소원을 입력하세요."
-            maxLength={MAX_CHARACTERS}
-            className={styles.wishTextarea}
+            maxLength={MAX_WISH_TEXT_LENGTH}
+            className={styles.wisharea}
           />
           <div className={styles.charCount}>
-            {wishText.length}/{MAX_CHARACTERS}
+            {wishText.length}/{MAX_WISH_TEXT_LENGTH}
           </div>
-          <div className={styles.title}>
-            <MeterialIcon />
-            <span>떡국 재료 추가하기</span>
+          <div className={styles.titleContainer}>
+            <div className={styles.title}>
+              <MeterialIcon />
+              <span>떡국 재료 추가하기</span>
+            </div>
+            <div>
+              {selectedIngredients.length}/{MAX_INGREDIENTS}
+            </div>
           </div>
           <div className={styles.meterialContainer}>
-            <Ingredient ingredientIcon={<DumplingIcon />} label="희망떡" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="사랑계란" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="해피김" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="행운파" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="튼튼고기" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="용기버섯" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="스마일두부" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="성공마늘" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="응원어묵" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="일등사탕" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="당첨만두" />
-            <Ingredient ingredientIcon={<DumplingIcon />} label="붕어빵" />
+            {INGREDIENT_KEYS.map((key, index) => (
+              <Ingredient
+                key={`${index}-${key}`}
+                IngredientIcon={INGREDIENT_ICON_BY_KEY[key]}
+                label={INGREDIENT_NAME_BY_KEY[key]}
+                onClick={handleClickIngredient(key)}
+                isSelected={selectedIngredients.includes(key)}
+              />
+            ))}
           </div>
           <label htmlFor="private" className={styles.privateLabel}>
             {isPrivate ? <CheckIcon /> : <NoCheckIcon />}
@@ -74,7 +132,11 @@ const TteokgukCookingPage = () => {
             onChange={handleCheckboxChange}
             className="a11y-hidden"
           />
-          <Button color="primary.45" applyColorTo="outline">
+          <Button
+            disabled={!wishText || selectedIngredients.length !== MAX_INGREDIENTS}
+            color="primary.45"
+            applyColorTo="outline"
+          >
             소원 떡국 만들기
           </Button>
         </form>
@@ -96,8 +158,15 @@ const styles = {
     height: "8.4rem",
     border: "0.1rem solid",
   }),
+  titleContainer: css({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingRight: "0.8rem",
+  }),
   title: css({
     display: "flex",
+    alignItems: "center",
     fontWeight: 700,
     marginTop: "1.6rem",
     marginBottom: "1rem",
@@ -105,8 +174,9 @@ const styles = {
   textareaContainer: css({
     position: "relative",
     height: "16.9rem",
+    paddingBottom: "2rem",
   }),
-  wishTextarea: css({
+  wisharea: css({
     width: "100%",
     height: "100%",
     borderWidth: "0.1rem",
@@ -120,15 +190,14 @@ const styles = {
   charCount: css({
     position: "absolute",
     right: "1.2rem",
-    bottom: "1rem",
+    bottom: "3rem",
     fontSize: "1.2rem",
     color: "gray.50",
   }),
   meterialContainer: css({
-    display: "flex",
-    flexFlow: "column wrap",
-    alignItems: "center",
-    gap: "2.5rem 1.8rem",
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(7.6rem, 1fr))",
+    gap: "1.8rem",
     height: "43.8rem",
     padding: "2.3rem 2.4rem",
     borderRadius: "0.8rem",
@@ -141,5 +210,11 @@ const styles = {
     gap: "0.8rem",
     marginTop: "3.1rem",
     marginBottom: "1.6rem",
+    cursor: "pointer",
+  }),
+  toast: css({
+    paddingY: "1.2rem",
+    whiteSpace: "pre-line",
+    textAlign: "center",
   }),
 };

@@ -17,11 +17,11 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     fontSize: "1.5rem",
-    height: "4.2rem",
     backgroundColor: "#929292",
     fontFamily: "Pretendard Variable",
     color: "#ffffff",
-    marginBottom: "1.2rem",
+    marginBottom: "3.2rem",
+    padding: "1.2rem 0",
     borderRadius: "0.8rem",
   },
 };

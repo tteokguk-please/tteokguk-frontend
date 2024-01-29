@@ -1,16 +1,18 @@
-import { ReactNode } from "react";
-
 import { css } from "@styled-system/css";
 
 interface Props {
-  ingredientIcon: ReactNode;
+  IngredientIcon: string; // string 타입이지만 svg component로 사용
   label: string;
+  onClick: () => void;
+  isSelected: boolean;
 }
 
-const Ingredient = ({ ingredientIcon, label }: Props) => {
+const Ingredient = ({ IngredientIcon, label, onClick, isSelected }: Props) => {
   return (
-    <button className={styles.ingredientContainer}>
-      <div className={styles.ingredientIcon}>{ingredientIcon}</div>
+    <button type="button" className={styles.ingredientContainer} onClick={onClick}>
+      <div className={styles.ingredientIcon(isSelected)} aria-label={label}>
+        {<IngredientIcon />}
+      </div>
       <div className={styles.ingredientLabel}>{label}</div>
     </button>
   );
@@ -22,17 +24,20 @@ const styles = {
   ingredientContainer: css({
     position: "relative",
     cursor: "pointer",
-  }),
-  ingredientIcon: css({
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     width: "7.6rem",
     height: "7.6rem",
-    backgroundColor: "primary.45",
-    borderRadius: "50%",
-    overflow: "hidden",
   }),
+  ingredientIcon: (isSelected: boolean) =>
+    css({
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "7.6rem",
+      height: "7.6rem",
+      backgroundColor: isSelected ? "secondary.50" : "primary.45",
+      borderRadius: "50%",
+      overflow: "hidden",
+    }),
   ingredientLabel: css({
     position: "absolute",
     left: "0.5rem",

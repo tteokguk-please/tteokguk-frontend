@@ -1,5 +1,7 @@
 import { atomWithMutation } from "jotai-tanstack-query";
+
 import { checkEmail, checkNickname, postSignup } from "@/apis/auth";
+
 import { CheckEmailNicknameResponse, SignupRequest, SignupResponse } from "@/types/auth";
 
 export const $checkEmail = atomWithMutation(() => ({

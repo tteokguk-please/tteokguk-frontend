@@ -6,7 +6,7 @@ import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
 import UserProfileSection from "@/components/common/UserProfileSection";
 import TteokgukList from "@/components/common/TteokgukList";
-import DumplingIcon from "@/assets/svg/dumpling.svg";
+import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
 import VisitIcon from "@/assets/svg/visit.svg";
 
 const RandomUserPage = () => {
