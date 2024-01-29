@@ -62,32 +62,30 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
   }, [nickname, setIsExistNickname]);
 
   return (
-    <div className={styles.container}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.labelContainer}>
-          <Label htmlFor="nickname">닉네임</Label>
-          {errors.nickname && <p className={styles.errorMessage}>{errors.nickname.message}</p>}
-          {isExistNickname === false && (
-            <p className={styles.successMessage}>사용 가능한 닉네임입니다.</p>
-          )}
-        </div>
-        <div className={styles.nicknameContainer}>
-          <Input
-            {...nicknameRegister}
-            id="nickname"
-            type="text"
-            placeholder="닉네임 2~6자를 입력해주세요"
-          />
-          <button
-            type="button"
-            className={styles.checkDuplicateButton}
-            disabled={!validateNickname(nickname)}
-            onClick={handleCheckNickname}
-          >
-            중복확인
-          </button>
-        </div>
-      </form>
+    <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.labelContainer}>
+        <Label htmlFor="nickname">닉네임</Label>
+        {errors.nickname && <p className={styles.errorMessage}>{errors.nickname.message}</p>}
+        {isExistNickname === false && (
+          <p className={styles.successMessage}>사용 가능한 닉네임입니다.</p>
+        )}
+      </div>
+      <div className={styles.nicknameContainer}>
+        <Input
+          {...nicknameRegister}
+          id="nickname"
+          type="text"
+          placeholder="닉네임 2~6자를 입력해주세요"
+        />
+        <button
+          type="button"
+          className={styles.checkDuplicateButton}
+          disabled={!validateNickname(nickname)}
+          onClick={handleCheckNickname}
+        >
+          중복확인
+        </button>
+      </div>
       <div className={styles.footer}>
         <div className={styles.agreementContainer}>
           <label
@@ -123,7 +121,7 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
           회원가입 완료하기
         </Button>
       </div>
-    </div>
+    </form>
   );
 };
 
