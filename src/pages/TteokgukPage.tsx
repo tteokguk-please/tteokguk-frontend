@@ -142,12 +142,14 @@ const styles = {
   }),
   ingredientFirstRow: css({
     display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "2rem",
+    justifyContent: "center",
+    gap: "1.8rem",
+    marginBottom: "3rem",
   }),
   ingredientSecondRow: css({
     display: "flex",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
+    gap: "1.8rem",
   }),
   wishDeleteButton: css({
     display: "flex",
