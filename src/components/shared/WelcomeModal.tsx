@@ -18,7 +18,7 @@ interface Props {
   uniqueIngredientKey: IngredientKey;
 }
 
-const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredientKey }: Props) => {
+const WelcomeModal = ({ isOpen, onClose, nickname, uniqueIngredientKey }: Props) => {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const ingredientName = INGREDIENT_NAME_BY_KEY[uniqueIngredientKey];
@@ -73,7 +73,7 @@ const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredientKey }: Props) 
   );
 };
 
-export default WelcomModal;
+export default WelcomeModal;
 
 const styles = {
   container: css({

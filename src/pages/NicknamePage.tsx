@@ -8,10 +8,10 @@ import { NicknameFormValues } from "@/types/form";
 import Header from "@/components/common/Header";
 import NicknameForm from "@/components/Nickname/NicknameForm";
 import { $postKakaoUserSignup } from "@/store/auth";
-import WelcomModal from "@/components/shared/WelcomModal";
+import WelcomeModal from "@/components/shared/WelcomeModal";
 
 const NicknamePage = () => {
-  const welcomModal = useOverlay();
+  const welcomeModal = useOverlay();
   const defaultValues: NicknameFormValues = { nickname: "", privacy: true, marketing: false };
 
   const { mutate: postKakaoUserSignup } = useAtomValue($postKakaoUserSignup);
@@ -24,8 +24,8 @@ const NicknamePage = () => {
       },
       {
         onSuccess: ({ nickname, primaryIngredient }) => {
-          welcomModal.open(({ isOpen, close }) => (
-            <WelcomModal
+          welcomeModal.open(({ isOpen, close }) => (
+            <WelcomeModal
               isOpen={isOpen}
               onClose={close}
               nickname={nickname}
