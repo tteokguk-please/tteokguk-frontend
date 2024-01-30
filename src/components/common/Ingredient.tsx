@@ -26,13 +26,12 @@ export default Ingredient;
 
 const styles = {
   ingredientContainer: css({
-    position: "relative",
     cursor: "pointer",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
-    height: "100%",
+    width: "7.6rem",
+    height: "7.6rem",
   }),
   ingredientContent: css({
     display: "flex",

@@ -6,17 +6,17 @@ import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingr
 
 interface Props {
   ingredients: IngredientQuantity[];
-  uniqueIngredient: IngredientKey;
+  uniqueIngredientKey: IngredientKey;
 }
 
 const INFINITY = "\u221E";
 
-const IngredientList = ({ ingredients, uniqueIngredient }: Props) => {
+const IngredientList = ({ ingredients, uniqueIngredientKey }: Props) => {
   return (
     <ul className={styles.list}>
       {ingredients.map(({ ingredient, stockQuantity }, index) => {
-        const Icon = INGREDIENT_ICON_BY_KEY[ingredient];
-        const quantity = ingredient === uniqueIngredient ? INFINITY : stockQuantity;
+        const Icon = INGREDIENT_ICON_BY_KEY[40][ingredient];
+        const quantity = ingredient === uniqueIngredientKey ? INFINITY : stockQuantity;
 
         return (
           <li key={`${index}-${ingredient}`} className={styles.item}>

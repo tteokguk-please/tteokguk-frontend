@@ -17,7 +17,7 @@ import ActivityIcon from "@/assets/svg/activity.svg";
 const MyPage = () => {
   const { data: myDetails } = useAtomValue($getMyDetails);
   const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
-  const IngredientIcon = INGREDIENT_ICON_BY_KEY[primaryIngredient];
+  const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][primaryIngredient];
 
   return (
     <Fragment>
@@ -65,7 +65,7 @@ const MyPage = () => {
           <div className={styles.wishTteokgukTitle}>
             <div>보유중인 떡국 재료</div>
           </div>
-          <IngredientList ingredients={ingredients} uniqueIngredient={primaryIngredient} />
+          <IngredientList ingredients={ingredients} uniqueIngredientKey={primaryIngredient} />
         </div>
         <div className={styles.accountContainer}>
           <button>로그아웃</button>
