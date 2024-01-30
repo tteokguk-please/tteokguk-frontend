@@ -5,7 +5,6 @@ import { css } from "@styled-system/css";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
 import UserProfileSection from "@/components/common/UserProfileSection";
-import TteokgukList from "@/components/common/TteokgukList";
 import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
 import VisitIcon from "@/assets/svg/visit.svg";
 
@@ -33,7 +32,8 @@ const RandomUserPage = () => {
           <div className={styles.wishTteokgukTitle}>
             <div>사용자님의 소원 떡국 리스트</div>
           </div>
-          <TteokgukList className={styles.tteokgukList} />
+          {/* TteokgukList 컴포넌트의 props가 추가되어 임의로 주석 처리 */}
+          {/* <TteokgukList className={styles.tteokgukList} /> */}
         </div>
       </div>
     </Fragment>
