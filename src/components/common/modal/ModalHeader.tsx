@@ -7,17 +7,20 @@ import { css } from "@styled-system/css";
 import CloseIcon from "@/assets/svg/close.svg";
 
 interface Props {
+  fontSize: "md" | "sm";
   children: ReactNode;
   className?: string;
   hasCloseButton?: boolean;
   onClose?: () => void;
 }
 
-const ModalHeader = ({ children, className, hasCloseButton = false, onClose }: Props) => {
+const ModalHeader = ({ children, className, fontSize, hasCloseButton = false, onClose }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.spacer} />
-      <div className={classNames(styles.title, className)}>{children}</div>
+      <div className={classNames(styles.title, styles.headerTitleStyles[fontSize], className)}>
+        {children}
+      </div>
       <div className={styles.spacer}>
         {hasCloseButton && (
           <button onClick={onClose} className={styles.closeButton}>
@@ -46,11 +49,15 @@ const styles = {
   title: css({
     width: "100%",
     flex: 1,
-    fontSize: "2rem",
     fontWeight: 700,
     textAlign: "center",
-    marginTop: "1.2rem",
+    marginTop: "0.8rem",
   }),
+
+  headerTitleStyles: {
+    md: css({ fontSize: "2rem" }),
+    sm: css({ fontSize: "1.6rem" }),
+  },
   closeButton: css({
     cursor: "pointer",
   }),

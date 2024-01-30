@@ -51,7 +51,9 @@ const GuideModal = ({ isOpen, onClose }: Props) => {
   return (
     isOpen && (
       <Modal className={styles.container}>
-        <Modal.Header className={styles.title}>{modalContents[step].title}</Modal.Header>
+        <Modal.Header fontSize="md" className={styles.title}>
+          {modalContents[step].title}
+        </Modal.Header>
         <Modal.Body className={styles.bodyContainer}>
           <div className={styles.content}>{modalContents[step].content}</div>
           <div className={styles.imageContainer}>{modalContents[step].icon}</div>
@@ -73,8 +75,6 @@ const styles = {
     alignItems: "center",
   }),
   title: css({
-    fontSize: "2rem",
-    fontWeight: 700,
     marginBottom: "0.8rem",
   }),
   bodyContainer: css({

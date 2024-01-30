@@ -47,7 +47,7 @@ const CheerMessageModal = ({ isOpen, onClose }: Props) => {
   return (
     isOpen && (
       <Modal className={styles.container}>
-        <Modal.Header hasCloseButton onClose={onClose}>
+        <Modal.Header fontSize="md" hasCloseButton onClose={onClose}>
           응원 메시지 남기기
         </Modal.Header>
         <Modal.Body className={styles.bodyContainer}>
