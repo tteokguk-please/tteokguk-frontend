@@ -139,11 +139,9 @@ const styles = {
     height: "calc(100vh - 4.8rem)",
     paddingX: "4rem",
     "@media (max-width: 500px)": {
-      justifyContent: "space-between",
-      paddingY: "1.2rem 2rem",
+      paddingTop: "0.8rem",
     },
     "@media (min-width: 501px)": {
-      gap: "7.2rem",
       paddingTop: "3.2rem",
     },
   }),
@@ -194,6 +192,12 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    "@media (max-width: 500px)": {
+      marginTop: "29.6rem",
+    },
+    "@media (min-width: 501px)": {
+      marginTop: "7.2rem",
+    },
   }),
   agreementContainer: css({
     marginBottom: "1.6rem",
