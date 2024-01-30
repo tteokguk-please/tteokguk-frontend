@@ -73,8 +73,6 @@ const styles = {
     alignItems: "center",
   }),
   title: css({
-    fontSize: "2rem",
-    fontWeight: 700,
     marginBottom: "0.8rem",
   }),
   bodyContainer: css({

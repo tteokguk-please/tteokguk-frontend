@@ -7,12 +7,11 @@ import { SignupFormValues } from "@/types/form";
 
 import Header from "@/components/common/Header";
 import SignupForm from "@/components/Signup/SignupForm";
-import WelcomModal from "@/components/shared/WelcomModal";
+import WelcomeModal from "@/components/shared/WelcomeModal";
 import { $signup } from "@/store/auth";
-import { INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 
 const SignupPage = () => {
-  const welcomModal = useOverlay();
+  const welcomeModal = useOverlay();
   const defaultValues: SignupFormValues = {
     email: "",
     password: "",
@@ -34,12 +33,12 @@ const SignupPage = () => {
       },
       {
         onSuccess: ({ nickname, primaryIngredient }) => {
-          welcomModal.open(({ isOpen, close }) => (
-            <WelcomModal
+          welcomeModal.open(({ isOpen, close }) => (
+            <WelcomeModal
               isOpen={isOpen}
               onClose={close}
               nickname={nickname}
-              uniqueIngredientName={INGREDIENT_NAME_BY_KEY[primaryIngredient]}
+              uniqueIngredientKey={primaryIngredient}
             />
           ));
         },

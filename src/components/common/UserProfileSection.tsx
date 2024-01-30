@@ -12,7 +12,7 @@ interface Props {
 }
 
 const UserProfileSection = ({ nickname, uniqueIngredientKey, color }: Props) => {
-  const IngredientIcon = INGREDIENT_ICON_BY_KEY[uniqueIngredientKey];
+  const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][uniqueIngredientKey];
 
   return (
     <article className={styles.userInfo(color)}>
