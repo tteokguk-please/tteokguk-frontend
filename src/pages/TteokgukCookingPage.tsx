@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { css } from "@styled-system/css";
 
 import { IngredientKey } from "@/types/ingredient";
-import { PostTteokgukResponse } from "@/types/tteokguk";
+import { PostTteokgukResponse } from "@/types/tteokguk.dto";
 
 import useRouter from "@/routes/useRouter";
 import { $postTteokguk } from "@/store/tteokguk";
@@ -119,7 +119,7 @@ const TteokgukCookingPage = () => {
               <Ingredient
                 key={`${index}-${key}`}
                 IngredientIcon={INGREDIENT_ICON_BY_KEY[40][key]}
-                label={INGREDIENT_NAME_BY_KEY[key]}
+                name={INGREDIENT_NAME_BY_KEY[key]}
                 onClick={handleClickIngredient(key)}
                 isSelected={selectedIngredients.includes(key)}
               />
@@ -156,6 +156,7 @@ const styles = {
     height: "calc(100vh- 16.4rem)",
     backgroundColor: "back",
     paddingX: "2.4rem",
+    paddingBottom: "2rem",
   }),
   image: css({
     height: "8.4rem",
@@ -199,7 +200,6 @@ const styles = {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(7.6rem, 1fr))",
     gap: "1.8rem",
-    height: "43.8rem",
     padding: "2.3rem 2.4rem",
     borderRadius: "0.8rem",
     backgroundColor: "primary.20",

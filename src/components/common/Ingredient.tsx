@@ -1,19 +1,23 @@
 import { css } from "@styled-system/css";
 
+import { IngredientName } from "@/types/ingredient";
+
 interface Props {
   IngredientIcon: string; // string 타입이지만 svg component로 사용
-  label: string;
+  name: IngredientName;
   onClick: () => void;
   isSelected: boolean;
 }
 
-const Ingredient = ({ IngredientIcon, label, onClick, isSelected }: Props) => {
+const Ingredient = ({ IngredientIcon, name, onClick, isSelected }: Props) => {
   return (
     <button type="button" className={styles.ingredientContainer} onClick={onClick}>
-      <div className={styles.ingredientIcon(isSelected)} aria-label={label}>
-        {<IngredientIcon />}
+      <div className={styles.ingredientContent}>
+        <div className={styles.ingredientIcon(isSelected)} aria-label={name}>
+          {<IngredientIcon />}
+        </div>
+        <div className={styles.ingredientLabel}>{name}</div>
       </div>
-      <div className={styles.ingredientLabel}>{label}</div>
     </button>
   );
 };
@@ -24,8 +28,17 @@ const styles = {
   ingredientContainer: css({
     position: "relative",
     cursor: "pointer",
-    width: "7.6rem",
-    height: "7.6rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+  }),
+  ingredientContent: css({
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   }),
   ingredientIcon: (isSelected: boolean) =>
     css({
@@ -39,15 +52,13 @@ const styles = {
       overflow: "hidden",
     }),
   ingredientLabel: css({
-    position: "absolute",
-    left: "0.5rem",
-    bottom: "-1rem",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     width: "6.8rem",
     height: "2.2rem",
     fontSize: "1.2rem",
+    marginTop: "-1.4rem",
     backgroundColor: "white",
     borderRadius: "0.4rem",
     textAlign: "center",

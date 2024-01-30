@@ -44,19 +44,19 @@ const TteokgukPage = () => {
             <div className={styles.ingredientFirstRow}>
               <Ingredient
                 IngredientIcon={DumplingIcon}
-                label="희망떡"
+                name="희망떡"
                 isSelected
                 onClick={() => {}}
               />
               <Ingredient
                 IngredientIcon={DumplingIcon}
-                label="사랑계란"
+                name="사랑계란"
                 isSelected
                 onClick={() => {}}
               />
               <Ingredient
                 IngredientIcon={DumplingIcon}
-                label="해피김"
+                name="해피김"
                 isSelected
                 onClick={() => {}}
               />
@@ -64,13 +64,13 @@ const TteokgukPage = () => {
             <div className={styles.ingredientSecondRow}>
               <Ingredient
                 IngredientIcon={DumplingIcon}
-                label="행운파"
+                name="행운파"
                 isSelected
                 onClick={() => {}}
               />
               <Ingredient
                 IngredientIcon={DumplingIcon}
-                label="튼튼고기"
+                name="튼튼고기"
                 isSelected
                 onClick={() => {}}
               />

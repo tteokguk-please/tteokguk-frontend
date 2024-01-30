@@ -15,14 +15,14 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   nickname: string;
-  uniqueIngredient: IngredientKey;
+  uniqueIngredientKey: IngredientKey;
 }
 
-const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => {
+const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredientKey }: Props) => {
   const router = useRouter();
   const [step, setStep] = useState(0);
-  const ingredientName = INGREDIENT_NAME_BY_KEY[uniqueIngredient];
-  const IngredientIcon = INGREDIENT_ICON_BY_KEY[80][uniqueIngredient];
+  const ingredientName = INGREDIENT_NAME_BY_KEY[uniqueIngredientKey];
+  const IngredientIcon = INGREDIENT_ICON_BY_KEY[80][uniqueIngredientKey];
 
   const modalContents = [
     {

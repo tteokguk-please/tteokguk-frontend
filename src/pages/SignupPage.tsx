@@ -38,7 +38,7 @@ const SignupPage = () => {
               isOpen={isOpen}
               onClose={close}
               nickname={nickname}
-              uniqueIngredient={primaryIngredient}
+              uniqueIngredientKey={primaryIngredient}
             />
           ));
         },

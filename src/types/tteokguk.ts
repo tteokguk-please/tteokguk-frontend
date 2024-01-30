@@ -1,16 +1,9 @@
 import { IngredientKey } from "./ingredient";
 
-export interface PostTteokgukRequest {
-  wish: string;
-  ingredients: IngredientKey[];
-  access: boolean;
-}
-
-export interface PostTteokgukResponse {
+export interface Tteokguk {
   tteokgukId: number;
-  memberId: number;
   wish: string;
-  access: boolean;
   completion: boolean;
-  ingredients: IngredientKey[];
+  access: boolean;
+  tteokgukIngredients: IngredientKey[];
 }
