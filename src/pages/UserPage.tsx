@@ -9,16 +9,13 @@ import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
 import UserProfileSection from "@/components/common/UserProfileSection";
 import TteokgukList from "@/components/common/TteokgukList";
-import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
 import VisitIcon from "@/assets/svg/visit.svg";
 import { $userDetail } from "@/store/user";
 
 const UserPage = () => {
   const { id } = useParams();
-  const { data } = useAtomValue($userDetail(Number(id)));
-
-  console.log(id);
-  console.log(data);
+  const { data: userDetails } = useAtomValue($userDetail(Number(id)));
+  const { nickname, primaryIngredient, tteokguks } = userDetails;
 
   return (
     <Fragment>
@@ -27,8 +24,8 @@ const UserPage = () => {
       </Header>
       <div className={styles.container}>
         <UserProfileSection
-          nickname="사용자 닉네임"
-          UniqueIngredientIcon={<DumplingIcon />}
+          nickname={nickname}
+          uniqueIngredient={primaryIngredient}
           color="primary"
         />
         <div className={styles.buttonContainer}>
@@ -43,7 +40,7 @@ const UserPage = () => {
           <div className={styles.wishTteokgukTitle}>
             <div>사용자님의 소원 떡국 리스트</div>
           </div>
-          <TteokgukList className={styles.tteokgukList} />
+          <TteokgukList tteokguks={tteokguks} className={styles.tteokgukList} />
         </div>
       </div>
     </Fragment>

@@ -2,20 +2,24 @@ import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
-import tteokgukComplete from "@/assets/images/tteokguk-complete.png";
+import { Tteokguk } from "@/types/tteokguk";
+
+import TteokgukImage from "./TteokgukImage";
+
 import { Link } from "@/routes/Link";
 
 interface Props {
+  tteokguks: Tteokguk[];
   className?: string;
 }
 
-const TteokgukList = ({ className }: Props) => {
+const TteokgukList = ({ tteokguks, className }: Props) => {
   return (
     <ul className={classNames(styles.tteokgukList, className)}>
-      {[...Array(26)].map(() => (
-        <Link to="/tteokguks/:id">
+      {tteokguks.map(({ tteokgukId, completion }) => (
+        <Link to={`/tteokguks/${tteokgukId}`}>
           <li className={styles.tteokgukListItem}>
-            <img src={tteokgukComplete} alt="완성된 떡국" />
+            <TteokgukImage completion={completion} />
           </li>
         </Link>
       ))}
