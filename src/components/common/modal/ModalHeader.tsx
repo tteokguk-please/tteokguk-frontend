@@ -7,14 +7,20 @@ import { css } from "@styled-system/css";
 import CloseIcon from "@/assets/svg/close.svg";
 
 interface Props {
-  fontSize: "md" | "sm";
+  fontSize?: "md" | "sm";
   children: ReactNode;
   className?: string;
   hasCloseButton?: boolean;
   onClose?: () => void;
 }
 
-const ModalHeader = ({ children, className, fontSize, hasCloseButton = false, onClose }: Props) => {
+const ModalHeader = ({
+  children,
+  className,
+  fontSize = "md",
+  hasCloseButton = false,
+  onClose,
+}: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.spacer} />

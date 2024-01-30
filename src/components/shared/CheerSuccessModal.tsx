@@ -38,7 +38,7 @@ const CheerSuccessModal = ({ isOpen, onClose }: Props) => {
   return (
     isOpen && (
       <Modal>
-        <Modal.Header fontSize="md" hasCloseButton onClose={onClose}>
+        <Modal.Header hasCloseButton onClose={onClose}>
           {modalContents[step].title}
         </Modal.Header>
         <Modal.Body>

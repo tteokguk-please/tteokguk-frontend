@@ -15,7 +15,7 @@ const AddIngredientsModal = ({ isOpen, onClose, title, buttonContent }: Props) =
   return (
     isOpen && (
       <Modal className={styles.container}>
-        <Modal.Header onClose={onClose} fontSize="md" hasCloseButton className={styles.title}>
+        <Modal.Header onClose={onClose} hasCloseButton className={styles.title}>
           {title}
         </Modal.Header>
         <Modal.Body className={styles.contentContainer}>

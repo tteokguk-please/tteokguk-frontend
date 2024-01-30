@@ -57,9 +57,7 @@ const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => 
   return (
     isOpen && (
       <Modal className={styles.container}>
-        <Modal.Header fontSize="md" className={styles.title}>
-          {modalContents[step].title}
-        </Modal.Header>
+        <Modal.Header className={styles.title}>{modalContents[step].title}</Modal.Header>
         <Modal.Body className={styles.bodyContainer}>
           <div className={styles.content}>{modalContents[step].content}</div>
           <div className={styles.imageContainer}>{modalContents[step].icon}</div>
