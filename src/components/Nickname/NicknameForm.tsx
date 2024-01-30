@@ -14,7 +14,6 @@ import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import { $checkNickname } from "@/store/auth";
 
-
 interface Props {
   defaultValues: NicknameFormValues;
   onSubmit: (values: NicknameFormValues) => void | Promise<void>;
