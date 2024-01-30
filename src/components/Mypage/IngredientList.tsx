@@ -46,7 +46,8 @@ const styles = {
     marginBottom: "3.2rem",
   }),
   item: css({
-    width: "9.6rem",
+    minWidth: "9.6rem",
+    flex: "1 0 9.6rem",
     height: "9.3rem",
     backgroundColor: "primary.20",
     borderRadius: "0.8rem",
