@@ -9,7 +9,6 @@ import Header from "@/components/common/Header";
 import SignupForm from "@/components/Signup/SignupForm";
 import WelcomModal from "@/components/shared/WelcomModal";
 import { $signup } from "@/store/auth";
-import { INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 
 const SignupPage = () => {
   const welcomModal = useOverlay();
@@ -39,7 +38,7 @@ const SignupPage = () => {
               isOpen={isOpen}
               onClose={close}
               nickname={nickname}
-              uniqueIngredient={INGREDIENT_NAME_BY_KEY[primaryIngredient]}
+              uniqueIngredient={primaryIngredient}
             />
           ));
         },
