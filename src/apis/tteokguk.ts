@@ -1,4 +1,4 @@
-import { PostTteokgukRequest, PostTteokgukResponse } from "@/types/tteokguk";
+import { PostTteokgukRequest, PostTteokgukResponse } from "@/types/tteokguk.dto";
 
 import http from "./core";
 

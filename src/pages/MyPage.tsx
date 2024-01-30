@@ -1,17 +1,24 @@
 import { Fragment } from "react";
 
+import { useAtomValue } from "jotai";
+
 import { css } from "@styled-system/css";
 
 import { Link } from "@/routes/Link";
+import { $getMyDetails } from "@/store/user";
+import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
-import IngredientList from "@/components/Mypage/IngredientList";
 import TteokgukList from "@/components/common/TteokgukList";
-import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
+import IngredientList from "@/components/Mypage/IngredientList";
 import VisitIcon from "@/assets/svg/visit.svg";
 import ActivityIcon from "@/assets/svg/activity.svg";
 
 const MyPage = () => {
+  const { data: myDetails } = useAtomValue($getMyDetails);
+  const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
+  const IngredientIcon = INGREDIENT_ICON_BY_KEY[primaryIngredient];
+
   return (
     <Fragment>
       <Header hasPreviousPage actionIcon="guide">
@@ -19,11 +26,11 @@ const MyPage = () => {
       </Header>
       <div className={styles.container}>
         <div className={styles.userInfo}>
-          <div>사용자 닉네임님</div>
+          <div>{nickname}님</div>
           <div className={styles.uniqueIngredient}>
             고유재료
             <div className={styles.ingredientIcon}>
-              <DumplingIcon />
+              <IngredientIcon />
             </div>
           </div>
         </div>
@@ -52,13 +59,13 @@ const MyPage = () => {
               <button>소원 떡국 만들기</button>
             </Link>
           </div>
-          <TteokgukList tteokguks={[]} />
+          <TteokgukList tteokguks={tteokguks} />
         </div>
         <div>
           <div className={styles.wishTteokgukTitle}>
             <div>보유중인 떡국 재료</div>
           </div>
-          <IngredientList />
+          <IngredientList ingredients={ingredients} uniqueIngredient={primaryIngredient} />
         </div>
         <div className={styles.accountContainer}>
           <button>로그아웃</button>

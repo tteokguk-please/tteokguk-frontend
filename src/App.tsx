@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { OverlayProvider } from "@toss/use-overlay";
 
@@ -10,7 +12,11 @@ const App = () => {
     <BrowserRouter>
       <OverlayProvider>
         <ToastContainer />
-        <Routes />
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Suspense fallback={<div>loading</div>}>
+            <Routes />
+          </Suspense>
+        </ErrorBoundary>
       </OverlayProvider>
     </BrowserRouter>
   );
