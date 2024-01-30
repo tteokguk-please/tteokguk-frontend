@@ -3,15 +3,15 @@ import { Routes as ReactRoutes, Route } from "react-router-dom";
 import HomePage from "@/pages/HomePage";
 import LoginPage from "@/pages/LoginPage";
 import EmailLoginPage from "@/pages/EmailLoginPage";
+import NicknamePage from "@/pages/NicknamePage";
 import SignupPage from "@/pages/SignupPage";
 import MainPage from "@/pages/MainPage";
 import TteokgukPage from "@/pages/TteokgukPage";
 import TteokgukCookingPage from "@/pages/TteokgukCookingPage";
 import MyPage from "@/pages/MyPage";
 import MyActivityPage from "@/pages/MyActivityPage";
-import RandomUserPage from "@/pages/RandomUserPage";
+import UserPage from "@/pages/UserPage";
 import NotFoundPage from "@/pages/NotFoundPage";
-import NicknamePage from "@/pages/NicknamePage";
 
 import Layout from "@/components/layout/Layout";
 
@@ -44,7 +44,7 @@ export const Routes = () => {
         <Route path="/tteokguk/create" element={<TteokgukCookingPage />} />
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/my-page/activity" element={<MyActivityPage />} />
-        <Route path="/users/:id" element={<RandomUserPage />} />
+        <Route path="/users/:id" element={<UserPage />} />
       </Route>
       <Route path="/*" element={<NotFoundPage />} />
     </ReactRoutes>

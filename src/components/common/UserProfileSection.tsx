@@ -1,21 +1,27 @@
-import { ReactNode } from "react";
-
 import { css } from "@styled-system/css";
+
+import { IngredientKey } from "@/types/ingredient";
+
+import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 
 interface Props {
   nickname: string;
-  UniqueIngredientIcon: ReactNode;
+  uniqueIngredientKey: IngredientKey;
   color: "primary" | "secondary";
   className?: string;
 }
 
-const UserProfileSection = ({ nickname, UniqueIngredientIcon, color }: Props) => {
+const UserProfileSection = ({ nickname, uniqueIngredientKey, color }: Props) => {
+  const IngredientIcon = INGREDIENT_ICON_BY_KEY[uniqueIngredientKey];
+
   return (
     <article className={styles.userInfo(color)}>
       <div>{nickname}님</div>
       <div className={styles.uniqueIngredient}>
         고유재료
-        <div className={styles.ingredientIcon(color)}>{UniqueIngredientIcon}</div>
+        <div className={styles.ingredientIcon(color)}>
+          <IngredientIcon />
+        </div>
       </div>
     </article>
   );

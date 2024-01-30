@@ -1,14 +1,22 @@
 import { Fragment } from "react";
+import { useParams } from "react-router-dom";
+
+import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
 import UserProfileSection from "@/components/common/UserProfileSection";
-import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
+import TteokgukList from "@/components/common/TteokgukList";
 import VisitIcon from "@/assets/svg/visit.svg";
+import { $userDetail } from "@/store/user";
 
-const RandomUserPage = () => {
+const UserPage = () => {
+  const { id } = useParams();
+  const { data: userDetails } = useAtomValue($userDetail(Number(id)));
+  const { nickname, primaryIngredient: uniqueIngredientKey, tteokguks } = userDetails;
+
   return (
     <Fragment>
       <Header hasPreviousPage actionIcon="profile">
@@ -16,8 +24,8 @@ const RandomUserPage = () => {
       </Header>
       <div className={styles.container}>
         <UserProfileSection
-          nickname="사용자 닉네임"
-          UniqueIngredientIcon={<DumplingIcon />}
+          nickname={nickname}
+          uniqueIngredientKey={uniqueIngredientKey}
           color="primary"
         />
         <div className={styles.buttonContainer}>
@@ -32,15 +40,14 @@ const RandomUserPage = () => {
           <div className={styles.wishTteokgukTitle}>
             <div>사용자님의 소원 떡국 리스트</div>
           </div>
-          {/* TteokgukList 컴포넌트의 props가 추가되어 임의로 주석 처리 */}
-          {/* <TteokgukList className={styles.tteokgukList} /> */}
+          <TteokgukList tteokguks={tteokguks} className={styles.tteokgukList} />
         </div>
       </div>
     </Fragment>
   );
 };
 
-export default RandomUserPage;
+export default UserPage;
 
 const styles = {
   container: css({

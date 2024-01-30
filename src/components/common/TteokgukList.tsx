@@ -4,8 +4,8 @@ import { css } from "@styled-system/css";
 
 import { Tteokguk } from "@/types/tteokguk";
 
-import tteokgukComplete from "@/assets/images/tteokguk-complete.png";
-import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
+import TteokgukImage from "./TteokgukImage";
+
 import { Link } from "@/routes/Link";
 
 interface Props {
@@ -19,10 +19,7 @@ const TteokgukList = ({ tteokguks, className }: Props) => {
       {tteokguks.map(({ tteokgukId, completion }) => (
         <Link to={`/tteokguks/${tteokgukId}`}>
           <li className={styles.tteokgukListItem}>
-            <img
-              src={completion ? tteokgukComplete : tteokgukIncomplete}
-              alt={completion ? "완성된 떡국" : "미완성 떡국"}
-            />
+            <TteokgukImage completion={completion} />
           </li>
         </Link>
       ))}
