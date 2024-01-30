@@ -119,7 +119,7 @@ const TteokgukCookingPage = () => {
               <Ingredient
                 key={`${index}-${key}`}
                 IngredientIcon={INGREDIENT_ICON_BY_KEY[key]}
-                label={INGREDIENT_NAME_BY_KEY[key]}
+                name={INGREDIENT_NAME_BY_KEY[key]}
                 onClick={handleClickIngredient(key)}
                 isSelected={selectedIngredients.includes(key)}
               />
