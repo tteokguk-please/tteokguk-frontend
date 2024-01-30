@@ -16,13 +16,14 @@ const IngredientList = ({ ingredients, uniqueIngredient }: Props) => {
     <ul className={styles.list}>
       {ingredients.map(({ ingredient, stockQuantity }, index) => {
         const Icon = INGREDIENT_ICON_BY_KEY[ingredient];
+        const quantity = ingredient === uniqueIngredient ? INFINITY : stockQuantity;
 
         return (
           <li key={`${index}-${ingredient}`} className={styles.item}>
             <div className={styles.title}>{INGREDIENT_NAME_BY_KEY[ingredient]}</div>
             <div className={styles.iconContainer}>
               <Icon />
-              <span>X {ingredient === uniqueIngredient ? INFINITY : stockQuantity}</span>
+              <span>X {quantity}</span>
             </div>
           </li>
         );
