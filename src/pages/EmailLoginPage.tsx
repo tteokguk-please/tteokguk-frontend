@@ -32,8 +32,9 @@ const EmailLoginPage = () => {
         password,
       },
       {
-        onSuccess: ({ accessToken }) => {
+        onSuccess: ({ accessToken, refreshToken }) => {
           setLocalStorage("accessToken", accessToken);
+          setLocalStorage("refreshToken", refreshToken);
           router.push("/tteokguks");
         },
         onError: () => toast("아이디 혹은 비밀번호를 확인해주세요."),
