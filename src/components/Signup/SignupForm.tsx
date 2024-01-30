@@ -125,7 +125,13 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
             )}
           </div>
           <div className={styles.emailContainer}>
-            <Input {...emailRegister} id="email" type="email" placeholder="이메일을 입력해주세요" />
+            <Input
+              {...emailRegister}
+              id="email"
+              type="email"
+              placeholder="이메일을 입력해주세요"
+              className={styles.input}
+            />
             <button
               type="button"
               className={styles.checkDuplicateButton}
@@ -178,6 +184,7 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
               id="nickname"
               type="text"
               placeholder="닉네임 2~6자를 입력해주세요"
+              className={styles.input}
             />
             <button
               type="button"
@@ -242,7 +249,13 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     height: "100%",
-    padding: "10rem 4rem 7.2rem 4rem",
+    paddingX: "4rem",
+    "@media (max-width: 500px)": {
+      paddingTop: "0.8rem",
+    },
+    "@media (min-width: 501px)": {
+      paddingTop: "3.2rem",
+    },
   }),
   emailContainer: css({
     display: "flex",
@@ -256,12 +269,18 @@ const styles = {
     fontSize: "1.4rem",
     marginLeft: "0.8rem",
     backgroundColor: "primary.100",
+    "@media (min-width: 501px)": {
+      width: "9.9rem",
+    },
   }),
   passwordInput: css({
     marginBottom: "1.6rem",
   }),
   nicknameContainer: css({
     display: "flex",
+  }),
+  input: css({
+    flex: 1,
   }),
   signupButtonContainer: css({
     display: "flex",
