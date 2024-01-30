@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { OverlayProvider } from "@toss/use-overlay";
@@ -10,7 +11,9 @@ const App = () => {
     <BrowserRouter>
       <OverlayProvider>
         <ToastContainer />
-        <Routes />
+        <Suspense fallback={<div>loading</div>}>
+          <Routes />
+        </Suspense>
       </OverlayProvider>
     </BrowserRouter>
   );
