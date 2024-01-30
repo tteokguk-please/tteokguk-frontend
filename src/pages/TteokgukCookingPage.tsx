@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { css } from "@styled-system/css";
 
 import { IngredientKey } from "@/types/ingredient";
-import { PostTteokgukResponse } from "@/types/tteokguk";
+import { PostTteokgukResponse } from "@/types/tteokguk.dto";
 
 import useRouter from "@/routes/useRouter";
 import { $postTteokguk } from "@/store/tteokguk";
@@ -199,7 +199,6 @@ const styles = {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(7.6rem, 1fr))",
     gap: "1.8rem",
-    height: "43.8rem",
     padding: "2.3rem 2.4rem",
     borderRadius: "0.8rem",
     backgroundColor: "primary.20",
