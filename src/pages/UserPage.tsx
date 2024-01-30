@@ -9,12 +9,12 @@ import UserProfileSection from "@/components/common/UserProfileSection";
 import TteokgukList from "@/components/common/TteokgukList";
 import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
 import VisitIcon from "@/assets/svg/visit.svg";
-import { $userDetail, $userIdAtom, useAtomFamilyQuery } from "@/store/user";
+import { $userDetail } from "@/store/user";
+import { useAtomValue } from "jotai";
 
 const UserPage = () => {
   const { id } = useParams();
-  const data = useAtomFamilyQuery($userDetail, $userIdAtom, id);
-  // const { data } = useAtomValue($user(Number(id)));
+  const { data } = useAtomValue($userDetail(Number(id)));
 
   console.log(id);
   console.log(data);
