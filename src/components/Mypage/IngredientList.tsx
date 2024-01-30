@@ -15,7 +15,7 @@ const IngredientList = ({ ingredients, uniqueIngredient }: Props) => {
   return (
     <ul className={styles.list}>
       {ingredients.map(({ ingredient, stockQuantity }, index) => {
-        const Icon = INGREDIENT_ICON_BY_KEY[ingredient];
+        const Icon = INGREDIENT_ICON_BY_KEY[40][ingredient];
         const quantity = ingredient === uniqueIngredient ? INFINITY : stockQuantity;
 
         return (
