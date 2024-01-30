@@ -1,6 +1,8 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 
+import { useAtomValue } from "jotai";
+
 import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
@@ -10,7 +12,6 @@ import TteokgukList from "@/components/common/TteokgukList";
 import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
 import VisitIcon from "@/assets/svg/visit.svg";
 import { $userDetail } from "@/store/user";
-import { useAtomValue } from "jotai";
 
 const UserPage = () => {
   const { id } = useParams();
