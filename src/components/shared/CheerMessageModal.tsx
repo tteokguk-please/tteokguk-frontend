@@ -4,10 +4,9 @@ import { useOverlay } from "@toss/use-overlay";
 
 import { css } from "@styled-system/css";
 
-import Button from "../common/Button";
-
 import CheerSuccessModal from "./CheerSuccessModal";
 
+import Button from "@/components/common/Button";
 import Modal from "@/components/common/modal/Modal";
 import CheckIcon from "@/assets/svg/check.svg";
 import NoCheckIcon from "@/assets/svg/no-check.svg";

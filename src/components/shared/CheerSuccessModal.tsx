@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import { css } from "@styled-system/css";
 
-import Modal from "../common/modal/Modal";
-import Button from "../common/Button";
+import Modal from "@/components/common/modal/Modal";
+import Button from "@/components/common/Button";
 
 interface Props {
   isOpen: boolean;
