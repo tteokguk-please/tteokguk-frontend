@@ -15,7 +15,7 @@ import { $userDetail } from "@/store/user";
 const UserPage = () => {
   const { id } = useParams();
   const { data: userDetails } = useAtomValue($userDetail(Number(id)));
-  const { nickname, primaryIngredient, tteokguks } = userDetails;
+  const { nickname, primaryIngredient: uniqueIngredientKey, tteokguks } = userDetails;
 
   return (
     <Fragment>
@@ -25,7 +25,7 @@ const UserPage = () => {
       <div className={styles.container}>
         <UserProfileSection
           nickname={nickname}
-          uniqueIngredientKey={primaryIngredient}
+          uniqueIngredientKey={uniqueIngredientKey}
           color="primary"
         />
         <div className={styles.buttonContainer}>
