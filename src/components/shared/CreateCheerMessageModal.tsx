@@ -18,7 +18,7 @@ interface Props {
 
 const MAX_CHARACTER = 100;
 
-const CheerMessageModal = ({ isOpen, onClose }: Props) => {
+const CreateCheerMessageModal = ({ isOpen, onClose }: Props) => {
   const cheerSuccessOverlay = useOverlay();
   const [message, setMessage] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
@@ -80,7 +80,7 @@ const CheerMessageModal = ({ isOpen, onClose }: Props) => {
   );
 };
 
-export default CheerMessageModal;
+export default CreateCheerMessageModal;
 
 const styles = {
   container: css({
@@ -115,5 +115,6 @@ const styles = {
     justifyContent: "center",
     gap: "0.8rem",
     marginBottom: "1.2rem",
+    cursor: "pointer",
   }),
 };
