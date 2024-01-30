@@ -5,10 +5,10 @@ import { getMyDetails, getUserDetails } from "@/apis/user";
 import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
 
 export const $getMyDetails = atomWithSuspenseQuery(() => ({
-  queryKey: ["my-details"],
+  queryKey: ["myDetails"],
   queryFn: getMyDetails,
 }));
 
-export const $userDetail = atomFamilyWithSuspenseQuery("users", (id: number) => {
+export const $getUserDetail = atomFamilyWithSuspenseQuery("users", (id: number) => {
   return getUserDetails(id);
 });

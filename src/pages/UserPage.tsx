@@ -10,11 +10,11 @@ import IconButton from "@/components/common/IconButton";
 import UserProfileSection from "@/components/common/UserProfileSection";
 import TteokgukList from "@/components/common/TteokgukList";
 import VisitIcon from "@/assets/svg/visit.svg";
-import { $userDetail } from "@/store/user";
+import { $getUserDetail } from "@/store/user";
 
 const UserPage = () => {
   const { id } = useParams();
-  const { data: userDetails } = useAtomValue($userDetail(Number(id)));
+  const { data: userDetails } = useAtomValue($getUserDetail(Number(id)));
   const { nickname, primaryIngredient: uniqueIngredientKey, tteokguks } = userDetails;
 
   return (
