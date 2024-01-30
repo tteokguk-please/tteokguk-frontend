@@ -6,6 +6,7 @@ import { OverlayProvider } from "@toss/use-overlay";
 
 import { Routes } from "./routes/Routes";
 import ToastContainer from "./components/common/ToastContainer";
+import { DialogModalProvider } from "./components/common/DialogModal";
 
 const App = () => {
   return (
@@ -14,7 +15,9 @@ const App = () => {
         <ToastContainer />
         <ErrorBoundary fallback={<div>error</div>}>
           <Suspense fallback={<div>loading</div>}>
-            <Routes />
+            <DialogModalProvider>
+              <Routes />
+            </DialogModalProvider>
           </Suspense>
         </ErrorBoundary>
       </OverlayProvider>
