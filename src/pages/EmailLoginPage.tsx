@@ -5,6 +5,8 @@ import { toast } from "sonner";
 
 import { css } from "@styled-system/css";
 
+import { setLocalStorage } from "@/utils/localStorage";
+
 import { Link } from "@/routes/Link";
 import Label from "@/components/common/Label";
 import Input from "@/components/common/Input";
@@ -30,7 +32,10 @@ const EmailLoginPage = () => {
         password,
       },
       {
-        onSuccess: () => router.push("/tteokguks"),
+        onSuccess: ({ accessToken }) => {
+          setLocalStorage("accessToken", accessToken);
+          router.push("/tteokguks");
+        },
         onError: () => toast("아이디 혹은 비밀번호를 확인해주세요."),
       },
     );
@@ -45,12 +50,18 @@ const EmailLoginPage = () => {
             <Label htmlFor="email">이메일</Label>
             <Input
               id="email"
+              name="email"
               type="email"
               placeholder="이메일을 입력해주세요"
               className={styles.emailInput}
             />
             <Label htmlFor="password">비밀번호</Label>
-            <Input id="password" type="password" placeholder="비밀번호를 입력해주세요" />
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+            />
             <button type="submit" className={styles.button}>
               로그인 하기
             </button>
