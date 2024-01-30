@@ -65,7 +65,7 @@ const MyPage = () => {
           <div className={styles.wishTteokgukTitle}>
             <div>보유중인 떡국 재료</div>
           </div>
-          <IngredientList ingredients={ingredients} uniqueIngredient={primaryIngredient} />
+          <IngredientList ingredients={ingredients} uniqueIngredientKey={primaryIngredient} />
         </div>
         <div className={styles.accountContainer}>
           <button>로그아웃</button>
