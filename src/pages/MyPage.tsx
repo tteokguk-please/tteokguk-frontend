@@ -5,14 +5,14 @@ import { useAtomValue } from "jotai";
 import { css } from "@styled-system/css";
 
 import { Link } from "@/routes/Link";
+import { $getMyDetails } from "@/store/user";
+import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
 import TteokgukList from "@/components/common/TteokgukList";
+import IngredientList from "@/components/Mypage/IngredientList";
 import VisitIcon from "@/assets/svg/visit.svg";
 import ActivityIcon from "@/assets/svg/activity.svg";
-import { $getMyDetails } from "@/store/user";
-import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
-import IngredientList from "@/components/Mypage/IngredientList";
 
 const MyPage = () => {
   const { data: myDetails } = useAtomValue($getMyDetails);
