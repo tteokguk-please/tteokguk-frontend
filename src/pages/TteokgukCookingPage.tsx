@@ -156,6 +156,7 @@ const styles = {
     height: "calc(100vh- 16.4rem)",
     backgroundColor: "back",
     paddingX: "2.4rem",
+    paddingBottom: "2rem",
   }),
   image: css({
     height: "8.4rem",
