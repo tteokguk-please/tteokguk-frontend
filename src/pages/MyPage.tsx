@@ -52,7 +52,7 @@ const MyPage = () => {
               <button>소원 떡국 만들기</button>
             </Link>
           </div>
-          <TteokgukList />
+          <TteokgukList tteokguks={[]} />
         </div>
         <div>
           <div className={styles.wishTteokgukTitle}>
