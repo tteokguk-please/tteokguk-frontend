@@ -11,16 +11,16 @@ import { DialogModalProvider } from "./components/common/DialogModal";
 const App = () => {
   return (
     <BrowserRouter>
-      <OverlayProvider>
-        <ToastContainer />
-        <ErrorBoundary fallback={<div>error</div>}>
-          <Suspense fallback={<div>loading</div>}>
+      <ErrorBoundary fallback={<div>error</div>}>
+        <Suspense fallback={<div>loading</div>}>
+          <OverlayProvider>
+            <ToastContainer />
             <DialogModalProvider>
               <Routes />
             </DialogModalProvider>
-          </Suspense>
-        </ErrorBoundary>
-      </OverlayProvider>
+          </OverlayProvider>
+        </Suspense>
+      </ErrorBoundary>
     </BrowserRouter>
   );
 };
