@@ -1,5 +1,4 @@
-import { MyDetailsResponse } from "@/types/user.dto";
-import { UserResponse } from "@/types/user";
+import { MyDetailsResponse, UserResponse } from "@/types/user.dto";
 
 import http from "./core";
 
