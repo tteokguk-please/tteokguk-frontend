@@ -6,13 +6,13 @@ import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 
 interface Props {
   nickname: string;
-  uniqueIngredient: IngredientKey;
+  uniqueIngredientKey: IngredientKey;
   color: "primary" | "secondary";
   className?: string;
 }
 
-const UserProfileSection = ({ nickname, uniqueIngredient, color }: Props) => {
-  const IngredientIcon = INGREDIENT_ICON_BY_KEY[uniqueIngredient];
+const UserProfileSection = ({ nickname, uniqueIngredientKey, color }: Props) => {
+  const IngredientIcon = INGREDIENT_ICON_BY_KEY[uniqueIngredientKey];
 
   return (
     <article className={styles.userInfo(color)}>

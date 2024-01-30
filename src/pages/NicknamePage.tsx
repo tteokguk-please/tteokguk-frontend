@@ -30,7 +30,7 @@ const NicknamePage = () => {
               isOpen={isOpen}
               onClose={close}
               nickname={nickname}
-              uniqueIngredient={INGREDIENT_NAME_BY_KEY[primaryIngredient]}
+              uniqueIngredientName={INGREDIENT_NAME_BY_KEY[primaryIngredient]}
             />
           ));
         },

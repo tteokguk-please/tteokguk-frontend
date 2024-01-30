@@ -25,7 +25,7 @@ const UserPage = () => {
       <div className={styles.container}>
         <UserProfileSection
           nickname={nickname}
-          uniqueIngredient={primaryIngredient}
+          uniqueIngredientKey={primaryIngredient}
           color="primary"
         />
         <div className={styles.buttonContainer}>

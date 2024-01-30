@@ -14,17 +14,17 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   nickname: string;
-  uniqueIngredient: IngredientName;
+  uniqueIngredientName: IngredientName;
 }
 
-const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => {
+const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredientName }: Props) => {
   const router = useRouter();
   const [step, setStep] = useState(0);
 
   const modalContents = [
     {
       title: `${nickname}님 환영합니다!`,
-      content: `${nickname}님의 고유 재료는 '${uniqueIngredient}' 이에요.\n 고유재료는 무제한으로 쓸 수 있어요.`,
+      content: `${nickname}님의 고유 재료는 '${uniqueIngredientName}' 이에요.\n 고유재료는 무제한으로 쓸 수 있어요.`,
       icon: "",
       buttonContent: "다음",
     },
