@@ -1,10 +1,5 @@
-import { IngredientKey } from "./ingredient";
+import { IngredientKey, IngredientQuantity } from "./ingredient";
 import { Tteokguk } from "./tteokguk";
-
-interface IngredientQuantity {
-  ingredient: IngredientKey;
-  stockQuantity: number;
-}
 
 export interface MyDetailsResponse {
   id: number;
