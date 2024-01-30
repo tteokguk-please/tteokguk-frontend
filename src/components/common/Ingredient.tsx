@@ -1,20 +1,22 @@
 import { css } from "@styled-system/css";
 
+import { IngredientName } from "@/types/ingredient";
+
 interface Props {
   IngredientIcon: string; // string 타입이지만 svg component로 사용
-  label: string;
+  name: IngredientName;
   onClick: () => void;
   isSelected: boolean;
 }
 
-const Ingredient = ({ IngredientIcon, label, onClick, isSelected }: Props) => {
+const Ingredient = ({ IngredientIcon, name, onClick, isSelected }: Props) => {
   return (
     <button type="button" className={styles.ingredientContainer} onClick={onClick}>
       <div className={styles.ingredientContent}>
-        <div className={styles.ingredientIcon(isSelected)} aria-label={label}>
+        <div className={styles.ingredientIcon(isSelected)} aria-label={name}>
           {<IngredientIcon />}
         </div>
-        <div className={styles.ingredientLabel}>{label}</div>
+        <div className={styles.ingredientLabel}>{name}</div>
       </div>
     </button>
   );
