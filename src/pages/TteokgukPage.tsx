@@ -8,7 +8,7 @@ import Ingredient from "@/components/common/Ingredient";
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
 import ActivityIcon from "@/assets/svg/activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
-import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
+import DumplingIcon from "@/assets/svg/ingredients-40/dumpling.svg";
 
 const TteokgukPage = () => {
   return (

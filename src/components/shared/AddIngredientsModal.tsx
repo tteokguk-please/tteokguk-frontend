@@ -2,7 +2,7 @@ import { css } from "@styled-system/css";
 
 import Modal from "@/components/common/modal/Modal";
 import Button from "@/components/common/Button";
-import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
+import DumplingIcon from "@/assets/svg/ingredients-40/dumpling.svg";
 
 interface Props {
   isOpen: boolean;

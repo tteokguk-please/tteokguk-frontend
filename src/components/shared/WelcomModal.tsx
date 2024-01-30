@@ -2,30 +2,33 @@ import { useState } from "react";
 
 import { css } from "@styled-system/css";
 
-import { IngredientName } from "@/types/ingredient";
+import { IngredientKey } from "@/types/ingredient";
 
 import useRouter from "@/routes/useRouter";
 import Modal from "@/components/common/modal/Modal";
 import Button from "@/components/common/Button";
 import GiftIcon from "@/assets/svg/gift.svg";
 import LuckyBagIcon from "@/assets/svg/lucky-bag.svg";
+import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   nickname: string;
-  uniqueIngredient: IngredientName;
+  uniqueIngredient: IngredientKey;
 }
 
 const WelcomModal = ({ isOpen, onClose, nickname, uniqueIngredient }: Props) => {
   const router = useRouter();
   const [step, setStep] = useState(0);
+  const ingredientName = INGREDIENT_NAME_BY_KEY[uniqueIngredient];
+  const IngredientIcon = INGREDIENT_ICON_BY_KEY[80][uniqueIngredient];
 
   const modalContents = [
     {
       title: `${nickname}님 환영합니다!`,
-      content: `${nickname}님의 고유 재료는 '${uniqueIngredient}' 이에요.\n 고유재료는 무제한으로 쓸 수 있어요.`,
-      icon: "",
+      content: `${nickname}님의 고유 재료는 '${ingredientName}' 이에요.\n 고유재료는 무제한으로 쓸 수 있어요.`,
+      icon: <IngredientIcon aria-label={ingredientName} />,
       buttonContent: "다음",
     },
     {
@@ -101,5 +104,10 @@ const styles = {
     borderRadius: "0.8rem",
     marginTop: "1.6rem",
     marginBottom: "2rem",
+  }),
+  icon: css({
+    width: "100%", // 컨테이너의 너비에 맞춤
+    height: "100%", // 컨테이너의 높이에 맞춤
+    objectFit: "contain", // 아이콘의 원래 비율을 유지
   }),
 };

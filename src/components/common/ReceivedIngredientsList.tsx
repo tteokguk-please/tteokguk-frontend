@@ -1,7 +1,7 @@
 import { css } from "@styled-system/css";
 
 import { Link } from "@/routes/Link";
-import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
+import DumplingIcon from "@/assets/svg/ingredients-40/dumpling.svg";
 
 const ReceivedIngredientsList = () => {
   return (

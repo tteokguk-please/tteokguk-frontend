@@ -7,7 +7,7 @@ import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
 import IngredientList from "@/components/Mypage/IngredientList";
 import TteokgukList from "@/components/common/TteokgukList";
-import DumplingIcon from "@/assets/svg/ingredients/dumpling.svg";
+import DumplingIcon from "@/assets/svg/ingredients-40/dumpling.svg";
 import VisitIcon from "@/assets/svg/visit.svg";
 import ActivityIcon from "@/assets/svg/activity.svg";
 
