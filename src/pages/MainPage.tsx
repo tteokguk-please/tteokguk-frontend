@@ -14,6 +14,7 @@ import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
 import { $tteokguksByTab } from "@/store/tteokguk";
 import HeaderLogo from "@/assets/svg/header-logo.svg";
+import BottomCTA from "@/components/common/BottomCTA";
 
 const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -60,15 +61,17 @@ const MainPage = () => {
           </TabPanel>
         </Tabs>
 
-        <Link to="/tteokguk/create">
-          <Button
-            color="secondary.100"
-            applyColorTo="background"
-            className={classNames(styles.button)}
-          >
-            소원 떡국 만들기
-          </Button>
-        </Link>
+        <BottomCTA>
+          <Link to="/tteokguk/create" className={classNames(styles.link)}>
+            <Button
+              color="secondary.100"
+              applyColorTo="background"
+              className={classNames(styles.button)}
+            >
+              소원 떡국 만들기
+            </Button>
+          </Link>
+        </BottomCTA>
         <div ref={fetchMoreRef} />
       </div>
     </>
@@ -113,13 +116,12 @@ const styles = {
       backgroundColor: "primary.100",
     },
   }),
-  button: css({
-    position: "fixed",
-    left: "50%",
-    transform: "translateX(-50%)",
-    bottom: "3rem",
+  link: css({
     width: "calc(100% - 4.8rem)",
     maxWidth: "45.2rem",
+  }),
+  button: css({
+    width: "100%",
   }),
   buttonHidden: css({
     display: "none",
