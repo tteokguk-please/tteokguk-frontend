@@ -3,9 +3,14 @@ import { useForm } from "react-hook-form";
 
 import { useAtomValue } from "jotai";
 
+import { useDailog } from "@/hooks/useDialog";
+
 import { css } from "@styled-system/css";
 
 import { SignupFormValues } from "@/types/form";
+
+import PrivacyConfirmView from "../shared/PrivacyConfirmView";
+import MarketingConfirmView from "../shared/MarketingConfirmView";
 
 import Input from "@/components/common/Input";
 import Label from "@/components/common/Label";
@@ -13,9 +18,6 @@ import Button from "@/components/common/Button";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import { $checkEmail, $checkNickname } from "@/store/auth";
-import { useDailog } from "@/hooks/useDialog";
-import PrivacyConfirmView from "../shared/PrivacyConfirmView";
-import MarketingConfirmView from "../shared/MarketingConfirmView";
 
 interface Props {
   defaultValues: SignupFormValues;

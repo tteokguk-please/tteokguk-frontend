@@ -1,6 +1,8 @@
-import { DialogModalContext } from "@/components/common/DialogModal";
-import { DialogModalContextProps } from "@/types/dialog";
 import { useContext } from "react";
+
+import { DialogModalContextProps } from "@/types/dialog";
+
+import { DialogModalContext } from "@/components/common/DialogModal";
 
 type AlertParams = Omit<DialogModalContextProps, "isOpen" | "type" | "cancelButton">;
 type ConfirmParams = Omit<DialogModalContextProps, "isOpen" | "type">;

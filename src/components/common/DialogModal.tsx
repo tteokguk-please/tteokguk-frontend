@@ -1,9 +1,11 @@
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
+
 import { css } from "@styled-system/css";
+
+import { DialogModalContextProps } from "@/types/dialog";
 
 import Modal from "@/components/common/modal/Modal";
 import Button from "@/components/common/Button";
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
-import { DialogModalContextProps } from "@/types/dialog";
 
 const DialogModal = () => {
   const [{ isOpen, type, title, description, confirmButton, cancelButton }] =
