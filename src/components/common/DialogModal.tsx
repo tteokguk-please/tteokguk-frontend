@@ -14,8 +14,8 @@ const DialogModal = () => {
 
   return (
     isOpen && (
-      <Modal className={styles.container}>
-        {title && <Modal.Header className={styles.modalHeader}>{title}</Modal.Header>}
+      <Modal>
+        {title && <Modal.Header>{title}</Modal.Header>}
         <Modal.Body>
           {description}
           <div className={styles.footer}>
@@ -69,10 +69,6 @@ export const DialogModalProvider = ({ children }: { children: ReactNode }) => {
 };
 
 const styles = {
-  container: css({}),
-  modalHeader: css({
-    fontSize: "1.6rem",
-  }),
   content: css({
     fontSize: "1.4rem",
     whiteSpace: "pre-line",
