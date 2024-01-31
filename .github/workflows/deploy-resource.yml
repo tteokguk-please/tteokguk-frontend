@@ -24,6 +24,12 @@ jobs:
 
       - name: React build
         run: pnpm run build
+        env:
+          VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
+          VITE_KAKAO_API_KEY: ${{ secrets.VITE_KAKAO_API_KEY }}
+          VITE_KAKAO_CLIENT_SECRET: ${{ secrets.VITE_KAKAO_CLIENT_SECRET }}
+          VITE_KAKAO_LOGIN_URI: ${{ secrets.VITE_KAKAO_LOGIN_URI }}
+          VITE_KAKAO_REDIRECT_URI: ${{ secrets.VITE_KAKAO_REDIRECT_URI }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
