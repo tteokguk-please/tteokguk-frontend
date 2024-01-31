@@ -24,7 +24,7 @@ interface Props {
   onSubmit: (values: SignupFormValues) => void | Promise<void>;
 }
 
-const EMAIL_REGEX = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+const EMAIL_REGEX = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w{2,4}([-.]\w+)*$/;
 const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/;
 
 const SignupForm = ({ defaultValues, onSubmit }: Props) => {
