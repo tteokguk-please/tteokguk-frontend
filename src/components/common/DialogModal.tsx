@@ -44,6 +44,7 @@ const DialogModal = () => {
 
 export const DialogModalContext = createContext<
   [DialogModalContextProps, Dispatch<SetStateAction<DialogModalContextProps>>]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 >([] as any);
 
 export const DialogModalProvider = ({ children }: { children: ReactNode }) => {
