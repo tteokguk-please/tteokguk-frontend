@@ -24,6 +24,8 @@ const NicknamePage = () => {
       },
       {
         onSuccess: ({ nickname, primaryIngredient }) => {
+          localStorage.removeItem("kakaoToken");
+
           welcomeModal.open(({ isOpen, close }) => (
             <WelcomeModal
               isOpen={isOpen}
