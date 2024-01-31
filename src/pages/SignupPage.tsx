@@ -17,7 +17,7 @@ const SignupPage = () => {
     password: "",
     passwordConfirm: "",
     nickname: "",
-    privacy: true,
+    privacy: false,
     marketing: false,
   };
 
