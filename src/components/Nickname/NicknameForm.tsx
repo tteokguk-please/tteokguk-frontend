@@ -60,23 +60,23 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
   const handleClickPrivacy = async (event: MouseEvent<HTMLInputElement>) => {
     event.preventDefault();
 
-    const result = await confirm({
+    const confirmed = await confirm({
       description: <PrivacyConfirmView />,
       confirmButton: { text: "동의" },
       cancelButton: { text: "미동의" },
     });
-    setValue("privacy", result, { shouldValidate: true });
+    setValue("privacy", confirmed, { shouldValidate: true });
   };
 
   const handleClickMarketing = async (event: MouseEvent<HTMLInputElement>) => {
     event.preventDefault();
 
-    const result = await confirm({
+    const confirmed = await confirm({
       description: <MarketingConfirmView />,
       confirmButton: { text: "동의" },
       cancelButton: { text: "미동의" },
     });
-    setValue("marketing", result, { shouldValidate: true });
+    setValue("marketing", confirmed, { shouldValidate: true });
   };
 
   useEffect(() => {
