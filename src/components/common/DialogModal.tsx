@@ -13,7 +13,7 @@ const DialogModal = () => {
   return (
     isOpen && (
       <Modal className={styles.container}>
-        <Modal.Header className={styles.modalHeader}>{title}</Modal.Header>
+        {title && <Modal.Header className={styles.modalHeader}>{title}</Modal.Header>}
         <Modal.Body>
           {description}
           <div className={styles.footer}>
@@ -86,7 +86,6 @@ const styles = {
     display: "flex",
     width: "100%",
     gap: "0.8rem",
-    marginTop: "1.6rem",
   }),
   block: css({
     display: "block",

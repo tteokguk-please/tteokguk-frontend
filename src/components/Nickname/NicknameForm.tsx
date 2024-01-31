@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 
 import { useAtomValue } from "jotai";
 
@@ -13,6 +13,9 @@ import Button from "@/components/common/Button";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import CheckIcon from "@/assets/svg/check.svg";
 import { $checkNickname } from "@/store/auth";
+import { useDailog } from "@/hooks/useDialog";
+import PrivacyConfirmView from "../shared/PrivacyConfirmView";
+import MarketingConfirmView from "../shared/MarketingConfirmView";
 
 interface Props {
   defaultValues: NicknameFormValues;
@@ -20,9 +23,11 @@ interface Props {
 }
 
 const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
+  const { confirm } = useDailog();
   const {
     register,
     watch,
+    setValue,
     setError,
     handleSubmit,
     formState: { errors, isValid },
@@ -48,6 +53,28 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
 
   const handleCheckNickname = () => {
     checkNickname(nickname);
+  };
+
+  const handleClickPrivacy = async (event: MouseEvent<HTMLInputElement>) => {
+    event.preventDefault();
+
+    const result = await confirm({
+      description: <PrivacyConfirmView />,
+      confirmButton: { text: "동의" },
+      cancelButton: { text: "미동의" },
+    });
+    setValue("privacy", result, { shouldValidate: true });
+  };
+
+  const handleClickMarketing = async (event: MouseEvent<HTMLInputElement>) => {
+    event.preventDefault();
+
+    const result = await confirm({
+      description: <MarketingConfirmView />,
+      confirmButton: { text: "동의" },
+      cancelButton: { text: "미동의" },
+    });
+    setValue("marketing", result, { shouldValidate: true });
   };
 
   useEffect(() => {
@@ -106,6 +133,8 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
             id="privacy"
             type="checkbox"
             className="a11y-hidden"
+            onChange={(e) => e.preventDefault()}
+            onClick={handleClickPrivacy}
           />
           <label
             htmlFor="marketing"
@@ -120,6 +149,8 @@ const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
             id="marketing"
             type="checkbox"
             className="a11y-hidden"
+            onChange={(e) => e.preventDefault()}
+            onClick={handleClickMarketing}
           />
         </div>
         <Button disabled={isDisabledSignupButton} color="primary.100" applyColorTo="background">
@@ -184,6 +215,7 @@ const styles = {
     flexDirection: "row",
     alignItems: "center",
     fontSize: "1.4rem",
+    cursor: "pointer",
   }),
   checkTitle: css({
     marginLeft: "0.8rem",
