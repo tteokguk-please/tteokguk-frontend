@@ -1,5 +1,11 @@
+import Loading from "@/components/common/Loading";
+
 const NotFoundPage = () => {
-  return <div>404 Not Found</div>;
+  return (
+    <div>
+      <Loading />
+    </div>
+  );
 };
 
 export default NotFoundPage;

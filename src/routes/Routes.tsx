@@ -45,8 +45,8 @@ export const Routes = () => {
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/my-page/activity" element={<MyActivityPage />} />
         <Route path="/users/:id" element={<UserPage />} />
+        <Route path="/*" element={<NotFoundPage />} />
       </Route>
-      <Route path="/*" element={<NotFoundPage />} />
     </ReactRoutes>
   );
 };
