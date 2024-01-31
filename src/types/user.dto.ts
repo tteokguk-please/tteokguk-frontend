@@ -1,16 +1,16 @@
 import { IngredientKey, IngredientQuantity } from "./ingredient";
-import { Tteokguk } from "./tteokguk";
+import { UserTteokguk } from "./tteokguk";
 
-export interface UserResponse {
+export interface UserDetailsResponse {
   nickname: string;
   primaryIngredient: IngredientKey;
-  tteokguks: Tteokguk[];
+  tteokguks: UserTteokguk[];
 }
 
 export interface MyDetailsResponse {
   id: number;
   primaryIngredient: IngredientKey;
   nickname: string;
-  tteokguks: Tteokguk[];
+  tteokguks: UserTteokguk[];
   items: IngredientQuantity[];
 }
