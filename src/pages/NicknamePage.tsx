@@ -12,7 +12,7 @@ import WelcomeModal from "@/components/shared/WelcomeModal";
 
 const NicknamePage = () => {
   const welcomeModal = useOverlay();
-  const defaultValues: NicknameFormValues = { nickname: "", privacy: true, marketing: false };
+  const defaultValues: NicknameFormValues = { nickname: "", privacy: false, marketing: false };
 
   const { mutate: postKakaoUserSignup } = useAtomValue($postKakaoUserSignup);
 

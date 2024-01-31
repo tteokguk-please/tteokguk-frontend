@@ -1,11 +1,16 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, MouseEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { useAtomValue } from "jotai";
 
+import { useDailog } from "@/hooks/useDialog";
+
 import { css } from "@styled-system/css";
 
 import { SignupFormValues } from "@/types/form";
+
+import PrivacyConfirmView from "../shared/PrivacyConfirmView";
+import MarketingConfirmView from "../shared/MarketingConfirmView";
 
 import Input from "@/components/common/Input";
 import Label from "@/components/common/Label";
@@ -19,13 +24,15 @@ interface Props {
   onSubmit: (values: SignupFormValues) => void | Promise<void>;
 }
 
-const EMAIL_REGEX = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+const EMAIL_REGEX = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w{2,4}([-.]\w+)*$/;
 const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/;
 
 const SignupForm = ({ defaultValues, onSubmit }: Props) => {
+  const { confirm } = useDailog();
   const {
     register,
     watch,
+    setValue,
     setError,
     handleSubmit,
     formState: { errors, isValid },
@@ -83,8 +90,30 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
     checkEmail(email);
   };
 
-  const handleCheckNickname = () => {
+  const handleCheckNickname = async () => {
     checkNickname(nickname);
+  };
+
+  const handleClickPrivacy = async (event: MouseEvent<HTMLInputElement>) => {
+    event.preventDefault();
+
+    const confirmed = await confirm({
+      description: <PrivacyConfirmView />,
+      confirmButton: { text: "동의" },
+      cancelButton: { text: "미동의" },
+    });
+    setValue("privacy", confirmed, { shouldValidate: true });
+  };
+
+  const handleClickMarketing = async (event: MouseEvent<HTMLInputElement>) => {
+    event.preventDefault();
+
+    const confirmed = await confirm({
+      description: <MarketingConfirmView />,
+      confirmButton: { text: "동의" },
+      cancelButton: { text: "미동의" },
+    });
+    setValue("marketing", confirmed, { shouldValidate: true });
   };
 
   useEffect(() => {
@@ -211,6 +240,8 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
               id="privacy"
               type="checkbox"
               className="a11y-hidden"
+              onChange={(e) => e.preventDefault()}
+              onClick={handleClickPrivacy}
             />
 
             <label
@@ -226,6 +257,8 @@ const SignupForm = ({ defaultValues, onSubmit }: Props) => {
               id="marketing"
               type="checkbox"
               className="a11y-hidden"
+              onChange={(e) => e.preventDefault()}
+              onClick={handleClickMarketing}
             />
           </div>
           <Button
@@ -292,6 +325,8 @@ const styles = {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    fontSize: "1.4rem",
+    cursor: "pointer",
   }),
   checkTitle: css({
     marginLeft: "0.8rem",
@@ -313,5 +348,20 @@ const styles = {
     fontSize: "1.2rem",
     color: "green.100",
     marginLeft: "0.4rem",
+  }),
+  content: css({
+    fontSize: "1.4rem",
+    whiteSpace: "pre-line",
+    textAlign: "center",
+    marginY: "1.6rem",
+  }),
+  description: css({
+    fontSize: "1.2rem",
+    color: "gray.50",
+    textAlign: "center",
+    whiteSpace: "pre-line",
+  }),
+  block: css({
+    display: "block",
   }),
 };

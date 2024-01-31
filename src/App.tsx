@@ -6,18 +6,21 @@ import { OverlayProvider } from "@toss/use-overlay";
 
 import { Routes } from "./routes/Routes";
 import ToastContainer from "./components/common/ToastContainer";
+import { DialogModalProvider } from "./components/common/DialogModal";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <OverlayProvider>
-        <ToastContainer />
-        <ErrorBoundary fallback={<div>error</div>}>
-          <Suspense fallback={<div>loading</div>}>
-            <Routes />
-          </Suspense>
-        </ErrorBoundary>
-      </OverlayProvider>
+      <ErrorBoundary fallback={<div>error</div>}>
+        <Suspense fallback={<div>loading</div>}>
+          <OverlayProvider>
+            <ToastContainer />
+            <DialogModalProvider>
+              <Routes />
+            </DialogModalProvider>
+          </OverlayProvider>
+        </Suspense>
+      </ErrorBoundary>
     </BrowserRouter>
   );
 };

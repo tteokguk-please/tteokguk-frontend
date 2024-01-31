@@ -1,0 +1,97 @@
+import { css } from "@styled-system/css";
+
+const MarketingConfirmView = () => {
+  return (
+    <div className={styles.content}>
+      <div className={styles.header}>마케팅 · 홍보 활용 동의서 (선택)</div>
+      <div className={styles.guide}>
+        <span className={styles.block}>사용자가 ‘떡국을 부탁해’에서 작성한 내용은</span>마케팅 및
+        홍보에 활용 될 수 있습니다.
+      </div>
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
+          <thead className={styles.tableHeader}>
+            <tr>
+              <th>수집항목</th>
+              <th>수집목적</th>
+              <th>기간</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span className={styles.block}>사용자</span> 작성 소원
+              </td>
+              <td>마케팅 및 홍보 활용</td>
+              <td>탈퇴 시</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className={styles.caution}>*사용자는 동의를 거부할 권리가 있습니다.</div>
+    </div>
+  );
+};
+
+export default MarketingConfirmView;
+
+const styles = {
+  content: css({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+    paddingTop: "0.8rem",
+    fontSize: "1.4rem",
+  }),
+  header: css({
+    flex: 1,
+    fontWeight: 700,
+    fontSize: "1.6rem",
+    textAlign: "center",
+    marginBottom: "0.4rem",
+  }),
+  guide: css({
+    marginBottom: "1.6rem",
+    lineHeight: "1.68rem",
+  }),
+  tableContainer: css({
+    borderWidth: "0.1rem",
+    borderColor: "primary.45",
+    borderRadius: "0.8rem",
+  }),
+  table: css({
+    width: "26.4rem",
+    height: "8rem",
+    fontSize: "1.2rem",
+    borderRadius: "0.8rem",
+    borderCollapse: "collapse",
+    backgroundColor: "white",
+    "& thead th": {
+      borderBottomWidth: "0.1rem",
+      borderBottomColor: "primary.45",
+      fontWeight: 600,
+    },
+
+    "& th, & td": {
+      width: "33.33%",
+      textAlign: "center",
+      paddingY: "0.5rem",
+      paddingX: "0.8rem",
+    },
+  }),
+  tableHeader: css({
+    borderBottom: "0.1rem solid black",
+    fontWeight: 600,
+  }),
+  block: css({
+    display: "block",
+  }),
+  caution: css({
+    fontSize: "1.2rem",
+    fontWeight: 400,
+    textAlign: "center",
+    marginTop: "2.4rem",
+    marginBottom: "0.8rem",
+  }),
+};
