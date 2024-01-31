@@ -41,7 +41,7 @@ const WelcomeModal = ({ isOpen, onClose, nickname, uniqueIngredientKey }: Props)
       title: "복주머니를 열어보세요!",
       content: "복주머니를 열면 새로운 떡국 재료를\n 랜덤으로 얻을 수 있어요.",
       icon: <LuckyBagIcon aria-label="복주머니" />,
-      buttonContent: "소원 떡국 만들러 가기",
+      buttonContent: "홈으로 이동하기",
     },
   ];
 
@@ -53,7 +53,7 @@ const WelcomeModal = ({ isOpen, onClose, nickname, uniqueIngredientKey }: Props)
     if (step === modalContents.length - 1) {
       onClose();
       setStep(0);
-      router.push("/tteokguk/create");
+      router.push("/tteokguks");
     }
   };
 
