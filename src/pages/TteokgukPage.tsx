@@ -21,8 +21,6 @@ const TteokgukPage = () => {
   const { data: tteokguk } = useAtomValue($getTteokguk(Number(id)));
   const { nickname, wish, ingredients, usedIngredients } = tteokguk;
 
-  console.log(id);
-
   return (
     <Fragment>
       <Header hasPreviousPage actionIcon="profile">
