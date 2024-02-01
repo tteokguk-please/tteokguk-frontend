@@ -4,15 +4,12 @@ import { getMyDetails, getUserDetails } from "@/apis/user";
 
 import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
 import { getLocalStorage } from "@/utils/localStorage";
-import { isExpiredAccessToken } from "@/utils/token";
 
 export const $getMyDetails = atomWithSuspenseQuery(() => {
-  const isTokenExpired = isExpiredAccessToken(getLocalStorage("accessToken"));
-
   return {
     queryKey: ["myDetails"],
     queryFn: () => getMyDetails(),
-    enabled: isTokenExpired,
+    enabled: !!getLocalStorage("accessToken"),
   };
 });
 
