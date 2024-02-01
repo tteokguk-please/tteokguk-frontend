@@ -36,7 +36,7 @@ const styles = {
     color: "gray.50",
   }),
   runAnimation: css({
-    animation: "run 2s linear infinite",
+    animation: "run 1.5s linear infinite",
   }),
   runningDragon: css({
     position: "relative",
