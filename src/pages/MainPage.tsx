@@ -62,12 +62,8 @@ const MainPage = () => {
         </Tabs>
 
         <BottomCTA>
-          <Link to="/tteokguk/create" className={classNames(styles.link)}>
-            <Button
-              color="secondary.100"
-              applyColorTo="background"
-              className={classNames(styles.button)}
-            >
+          <Link to="/tteokguk/create" className={styles.link}>
+            <Button color="secondary.100" applyColorTo="background" className={styles.button}>
               소원 떡국 만들기
             </Button>
           </Link>
