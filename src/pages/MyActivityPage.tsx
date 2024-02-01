@@ -30,7 +30,7 @@ const MyActivityPage = () => {
             <ReceivedIngredientsList />
           </TabPanel>
           <TabPanel className={styles.tabPanel}>
-            <TteokgukWithCaptionList />
+            <TteokgukWithCaptionList tteokguks={[]} />
           </TabPanel>
         </Tabs>
       </div>
