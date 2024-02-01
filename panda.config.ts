@@ -34,6 +34,16 @@ export default defineConfig({
         green: { 100: { value: "#37C35E" } },
       },
     },
+    keyframes: {
+      run: {
+        "0%": {
+          transform: "translateX(0%)",
+        },
+        "100%": {
+          transform: "translateX(100%)",
+        },
+      },
+    },
     extend: {},
   },
 
