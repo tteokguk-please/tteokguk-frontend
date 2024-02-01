@@ -7,8 +7,10 @@ const Loading = () => {
   return (
     <div className={styles.container}>
       <div>
-        <div className={styles.runningDragon}>
-          <img src={runningDragon} alt="달리는 용용이" />
+        <div className={styles.runAnimation}>
+          <div className={styles.runningDragon}>
+            <img src={runningDragon} alt="달리는 용용이" />
+          </div>
         </div>
         <div>
           <img src={ground} alt="땅" />
@@ -33,9 +35,11 @@ const styles = {
     fontWeight: 700,
     color: "gray.50",
   }),
+  runAnimation: css({
+    animation: "run 2s linear infinite",
+  }),
   runningDragon: css({
     position: "relative",
-    animation: "run 2s linear infinite",
     width: "7.3rem",
   }),
 };
