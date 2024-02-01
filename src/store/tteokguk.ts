@@ -8,7 +8,7 @@ import { PostTteokgukRequest } from "@/types/tteokguk.dto";
 
 import { $getMyDetails } from "./user";
 
-export const $getNewTteokguks = atomWithSuspenseInfiniteQuery(() => ({
+const $getNewTteokguks = atomWithSuspenseInfiniteQuery(() => ({
   queryKey: ["newTteokguks"],
   queryFn: async ({ pageParam }) => getNewTteokguks(pageParam),
   getNextPageParam: (lastPage, _allPages, lastPageParam) => {
@@ -19,7 +19,7 @@ export const $getNewTteokguks = atomWithSuspenseInfiniteQuery(() => ({
   initialPageParam: 1,
 }));
 
-export const $getCompletedTteokguks = atomWithSuspenseInfiniteQuery(() => ({
+const $getCompletedTteokguks = atomWithSuspenseInfiniteQuery(() => ({
   queryKey: ["completedTteokguks"],
   queryFn: async ({ pageParam }) => getCompletedTteokguks(pageParam),
   getNextPageParam: (lastPage, _allPages, lastPageParam) => {
