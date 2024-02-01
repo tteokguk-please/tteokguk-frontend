@@ -1,4 +1,5 @@
 import {
+  GetTteokgukResponse,
   GetNewTteokguksReponse,
   PostTteokgukRequest,
   PostTteokgukResponse,
@@ -7,6 +8,9 @@ import {
 import http from "./core";
 
 const TTEOKGUKS_SIZE = 20;
+
+export const getTteokguk = (id: number) =>
+  http.get<GetTteokgukResponse>(`api/v1/tteokguk/find/${id}`);
 
 export const getNewTteokguks = (page: number) =>
   http.get<GetNewTteokguksReponse>(`api/v1/tteokguk/new?size=${TTEOKGUKS_SIZE}&page=${page}`);

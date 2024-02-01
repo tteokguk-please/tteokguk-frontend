@@ -9,6 +9,17 @@ export interface GetNewTteokguksReponse {
   };
 }
 
+export interface GetTteokgukResponse {
+  tteokgukId: number;
+  memberId: number;
+  nickname: string;
+  wish: string;
+  access: boolean;
+  completino: boolean;
+  ingredients: IngredientKey[];
+  usedIngredients: IngredientKey[];
+}
+
 export interface PostTteokgukRequest {
   wish: string;
   ingredients: IngredientKey[];
