@@ -30,12 +30,12 @@ const kyInstance = ky.create({
 
 const setAuthHeader = async (request: Request) => {
   const storedToken = getLocalStorage("accessToken");
-  const currentToken = isExpiredAccessToken(storedToken)
+  const validToken = isExpiredAccessToken(storedToken)
     ? await refreshAccessToken(getLocalStorage("refreshToken"))
     : storedToken;
 
-  if (currentToken) {
-    request.headers.set("Authorization", `Bearer ${currentToken}`);
+  if (validToken) {
+    request.headers.set("Authorization", `Bearer ${validToken}`);
   }
 };
 
