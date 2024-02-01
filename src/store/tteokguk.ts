@@ -4,7 +4,10 @@ import { atom } from "jotai";
 
 import { getCompletedTteokguks, getNewTteokguks, postTteokguk } from "@/apis/tteokguk";
 
+import { differenceArray } from "@/utils/array";
+
 import { PostTteokgukRequest } from "@/types/tteokguk.dto";
+import { IngredientKey } from "@/types/ingredient";
 
 import { $getMyDetails } from "./user";
 
@@ -45,19 +48,23 @@ export const $tteokguksByTab = atomFamily((tabIndex: number) =>
     } = await get($tteokgukAtom);
 
     const tteokguks = pages
-      .flatMap(({ data: tteokguk }) => tteokguk)
+      .flatMap(({ data: tteokguks }) => tteokguks)
       .map((tteokguk) => {
-        const hasOwnedRequiredIngredient =
-          tteokguk.completion === false &&
-          tteokguk.ingredients.some(
-            (ingredient) =>
-              !tteokguk.usedIngredients.includes(ingredient) &&
-              myDetails?.items.some(
-                (item) => item.ingredient === ingredient && item.stockQuantity > 0,
-              ),
-          );
-
-        return { ...tteokguk, hasIngredient: myDetails ? hasOwnedRequiredIngredient : false };
+        const isNonMember = !myDetails;
+        if (isNonMember) {
+          return { ...tteokguk, hasIngredient: false };
+        }
+        const needIngredients = differenceArray<IngredientKey>(
+          tteokguk.ingredients,
+          tteokguk.usedIngredients,
+        );
+        const hasOwnIngredient = (ingredient: IngredientKey) =>
+          myDetails.items.some((item) => item.ingredient === ingredient && item.stockQuantity > 0);
+        const hasOwnedRequiredIngredient = needIngredients.some(hasOwnIngredient);
+        return {
+          ...tteokguk,
+          hasIngredient: tteokguk.completion === false && hasOwnedRequiredIngredient,
+        };
       });
 
     return {
