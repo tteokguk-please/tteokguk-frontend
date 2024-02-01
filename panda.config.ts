@@ -37,10 +37,10 @@ export default defineConfig({
     keyframes: {
       run: {
         "0%": {
-          left: "-10%",
+          left: "0%",
         },
         "100%": {
-          left: "105%",
+          left: "100%",
         },
       },
     },

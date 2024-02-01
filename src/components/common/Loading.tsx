@@ -35,7 +35,7 @@ const styles = {
   }),
   runningDragon: css({
     position: "relative",
-    animation: "run 2s cubic-bezier(0.4, 0.0, 0.2, 1) infinite",
+    animation: "run 2s linear infinite",
     width: "7.3rem",
   }),
 };
