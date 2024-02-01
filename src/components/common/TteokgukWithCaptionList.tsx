@@ -1,24 +1,32 @@
 import { css } from "@styled-system/css";
 
+import { Tteokguk } from "@/types/tteokguk";
+
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
 import { Link } from "@/routes/Link";
 
-const TteokgukWithCaptionList = () => {
+interface Props {
+  tteokguks: Tteokguk[];
+}
+
+const TteokgukWithCaptionList = ({ tteokguks }: Props) => {
   return (
     <ul className={styles.container}>
-      {[...Array(12)].map(() => (
-        <Link to="/tteokguks/:id" className={styles.cardContainer}>
-          <div>
-            <div className={styles.badge}>응원요청</div>
-            <div className={styles.imageContainer}>
-              <img src={tteokgukIncomplete} alt="미완성된 떡국" />
+      {tteokguks.map(({ tteokgukId, nickname, hasIngredient }) => (
+        <li key={tteokgukId} className={styles.cardContainer}>
+          <Link to={`/tteokguks/${tteokgukId}`}>
+            <div>
+              {hasIngredient && <div className={styles.badge}>응원요청</div>}
+              <div className={styles.imageContainer}>
+                <img src={tteokgukIncomplete} alt="미완성된 떡국" />
+              </div>
+              <div className={styles.cardContent}>
+                <div className={styles.cardTitle}>{tteokgukId}번째 소원떡국</div>
+                <div className={styles.cardNickname}>@ {nickname}</div>
+              </div>
             </div>
-            <div className={styles.cardContent}>
-              <div className={styles.cardTitle}>{1178}번째 소원떡국</div>
-              <div className={styles.cardNickname}>@ {"재민"}</div>
-            </div>
-          </div>
-        </Link>
+          </Link>
+        </li>
       ))}
     </ul>
   );

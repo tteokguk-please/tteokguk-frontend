@@ -2,14 +2,14 @@ import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
-import { Tteokguk } from "@/types/tteokguk";
+import { UserTteokguk } from "@/types/tteokguk";
 
 import TteokgukImage from "./TteokgukImage";
 
 import { Link } from "@/routes/Link";
 
 interface Props {
-  tteokguks: Tteokguk[];
+  tteokguks: UserTteokguk[];
   className?: string;
 }
 

@@ -16,7 +16,7 @@ interface Props {
   hasPreviousPage?: true;
   actionIcon?: "profile" | "guide";
   className?: string;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => {

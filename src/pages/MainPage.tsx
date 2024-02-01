@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 import classNames from "classnames";
+import { useAtomValue } from "jotai";
+
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 import { css } from "@styled-system/css";
 
@@ -9,11 +12,28 @@ import { Link } from "@/routes/Link";
 import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
+import { $tteokguksByTab } from "@/store/tteokguk";
 import HeaderLogo from "@/assets/svg/header-logo.svg";
 
 const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const isSelectedTab = (index: number) => index === tabIndex;
+  const fetchMoreRef = useRef(null);
+
+  const { tteokguks, isFetchingNextPage, hasNextPage, fetchNextPage } = useAtomValue(
+    $tteokguksByTab(tabIndex),
+  );
+
+  const handleIntersect = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  useIntersectionObserver({
+    target: fetchMoreRef,
+    handleIntersect,
+  });
 
   return (
     <>
@@ -33,10 +53,10 @@ const MainPage = () => {
             </Tab>
           </TabList>
           <TabPanel className={styles.tabPanel}>
-            <TteokgukWithCaptionList />
+            <TteokgukWithCaptionList tteokguks={tteokguks} />
           </TabPanel>
           <TabPanel className={styles.tabPanel}>
-            <TteokgukWithCaptionList />
+            <TteokgukWithCaptionList tteokguks={tteokguks} />
           </TabPanel>
         </Tabs>
 
@@ -49,6 +69,7 @@ const MainPage = () => {
             소원 떡국 만들기
           </Button>
         </Link>
+        <div ref={fetchMoreRef} />
       </div>
     </>
   );

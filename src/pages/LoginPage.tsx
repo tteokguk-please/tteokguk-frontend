@@ -12,7 +12,6 @@ import Button from "@/components/common/Button";
 import { Link } from "@/routes/Link";
 import { $postKakaoLogin, $postKakaoToken } from "@/store/auth";
 import useRouter from "@/routes/useRouter";
-import { RoutePath } from "@/routes/Routes";
 import deliveryDragon from "@/assets/images/delivery-dragon.png";
 import KakaoIcon from "@/assets/svg/kakao.svg";
 
@@ -56,8 +55,12 @@ const LoginPage = () => {
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
 
-    const nextPath: RoutePath = isInitialized ? "/tteokguks" : "/nickname/create";
-    router.push(nextPath);
+    if (isInitialized) {
+      localStorage.removeItem("kakaoToken");
+      router.push("/tteokguks");
+    } else {
+      router.push("/nickname/create");
+    }
   };
 
   useEffect(() => {

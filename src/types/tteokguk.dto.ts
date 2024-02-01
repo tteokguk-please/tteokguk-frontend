@@ -1,4 +1,24 @@
 import { IngredientKey } from "./ingredient";
+import { Tteokguk } from "./tteokguk";
+
+export interface GetNewTteokguksReponse {
+  data: Tteokguk[];
+  pageInfo: {
+    page: number;
+    size: number;
+  };
+}
+
+export interface GetTteokgukResponse {
+  tteokgukId: number;
+  memberId: number;
+  nickname: string;
+  wish: string;
+  access: boolean;
+  completino: boolean;
+  ingredients: IngredientKey[];
+  usedIngredients: IngredientKey[];
+}
 
 export interface GetTteokgukResponse {
   tteokgukId: number;
