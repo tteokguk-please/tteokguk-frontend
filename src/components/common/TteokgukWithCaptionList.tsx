@@ -14,7 +14,7 @@ const TteokgukWithCaptionList = ({ tteokguks }: Props) => {
     <ul className={styles.container}>
       {tteokguks.map(({ tteokgukId, nickname, hasIngredient }) => (
         <li key={tteokgukId} className={styles.cardContainer}>
-          <Link to="/tteokguks/:id">
+          <Link to={`/tteokguks/${tteokgukId}`}>
             <div>
               {hasIngredient && <div className={styles.badge}>응원요청</div>}
               <div className={styles.imageContainer}>
