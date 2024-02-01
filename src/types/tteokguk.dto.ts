@@ -1,4 +1,13 @@
 import { IngredientKey } from "./ingredient";
+import { Tteokguk } from "./tteokguk";
+
+export interface GetNewTteokguksReponse {
+  data: Tteokguk[];
+  pageInfo: {
+    page: number;
+    size: number;
+  };
+}
 
 export interface PostTteokgukRequest {
   wish: string;

@@ -1,6 +1,9 @@
 import ky, { Input, KyResponse } from "ky";
 
-import { getLocalStorage } from "@/utils/localStorage";
+import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
+import { isExpiredAccessToken } from "@/utils/token";
+
+import { LoginResponse } from "@/types/auth";
 
 const kyInstance = ky.create({
   prefixUrl: import.meta.env.VITE_BASE_URL,
@@ -10,12 +13,8 @@ const kyInstance = ky.create({
   },
   hooks: {
     beforeRequest: [
-      (request) => {
-        const accessToken = getLocalStorage("accessToken");
-
-        if (accessToken) {
-          request.headers.set("Authorization", `Bearer ${accessToken}`);
-        }
+      async (request) => {
+        await setAuthHeader(request);
       },
     ],
     afterResponse: [
@@ -28,6 +27,36 @@ const kyInstance = ky.create({
     ],
   },
 });
+
+const setAuthHeader = async (request: Request) => {
+  const storedToken = getLocalStorage("accessToken");
+  const validToken = isExpiredAccessToken(storedToken)
+    ? await refreshAccessToken(getLocalStorage("refreshToken"))
+    : storedToken;
+
+  if (validToken) {
+    request.headers.set("Authorization", `Bearer ${validToken}`);
+  }
+};
+
+const refreshAccessToken = async (token: string) => {
+  try {
+    const { accessToken, refreshToken } = await ky
+      .post("api/v1/auth/token", {
+        prefixUrl: import.meta.env.VITE_BASE_URL,
+        json: { refreshToken: token },
+      })
+      .json<LoginResponse>();
+
+    setLocalStorage("accessToken", accessToken);
+    setLocalStorage("refreshToken", refreshToken);
+
+    return accessToken;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to refresh token");
+  }
+};
 
 const handleResponse = <Response>(response: KyResponse) => response.json<Response>();
 
