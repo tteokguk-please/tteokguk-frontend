@@ -2,8 +2,7 @@ import { atomWithMutation, atomWithSuspenseInfiniteQuery } from "jotai-tanstack-
 import { atomFamily } from "jotai/utils";
 import { atom } from "jotai";
 
-import { getTteokguk, postTteokguk } from "@/apis/tteokguk";
-import { getCompletedTteokguks, getNewTteokguks, postTteokguk } from "@/apis/tteokguk";
+import { getTteokguk, getCompletedTteokguks, getNewTteokguks, postTteokguk } from "@/apis/tteokguk";
 
 import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
 import { differenceArray } from "@/utils/array";
