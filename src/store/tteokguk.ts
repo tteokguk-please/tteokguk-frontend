@@ -1,6 +1,8 @@
 import { atomWithMutation } from "jotai-tanstack-query";
 
-import { postTteokguk } from "@/apis/tteokguk";
+import { getTteokguk, postTteokguk } from "@/apis/tteokguk";
+
+import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
 
 import { PostTteokgukRequest } from "@/types/tteokguk.dto";
 
@@ -9,3 +11,7 @@ export const $postTteokguk = atomWithMutation(() => {
     mutationFn: (tteokguk: PostTteokgukRequest) => postTteokguk(tteokguk),
   };
 });
+
+export const $getTteokguk = atomFamilyWithSuspenseQuery("tteokguk", (id: number) =>
+  getTteokguk(id),
+);
