@@ -14,3 +14,9 @@ export interface MyDetailsResponse {
   tteokguks: UserTteokguk[];
   items: IngredientQuantity[];
 }
+
+export type SearchedUserResponse = {
+  id: number;
+  nickname: string;
+  primaryIngredient: IngredientKey;
+}[];
