@@ -1,5 +1,4 @@
 import { atomWithQuery, atomWithSuspenseQuery } from "jotai-tanstack-query";
-import { HTTPError } from "ky";
 
 import { getLoggedInUserDetails, getMyDetails, getUserDetails } from "@/apis/user";
 
@@ -8,15 +7,7 @@ import { getLocalStorage } from "@/utils/localStorage";
 
 export const $getMyDetails = atomWithSuspenseQuery(() => ({
   queryKey: ["myDetails"],
-  queryFn: async () => {
-    try {
-      return await getMyDetails();
-    } catch (error) {
-      if (error instanceof HTTPError) {
-        if (error.response.status === 401) return null;
-      }
-    }
-  },
+  queryFn: async () => getMyDetails(),
 }));
 
 export const $getUserDetail = atomFamilyWithSuspenseQuery("users", (id: number) => {
