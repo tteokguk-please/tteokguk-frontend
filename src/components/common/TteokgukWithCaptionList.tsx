@@ -2,7 +2,8 @@ import { css } from "@styled-system/css";
 
 import { Tteokguk } from "@/types/tteokguk";
 
-import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
+import TteokgukImage from "./TteokgukImage";
+
 import { Link } from "@/routes/Link";
 
 interface Props {
@@ -12,22 +13,37 @@ interface Props {
 const TteokgukWithCaptionList = ({ tteokguks }: Props) => {
   return (
     <ul className={styles.container}>
-      {tteokguks.map(({ tteokgukId, nickname, hasIngredient }) => (
-        <li key={tteokgukId} className={styles.cardContainer}>
-          <Link to={`/tteokguks/${tteokgukId}`}>
-            <div>
-              {hasIngredient && <div className={styles.badge}>응원요청</div>}
-              <div className={styles.imageContainer}>
-                <img src={tteokgukIncomplete} alt="미완성된 떡국" />
+      {tteokguks.map(
+        ({
+          tteokgukId,
+          nickname,
+          completion,
+          hasIngredient,
+          backgroundColor,
+          visibleIngredient1,
+          visibleIngredient2,
+        }) => (
+          <li key={tteokgukId} className={styles.cardContainer}>
+            <Link to={`/tteokguks/${tteokgukId}`}>
+              <div>
+                {hasIngredient && <div className={styles.badge}>응원요청</div>}
+                <div className={styles.imageContainer}>
+                  <TteokgukImage
+                    completion={completion}
+                    backgroundColor={backgroundColor}
+                    firstGarnish={visibleIngredient1}
+                    secondGarnish={visibleIngredient2}
+                  />
+                </div>
+                <div className={styles.cardContent}>
+                  <div className={styles.cardTitle}>{tteokgukId}번째 소원떡국</div>
+                  <div className={styles.cardNickname}>@ {nickname}</div>
+                </div>
               </div>
-              <div className={styles.cardContent}>
-                <div className={styles.cardTitle}>{tteokgukId}번째 소원떡국</div>
-                <div className={styles.cardNickname}>@ {nickname}</div>
-              </div>
-            </div>
-          </Link>
-        </li>
-      ))}
+            </Link>
+          </li>
+        ),
+      )}
     </ul>
   );
 };
@@ -48,6 +64,7 @@ const styles = {
     boxSizing: "border-box",
     borderRadius: "1rem",
     overflow: "hidden",
+    paddingBottom: "5.3rem",
   }),
   badge: css({
     position: "absolute",
@@ -63,6 +80,7 @@ const styles = {
     backgroundColor: "secondary.50",
   }),
   imageContainer: css({
+    position: "relative",
     display: "flex",
     justifyContent: "center",
     height: "15.2rem",

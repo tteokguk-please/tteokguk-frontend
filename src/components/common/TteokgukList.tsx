@@ -16,13 +16,20 @@ interface Props {
 const TteokgukList = ({ tteokguks, className }: Props) => {
   return (
     <ul className={classNames(styles.tteokgukList, className)}>
-      {tteokguks.map(({ tteokgukId, completion }) => (
-        <Link to={`/tteokguks/${tteokgukId}`}>
-          <li className={styles.tteokgukListItem}>
-            <TteokgukImage completion={completion} />
+      {tteokguks.map(
+        ({ tteokgukId, completion, backgroundColor, visibleIngredient1, visibleIngredient2 }) => (
+          <li key={tteokgukId} className={styles.tteokgukListItem}>
+            <Link to={`/tteokguks/${tteokgukId}`}>
+              <TteokgukImage
+                completion={completion}
+                backgroundColor={backgroundColor || "BLUE"}
+                firstGarnish={visibleIngredient1}
+                secondGarnish={visibleIngredient2}
+              />
+            </Link>
           </li>
-        </Link>
-      ))}
+        ),
+      )}
     </ul>
   );
 };
@@ -38,6 +45,7 @@ const styles = {
     marginTop: "0.8rem",
   }),
   tteokgukListItem: css({
+    position: "relative",
     width: "9.6rem",
     height: "9.6rem",
     flex: "0 0 auto",
