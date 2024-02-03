@@ -12,9 +12,9 @@ import { Link } from "@/routes/Link";
 import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
+import BottomCTA from "@/components/common/BottomCTA";
 import { $tteokguksByTab } from "@/store/tteokguk";
 import HeaderLogo from "@/assets/svg/header-logo.svg";
-import BottomCTA from "@/components/common/BottomCTA";
 
 const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
