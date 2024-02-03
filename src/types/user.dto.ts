@@ -14,3 +14,10 @@ export interface MyDetailsResponse {
   tteokguks: UserTteokguk[];
   items: IngredientQuantity[];
 }
+
+export interface LoggedInUserDetailsResponse {
+  id: number;
+  primaryIngredient: IngredientKey;
+  nickname: string;
+  itemResponses: IngredientQuantity[];
+}
