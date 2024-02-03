@@ -10,6 +10,7 @@ import TteokgukPage from "@/pages/TteokgukPage";
 import TteokgukCookingPage from "@/pages/TteokgukCookingPage";
 import MyPage from "@/pages/MyPage";
 import MyActivityPage from "@/pages/MyActivityPage";
+import SearchUserPage from "@/pages/SearchUserPage";
 import UserPage from "@/pages/UserPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
@@ -27,6 +28,7 @@ export type RoutePath =
   | "/tteokguk/create"
   | "/my-page"
   | "/my-page/activity"
+  | "/search/user"
   | "/users/:id"
   | `/users/${number}`;
 
@@ -44,6 +46,7 @@ export const Routes = () => {
         <Route path="/tteokguk/create" element={<TteokgukCookingPage />} />
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/my-page/activity" element={<MyActivityPage />} />
+        <Route path="/search/user" element={<SearchUserPage />} />
         <Route path="/users/:id" element={<UserPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Route>
