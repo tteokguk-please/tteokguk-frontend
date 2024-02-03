@@ -17,7 +17,6 @@ import SearchIcon from "@/assets/svg/search.svg";
 const SearchUserPage = () => {
   const [nickname, setNickname] = useAtom($nickname);
   const { data: searchedUsers, isLoading } = useAtomValue($getSearchedUsers(nickname));
-  console.log(searchedUsers);
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
