@@ -8,6 +8,8 @@ import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 import { css } from "@styled-system/css";
 
+import { getLocalStorage } from "@/utils/localStorage";
+
 import { Link } from "@/routes/Link";
 import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
 import Button from "@/components/common/Button";
@@ -19,6 +21,7 @@ const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const isSelectedTab = (index: number) => index === tabIndex;
   const fetchMoreRef = useRef(null);
+  const isLoggedIn = !!getLocalStorage("accessToken");
 
   const { tteokguks, isFetchingNextPage, hasNextPage, fetchNextPage } = useAtomValue(
     $tteokguksByTab(tabIndex),
@@ -60,7 +63,7 @@ const MainPage = () => {
           </TabPanel>
         </Tabs>
 
-        <Link to="/tteokguk/create">
+        <Link to={isLoggedIn ? "/tteokguk/create" : "/login"}>
           <Button
             color="secondary.100"
             applyColorTo="background"
