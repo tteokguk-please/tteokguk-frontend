@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
-import { css } from "@styled-system/css";
+
 import useBottomCTA from "@/hooks/useBottomCTA";
+
+import { css } from "@styled-system/css";
 
 interface Props {
   children: ReactNode;
@@ -25,5 +27,6 @@ const styles = {
       padding: "1rem 0 4rem 0",
       transform: isVisible ? "translateY(0%)" : "translateY(100%)",
       transition: "transform 0.4s",
+      zIndex: 100,
     }),
 };
