@@ -15,9 +15,12 @@ export interface GetTteokgukResponse {
   nickname: string;
   wish: string;
   access: boolean;
-  completino: boolean;
+  completion: boolean;
   ingredients: IngredientKey[];
   usedIngredients: IngredientKey[];
+  backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
+  visibleIngredient1: IngredientKey;
+  visibleIngredient2: IngredientKey;
 }
 
 export interface PostTteokgukRequest {

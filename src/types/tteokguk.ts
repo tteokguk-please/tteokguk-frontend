@@ -9,6 +9,9 @@ export interface Tteokguk {
   completion: boolean;
   ingredients: IngredientKey[];
   usedIngredients: IngredientKey[];
+  backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
+  visibleIngredient1: IngredientKey;
+  visibleIngredient2: IngredientKey;
   hasIngredient: boolean;
 }
 
@@ -18,4 +21,7 @@ export interface UserTteokguk {
   completion: boolean;
   access: boolean;
   tteokgukIngredients: IngredientKey[];
+  backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
+  visibleIngredient1: IngredientKey;
+  visibleIngredient2: IngredientKey;
 }
