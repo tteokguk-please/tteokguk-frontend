@@ -1,17 +1,23 @@
 import { css } from "@styled-system/css";
 
+import { LoggedInUserDetailsResponse } from "@/types/user.dto";
+import { IngredientKey } from "@/types/ingredient";
+
 import Modal from "@/components/common/modal/Modal";
 import Button from "@/components/common/Button";
-import DumplingIcon from "@/assets/svg/ingredients-40/dumpling.svg";
+import { INGREDIENT_ICON_BY_KEY, INGREDIENT_KEYS } from "@/constants/ingredient";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  title: "떡국 재료 추가하기" | "떡국 재료 보내기";
-  buttonContent: "추가하기" | "다음";
+  memberId: number;
+  loggedInUserDetails: LoggedInUserDetailsResponse;
 }
 
-const AddIngredientsModal = ({ isOpen, onClose, title, buttonContent }: Props) => {
+const AddIngredientsModal = ({ isOpen, onClose, memberId, loggedInUserDetails }: Props) => {
+  const title = loggedInUserDetails.id === memberId ? "떡국 재료 추가하기" : "떡국 재료 보내기";
+  const buttonText = title === "떡국 재료 추가하기" ? "추가하기" : "다음";
+
   return (
     isOpen && (
       <Modal className={styles.container}>
@@ -21,12 +27,12 @@ const AddIngredientsModal = ({ isOpen, onClose, title, buttonContent }: Props) =
         <Modal.Body className={styles.contentContainer}>
           <div className={styles.bodyTitle}>내가 가지고 있는 재료</div>
           <ol className={styles.content}>
-            {[...Array(12)].map(() => (
-              <Ingredient />
+            {INGREDIENT_KEYS.map((ingredientKey) => (
+              <Ingredient key={ingredientKey} ingredientKey={ingredientKey} />
             ))}
           </ol>
           <Button onClick={onClose} color="primary.100" applyColorTo="background">
-            {buttonContent}
+            {buttonText}
           </Button>
         </Modal.Body>
       </Modal>
@@ -36,11 +42,13 @@ const AddIngredientsModal = ({ isOpen, onClose, title, buttonContent }: Props) =
 
 export default AddIngredientsModal;
 
-const Ingredient = () => {
+const Ingredient = ({ ingredientKey }: { ingredientKey: IngredientKey }) => {
+  const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][ingredientKey];
+
   return (
     <li className={styles.ingredient} aria-label="만두">
       <div className={styles.ingredientNumber}>1</div>
-      <DumplingIcon />
+      <IngredientIcon />
     </li>
   );
 };
