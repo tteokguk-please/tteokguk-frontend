@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { useLocation } from "react-router-dom";
 
 import classNames from "classnames";
 import { useOverlay } from "@toss/use-overlay";
@@ -11,6 +12,7 @@ import GuideModal from "@/components/shared/GuideModal";
 import BeforeIcon from "@/assets/svg/before.svg";
 import ProfileIcon from "@/assets/svg/profile.svg";
 import GuideIcon from "@/assets/svg/guide.svg";
+import SearchIcon from "@/assets/svg/search.svg";
 
 interface Props {
   hasPreviousPage?: true;
@@ -20,17 +22,27 @@ interface Props {
 }
 
 const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => {
+  const location = useLocation();
   const navigation = useRouter();
 
   const handleClickBefore = () => {
     navigation.back();
   };
 
+  const isMainPage = location.pathname === "/tteokguks";
+
   return (
     <header className={classNames(styles.header, className)}>
-      <div onClick={handleClickBefore} className={styles.beforeIcon} aria-label="뒤로 가기">
-        {hasPreviousPage && <BeforeIcon />}
-      </div>
+      {isMainPage && (
+        <Link to="/search/user" className={styles.icon}>
+          <SearchIcon aria-label="검색" />
+        </Link>
+      )}
+      {!isMainPage && (
+        <div onClick={handleClickBefore} className={styles.icon} aria-label="뒤로 가기">
+          {hasPreviousPage && <BeforeIcon />}
+        </div>
+      )}
       <div className={styles.title}>
         <h1>{children}</h1>
       </div>
@@ -75,7 +87,7 @@ const styles = {
     height: "4.8rem",
     padding: "0 1.6rem",
   }),
-  beforeIcon: css({
+  icon: css({
     flex: 1,
     cursor: "pointer",
   }),
