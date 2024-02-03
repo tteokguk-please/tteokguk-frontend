@@ -10,7 +10,7 @@ import { differenceArray } from "@/utils/array";
 import { PostTteokgukRequest } from "@/types/tteokguk.dto";
 import { IngredientKey } from "@/types/ingredient";
 
-import { $getMyDetails } from "./user";
+import { $getLoggedInUserDetails } from "./user";
 
 const $getNewTteokguks = atomWithSuspenseInfiniteQuery(() => ({
   queryKey: ["newTteokguks"],
@@ -36,7 +36,7 @@ const $getCompletedTteokguks = atomWithSuspenseInfiniteQuery(() => ({
 
 export const $tteokguksByTab = atomFamily((tabIndex: number) =>
   atom(async (get) => {
-    const { data: myDetails } = await get($getMyDetails);
+    const { data: loggedInUserDetails } = get($getLoggedInUserDetails);
 
     const $tteokgukAtom = tabIndex === 0 ? $getNewTteokguks : $getCompletedTteokguks;
 
@@ -51,17 +51,23 @@ export const $tteokguksByTab = atomFamily((tabIndex: number) =>
     const tteokguks = pages
       .flatMap(({ data: tteokguks }) => tteokguks)
       .map((tteokguk) => {
-        const isNonMember = !myDetails;
+        const isNonMember = !loggedInUserDetails;
+
         if (isNonMember) {
           return { ...tteokguk, hasIngredient: false };
         }
+
         const needIngredients = differenceArray<IngredientKey>(
           tteokguk.ingredients,
           tteokguk.usedIngredients,
         );
+
         const hasOwnIngredient = (ingredient: IngredientKey) =>
-          myDetails.items.some((item) => item.ingredient === ingredient && item.stockQuantity > 0);
+          loggedInUserDetails.itemResponses?.some(
+            (item) => item.ingredient === ingredient && item.stockQuantity > 0,
+          );
         const hasOwnedRequiredIngredient = needIngredients.some(hasOwnIngredient);
+
         return {
           ...tteokguk,
           hasIngredient: tteokguk.completion === false && hasOwnedRequiredIngredient,
