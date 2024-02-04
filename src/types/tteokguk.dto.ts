@@ -15,19 +15,7 @@ export interface GetTteokgukResponse {
   nickname: string;
   wish: string;
   access: boolean;
-  completino: boolean;
-  ingredients: IngredientKey[];
-  usedIngredients: IngredientKey[];
-  requiredIngredients: IngredientKey[];
-}
-
-export interface GetTteokgukResponse {
-  tteokgukId: number;
-  memberId: number;
-  nickname: string;
-  wish: string;
-  access: boolean;
-  completino: boolean;
+  completion: boolean;
   ingredients: IngredientKey[];
   usedIngredients: IngredientKey[];
   requiredIngredients: IngredientKey[];
