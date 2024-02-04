@@ -2,28 +2,46 @@ import { css } from "@styled-system/css";
 
 import { IngredientKey } from "@/types/ingredient";
 
-import { INFINITY, INGREDIENT_ICON_BY_KEY, MAX_INGREDIENT_QUANTITY } from "@/constants/ingredient";
+import {
+  INFINITY,
+  INGREDIENT_ICON_BY_KEY,
+  INGREDIENT_NAME_BY_KEY,
+  MAX_INGREDIENT_QUANTITY,
+} from "@/constants/ingredient";
 
 interface Props {
   ingredientKey: IngredientKey;
   isSelected: boolean;
   stockQuantity: number;
+  isDisabled: boolean;
   handleClickIngredient: () => void;
 }
 
-const Ingredient = ({ ingredientKey, isSelected, stockQuantity, handleClickIngredient }: Props) => {
-  const quantity =
-    stockQuantity === MAX_INGREDIENT_QUANTITY
-      ? INFINITY
-      : isSelected
-      ? stockQuantity - 1
-      : stockQuantity;
-  const IngredientIcon = isSelected
-    ? INGREDIENT_ICON_BY_KEY[40][ingredientKey]
-    : INGREDIENT_ICON_BY_KEY.disabled[ingredientKey];
+const Ingredient = ({
+  ingredientKey,
+  isSelected,
+  stockQuantity,
+  isDisabled,
+  handleClickIngredient,
+}: Props) => {
+  const isInfiniteQuantity = stockQuantity === MAX_INGREDIENT_QUANTITY;
+  const remainQuantity = isSelected ? stockQuantity - 1 : stockQuantity;
+  const quantity = isInfiniteQuantity ? INFINITY : remainQuantity;
+
+  const IngredientIcon = INGREDIENT_ICON_BY_KEY[isDisabled ? "disabled" : 40][ingredientKey];
+
+  const getBackgroundColor = () => {
+    if (isDisabled) return "white";
+    if (isSelected) return "secondary.50";
+    return "primary.45";
+  };
 
   return (
-    <li onClick={handleClickIngredient} className={styles.ingredient(isSelected)} aria-label="만두">
+    <li
+      onClick={handleClickIngredient}
+      className={styles.ingredient(getBackgroundColor())}
+      aria-label={INGREDIENT_NAME_BY_KEY[ingredientKey]}
+    >
       <div className={styles.ingredientNumber}>{quantity}</div>
       <IngredientIcon />
     </li>
@@ -33,7 +51,7 @@ const Ingredient = ({ ingredientKey, isSelected, stockQuantity, handleClickIngre
 export default Ingredient;
 
 const styles = {
-  ingredient: (isSelected: boolean) =>
+  ingredient: (backgroundColor: "white" | "primary.45" | "secondary.50") =>
     css({
       position: "relative",
       display: "flex",
@@ -42,8 +60,8 @@ const styles = {
       width: "5.6rem",
       height: "5.6rem",
       borderRadius: "50%",
-      backgroundColor: `${isSelected ? "secondary.100" : "white"}`,
-      cursor: "pointer",
+      backgroundColor,
+      cursor: `${backgroundColor === "white" ? "default" : "pointer"}`,
     }),
   ingredientNumber: css({
     position: "absolute",
