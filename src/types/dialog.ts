@@ -5,7 +5,7 @@ import { ButtonColor } from "@/components/common/Button";
 export interface DialogModalContextProps {
   isOpen: boolean;
   type: "alert" | "confirm";
-  title?: string;
+  title?: ReactNode;
   description: ReactNode;
   confirmButton: {
     text: string;
