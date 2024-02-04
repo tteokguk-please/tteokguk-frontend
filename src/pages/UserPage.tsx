@@ -19,7 +19,7 @@ const UserPage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage actionIcon="profile">
+      <Header showBackButton actionIcon="profile">
         프로필
       </Header>
       <div className={styles.container}>

@@ -8,7 +8,7 @@ import deliveryDragon from "@/assets/images/delivery-dragon.png";
 const NotFoundPage = () => {
   return (
     <div>
-      <Header hasPreviousPage />
+      <Header showBackButton />
       <div className={styles.container}>
         <div>
           <div>
