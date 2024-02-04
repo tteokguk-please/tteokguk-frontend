@@ -16,17 +16,26 @@ interface Props {
   onClose: () => void;
   memberId: number;
   loggedInUserDetails: LoggedInUserDetailsResponse;
+  requiredIngredients: IngredientKey[];
 }
 
-const AddIngredientsModal = ({ isOpen, onClose, memberId, loggedInUserDetails }: Props) => {
+const AddIngredientsModal = ({
+  isOpen,
+  onClose,
+  memberId,
+  loggedInUserDetails,
+  requiredIngredients,
+}: Props) => {
   const [selectedIngredients, updateSelectedIngredients] = useAtom($updateSelectedIngredients);
 
   const { itemResponses: ingredientsStocks } = loggedInUserDetails;
+
   const title = loggedInUserDetails.id === memberId ? "떡국 재료 추가하기" : "떡국 재료 보내기";
   const buttonText = title === "떡국 재료 추가하기" ? "추가하기" : "다음";
 
   const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
     console.log(ingredientKey);
+    if (!requiredIngredients.includes(ingredientKey)) return;
 
     updateSelectedIngredients(ingredientKey);
   };
@@ -40,15 +49,19 @@ const AddIngredientsModal = ({ isOpen, onClose, memberId, loggedInUserDetails }:
         <Modal.Body className={styles.contentContainer}>
           <div className={styles.bodyTitle}>내가 가지고 있는 재료</div>
           <ol className={styles.content}>
-            {ingredientsStocks.map(({ ingredient, stockQuantity }) => (
-              <Ingredient
-                key={ingredient}
-                ingredientKey={ingredient}
-                handleClickIngredient={handleClickIngredient(ingredient)}
-                stockQuantity={stockQuantity}
-                isSelected={selectedIngredients.includes(ingredient)}
-              />
-            ))}
+            {ingredientsStocks.map(
+              ({ ingredient, stockQuantity }) =>
+                stockQuantity > 0 && (
+                  <Ingredient
+                    key={ingredient}
+                    ingredientKey={ingredient}
+                    handleClickIngredient={handleClickIngredient(ingredient)}
+                    stockQuantity={stockQuantity}
+                    isSelected={selectedIngredients.includes(ingredient)}
+                    isDisabled={!requiredIngredients.includes(ingredient)}
+                  />
+                ),
+            )}
           </ol>
           <Button onClick={onClose} color="primary.100" applyColorTo="background">
             {buttonText}
@@ -90,7 +103,7 @@ const styles = {
     flexFlow: "row wrap",
     gap: "1rem",
     height: "22.8rem",
-    backgroundColor: "primary.45",
+    backgroundColor: "primary.20",
     borderBottomRadius: "0.8rem",
     marginBottom: "2rem",
     padding: "1.2rem",
