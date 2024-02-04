@@ -36,7 +36,7 @@ const SearchUserPage = () => {
             검색
           </label>
           <Input id="nickname" name="nickname" placeholder="찾으시는 분의 닉네임을 입력하세요" />
-          <button className={styles.searchButton}>
+          <button type="submit" className={styles.searchButton}>
             <SearchIcon />
           </button>
         </form>
