@@ -5,7 +5,6 @@ import { atom } from "jotai";
 import { getTteokguk, getCompletedTteokguks, getNewTteokguks, postTteokguk } from "@/apis/tteokguk";
 
 import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
-import { differenceArray } from "@/utils/array";
 
 import { PostTteokgukRequest } from "@/types/tteokguk.dto";
 import { IngredientKey } from "@/types/ingredient";
@@ -52,21 +51,17 @@ export const $tteokguksByTab = atomFamily((tabIndex: number) =>
       .flatMap(({ data: tteokguks }) => tteokguks)
       .map((tteokguk) => {
         const isNonMember = !loggedInUserDetails;
+        const { requiredIngredients } = tteokguk;
 
         if (isNonMember) {
           return { ...tteokguk, hasIngredient: false };
         }
 
-        const needIngredients = differenceArray<IngredientKey>(
-          tteokguk.ingredients,
-          tteokguk.usedIngredients,
-        );
-
         const hasOwnIngredient = (ingredient: IngredientKey) =>
           loggedInUserDetails.itemResponses?.some(
             (item) => item.ingredient === ingredient && item.stockQuantity > 0,
           );
-        const hasOwnedRequiredIngredient = needIngredients.some(hasOwnIngredient);
+        const hasOwnedRequiredIngredient = requiredIngredients.some(hasOwnIngredient);
 
         return {
           ...tteokguk,
