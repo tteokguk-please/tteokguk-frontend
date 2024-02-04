@@ -9,7 +9,6 @@ import { css } from "@styled-system/css";
 import { getLocalStorage } from "@/utils/localStorage";
 
 import { Link } from "@/routes/Link";
-import AddIngredientsModal from "@/components/shared/AddIngredientsModal";
 import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
 import Ingredient from "@/components/common/Ingredient";
@@ -19,28 +18,49 @@ import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingr
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
 import ActivityIcon from "@/assets/svg/activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
+import AddIngredientsToMyTteokgukModal from "@/components/shared/AddIngredientsToMyTteokgukModal";
+import SendIngredientsToOthersTteokgukModal from "@/components/shared/SendIngredientToOthersTteokgukModal";
 
 const MAX_INGREDIENTS = 5;
 
 const TteokgukPage = () => {
   const { id } = useParams();
-  const addIngredientModalOverlay = useOverlay();
+  console.log(id);
+
   const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
   const { data: tteokguk } = useAtomValue($getTteokguk(Number(id)));
-  const { nickname, wish, ingredients, usedIngredients, memberId } = tteokguk;
+  const { nickname, wish, ingredients, usedIngredients, memberId, requiredIngredients } = tteokguk;
+  const addIngredientsToMyTteokgukOverlay = useOverlay();
+  const sendIngredientsToOthersTteokgukOverlay = useOverlay();
   const isLoggedIn = !!getLocalStorage("accessToken");
+  const isMyTteokguk = loggedInUserDetails?.id === memberId;
 
   const handleClickAddIngredientButton = () => {
     if (!loggedInUserDetails) return;
 
-    addIngredientModalOverlay.open(({ isOpen, close }) => (
-      <AddIngredientsModal
-        isOpen={isOpen}
-        onClose={close}
-        memberId={memberId}
-        loggedInUserDetails={loggedInUserDetails}
-      />
-    ));
+    if (isMyTteokguk) {
+      addIngredientsToMyTteokgukOverlay.open(({ isOpen, close }) => (
+        <AddIngredientsToMyTteokgukModal
+          isOpen={isOpen}
+          onClose={close}
+          tteokgukId={Number(id)}
+          myDetails={loggedInUserDetails}
+          requiredIngredients={requiredIngredients}
+        />
+      ));
+    }
+
+    if (!isMyTteokguk) {
+      sendIngredientsToOthersTteokgukOverlay.open(({ isOpen, close }) => (
+        <SendIngredientsToOthersTteokgukModal
+          isOpen={isOpen}
+          onClose={close}
+          tteokgukId={Number(id)}
+          myDetails={loggedInUserDetails}
+          requiredIngredients={requiredIngredients}
+        />
+      ));
+    }
   };
 
   return (
