@@ -41,16 +41,23 @@ const SearchUserPage = () => {
           </button>
         </form>
         {isLoading && <Loading />}
-        <div>
-          <ul className={styles.searchResult}>
-            {searchedUsers?.length === 0 && (
-              <div className={styles.noUsers}>일치하는 사용자가 없습니다.</div>
-            )}
-            {searchedUsers?.map(({ id, nickname, primaryIngredient }) => (
-              <Ingredient key={id} id={id} nickanme={nickname} ingredientKey={primaryIngredient} />
-            ))}
-          </ul>
-        </div>
+        {searchedUsers && (
+          <div>
+            <ul className={styles.searchResult}>
+              {searchedUsers.length === 0 && (
+                <div className={styles.noUsers}>일치하는 사용자가 없습니다.</div>
+              )}
+              {searchedUsers.map(({ id, nickname, primaryIngredient }) => (
+                <Ingredient
+                  key={id}
+                  id={id}
+                  nickanme={nickname}
+                  ingredientKey={primaryIngredient}
+                />
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </Fragment>
   );
