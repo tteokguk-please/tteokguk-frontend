@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
 
+import { useDailog } from "@/hooks/useDialog";
+
 import { css } from "@styled-system/css";
 
 import { getLocalStorage } from "@/utils/localStorage";
@@ -14,21 +16,26 @@ import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
 import Ingredient from "@/components/common/Ingredient";
 import { $getLoggedInUserDetails } from "@/store/user";
-import { $getTteokguk } from "@/store/tteokguk";
+import { $deleteTteokguk, $getTteokguk } from "@/store/tteokguk";
 import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
 import ActivityIcon from "@/assets/svg/activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
+import useRouter from "@/routes/useRouter";
 
 const MAX_INGREDIENTS = 5;
 
 const TteokgukPage = () => {
   const { id } = useParams();
+  const router = useRouter();
+  const { confirm } = useDailog();
   const addIngredientModalOverlay = useOverlay();
   const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
+  const { mutate: deleteTteokguk } = useAtomValue($deleteTteokguk);
   const { data: tteokguk } = useAtomValue($getTteokguk(Number(id)));
-  const { nickname, wish, ingredients, usedIngredients, memberId } = tteokguk;
+  const { nickname, wish, ingredients, usedIngredients, memberId, tteokgukId } = tteokguk;
   const isLoggedIn = !!getLocalStorage("accessToken");
+  const isMyTteokguk = loggedInUserDetails?.id === memberId;
 
   const handleClickAddIngredientButton = () => {
     if (!loggedInUserDetails) return;
@@ -41,6 +48,25 @@ const TteokgukPage = () => {
         loggedInUserDetails={loggedInUserDetails}
       />
     ));
+  };
+
+  const handleClickDeleteTteokgukButton = async () => {
+    const isConfirmedDelete = await confirm({
+      title: <span className={styles.confirmTitle}>소원 떡국을 삭제하시겠어요?</span>,
+      description: (
+        <div className={styles.confirmDescription}>
+          {"소원 떡국을 삭제하면\n 다시 복구할 수 없어요!"}
+        </div>
+      ),
+      confirmButton: { text: "삭제" },
+      cancelButton: { text: "취소" },
+    });
+
+    if (!isConfirmedDelete) return;
+
+    deleteTteokguk(tteokgukId, {
+      onSuccess: () => router.push("/my-page"),
+    });
   };
 
   return (
@@ -114,10 +140,11 @@ const TteokgukPage = () => {
             {loggedInUserDetails?.id === memberId ? "떡국 재료 추가하기" : "떡국 재료 보내기"}
           </Button>
         )}
-
-        <div className={styles.wishDeleteButton}>
-          <button>소원 삭제하기</button>
-        </div>
+        {isMyTteokguk && (
+          <div className={styles.wishDeleteButton}>
+            <button onClick={handleClickDeleteTteokgukButton}>소원 삭제하기</button>
+          </div>
+        )}
       </div>
     </Fragment>
   );
@@ -193,5 +220,14 @@ const styles = {
     justifyContent: "center",
     color: "gray.50",
     marginTop: "4rem",
+  }),
+  confirmTitle: css({
+    fontSize: "1.6rem",
+  }),
+  confirmDescription: css({
+    display: "flex",
+    justifyContent: "center",
+    whiteSpace: "pre-line",
+    marginY: "1.6rem",
   }),
 };
