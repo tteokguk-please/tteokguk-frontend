@@ -28,7 +28,7 @@ export type RoutePath =
   | "/tteokguk/create"
   | "/my-page"
   | "/my-page/activity"
-  | "/search/user"
+  | "/user/search"
   | "/users/:id"
   | `/users/${number}`;
 
@@ -46,7 +46,7 @@ export const Routes = () => {
         <Route path="/tteokguk/create" element={<TteokgukCookingPage />} />
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/my-page/activity" element={<MyActivityPage />} />
-        <Route path="/search/user" element={<SearchUserPage />} />
+        <Route path="/user/search" element={<SearchUserPage />} />
         <Route path="/users/:id" element={<UserPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Route>
