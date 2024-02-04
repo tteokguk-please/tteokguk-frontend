@@ -9,6 +9,7 @@ export interface Tteokguk {
   completion: boolean;
   ingredients: IngredientKey[];
   usedIngredients: IngredientKey[];
+  requiredIngredients: IngredientKey[];
   hasIngredient: boolean;
 }
 
