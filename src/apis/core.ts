@@ -68,6 +68,6 @@ export default {
     kyInstance.patch(url, { json }).then(handleResponse<Response>),
   put: <Response>(url: Input, json: unknown) =>
     kyInstance.patch(url, { json }).then(handleResponse<Response>),
-  delete: <Response>(url: Input, json: unknown) =>
+  delete: <Response>(url: Input, json?: unknown) =>
     kyInstance.patch(url, { json }).then(handleResponse<Response>),
 };
