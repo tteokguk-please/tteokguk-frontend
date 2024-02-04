@@ -115,9 +115,11 @@ const TteokgukPage = () => {
           </Button>
         )}
 
-        <div className={styles.wishDeleteButton}>
-          <button>소원 삭제하기</button>
-        </div>
+        {loggedInUserDetails?.id === memberId && (
+          <div className={styles.wishDeleteButton}>
+            <button>소원 삭제하기</button>
+          </div>
+        )}
       </div>
     </Fragment>
   );
