@@ -18,10 +18,10 @@ export const $getUserDetail = atomFamilyWithSuspenseQuery("users", (id: number) 
 });
 
 export const $nickname = atom("");
-export const $getSearchedUsers = atomFamily((nickname: string) =>
-  atomWithQuery(() => ({
-    queryKey: ["searchedUsers", nickname],
-    queryFn: () => getSearchedUsers(nickname),
-    enabled: !!nickname,
+export const $getSearchedUsers = atomFamily(() =>
+  atomWithQuery((get) => ({
+    queryKey: ["searchedUsers", get($nickname)],
+    queryFn: () => getSearchedUsers(get($nickname)),
+    enabled: !!get($nickname),
   })),
 );
