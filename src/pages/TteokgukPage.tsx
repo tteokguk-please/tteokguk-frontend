@@ -23,7 +23,7 @@ const TteokgukPage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage actionIcon="profile">
+      <Header showBackButton actionIcon="profile">
         소원 떡국
       </Header>
       <div className={styles.container}>

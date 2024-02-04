@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { useLocation } from "react-router-dom";
 
 import classNames from "classnames";
 import { useOverlay } from "@toss/use-overlay";
@@ -15,32 +14,30 @@ import GuideIcon from "@/assets/svg/guide.svg";
 import SearchIcon from "@/assets/svg/search.svg";
 
 interface Props {
-  hasPreviousPage?: true;
+  showSearchIcon?: true;
+  showBackButton?: true;
   actionIcon?: "profile" | "guide";
   className?: string;
   children?: ReactNode;
 }
 
-const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => {
-  const location = useLocation();
+const Header = ({ showBackButton, showSearchIcon, actionIcon, className, children }: Props) => {
   const navigation = useRouter();
 
   const handleClickBefore = () => {
     navigation.back();
   };
 
-  const isMainPage = location.pathname === "/tteokguks";
-
   return (
     <header className={classNames(styles.header, className)}>
-      {isMainPage && (
-        <Link to="/search/user" className={styles.icon}>
+      {showSearchIcon && (
+        <Link to="/user/search" className={styles.icon}>
           <SearchIcon aria-label="검색" />
         </Link>
       )}
-      {!isMainPage && (
+      {showBackButton && (
         <div onClick={handleClickBefore} className={styles.icon} aria-label="뒤로 가기">
-          {hasPreviousPage && <BeforeIcon />}
+          <BeforeIcon />
         </div>
       )}
       <div className={styles.title}>

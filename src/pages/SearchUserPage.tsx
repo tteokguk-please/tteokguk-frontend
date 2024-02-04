@@ -29,7 +29,7 @@ const SearchUserPage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage>검색</Header>
+      <Header showBackButton>검색</Header>
       <div className={styles.container}>
         <form onSubmit={handleSubmitForm} className={styles.form}>
           <label htmlFor="nickname" className="a11y-hidden">

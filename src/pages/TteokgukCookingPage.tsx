@@ -84,7 +84,7 @@ const TteokgukCookingPage = () => {
 
   return (
     <div>
-      <Header hasPreviousPage actionIcon="guide">
+      <Header showBackButton actionIcon="guide">
         떡국 만들기
       </Header>
       <div>

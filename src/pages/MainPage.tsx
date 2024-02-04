@@ -38,7 +38,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Header actionIcon="profile">
+      <Header showSearchIcon actionIcon="profile">
         <Link to="/tteokguks">
           <HeaderLogo aria-label="용용이" />
         </Link>

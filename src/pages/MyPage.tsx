@@ -21,7 +21,7 @@ const MyPage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage actionIcon="guide">
+      <Header showBackButton actionIcon="guide">
         마이페이지
       </Header>
       <div className={styles.container}>
