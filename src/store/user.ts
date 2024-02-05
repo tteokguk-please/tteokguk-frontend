@@ -1,6 +1,13 @@
 import { atomWithQuery, atomWithSuspenseQuery } from "jotai-tanstack-query";
+import { atom } from "jotai";
+import { atomFamily } from "jotai/utils";
 
-import { getLoggedInUserDetails, getMyDetails, getUserDetails } from "@/apis/user";
+import {
+  getMyDetails,
+  getSearchedUsers,
+  getLoggedInUserDetails,
+  getUserDetails,
+} from "@/apis/user";
 
 import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
 import { getLocalStorage } from "@/utils/localStorage";
@@ -19,3 +26,12 @@ export const $getLoggedInUserDetails = atomWithQuery(() => ({
   queryFn: getLoggedInUserDetails,
   enabled: !!getLocalStorage("accessToken"),
 }));
+
+export const $nickname = atom("");
+export const $getSearchedUsers = atomFamily(() =>
+  atomWithQuery((get) => ({
+    queryKey: ["searchedUsers", get($nickname)],
+    queryFn: () => getSearchedUsers(get($nickname)),
+    enabled: !!get($nickname),
+  })),
+);
