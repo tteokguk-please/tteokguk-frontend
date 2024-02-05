@@ -70,7 +70,7 @@ const TteokgukCookingPage = () => {
       {
         wish: wishText,
         ingredients: selectedIngredients,
-        access: isPrivate,
+        access: !isPrivate,
       },
       {
         onSuccess: (createdTteokguk: PostTteokgukResponse) => {
