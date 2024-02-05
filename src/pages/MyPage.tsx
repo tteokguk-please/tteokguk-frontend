@@ -5,7 +5,7 @@ import { useAtomValue } from "jotai";
 import { css } from "@styled-system/css";
 
 import { Link } from "@/routes/Link";
-import { $getMyDetails } from "@/store/user";
+import { $getMyDetails, $getRandomUserDetails } from "@/store/user";
 import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
@@ -13,11 +13,23 @@ import TteokgukList from "@/components/common/TteokgukList";
 import IngredientList from "@/components/Mypage/IngredientList";
 import VisitIcon from "@/assets/svg/visit.svg";
 import ActivityIcon from "@/assets/svg/activity.svg";
+import useRouter from "@/routes/useRouter";
 
 const MyPage = () => {
+  const router = useRouter();
   const { data: myDetails } = useAtomValue($getMyDetails);
   const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
+  const { mutateAsync: randomUserDetails } = useAtomValue($getRandomUserDetails);
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][primaryIngredient];
+
+  const handleClickRandomVisitButton = async () => {
+    try {
+      const { id = 2 } = await randomUserDetails();
+      router.push(`/users/${id}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Fragment>
@@ -35,14 +47,16 @@ const MyPage = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <Link to="/users/:id" className={styles.full}>
-            <IconButton color="primary.45" applyColorTo="outline">
-              <IconButton.Icon>
-                <VisitIcon />
-              </IconButton.Icon>
-              랜덤 방문
-            </IconButton>
-          </Link>
+          <IconButton
+            onClick={handleClickRandomVisitButton}
+            color="primary.45"
+            applyColorTo="outline"
+          >
+            <IconButton.Icon>
+              <VisitIcon />
+            </IconButton.Icon>
+            랜덤 방문
+          </IconButton>
           <Link to="/my-page/activity" className={styles.full}>
             <IconButton color="primary.45" applyColorTo="outline">
               <IconButton.Icon>
