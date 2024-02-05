@@ -60,7 +60,7 @@ const refreshAccessToken = async (token: string) => {
 
 const handleResponse = <Response>(response: KyResponse) => {
   if (response.status === 204 || response.headers.get("content-length") === "0") {
-    return {} as Response;
+    return Promise.resolve({} as Response);
   }
 
   return response.json<Response>();
