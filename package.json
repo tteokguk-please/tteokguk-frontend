@@ -25,6 +25,7 @@
     "jotai-tanstack-query": "^0.8.2",
     "jwt-decode": "^4.0.0",
     "ky": "^1.2.0",
+    "lottie-react": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.12",
