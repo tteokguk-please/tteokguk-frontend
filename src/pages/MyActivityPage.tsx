@@ -2,16 +2,21 @@ import { Fragment, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 import classNames from "classnames";
+import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
 import ReceivedIngredientsList from "@/components/common/ReceivedIngredientsList";
 import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
+import { $mySupportedTteokguks } from "@/store/myActivity";
 
 const MyActivityPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const isSelectedTab = (index: number) => index === tabIndex;
+  const { mySupportedTteokguks } = useAtomValue($mySupportedTteokguks);
+
+  console.log(mySupportedTteokguks);
 
   return (
     <Fragment>
