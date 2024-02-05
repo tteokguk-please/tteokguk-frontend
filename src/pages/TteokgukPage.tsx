@@ -54,8 +54,9 @@ const TteokgukPage = () => {
     const isConfirmedDelete = await confirm({
       title: <span className={styles.confirmTitle}>소원 떡국을 삭제하시겠어요?</span>,
       description: (
-        <div className={styles.confirmDescription}>
-          {"소원 떡국을 삭제하면\n 다시 복구할 수 없어요!"}
+        <div className={styles.confirmContent}>
+          <span className={styles.block}>소원 떡국을 삭제하면</span>
+          다시 복구할 수 없어요!
         </div>
       ),
       confirmButton: { text: "삭제" },
@@ -224,10 +225,13 @@ const styles = {
   confirmTitle: css({
     fontSize: "1.6rem",
   }),
-  confirmDescription: css({
+  confirmContent: css({
     display: "flex",
     justifyContent: "center",
-    whiteSpace: "pre-line",
+    textAlign: "center",
     marginY: "1.6rem",
+  }),
+  block: css({
+    display: "block",
   }),
 };
