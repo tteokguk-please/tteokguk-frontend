@@ -15,6 +15,13 @@ export interface MyDetailsResponse {
   items: IngredientQuantity[];
 }
 
+export interface LoggedInUserDetailsResponse {
+  id: number;
+  primaryIngredient: IngredientKey;
+  nickname: string;
+  itemResponses: IngredientQuantity[];
+}
+
 export type SearchedUserResponse = {
   id: number;
   nickname: string;
