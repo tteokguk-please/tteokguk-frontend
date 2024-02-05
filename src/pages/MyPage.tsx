@@ -4,7 +4,10 @@ import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
+import { removeLocalStorage } from "@/utils/localStorage";
+
 import { Link } from "@/routes/Link";
+import useRouter from "@/routes/useRouter";
 import { $getMyDetails } from "@/store/user";
 import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 import Header from "@/components/common/Header";
@@ -15,9 +18,17 @@ import VisitIcon from "@/assets/svg/visit.svg";
 import ActivityIcon from "@/assets/svg/activity.svg";
 
 const MyPage = () => {
+  const router = useRouter();
   const { data: myDetails } = useAtomValue($getMyDetails);
   const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][primaryIngredient];
+
+  const handleClickLogoutButton = () => {
+    removeLocalStorage("accessToken");
+    removeLocalStorage("refreshToken");
+
+    router.push("/");
+  };
 
   return (
     <Fragment>
@@ -68,7 +79,7 @@ const MyPage = () => {
           <IngredientList ingredients={ingredients} uniqueIngredientKey={primaryIngredient} />
         </div>
         <div className={styles.accountContainer}>
-          <button>로그아웃</button>
+          <button onClick={handleClickLogoutButton}>로그아웃</button>
           <button>탈퇴하기</button>
         </div>
       </div>
