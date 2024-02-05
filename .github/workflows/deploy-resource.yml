@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - "#85/bugfix/cache-invalidation"
 jobs:
   build:
     runs-on: ubuntu-latest
