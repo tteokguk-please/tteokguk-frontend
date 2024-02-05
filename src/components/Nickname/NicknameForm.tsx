@@ -3,7 +3,7 @@ import { MouseEvent, useEffect, useState } from "react";
 
 import { useAtomValue } from "jotai";
 
-import { useDailog } from "@/hooks/useDialog";
+import { useDialog } from "@/hooks/useDialog";
 
 import { css } from "@styled-system/css";
 
@@ -25,7 +25,7 @@ interface Props {
 }
 
 const NicknameForm = ({ defaultValues, onSubmit }: Props) => {
-  const { confirm } = useDailog();
+  const { confirm } = useDialog();
   const {
     register,
     watch,

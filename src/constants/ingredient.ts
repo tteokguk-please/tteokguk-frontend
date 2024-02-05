@@ -76,3 +76,7 @@ export const INGREDIENT_ICON_BY_KEY = {
     GARLIC: IngredientIconDisabled.GARLIC,
   },
 };
+
+export const INFINITY = "\u221E";
+export const MAX_INGREDIENT_QUANTITY = 1000000000;
+export const MAX_CHOOSE_INGREDIENT = 5;
