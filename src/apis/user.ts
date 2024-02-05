@@ -1,4 +1,9 @@
-import { MyDetailsResponse, SearchedUserResponse, UserDetailsResponse } from "@/types/user.dto";
+import {
+  MyDetailsResponse,
+  RandomUserResponse,
+  SearchedUserResponse,
+  UserDetailsResponse,
+} from "@/types/user.dto";
 
 import http from "./core";
 
@@ -8,3 +13,5 @@ export const getUserDetails = (id: number) => http.get<UserDetailsResponse>(`api
 
 export const getSearchedUsers = (nickname: string) =>
   http.get<SearchedUserResponse>(`api/v1/user/all?nickname=${nickname}`);
+
+export const getRandomUserDetails = () => http.get<RandomUserResponse>(`api/v1/user/random`);

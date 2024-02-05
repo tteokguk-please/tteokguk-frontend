@@ -20,3 +20,7 @@ export type SearchedUserResponse = {
   nickname: string;
   primaryIngredient: IngredientKey;
 }[];
+
+export interface RandomUserResponse {
+  id: number;
+}
