@@ -13,6 +13,8 @@ import MyActivityPage from "@/pages/MyActivityPage";
 import UserPage from "@/pages/UserPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
+import ProtectedRoute from "./ProtectedRoute";
+
 import Layout from "@/components/layout/Layout";
 
 export type RoutePath =
@@ -35,15 +37,64 @@ export const Routes = () => {
     <ReactRoutes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="login/email" element={<EmailLoginPage />} />
-        <Route path="/nickname/create" element={<NicknamePage />} />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route
+          path="/login"
+          element={
+            <ProtectedRoute role="member" redirectPath="/tteokguks">
+              <LoginPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="login/email"
+          element={
+            <ProtectedRoute role="member" redirectPath="/tteokguks">
+              <EmailLoginPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/nickname/create"
+          element={
+            <ProtectedRoute role="member" redirectPath="/tteokguks">
+              <NicknamePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <ProtectedRoute role="member" redirectPath="/tteokguks">
+              <SignupPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/tteokguks" element={<MainPage />} />
         <Route path="/tteokguks/:id" element={<TteokgukPage />} />
-        <Route path="/tteokguk/create" element={<TteokgukCookingPage />} />
-        <Route path="/my-page" element={<MyPage />} />
-        <Route path="/my-page/activity" element={<MyActivityPage />} />
+        <Route
+          path="/tteokguk/create"
+          element={
+            <ProtectedRoute role="nonMember" redirectPath="/login">
+              <TteokgukCookingPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-page"
+          element={
+            <ProtectedRoute role="nonMember" redirectPath="/login">
+              <MyPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-page/activity"
+          element={
+            <ProtectedRoute role="nonMember" redirectPath="/login">
+              <MyActivityPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/users/:id" element={<UserPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Route>
