@@ -21,3 +21,9 @@ export interface LoggedInUserDetailsResponse {
   nickname: string;
   itemResponses: IngredientQuantity[];
 }
+
+export type SearchedUserResponse = {
+  id: number;
+  nickname: string;
+  primaryIngredient: IngredientKey;
+}[];

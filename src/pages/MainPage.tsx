@@ -8,12 +8,11 @@ import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 import { css } from "@styled-system/css";
 
-import { getLocalStorage } from "@/utils/localStorage";
-
 import { Link } from "@/routes/Link";
 import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
+import BottomCTA from "@/components/common/BottomCTA";
 import { $tteokguksByTab } from "@/store/tteokguk";
 import HeaderLogo from "@/assets/svg/header-logo.svg";
 
@@ -21,7 +20,6 @@ const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const isSelectedTab = (index: number) => index === tabIndex;
   const fetchMoreRef = useRef(null);
-  const isLoggedIn = !!getLocalStorage("accessToken");
 
   const { tteokguks, isFetchingNextPage, hasNextPage, fetchNextPage } = useAtomValue(
     $tteokguksByTab(tabIndex),
@@ -40,7 +38,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Header actionIcon="profile">
+      <Header showSearchIcon actionIcon="profile">
         <Link to="/tteokguks">
           <HeaderLogo aria-label="용용이" />
         </Link>
@@ -63,15 +61,13 @@ const MainPage = () => {
           </TabPanel>
         </Tabs>
 
-        <Link to={isLoggedIn ? "/tteokguk/create" : "/login"}>
-          <Button
-            color="secondary.100"
-            applyColorTo="background"
-            className={classNames(styles.button)}
-          >
-            소원 떡국 만들기
-          </Button>
-        </Link>
+        <BottomCTA>
+          <Link to="/tteokguk/create" className={styles.link}>
+            <Button color="secondary.100" applyColorTo="background" className={styles.button}>
+              소원 떡국 만들기
+            </Button>
+          </Link>
+        </BottomCTA>
         <div ref={fetchMoreRef} />
       </div>
     </>
@@ -116,13 +112,12 @@ const styles = {
       backgroundColor: "primary.100",
     },
   }),
-  button: css({
-    position: "fixed",
-    left: "50%",
-    transform: "translateX(-50%)",
-    bottom: "3rem",
+  link: css({
     width: "calc(100% - 4.8rem)",
     maxWidth: "45.2rem",
+  }),
+  button: css({
+    width: "100%",
   }),
   buttonHidden: css({
     display: "none",

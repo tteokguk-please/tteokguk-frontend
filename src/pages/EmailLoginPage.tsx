@@ -44,7 +44,7 @@ const EmailLoginPage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage>이메일로 로그인</Header>
+      <Header showBackButton>이메일로 로그인</Header>
       <div className={styles.container}>
         <div className={styles.content}>
           <form onSubmit={handleSubmitLogin} noValidate>

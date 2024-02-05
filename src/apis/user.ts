@@ -1,5 +1,6 @@
 import {
   LoggedInUserDetailsResponse,
+  SearchedUserResponse,
   MyDetailsResponse,
   UserDetailsResponse,
 } from "@/types/user.dto";
@@ -12,3 +13,6 @@ export const getUserDetails = (id: number) => http.get<UserDetailsResponse>(`api
 
 export const getLoggedInUserDetails = () =>
   http.get<LoggedInUserDetailsResponse>("api/v1/user/my-ingredients");
+
+export const getSearchedUsers = (nickname: string) =>
+  http.get<SearchedUserResponse>(`api/v1/user/all?nickname=${nickname}`);

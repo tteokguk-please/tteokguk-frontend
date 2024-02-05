@@ -2,76 +2,28 @@ import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 
 import { useAtomValue } from "jotai";
-import { useOverlay } from "@toss/use-overlay";
-
-import { useDailog } from "@/hooks/useDialog";
 
 import { css } from "@styled-system/css";
 
-import { getLocalStorage } from "@/utils/localStorage";
-
-import { Link } from "@/routes/Link";
-import AddIngredientsModal from "@/components/shared/AddIngredientsModal";
 import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
 import Ingredient from "@/components/common/Ingredient";
-import { $getLoggedInUserDetails } from "@/store/user";
-import { $deleteTteokguk, $getTteokguk } from "@/store/tteokguk";
-import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
 import ActivityIcon from "@/assets/svg/activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
-import useRouter from "@/routes/useRouter";
+import { $getTteokguk } from "@/store/tteokguk";
+import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 
 const MAX_INGREDIENTS = 5;
 
 const TteokgukPage = () => {
   const { id } = useParams();
-  const router = useRouter();
-  const { confirm } = useDailog();
-  const addIngredientModalOverlay = useOverlay();
-  const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
-  const { mutate: deleteTteokguk } = useAtomValue($deleteTteokguk);
   const { data: tteokguk } = useAtomValue($getTteokguk(Number(id)));
-  const { nickname, wish, ingredients, usedIngredients, memberId, tteokgukId } = tteokguk;
-  const isLoggedIn = !!getLocalStorage("accessToken");
-  const isMyTteokguk = loggedInUserDetails?.id === memberId;
-
-  const handleClickAddIngredientButton = () => {
-    if (!loggedInUserDetails) return;
-
-    addIngredientModalOverlay.open(({ isOpen, close }) => (
-      <AddIngredientsModal
-        isOpen={isOpen}
-        onClose={close}
-        memberId={memberId}
-        loggedInUserDetails={loggedInUserDetails}
-      />
-    ));
-  };
-
-  const handleClickDeleteTteokgukButton = async () => {
-    const isConfirmedDelete = await confirm({
-      title: <span className={styles.confirmTitle}>소원 떡국을 삭제하시겠어요?</span>,
-      description: (
-        <div className={styles.confirmDescription}>
-          {"소원 떡국을 삭제하면\n 다시 복구할 수 없어요!"}
-        </div>
-      ),
-      confirmButton: { text: "삭제" },
-      cancelButton: { text: "취소" },
-    });
-
-    if (!isConfirmedDelete) return;
-
-    deleteTteokguk(tteokgukId, {
-      onSuccess: () => router.push("/my-page"),
-    });
-  };
+  const { nickname, wish, ingredients, usedIngredients } = tteokguk;
 
   return (
     <Fragment>
-      <Header hasPreviousPage actionIcon="profile">
+      <Header showBackButton actionIcon="profile">
         소원 떡국
       </Header>
       <div className={styles.container}>
@@ -123,28 +75,12 @@ const TteokgukPage = () => {
             </div>
           </div>
         </article>
-
-        {!isLoggedIn && (
-          <Link to="/login">
-            <Button color="primary.45" applyColorTo="outline">
-              소원 떡국 만들기
-            </Button>
-          </Link>
-        )}
-        {isLoggedIn && (
-          <Button
-            onClick={handleClickAddIngredientButton}
-            color="primary.45"
-            applyColorTo="outline"
-          >
-            {loggedInUserDetails?.id === memberId ? "떡국 재료 추가하기" : "떡국 재료 보내기"}
-          </Button>
-        )}
-        {isMyTteokguk && (
-          <div className={styles.wishDeleteButton}>
-            <button onClick={handleClickDeleteTteokgukButton}>소원 삭제하기</button>
-          </div>
-        )}
+        <Button color="primary.45" applyColorTo="outline">
+          떡국 재료 추가하기
+        </Button>
+        <div className={styles.wishDeleteButton}>
+          <button>소원 삭제하기</button>
+        </div>
       </div>
     </Fragment>
   );

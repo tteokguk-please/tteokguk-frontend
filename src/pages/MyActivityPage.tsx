@@ -15,7 +15,7 @@ const MyActivityPage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage>활동 내역</Header>
+      <Header showBackButton>활동 내역</Header>
       <div className={styles.container}>
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList className={styles.tabList}>
