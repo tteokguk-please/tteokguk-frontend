@@ -65,7 +65,7 @@ const TteokgukPage = () => {
     if (!isConfirmedDelete) return;
 
     deleteTteokguk(tteokgukId, {
-      onSuccess: () => router.push("/my-page"),
+      onSuccess: () => router.back(),
     });
   };
 
