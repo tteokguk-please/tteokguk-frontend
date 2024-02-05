@@ -53,7 +53,7 @@ const WelcomeModal = ({ isOpen, onClose, nickname, uniqueIngredientKey }: Props)
     if (step === modalContents.length - 1) {
       onClose();
       setStep(0);
-      router.push("/tteokguks");
+      router.push("/");
     }
   };
 
