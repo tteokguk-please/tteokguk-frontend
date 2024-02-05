@@ -1,9 +1,9 @@
-import { atomWithSuspenseInfiniteQuery } from "jotai-tanstack-query";
+import { atomWithInfiniteQuery } from "jotai-tanstack-query";
 import { atom } from "jotai";
 
 import { getMySupportedTteokguks } from "@/apis/myActivity";
 
-const $getMySupportedTteokguks = atomWithSuspenseInfiniteQuery(() => ({
+const $getMySupportedTteokguks = atomWithInfiniteQuery(() => ({
   queryKey: ["supportedTteokguks"],
   queryFn: async ({ pageParam }) => getMySupportedTteokguks(pageParam),
   getNextPageParam: (lastPage, _allPages, lastPageParam) => {
@@ -14,20 +14,13 @@ const $getMySupportedTteokguks = atomWithSuspenseInfiniteQuery(() => ({
   initialPageParam: 1,
 }));
 
-export const $mySupportedTteokguks = atom(async (get) => {
-  const {
-    data: { pages },
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    ...rest
-  } = await get($getMySupportedTteokguks);
+export const $mySupportedTteokguks = atom((get) => {
+  const mySupportedTteokguks = get($getMySupportedTteokguks);
 
   return {
-    mySupportedTteokguks: pages.flatMap(({ data: receivedIngredients }) => receivedIngredients),
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    ...rest,
+    mySupportedTteokguks: mySupportedTteokguks.data?.pages.flatMap(
+      ({ data: receivedIngredients }) => receivedIngredients,
+    ),
+    ...mySupportedTteokguks,
   };
 });
