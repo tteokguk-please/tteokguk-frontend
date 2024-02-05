@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
+
 import useWindowScroll from "./useWindowScroll";
 
 const useBottomCTA = () => {
