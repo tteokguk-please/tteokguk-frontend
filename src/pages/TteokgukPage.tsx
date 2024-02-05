@@ -11,6 +11,7 @@ import { css } from "@styled-system/css";
 import { getLocalStorage } from "@/utils/localStorage";
 
 import { Link } from "@/routes/Link";
+import useRouter from "@/routes/useRouter";
 import AddIngredientsModal from "@/components/shared/AddIngredientsModal";
 import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
@@ -21,7 +22,6 @@ import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingr
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
 import ActivityIcon from "@/assets/svg/activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
-import useRouter from "@/routes/useRouter";
 
 const MAX_INGREDIENTS = 5;
 
@@ -72,7 +72,7 @@ const TteokgukPage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage actionIcon="profile">
+      <Header showBackButton actionIcon="profile">
         소원 떡국
       </Header>
       <div className={styles.container}>

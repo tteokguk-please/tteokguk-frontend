@@ -41,7 +41,7 @@ const NicknamePage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage>닉네임 설정하기</Header>
+      <Header showBackButton>닉네임 설정하기</Header>
       <NicknameForm defaultValues={defaultValues} onSubmit={handleSubmit} />
     </Fragment>
   );

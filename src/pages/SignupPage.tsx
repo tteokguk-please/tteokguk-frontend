@@ -48,7 +48,7 @@ const SignupPage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage>회원가입</Header>
+      <Header showBackButton>회원가입</Header>
       <SignupForm defaultValues={defaultValues} onSubmit={handleSubmit} />
     </Fragment>
   );

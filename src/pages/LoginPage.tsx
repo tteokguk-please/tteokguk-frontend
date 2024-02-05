@@ -74,7 +74,7 @@ const LoginPage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage>
+      <Header showBackButton>
         <Link to="/">로그인</Link>
       </Header>
       <div className={styles.container}>

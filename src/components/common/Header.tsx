@@ -11,15 +11,17 @@ import GuideModal from "@/components/shared/GuideModal";
 import BeforeIcon from "@/assets/svg/before.svg";
 import ProfileIcon from "@/assets/svg/profile.svg";
 import GuideIcon from "@/assets/svg/guide.svg";
+import SearchIcon from "@/assets/svg/search.svg";
 
 interface Props {
-  hasPreviousPage?: true;
+  showSearchIcon?: true;
+  showBackButton?: true;
   actionIcon?: "profile" | "guide";
   className?: string;
   children?: ReactNode;
 }
 
-const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => {
+const Header = ({ showBackButton, showSearchIcon, actionIcon, className, children }: Props) => {
   const navigation = useRouter();
 
   const handleClickBefore = () => {
@@ -28,9 +30,16 @@ const Header = ({ hasPreviousPage, actionIcon, className, children }: Props) => 
 
   return (
     <header className={classNames(styles.header, className)}>
-      <div onClick={handleClickBefore} className={styles.beforeIcon} aria-label="뒤로 가기">
-        {hasPreviousPage && <BeforeIcon />}
-      </div>
+      {showSearchIcon && (
+        <Link to="/user/search" className={styles.icon}>
+          <SearchIcon aria-label="검색" />
+        </Link>
+      )}
+      {showBackButton && (
+        <div onClick={handleClickBefore} className={styles.icon} aria-label="뒤로 가기">
+          <BeforeIcon />
+        </div>
+      )}
       <div className={styles.title}>
         <h1>{children}</h1>
       </div>
@@ -75,7 +84,7 @@ const styles = {
     height: "4.8rem",
     padding: "0 1.6rem",
   }),
-  beforeIcon: css({
+  icon: css({
     flex: 1,
     cursor: "pointer",
   }),
