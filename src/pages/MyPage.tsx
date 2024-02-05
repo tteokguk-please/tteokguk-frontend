@@ -13,9 +13,24 @@ import TteokgukList from "@/components/common/TteokgukList";
 import IngredientList from "@/components/Mypage/IngredientList";
 import VisitIcon from "@/assets/svg/visit.svg";
 import ActivityIcon from "@/assets/svg/activity.svg";
+import Loading from "@/components/common/Loading";
 
 const MyPage = () => {
-  const { data: myDetails } = useAtomValue($getMyDetails);
+  const { data: myDetails, isPending } = useAtomValue($getMyDetails);
+
+  if (isPending || !myDetails) {
+    return (
+      <Fragment>
+        <Header showBackButton actionIcon="guide">
+          마이페이지
+        </Header>
+        <div className={styles.container}>
+          <Loading />
+        </div>
+      </Fragment>
+    );
+  }
+
   const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][primaryIngredient];
 

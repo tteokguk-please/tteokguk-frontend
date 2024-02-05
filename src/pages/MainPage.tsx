@@ -15,13 +15,14 @@ import Header from "@/components/common/Header";
 import BottomCTA from "@/components/common/BottomCTA";
 import { $tteokguksByTab } from "@/store/tteokguk";
 import HeaderLogo from "@/assets/svg/header-logo.svg";
+import Loading from "@/components/common/Loading";
 
 const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const isSelectedTab = (index: number) => index === tabIndex;
   const fetchMoreRef = useRef(null);
 
-  const { tteokguks, isFetchingNextPage, hasNextPage, fetchNextPage } = useAtomValue(
+  const { tteokguks, isFetchingNextPage, hasNextPage, fetchNextPage, isPending } = useAtomValue(
     $tteokguksByTab(tabIndex),
   );
 
@@ -44,6 +45,7 @@ const MainPage = () => {
         </Link>
       </Header>
       <div className={styles.container}>
+        {isPending && <Loading />}
         <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
           <TabList className={styles.tabList}>
             <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
@@ -68,6 +70,7 @@ const MainPage = () => {
             </Button>
           </Link>
         </BottomCTA>
+        {isFetchingNextPage && <Loading />}
         <div ref={fetchMoreRef} />
       </div>
     </>

@@ -19,6 +19,7 @@ import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingr
 import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
 import ActivityIcon from "@/assets/svg/activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
+import Loading from "@/components/common/Loading";
 
 const MAX_INGREDIENTS = 5;
 
@@ -26,7 +27,21 @@ const TteokgukPage = () => {
   const { id } = useParams();
   const addIngredientModalOverlay = useOverlay();
   const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
-  const { data: tteokguk } = useAtomValue($getTteokguk(Number(id)));
+  const { data: tteokguk, isPending } = useAtomValue($getTteokguk(Number(id)));
+
+  if (isPending || !tteokguk) {
+    return (
+      <Fragment>
+        <Header showBackButton actionIcon="profile">
+          소원 떡국
+        </Header>
+        <div className={styles.container}>
+          <Loading />
+        </div>
+      </Fragment>
+    );
+  }
+
   const { nickname, wish, ingredients, usedIngredients, memberId } = tteokguk;
   const isLoggedIn = !!getLocalStorage("accessToken");
 

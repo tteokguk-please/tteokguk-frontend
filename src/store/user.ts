@@ -1,4 +1,4 @@
-import { atomWithQuery, atomWithSuspenseQuery } from "jotai-tanstack-query";
+import { atomWithQuery } from "jotai-tanstack-query";
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
 
@@ -9,15 +9,15 @@ import {
   getUserDetails,
 } from "@/apis/user";
 
-import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
 import { getLocalStorage } from "@/utils/localStorage";
+import { atomFamilyWithQuery } from "@/utils/jotai";
 
-export const $getMyDetails = atomWithSuspenseQuery(() => ({
+export const $getMyDetails = atomWithQuery(() => ({
   queryKey: ["myDetails"],
   queryFn: async () => getMyDetails(),
 }));
 
-export const $getUserDetail = atomFamilyWithSuspenseQuery("users", (id: number) => {
+export const $getUserDetail = atomFamilyWithQuery("users", (id: number) => {
   return getUserDetails(id);
 });
 

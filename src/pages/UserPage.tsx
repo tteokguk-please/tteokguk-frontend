@@ -11,10 +11,25 @@ import UserProfileSection from "@/components/common/UserProfileSection";
 import TteokgukList from "@/components/common/TteokgukList";
 import VisitIcon from "@/assets/svg/visit.svg";
 import { $getUserDetail } from "@/store/user";
+import Loading from "@/components/common/Loading";
 
 const UserPage = () => {
   const { id } = useParams();
-  const { data: userDetails } = useAtomValue($getUserDetail(Number(id)));
+  const { data: userDetails, isPending } = useAtomValue($getUserDetail(Number(id)));
+
+  if (isPending || !userDetails) {
+    return (
+      <Fragment>
+        <Header showBackButton actionIcon="profile">
+          프로필
+        </Header>
+        <div className={styles.container}>
+          <Loading />
+        </div>
+      </Fragment>
+    );
+  }
+
   const { nickname, primaryIngredient: uniqueIngredientKey, tteokguks } = userDetails;
 
   return (

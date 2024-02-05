@@ -1,10 +1,10 @@
-import { atomWithMutation, atomWithSuspenseInfiniteQuery } from "jotai-tanstack-query";
+import { atomWithInfiniteQuery, atomWithMutation } from "jotai-tanstack-query";
 import { atomFamily } from "jotai/utils";
 import { atom } from "jotai";
 
 import { getTteokguk, getCompletedTteokguks, getNewTteokguks, postTteokguk } from "@/apis/tteokguk";
 
-import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
+import { atomFamilyWithQuery } from "@/utils/jotai";
 import { differenceArray } from "@/utils/array";
 
 import { PostTteokgukRequest } from "@/types/tteokguk.dto";
@@ -12,7 +12,7 @@ import { IngredientKey } from "@/types/ingredient";
 
 import { $getLoggedInUserDetails } from "./user";
 
-const $getNewTteokguks = atomWithSuspenseInfiniteQuery(() => ({
+const $getNewTteokguks = atomWithInfiniteQuery(() => ({
   queryKey: ["newTteokguks"],
   queryFn: async ({ pageParam }) => getNewTteokguks(pageParam),
   getNextPageParam: (lastPage, _allPages, lastPageParam) => {
@@ -23,7 +23,7 @@ const $getNewTteokguks = atomWithSuspenseInfiniteQuery(() => ({
   initialPageParam: 1,
 }));
 
-const $getCompletedTteokguks = atomWithSuspenseInfiniteQuery(() => ({
+const $getCompletedTteokguks = atomWithInfiniteQuery(() => ({
   queryKey: ["completedTteokguks"],
   queryFn: async ({ pageParam }) => getCompletedTteokguks(pageParam),
   getNextPageParam: (lastPage, _allPages, lastPageParam) => {
@@ -39,14 +39,8 @@ export const $tteokguksByTab = atomFamily((tabIndex: number) =>
     const { data: loggedInUserDetails } = get($getLoggedInUserDetails);
 
     const $tteokgukAtom = tabIndex === 0 ? $getNewTteokguks : $getCompletedTteokguks;
-
-    const {
-      data: { pages },
-      fetchNextPage,
-      hasNextPage,
-      isFetchingNextPage,
-      ...rest
-    } = await get($tteokgukAtom);
+    const tteokgukPaginationData = get($tteokgukAtom);
+    const pages = tteokgukPaginationData.data?.pages || [];
 
     const tteokguks = pages
       .flatMap(({ data: tteokguks }) => tteokguks)
@@ -76,10 +70,7 @@ export const $tteokguksByTab = atomFamily((tabIndex: number) =>
 
     return {
       tteokguks,
-      fetchNextPage,
-      hasNextPage,
-      isFetchingNextPage,
-      ...rest,
+      ...tteokgukPaginationData,
     };
   }),
 );
@@ -90,6 +81,4 @@ export const $postTteokguk = atomWithMutation(() => {
   };
 });
 
-export const $getTteokguk = atomFamilyWithSuspenseQuery("tteokguk", (id: number) =>
-  getTteokguk(id),
-);
+export const $getTteokguk = atomFamilyWithQuery("tteokguk", (id: number) => getTteokguk(id));
