@@ -19,8 +19,8 @@ export interface GetTteokgukResponse {
   ingredients: IngredientKey[];
   usedIngredients: IngredientKey[];
   backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
-  visibleIngredient1: IngredientKey;
-  visibleIngredient2: IngredientKey;
+  frontGarnish: IngredientKey;
+  backGarnish: IngredientKey;
 }
 
 export interface PostTteokgukRequest {

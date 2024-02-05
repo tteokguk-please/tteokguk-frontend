@@ -26,8 +26,8 @@ const TteokgukPage = () => {
     usedIngredients,
     completion,
     backgroundColor,
-    visibleIngredient1,
-    visibleIngredient2,
+    frontGarnish,
+    backGarnish,
   } = tteokguk;
 
   return (
@@ -48,8 +48,8 @@ const TteokgukPage = () => {
             <TteokgukImage
               completion={completion}
               backgroundColor={backgroundColor}
-              firstGarnish={visibleIngredient1}
-              secondGarnish={visibleIngredient2}
+              firstGarnish={frontGarnish}
+              secondGarnish={backGarnish}
             />
           </div>
           <div className={styles.content}>{wish}</div>

@@ -20,8 +20,8 @@ const TteokgukWithCaptionList = ({ tteokguks }: Props) => {
           completion,
           hasIngredient,
           backgroundColor,
-          visibleIngredient1,
-          visibleIngredient2,
+          frontGarnish,
+          backGarnish,
         }) => (
           <li key={tteokgukId} className={styles.cardContainer}>
             <Link to={`/tteokguks/${tteokgukId}`}>
@@ -31,8 +31,8 @@ const TteokgukWithCaptionList = ({ tteokguks }: Props) => {
                   <TteokgukImage
                     completion={completion}
                     backgroundColor={backgroundColor}
-                    firstGarnish={visibleIngredient1}
-                    secondGarnish={visibleIngredient2}
+                    firstGarnish={frontGarnish}
+                    secondGarnish={backGarnish}
                   />
                 </div>
                 <div className={styles.cardContent}>
