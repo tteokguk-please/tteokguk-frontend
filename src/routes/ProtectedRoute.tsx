@@ -6,20 +6,20 @@ import { getLocalStorage } from "@/utils/localStorage";
 import { RoutePath } from "./Routes";
 
 interface Props {
-  role: "member" | "nonMember";
+  inaccessibleRole: "member" | "nonMember";
   redirectPath: RoutePath;
   children: ReactNode;
 }
 
-const ProtectedRoute = ({ role, redirectPath = "/", children }: Props) => {
+const ProtectedRoute = ({ inaccessibleRole, redirectPath = "/", children }: Props) => {
   const isLoggedIn = !!getLocalStorage("accessToken");
   const isTemporaryKakaoLoggedIn = !!getLocalStorage("kakaoToken");
 
-  if (role === "nonMember" && (!isLoggedIn || !isTemporaryKakaoLoggedIn)) {
+  if (inaccessibleRole === "nonMember" && (!isLoggedIn || !isTemporaryKakaoLoggedIn)) {
     return <Navigate to="/login" replace />;
   }
 
-  if (role === "member" && isLoggedIn) {
+  if (inaccessibleRole === "member" && isLoggedIn) {
     return <Navigate to={redirectPath} replace />;
   }
 

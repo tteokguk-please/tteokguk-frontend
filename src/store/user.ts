@@ -1,4 +1,4 @@
-import { atomWithQuery, atomWithSuspenseQuery } from "jotai-tanstack-query";
+import { atomWithMutation, atomWithQuery, atomWithSuspenseQuery } from "jotai-tanstack-query";
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
 
@@ -7,6 +7,7 @@ import {
   getSearchedUsers,
   getLoggedInUserDetails,
   getUserDetails,
+  deleteLoggedInUser,
 } from "@/apis/user";
 
 import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
@@ -35,3 +36,9 @@ export const $getSearchedUsers = atomFamily(() =>
     enabled: !!get($nickname),
   })),
 );
+
+export const $deleteLoggedInUser = atomWithMutation(() => {
+  return {
+    mutationFn: deleteLoggedInUser,
+  };
+});

@@ -42,7 +42,7 @@ export const Routes = () => {
         <Route
           path="/login"
           element={
-            <ProtectedRoute role="member" redirectPath="/tteokguks">
+            <ProtectedRoute inaccessibleRole="member" redirectPath="/tteokguks">
               <LoginPage />
             </ProtectedRoute>
           }
@@ -50,7 +50,7 @@ export const Routes = () => {
         <Route
           path="login/email"
           element={
-            <ProtectedRoute role="member" redirectPath="/tteokguks">
+            <ProtectedRoute inaccessibleRole="member" redirectPath="/tteokguks">
               <EmailLoginPage />
             </ProtectedRoute>
           }
@@ -58,7 +58,7 @@ export const Routes = () => {
         <Route
           path="/nickname/create"
           element={
-            <ProtectedRoute role="member" redirectPath="/tteokguks">
+            <ProtectedRoute inaccessibleRole="member" redirectPath="/tteokguks">
               <NicknamePage />
             </ProtectedRoute>
           }
@@ -66,7 +66,7 @@ export const Routes = () => {
         <Route
           path="/signup"
           element={
-            <ProtectedRoute role="member" redirectPath="/tteokguks">
+            <ProtectedRoute inaccessibleRole="member" redirectPath="/tteokguks">
               <SignupPage />
             </ProtectedRoute>
           }
@@ -76,7 +76,7 @@ export const Routes = () => {
         <Route
           path="/tteokguk/create"
           element={
-            <ProtectedRoute role="nonMember" redirectPath="/login">
+            <ProtectedRoute inaccessibleRole="nonMember" redirectPath="/login">
               <TteokgukCookingPage />
             </ProtectedRoute>
           }
@@ -84,7 +84,7 @@ export const Routes = () => {
         <Route
           path="/my-page"
           element={
-            <ProtectedRoute role="nonMember" redirectPath="/login">
+            <ProtectedRoute inaccessibleRole="nonMember" redirectPath="/login">
               <MyPage />
             </ProtectedRoute>
           }
@@ -92,7 +92,7 @@ export const Routes = () => {
         <Route
           path="/my-page/activity"
           element={
-            <ProtectedRoute role="nonMember" redirectPath="/login">
+            <ProtectedRoute inaccessibleRole="nonMember" redirectPath="/login">
               <MyActivityPage />
             </ProtectedRoute>
           }
