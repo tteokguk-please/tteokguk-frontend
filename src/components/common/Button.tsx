@@ -7,12 +7,15 @@ import { ColorToken } from "@styled-system/tokens";
 
 import { Filter } from "@/types/utils.ts";
 
+import LoadingLottie from "./LoadingLottie";
+
 export type ButtonColor = Filter<ColorToken, "primary.100" | "primary.45" | "secondary.100">;
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: ButtonColor;
   applyColorTo?: "background" | "outline";
   size?: "full";
+  isPending?: boolean;
 }
 
 const Button = ({
@@ -23,6 +26,7 @@ const Button = ({
   color = "primary.100",
   applyColorTo = "background",
   size = "full",
+  isPending,
 }: Props) => {
   const buttonStyle = classNames(
     styles.base,
@@ -33,6 +37,7 @@ const Button = ({
 
   return (
     <button className={buttonStyle} disabled={disabled} onClick={onClick}>
+      {isPending && <LoadingLottie className={styles.lottie} />}
       {children}
     </button>
   );
@@ -42,6 +47,9 @@ export default Button;
 
 const styles = {
   base: css({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     height: "5.1rem",
     fontSize: "1.6rem",
     fontWeight: 700,
@@ -64,4 +72,8 @@ const styles = {
       width: "100%",
     }),
   },
+  lottie: css({
+    marginRight: "0.8rem",
+    width: "2rem",
+  }),
 };
