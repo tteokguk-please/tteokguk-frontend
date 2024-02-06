@@ -15,12 +15,20 @@ const $getMySupportedTteokguks = atomWithInfiniteQuery(() => ({
 }));
 
 export const $mySupportedTteokguks = atom((get) => {
-  const mySupportedTteokguks = get($getMySupportedTteokguks);
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, ...rest } =
+    get($getMySupportedTteokguks);
+
+  const handleSupportedTtoekguksIntersect = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
 
   return {
-    mySupportedTteokguks: mySupportedTteokguks.data?.pages.flatMap(
+    mySupportedTteokguks: data?.pages.flatMap(
       ({ data: receivedIngredients }) => receivedIngredients,
     ),
-    ...mySupportedTteokguks,
+    handleSupportedTtoekguksIntersect,
+    ...rest,
   };
 });
