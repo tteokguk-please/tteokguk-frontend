@@ -15,7 +15,7 @@ const ProtectedRoute = ({ inaccessibleRole, redirectPath = "/", children }: Prop
   const isLoggedIn = !!getLocalStorage("accessToken");
   const isTemporaryKakaoLoggedIn = !!getLocalStorage("kakaoToken");
 
-  if (inaccessibleRole === "nonMember" && (!isLoggedIn || !isTemporaryKakaoLoggedIn)) {
+  if (inaccessibleRole === "nonMember" && !isLoggedIn) {
     return <Navigate to="/login" replace />;
   }
 
