@@ -22,8 +22,8 @@ const TteokgukList = ({ tteokguks, className }: Props) => {
             <TteokgukImage
               completion={completion}
               backgroundColor={backgroundColor || "BLUE"}
-              firstGarnish={frontGarnish}
-              secondGarnish={backGarnish}
+              frontGarnish={frontGarnish}
+              backGarnish={backGarnish}
             />
           </Link>
         </li>

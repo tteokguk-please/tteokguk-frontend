@@ -12,11 +12,11 @@ import { INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 interface Props {
   completion: boolean;
   backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
-  firstGarnish: IngredientKey;
-  secondGarnish: IngredientKey;
+  frontGarnish: IngredientKey;
+  backGarnish: IngredientKey;
 }
 
-const TteokgukImage = ({ completion, backgroundColor, firstGarnish, secondGarnish }: Props) => {
+const TteokgukImage = ({ completion, backgroundColor, frontGarnish, backGarnish }: Props) => {
   return (
     <Fragment>
       <img
@@ -27,14 +27,14 @@ const TteokgukImage = ({ completion, backgroundColor, firstGarnish, secondGarnis
       {completion && (
         <Fragment>
           <img
-            src={GARNISHES.front[firstGarnish]}
+            src={GARNISHES.front[frontGarnish]}
             className={classNames(styles.image, styles.front)}
-            alt={INGREDIENT_NAME_BY_KEY[firstGarnish]}
+            alt={INGREDIENT_NAME_BY_KEY[frontGarnish]}
           />
           <img
-            src={GARNISHES.back[secondGarnish]}
+            src={GARNISHES.back[backGarnish]}
             className={classNames(styles.image, styles.back)}
-            alt={INGREDIENT_NAME_BY_KEY[secondGarnish]}
+            alt={INGREDIENT_NAME_BY_KEY[backGarnish]}
           />
         </Fragment>
       )}
