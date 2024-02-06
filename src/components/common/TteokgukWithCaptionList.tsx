@@ -68,6 +68,7 @@ const styles = {
   }),
   badge: css({
     position: "absolute",
+    zIndex: 100,
     top: "0.7rem",
     right: "0.6rem",
     display: "flex",
