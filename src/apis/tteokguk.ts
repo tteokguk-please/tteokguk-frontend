@@ -22,3 +22,5 @@ export const getCompletedTteokguks = (page: number) =>
 
 export const postTteokguk = (tteokguk: PostTteokgukRequest) =>
   http.post<PostTteokgukResponse>("api/v1/tteokguk", tteokguk);
+
+export const deleteTteokguk = (id: number) => http.delete(`api/v1/tteokguk/${id}`);
