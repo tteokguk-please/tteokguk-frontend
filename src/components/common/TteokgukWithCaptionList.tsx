@@ -31,8 +31,8 @@ const TteokgukWithCaptionList = ({ tteokguks }: Props) => {
                   <TteokgukImage
                     completion={completion}
                     backgroundColor={backgroundColor}
-                    firstGarnish={frontGarnish}
-                    secondGarnish={backGarnish}
+                    frontGarnish={frontGarnish}
+                    backGarnish={backGarnish}
                   />
                 </div>
                 <div className={styles.cardContent}>
