@@ -2,9 +2,18 @@ import { atomWithQuery, atomWithSuspenseQuery } from "jotai-tanstack-query";
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
 
-import { getMyDetails, getSearchedUsers, getUserDetails } from "@/apis/user";
+import {
+  getLoggedInUserDetails,
+  getMyDetails,
+  getRandomUserDetails,
+  getSearchedUsers,
+  getUserDetails,
+} from "@/apis/user";
 
 import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
+import { getLocalStorage } from "@/utils/localStorage";
+
+import { RandomUserResponse } from "@/types/user.dto";
 
 export const $getMyDetails = atomWithSuspenseQuery(() => ({
   queryKey: ["myDetails"],
