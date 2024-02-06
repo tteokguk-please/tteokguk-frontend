@@ -1,0 +1,12 @@
+export { default as RICE_CAKE } from "./rice-cake.png";
+export { default as EGG } from "./egg.png";
+export { default as SEAWEED } from "./seaweed.png";
+export { default as GREEN_ONION } from "./green-onion.png";
+export { default as BEEF } from "./beef.png";
+export { default as MUSHROOM } from "./mushroom.png";
+export { default as TOFU } from "./tofu.png";
+export { default as FISH_CAKE } from "./fish-cake.png";
+export { default as CANDY } from "./candy.png";
+export { default as DUMPLING } from "./dumpling.png";
+export { default as TAIYAKI } from "./taiyaki.png";
+export { default as GARLIC } from "./garlic.png";
