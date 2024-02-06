@@ -1,7 +1,7 @@
 import ky, { Input, KyResponse } from "ky";
 
 import { getLocalStorage, removeLocalStorage, setLocalStorage } from "@/utils/localStorage";
-import { isExpiredAccessToken } from "@/utils/token";
+import { isExpiredToken } from "@/utils/token";
 
 import { LoginResponse } from "@/types/auth";
 
@@ -40,11 +40,11 @@ const setAuthHeader = async (request: Request) => {
 };
 
 const getToken = async (accessToken: string, refreshToken: string) => {
-  if (!isExpiredAccessToken(accessToken)) {
+  if (!isExpiredToken(accessToken)) {
     return accessToken;
   }
 
-  if (refreshToken && !isExpiredAccessToken(refreshToken)) {
+  if (refreshToken && !isExpiredToken(refreshToken)) {
     return refreshAccessToken(refreshToken);
   }
 

@@ -38,7 +38,14 @@ export const Routes = () => {
   return (
     <ReactRoutes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<HomePage />} />
+        <Route
+          index
+          element={
+            <ProtectedRoute inaccessibleRole="member" redirectPath="/tteokguks">
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/login"
           element={
