@@ -19,7 +19,7 @@ const ProtectedRoute = ({ inaccessibleRole, redirectPath = "/", children }: Prop
     return <Navigate to="/login" replace />;
   }
 
-  if (inaccessibleRole === "member" && isLoggedIn) {
+  if (inaccessibleRole === "member" && isLoggedIn && !isTemporaryKakaoLoggedIn) {
     return <Navigate to={redirectPath} replace />;
   }
 

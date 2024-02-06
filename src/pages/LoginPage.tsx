@@ -23,18 +23,7 @@ const LoginPage = () => {
   const { mutate: postKakaoLogin } = useAtomValue($postKakaoLogin);
 
   const handleClickKakaoLogin = () => {
-    const kakaoToken = localStorage.getItem("kakaoToken");
-
-    if (kakaoToken) {
-      postKakaoLogin(
-        { accessToken: kakaoToken },
-        {
-          onSuccess: handleSuccessPostKakaoLogin,
-        },
-      );
-    } else {
-      window.location.href = import.meta.env.VITE_KAKAO_LOGIN_URI;
-    }
+    window.location.href = import.meta.env.VITE_KAKAO_LOGIN_URI;
   };
 
   const handleSuccessPostKakaoToken = ({ access_token }: PostKakaoTokenReponse) => {
@@ -64,11 +53,18 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+
     const kakaoUserCode = searchParams.get("code");
+    const kakaoToken = localStorage.getItem("kakaoToken");
+
     if (kakaoUserCode) {
       postKakaoToken(kakaoUserCode, {
         onSuccess: handleSuccessPostKakaoToken,
       });
+    } else if (kakaoToken) {
+      localStorage.removeItem("kakaoToken");
     }
   }, [searchParams, postKakaoToken]);
 
