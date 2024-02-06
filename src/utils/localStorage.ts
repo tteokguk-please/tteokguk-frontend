@@ -21,3 +21,11 @@ export const setLocalStorage = <T>(key: string, value: T) => {
     console.error(`Error serializing value for localStorage item with key "${key}":`, error);
   }
 };
+
+export const removeLocalStorage = (key: string) => {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.error(`Failed to remove item from localStorage with key "${key}". Error: ${error}`);
+  }
+};

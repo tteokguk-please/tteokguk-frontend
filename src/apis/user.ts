@@ -19,3 +19,5 @@ export const getSearchedUsers = (nickname: string) =>
   http.get<SearchedUserResponse>(`api/v1/user/all?nickname=${nickname}`);
 
 export const getRandomUserDetails = () => http.get<RandomUserResponse>(`api/v1/user/random`);
+
+export const deleteLoggedInUser = () => http.delete("api/v1/user/me");
