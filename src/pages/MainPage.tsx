@@ -8,6 +8,8 @@ import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 import { css } from "@styled-system/css";
 
+import ErrorFallbackPage from "./ErrorFallbackPage";
+
 import { Link } from "@/routes/Link";
 import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
 import Button from "@/components/common/Button";
@@ -22,9 +24,8 @@ const MainPage = () => {
   const isSelectedTab = (index: number) => index === tabIndex;
   const fetchMoreRef = useRef(null);
 
-  const { tteokguks, isFetchingNextPage, hasNextPage, fetchNextPage, isPending } = useAtomValue(
-    $tteokguksByTab(tabIndex),
-  );
+  const { tteokguks, isFetchingNextPage, hasNextPage, fetchNextPage, isPending, isError, refetch } =
+    useAtomValue($tteokguksByTab(tabIndex));
 
   const handleIntersect = () => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -36,6 +37,10 @@ const MainPage = () => {
     target: fetchMoreRef,
     handleIntersect,
   });
+
+  if (!tteokguks || isError) {
+    return <ErrorFallbackPage retry={refetch} />;
+  }
 
   return (
     <>

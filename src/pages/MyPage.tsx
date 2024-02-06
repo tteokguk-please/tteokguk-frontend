@@ -4,6 +4,8 @@ import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
+import ErrorFallbackPage from "./ErrorFallbackPage";
+
 import { Link } from "@/routes/Link";
 import { $getMyDetails } from "@/store/user";
 import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
@@ -16,9 +18,9 @@ import ActivityIcon from "@/assets/svg/activity.svg";
 import Loading from "@/components/common/Loading";
 
 const MyPage = () => {
-  const { data: myDetails, isPending } = useAtomValue($getMyDetails);
+  const { data: myDetails, isPending, isError, refetch } = useAtomValue($getMyDetails);
 
-  if (isPending || !myDetails) {
+  if (isPending) {
     return (
       <Fragment>
         <Header showBackButton actionIcon="guide">
@@ -29,6 +31,10 @@ const MyPage = () => {
         </div>
       </Fragment>
     );
+  }
+
+  if (!myDetails || isError) {
+    return <ErrorFallbackPage retry={refetch} />;
   }
 
   const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;

@@ -8,6 +8,8 @@ import { css } from "@styled-system/css";
 
 import { getLocalStorage } from "@/utils/localStorage";
 
+import ErrorFallbackPage from "./ErrorFallbackPage";
+
 import { Link } from "@/routes/Link";
 import AddIngredientsModal from "@/components/shared/AddIngredientsModal";
 import Header from "@/components/common/Header";
@@ -27,9 +29,9 @@ const TteokgukPage = () => {
   const { id } = useParams();
   const addIngredientModalOverlay = useOverlay();
   const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
-  const { data: tteokguk, isPending } = useAtomValue($getTteokguk(Number(id)));
+  const { data: tteokguk, isPending, isError, refetch } = useAtomValue($getTteokguk(Number(id)));
 
-  if (isPending || !tteokguk) {
+  if (isPending) {
     return (
       <Fragment>
         <Header showBackButton actionIcon="profile">
@@ -40,6 +42,10 @@ const TteokgukPage = () => {
         </div>
       </Fragment>
     );
+  }
+
+  if (!tteokguk || isError) {
+    return <ErrorFallbackPage retry={refetch} />;
   }
 
   const { nickname, wish, ingredients, usedIngredients, memberId } = tteokguk;

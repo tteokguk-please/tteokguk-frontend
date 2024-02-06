@@ -5,6 +5,8 @@ import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
+import ErrorFallbackPage from "./ErrorFallbackPage";
+
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
 import UserProfileSection from "@/components/common/UserProfileSection";
@@ -15,7 +17,12 @@ import Loading from "@/components/common/Loading";
 
 const UserPage = () => {
   const { id } = useParams();
-  const { data: userDetails, isPending } = useAtomValue($getUserDetail(Number(id)));
+  const {
+    data: userDetails,
+    isPending,
+    isError,
+    refetch,
+  } = useAtomValue($getUserDetail(Number(id)));
 
   if (isPending || !userDetails) {
     return (
@@ -28,6 +35,10 @@ const UserPage = () => {
         </div>
       </Fragment>
     );
+  }
+
+  if (!userDetails || isError) {
+    return <ErrorFallbackPage retry={refetch} />;
   }
 
   const { nickname, primaryIngredient: uniqueIngredientKey, tteokguks } = userDetails;
