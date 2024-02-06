@@ -1,8 +1,10 @@
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 import classNames from "classnames";
 import { useAtomValue } from "jotai";
+
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 import { css } from "@styled-system/css";
 
@@ -14,30 +16,44 @@ import { $mySupportedTteokguks } from "@/store/myActivity";
 const MyActivityPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const isSelectedTab = (index: number) => index === tabIndex;
-  const { mySupportedTteokguks } = useAtomValue($mySupportedTteokguks);
+  const { mySupportedTteokguks, isPending, handleSupportedTtoekguksIntersect } =
+    useAtomValue($mySupportedTteokguks);
+  const fetchMoreRef = useRef(null);
 
   console.log(mySupportedTteokguks);
+
+  useIntersectionObserver({
+    target: fetchMoreRef,
+    handleIntersect: handleSupportedTtoekguksIntersect,
+  });
 
   return (
     <Fragment>
       <Header showBackButton>활동 내역</Header>
       <div className={styles.container}>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-          <TabList className={styles.tabList}>
-            <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
-              받은 떡국 재료
-            </Tab>
-            <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(1) })}>
-              내가 응원한 떡국
-            </Tab>
-          </TabList>
-          <TabPanel className={styles.tabPanel}>
-            <ReceivedIngredientsList />
-          </TabPanel>
-          <TabPanel className={styles.tabPanel}>
-            <TteokgukWithCaptionList tteokguks={[]} />
-          </TabPanel>
-        </Tabs>
+        {!isPending && (
+          <>
+            <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+              <TabList className={styles.tabList}>
+                <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
+                  받은 떡국 재료
+                </Tab>
+                <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(1) })}>
+                  내가 응원한 떡국
+                </Tab>
+              </TabList>
+              <TabPanel className={styles.tabPanel}>
+                <ReceivedIngredientsList />
+              </TabPanel>
+              <TabPanel className={styles.tabPanel}>
+                {mySupportedTteokguks && (
+                  <TteokgukWithCaptionList tteokguks={mySupportedTteokguks} />
+                )}
+              </TabPanel>
+            </Tabs>
+          </>
+        )}
+        <div ref={fetchMoreRef} />
       </div>
     </Fragment>
   );
