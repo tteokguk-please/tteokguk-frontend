@@ -23,15 +23,36 @@ const MyPage = () => {
   const router = useRouter();
   const { data: myDetails } = useAtomValue($getMyDetails);
   const { mutate: deleteLoggedInUser } = useAtomValue($deleteLoggedInUser);
-  const { confirm, alert } = useDialog();
+  const { confirm } = useDialog();
   const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][primaryIngredient];
 
-  const handleClickLogoutButton = () => {
-    removeLocalStorage("accessToken");
-    removeLocalStorage("refreshToken");
+  const handleClickLogoutButton = async () => {
+    const isLoggedOut = await confirm({
+      title: <div className={styles.confirmTitle}>로그아웃 하시겠어요?</div>,
+      description: (
+        <div className={styles.alertContent}>
+          <div className={styles.block}>접속중인 아이디로</div>언제든 다시 로그인하실 수 있어요!
+        </div>
+      ),
+      confirmButton: {
+        text: "로그아웃",
+        color: "primary.100",
+        applyColorTo: "background",
+      },
+      cancelButton: {
+        text: "취소",
+        color: "primary.45",
+        applyColorTo: "outline",
+      },
+    });
 
-    router.push("/");
+    if (isLoggedOut) {
+      removeLocalStorage("accessToken");
+      removeLocalStorage("refreshToken");
+
+      router.push("/");
+    }
   };
 
   const handleClickWithdrawalButton = async () => {
