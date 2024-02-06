@@ -42,10 +42,10 @@ const $getCompletedTteokguks = atomWithInfiniteQuery(() => ({
 
 export const $tteokguksByTab = atomFamily((tabIndex: number) =>
   atom(async (get) => {
-    const { data: loggedInUserDetails } = get($getLoggedInUserDetails);
+    const { data: loggedInUserDetails } = await get($getLoggedInUserDetails);
 
     const $tteokgukAtom = tabIndex === 0 ? $getNewTteokguks : $getCompletedTteokguks;
-    const tteokgukPaginationData = get($tteokgukAtom);
+    const tteokgukPaginationData = await get($tteokgukAtom);
     const pages = tteokgukPaginationData.data?.pages || [];
 
     const tteokguks = pages
