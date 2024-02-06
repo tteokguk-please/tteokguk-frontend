@@ -1,6 +1,6 @@
 import ky, { Input, KyResponse } from "ky";
 
-import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
+import { getLocalStorage, removeLocalStorage, setLocalStorage } from "@/utils/localStorage";
 import { isExpiredAccessToken } from "@/utils/token";
 
 import { LoginResponse } from "@/types/auth";
@@ -18,7 +18,7 @@ const kyInstance = ky.create({
       },
     ],
     afterResponse: [
-      (_request, _options, response) => {
+      async (_request, _options, response) => {
         if (!response.ok) {
           return Promise.reject(response);
         }
@@ -29,14 +29,28 @@ const kyInstance = ky.create({
 });
 
 const setAuthHeader = async (request: Request) => {
-  const storedToken = getLocalStorage("accessToken");
-  const validToken = isExpiredAccessToken(storedToken)
-    ? await refreshAccessToken(getLocalStorage("refreshToken"))
-    : storedToken;
+  const accessToken = getLocalStorage("accessToken");
+  const refreshToken = getLocalStorage("refreshToken");
 
-  if (validToken) {
-    request.headers.set("Authorization", `Bearer ${validToken}`);
+  const token = await getToken(accessToken, refreshToken);
+
+  if (token) {
+    request.headers.set("Authorization", `Bearer ${token}`);
   }
+};
+
+const getToken = async (accessToken: string, refreshToken: string) => {
+  if (!isExpiredAccessToken(accessToken)) {
+    return accessToken;
+  }
+
+  if (refreshToken && !isExpiredAccessToken(refreshToken)) {
+    return await refreshAccessToken(refreshToken);
+  }
+
+  removeLocalStorage("accessToken");
+  removeLocalStorage("refreshToken");
+  return null;
 };
 
 const refreshAccessToken = async (token: string) => {
@@ -54,17 +68,10 @@ const refreshAccessToken = async (token: string) => {
     return accessToken;
   } catch (error) {
     console.error(error);
-    throw new Error("Failed to refresh token");
   }
 };
 
-const handleResponse = <Response>(response: KyResponse) => {
-  if (response.status === 204 || response.headers.get("content-length") === "0") {
-    return {} as Response;
-  }
-
-  return response.json<Response>();
-};
+const handleResponse = <Response>(response: KyResponse) => response.json<Response>();
 
 export default {
   get: <Response>(url: Input) => kyInstance.get(url).then(handleResponse<Response>),
@@ -74,8 +81,6 @@ export default {
     kyInstance.patch(url, { json }).then(handleResponse<Response>),
   put: <Response>(url: Input, json: unknown) =>
     kyInstance.patch(url, { json }).then(handleResponse<Response>),
-  delete: <Response>(url: Input, json?: unknown) => {
-    const options = json ? { json } : {};
-    return kyInstance.delete(url, options).then(handleResponse<Response>);
-  },
+  delete: <Response>(url: Input, json: unknown) =>
+    kyInstance.patch(url, { json }).then(handleResponse<Response>),
 };
