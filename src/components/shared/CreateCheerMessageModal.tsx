@@ -41,7 +41,7 @@ const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
   const handleSubmitCheerMessage = (event: FormEvent) => {
     event.preventDefault();
 
-    if (!selectedIngredient) return;
+    if (!selectedIngredient || message.length === 0) return;
 
     postIngredient(
       {
