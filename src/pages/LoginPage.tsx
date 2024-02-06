@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useCallback, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { useAtomValue } from "jotai";
@@ -26,31 +26,33 @@ const LoginPage = () => {
     window.location.href = import.meta.env.VITE_KAKAO_LOGIN_URI;
   };
 
-  const handleSuccessPostKakaoToken = ({ access_token }: PostKakaoTokenReponse) => {
-    localStorage.setItem("kakaoToken", access_token);
-    postKakaoLogin(
-      { accessToken: access_token },
-      {
-        onSuccess: handleSuccessPostKakaoLogin,
-      },
-    );
-  };
+  const handleSuccessPostKakaoLogin = useCallback(
+    ({ accessToken, refreshToken, isInitialized }: PostKakaoLoginResponse) => {
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
 
-  const handleSuccessPostKakaoLogin = ({
-    accessToken,
-    refreshToken,
-    isInitialized,
-  }: PostKakaoLoginResponse) => {
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
+      if (isInitialized) {
+        localStorage.removeItem("kakaoToken");
+        router.push("/tteokguks");
+      } else {
+        router.push("/nickname/create");
+      }
+    },
+    [router],
+  );
 
-    if (isInitialized) {
-      localStorage.removeItem("kakaoToken");
-      router.push("/tteokguks");
-    } else {
-      router.push("/nickname/create");
-    }
-  };
+  const handleSuccessPostKakaoToken = useCallback(
+    ({ access_token }: PostKakaoTokenReponse) => {
+      localStorage.setItem("kakaoToken", access_token);
+      postKakaoLogin(
+        { accessToken: access_token },
+        {
+          onSuccess: handleSuccessPostKakaoLogin,
+        },
+      );
+    },
+    [postKakaoLogin, handleSuccessPostKakaoLogin],
+  );
 
   useEffect(() => {
     localStorage.removeItem("accessToken");
@@ -66,7 +68,7 @@ const LoginPage = () => {
     } else if (kakaoToken) {
       localStorage.removeItem("kakaoToken");
     }
-  }, [searchParams, postKakaoToken]);
+  }, [searchParams, postKakaoToken, handleSuccessPostKakaoToken]);
 
   return (
     <Fragment>
