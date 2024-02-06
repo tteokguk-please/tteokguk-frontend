@@ -87,7 +87,7 @@ const TteokgukPage = () => {
       title: <span className={styles.confirmTitle}>소원 떡국을 삭제하시겠어요?</span>,
       description: (
         <div className={styles.confirmContent}>
-          <span className={styles.block}>소원 떡국을 삭제하면</span>
+          <div className={styles.block}>소원 떡국을 삭제하면</div>
           다시 복구할 수 없어요!
         </div>
       ),
@@ -258,6 +258,7 @@ const styles = {
   }),
   confirmContent: css({
     display: "flex",
+    flexFlow: "column wrap",
     justifyContent: "center",
     textAlign: "center",
     marginY: "1.6rem",
