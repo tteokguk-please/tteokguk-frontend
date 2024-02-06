@@ -10,6 +10,8 @@ import { css } from "@styled-system/css";
 
 import { getLocalStorage } from "@/utils/localStorage";
 
+import ErrorFallbackPage from "./ErrorFallbackPage";
+
 import { Link } from "@/routes/Link";
 import useRouter from "@/routes/useRouter";
 import AddIngredientsToMyTteokgukModal from "@/components/shared/AddIngredientsToMyTteokgukModal";
@@ -23,6 +25,7 @@ import { $deleteTteokguk, $getTteokguk } from "@/store/tteokguk";
 import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 import ActivityIcon from "@/assets/svg/activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
+import Loading from "@/components/common/Loading";
 
 const MAX_INGREDIENTS = 5;
 
@@ -34,7 +37,25 @@ const TteokgukPage = () => {
   const { confirm } = useDialog();
   const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
   const { mutate: deleteTteokguk } = useAtomValue($deleteTteokguk);
-  const { data: tteokguk } = useAtomValue($getTteokguk(Number(id)));
+  const { data: tteokguk, isPending, isError, refetch } = useAtomValue($getTteokguk(Number(id)));
+
+  if (isPending) {
+    return (
+      <Fragment>
+        <Header showBackButton actionIcon="profile">
+          소원 떡국
+        </Header>
+        <div className={styles.container}>
+          <Loading />
+        </div>
+      </Fragment>
+    );
+  }
+
+  if (!tteokguk || isError) {
+    return <ErrorFallbackPage retry={refetch} />;
+  }
+
   const {
     nickname,
     wish,
@@ -84,7 +105,7 @@ const TteokgukPage = () => {
       title: <span className={styles.confirmTitle}>소원 떡국을 삭제하시겠어요?</span>,
       description: (
         <div className={styles.confirmContent}>
-          <span className={styles.block}>소원 떡국을 삭제하면</span>
+          <div className={styles.block}>소원 떡국을 삭제하면</div>
           다시 복구할 수 없어요!
         </div>
       ),
@@ -257,6 +278,7 @@ const styles = {
   }),
   confirmContent: css({
     display: "flex",
+    flexFlow: "column wrap",
     justifyContent: "center",
     textAlign: "center",
     marginY: "1.6rem",

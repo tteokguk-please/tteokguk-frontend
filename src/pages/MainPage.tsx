@@ -8,7 +8,7 @@ import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 import { css } from "@styled-system/css";
 
-import { getLocalStorage } from "@/utils/localStorage";
+import ErrorFallbackPage from "./ErrorFallbackPage";
 
 import { Link } from "@/routes/Link";
 import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
@@ -17,16 +17,15 @@ import Header from "@/components/common/Header";
 import BottomCTA from "@/components/common/BottomCTA";
 import { $tteokguksByTab } from "@/store/tteokguk";
 import HeaderLogo from "@/assets/svg/header-logo.svg";
+import Loading from "@/components/common/Loading";
 
 const MainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const isSelectedTab = (index: number) => index === tabIndex;
   const fetchMoreRef = useRef(null);
-  const isLoggedIn = !!getLocalStorage("accessToken");
 
-  const { tteokguks, isFetchingNextPage, hasNextPage, fetchNextPage } = useAtomValue(
-    $tteokguksByTab(tabIndex),
-  );
+  const { tteokguks, isFetchingNextPage, hasNextPage, fetchNextPage, isPending, isError, refetch } =
+    useAtomValue($tteokguksByTab(tabIndex));
 
   const handleIntersect = () => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -39,6 +38,10 @@ const MainPage = () => {
     handleIntersect,
   });
 
+  if (!tteokguks || isError) {
+    return <ErrorFallbackPage retry={refetch} />;
+  }
+
   return (
     <>
       <Header showSearchIcon actionIcon="profile">
@@ -47,34 +50,37 @@ const MainPage = () => {
         </Link>
       </Header>
       <div className={styles.container}>
-        <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
-          <TabList className={styles.tabList}>
-            <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
-              새로운 떡국
-            </Tab>
-            <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(1) })}>
-              완성된 떡국
-            </Tab>
-          </TabList>
-          <TabPanel className={styles.tabPanel}>
-            <TteokgukWithCaptionList tteokguks={tteokguks} />
-          </TabPanel>
-          <TabPanel className={styles.tabPanel}>
-            <TteokgukWithCaptionList tteokguks={tteokguks} />
-          </TabPanel>
-        </Tabs>
+        {isPending && <Loading />}
+        {!isPending && (
+          <>
+            <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
+              <TabList className={styles.tabList}>
+                <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
+                  새로운 떡국
+                </Tab>
+                <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(1) })}>
+                  완성된 떡국
+                </Tab>
+              </TabList>
+              <TabPanel className={styles.tabPanel}>
+                <TteokgukWithCaptionList tteokguks={tteokguks} />
+              </TabPanel>
+              <TabPanel className={styles.tabPanel}>
+                <TteokgukWithCaptionList tteokguks={tteokguks} />
+              </TabPanel>
+            </Tabs>
 
-        <BottomCTA>
-          <Link to={isLoggedIn ? "/tteokguk/create" : "/login"}>
-            <Button
-              color="secondary.100"
-              applyColorTo="background"
-              className={classNames(styles.button)}
-            >
-              소원 떡국 만들기
-            </Button>
-          </Link>
-        </BottomCTA>
+            <BottomCTA>
+              <Link to="/tteokguk/create" className={styles.link}>
+                <Button color="secondary.100" applyColorTo="background" className={styles.button}>
+                  소원 떡국 만들기
+                </Button>
+              </Link>
+            </BottomCTA>
+          </>
+        )}
+
+        {isFetchingNextPage && <Loading />}
         <div ref={fetchMoreRef} />
       </div>
     </>
@@ -118,6 +124,10 @@ const styles = {
       height: "0.4rem",
       backgroundColor: "primary.100",
     },
+  }),
+  link: css({
+    width: "calc(100% - 4.8rem)",
+    maxWidth: "45.2rem",
   }),
   button: css({
     position: "fixed",
