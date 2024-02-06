@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
 import { getLocalStorage } from "@/utils/localStorage";
-import { isExpiredAccessToken } from "@/utils/token";
+import { isExpiredToken } from "@/utils/token";
 
 import { RoutePath } from "./Routes";
 
@@ -13,10 +13,10 @@ interface Props {
 }
 
 const ProtectedRoute = ({ inaccessibleRole, redirectPath = "/", children }: Props) => {
-  const isLoggedIn = !isExpiredAccessToken(getLocalStorage("accessToken"));
-  const isTemporaryKakaoLoggedIn = !isExpiredAccessToken(getLocalStorage("kakaoToken"));
+  const isLoggedIn = !isExpiredToken(getLocalStorage("refreshToken"));
+  const isTemporaryKakaoLoggedIn = !getLocalStorage("kakaoToken");
 
-  if (inaccessibleRole === "nonMember" && (!isLoggedIn || !isTemporaryKakaoLoggedIn)) {
+  if (inaccessibleRole === "nonMember" && !isLoggedIn) {
     return <Navigate to="/login" replace />;
   }
 

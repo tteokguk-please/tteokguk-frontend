@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 
-export const isExpiredAccessToken = (accessToken: string | null) => {
+export const isExpiredToken = (accessToken: string | null) => {
   if (!accessToken) return false;
 
   const decodedAccessToken = jwtDecode(accessToken);
