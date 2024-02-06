@@ -14,6 +14,7 @@ import { Link } from "@/routes/Link";
 import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
+import BottomCTA from "@/components/common/BottomCTA";
 import { $tteokguksByTab } from "@/store/tteokguk";
 import HeaderLogo from "@/assets/svg/header-logo.svg";
 
@@ -40,7 +41,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Header actionIcon="profile">
+      <Header showSearchIcon actionIcon="profile">
         <Link to="/tteokguks">
           <HeaderLogo aria-label="용용이" />
         </Link>
@@ -63,15 +64,17 @@ const MainPage = () => {
           </TabPanel>
         </Tabs>
 
-        <Link to={isLoggedIn ? "/tteokguk/create" : "/login"}>
-          <Button
-            color="secondary.100"
-            applyColorTo="background"
-            className={classNames(styles.button)}
-          >
-            소원 떡국 만들기
-          </Button>
-        </Link>
+        <BottomCTA>
+          <Link to={isLoggedIn ? "/tteokguk/create" : "/login"}>
+            <Button
+              color="secondary.100"
+              applyColorTo="background"
+              className={classNames(styles.button)}
+            >
+              소원 떡국 만들기
+            </Button>
+          </Link>
+        </BottomCTA>
         <div ref={fetchMoreRef} />
       </div>
     </>

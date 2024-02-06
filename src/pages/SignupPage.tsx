@@ -3,6 +3,8 @@ import { Fragment } from "react";
 import { useOverlay } from "@toss/use-overlay";
 import { useAtomValue } from "jotai";
 
+import { setLocalStorage } from "@/utils/localStorage";
+
 import { SignupFormValues } from "@/types/form";
 
 import Header from "@/components/common/Header";
@@ -32,7 +34,10 @@ const SignupPage = () => {
         acceptsMarketing: marketing,
       },
       {
-        onSuccess: ({ nickname, primaryIngredient }) => {
+        onSuccess: ({ nickname, primaryIngredient, accessToken, refreshToken }) => {
+          setLocalStorage("accessToken", accessToken);
+          setLocalStorage("refreshToken", refreshToken);
+
           welcomeModal.open(({ isOpen, close }) => (
             <WelcomeModal
               isOpen={isOpen}
@@ -48,7 +53,7 @@ const SignupPage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage>회원가입</Header>
+      <Header showBackButton>회원가입</Header>
       <SignupForm defaultValues={defaultValues} onSubmit={handleSubmit} />
     </Fragment>
   );

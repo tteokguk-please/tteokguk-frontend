@@ -18,6 +18,20 @@ export interface GetTteokgukResponse {
   completion: boolean;
   ingredients: IngredientKey[];
   usedIngredients: IngredientKey[];
+  backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
+  frontGarnish: IngredientKey;
+  backGarnish: IngredientKey;
+}
+
+export interface GetTteokgukResponse {
+  tteokgukId: number;
+  memberId: number;
+  nickname: string;
+  wish: string;
+  access: boolean;
+  completino: boolean;
+  ingredients: IngredientKey[];
+  usedIngredients: IngredientKey[];
   requiredIngredients: IngredientKey[];
 }
 

@@ -1,9 +1,20 @@
-import { atomWithQuery, atomWithSuspenseQuery } from "jotai-tanstack-query";
+import { atomWithMutation, atomWithQuery, atomWithSuspenseQuery } from "jotai-tanstack-query";
+import { atom } from "jotai";
+import { atomFamily } from "jotai/utils";
 
-import { getLoggedInUserDetails, getMyDetails, getUserDetails } from "@/apis/user";
+import {
+  getLoggedInUserDetails,
+  getMyDetails,
+  getRandomUserDetails,
+  getSearchedUsers,
+  getUserDetails,
+  deleteLoggedInUser,
+} from "@/apis/user";
 
 import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
 import { getLocalStorage } from "@/utils/localStorage";
+
+import { RandomUserResponse } from "@/types/user.dto";
 
 export const $getMyDetails = atomWithSuspenseQuery(() => ({
   queryKey: ["myDetails"],
@@ -19,3 +30,24 @@ export const $getLoggedInUserDetails = atomWithQuery(() => ({
   queryFn: getLoggedInUserDetails,
   enabled: !!getLocalStorage("accessToken"),
 }));
+
+export const $nickname = atom("");
+export const $getSearchedUsers = atomFamily(() =>
+  atomWithQuery((get) => ({
+    queryKey: ["searchedUsers", get($nickname)],
+    queryFn: () => getSearchedUsers(get($nickname)),
+    enabled: !!get($nickname),
+  })),
+);
+
+export const $getRandomUserDetails = atomWithQuery<RandomUserResponse>(() => ({
+  queryKey: ["randomUserDetails"],
+  queryFn: getRandomUserDetails,
+  enabled: false,
+}));
+
+export const $deleteLoggedInUser = atomWithMutation(() => {
+  return {
+    mutationFn: deleteLoggedInUser,
+  };
+});

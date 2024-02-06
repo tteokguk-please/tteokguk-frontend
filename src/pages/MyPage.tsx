@@ -2,10 +2,15 @@ import { Fragment } from "react";
 
 import { useAtomValue } from "jotai";
 
+import { useDialog } from "@/hooks/useDialog";
+
 import { css } from "@styled-system/css";
 
+import { removeLocalStorage } from "@/utils/localStorage";
+
 import { Link } from "@/routes/Link";
-import { $getMyDetails } from "@/store/user";
+import useRouter from "@/routes/useRouter";
+import { $getMyDetails, $getRandomUserDetails, $deleteLoggedInUser } from "@/store/user";
 import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
@@ -15,13 +20,99 @@ import VisitIcon from "@/assets/svg/visit.svg";
 import ActivityIcon from "@/assets/svg/activity.svg";
 
 const MyPage = () => {
+  const router = useRouter();
   const { data: myDetails } = useAtomValue($getMyDetails);
+  const { mutate: deleteLoggedInUser } = useAtomValue($deleteLoggedInUser);
+  const { confirm } = useDialog();
   const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
+  const { refetch: refetchRandomUserDetails } = useAtomValue($getRandomUserDetails);
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][primaryIngredient];
+
+  const handleClickRandomVisitButton = async () => {
+    const { data: randomUserDetails } = await refetchRandomUserDetails();
+
+    if (randomUserDetails) {
+      router.push(`/users/${randomUserDetails.id}`);
+    }
+  };
+
+  const handleClickLogoutButton = async () => {
+    const isLoggedOut = await confirm({
+      title: <div className={styles.confirmTitle}>로그아웃 하시겠어요?</div>,
+      description: (
+        <div className={styles.alertContent}>
+          <div className={styles.block}>접속중인 아이디로</div>언제든 다시 로그인하실 수 있어요!
+        </div>
+      ),
+      confirmButton: {
+        text: "로그아웃",
+        color: "primary.100",
+        applyColorTo: "background",
+      },
+      cancelButton: {
+        text: "취소",
+        color: "primary.45",
+        applyColorTo: "outline",
+      },
+    });
+
+    if (isLoggedOut) {
+      removeLocalStorage("accessToken");
+      removeLocalStorage("refreshToken");
+
+      router.push("/");
+    }
+  };
+
+  const handleClickWithdrawalButton = async () => {
+    const isConfirmedWithdrawal = await confirm({
+      title: <span className={styles.confirmTitle}>정말 탈퇴하시겠어요?</span>,
+      description: (
+        <div>
+          <div className={styles.confirmContent}>
+            <span className={styles.block}>계정을 삭제하면 복구할 수 없어요.</span>
+            다른 사람들과 함께 더 많은 소원을 이뤄보세요🥺
+          </div>
+          <div className={styles.confirmDescription}>
+            <span className={styles.block}>*계정을 삭제해도 작성하신 소원은 남아있어요.</span>
+            <span className={styles.block}>남아있는 소원을 지우시고 싶으시다면</span>
+            소원 떡국 하단의 삭제하기를 눌러주세요.
+          </div>
+        </div>
+      ),
+      confirmButton: { text: "탈퇴", color: "primary.45", applyColorTo: "outline" },
+      cancelButton: { text: "취소", color: "primary.100", applyColorTo: "background" },
+    });
+
+    if (!isConfirmedWithdrawal) return;
+
+    deleteLoggedInUser(undefined, {
+      onSuccess: () => {
+        removeLocalStorage("accessToken");
+        removeLocalStorage("refreshToken");
+
+        alert({
+          title: <div className={styles.alertTitle}>탈퇴가 완료되었어요</div>,
+          description: (
+            <div className={styles.alertContent}>
+              <span className={styles.block}>새해에 더 이루고싶은 소원이 생각나시면</span>
+              다시 한 번 떡국을 부탁해를 들려주세요!🥺
+            </div>
+          ),
+          confirmButton: {
+            text: "첫 화면으로 이동",
+            color: "primary.100",
+            applyColorTo: "background",
+            onClick: () => router.push("/"),
+          },
+        });
+      },
+    });
+  };
 
   return (
     <Fragment>
-      <Header hasPreviousPage actionIcon="guide">
+      <Header showBackButton actionIcon="guide">
         마이페이지
       </Header>
       <div className={styles.container}>
@@ -35,14 +126,16 @@ const MyPage = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <Link to="/users/:id" className={styles.full}>
-            <IconButton color="primary.45" applyColorTo="outline">
-              <IconButton.Icon>
-                <VisitIcon />
-              </IconButton.Icon>
-              랜덤 방문
-            </IconButton>
-          </Link>
+          <IconButton
+            onClick={handleClickRandomVisitButton}
+            color="primary.45"
+            applyColorTo="outline"
+          >
+            <IconButton.Icon>
+              <VisitIcon />
+            </IconButton.Icon>
+            랜덤 방문
+          </IconButton>
           <Link to="/my-page/activity" className={styles.full}>
             <IconButton color="primary.45" applyColorTo="outline">
               <IconButton.Icon>
@@ -68,8 +161,8 @@ const MyPage = () => {
           <IngredientList ingredients={ingredients} uniqueIngredientKey={primaryIngredient} />
         </div>
         <div className={styles.accountContainer}>
-          <button>로그아웃</button>
-          <button>탈퇴하기</button>
+          <button onClick={handleClickLogoutButton}>로그아웃</button>
+          <button onClick={handleClickWithdrawalButton}>탈퇴하기</button>
         </div>
       </div>
     </Fragment>
@@ -132,5 +225,36 @@ const styles = {
   }),
   full: css({
     width: "100%",
+  }),
+  block: css({
+    display: "block",
+  }),
+  confirmTitle: css({
+    fontSize: "1.6rem",
+  }),
+  confirmContent: css({
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "center",
+    fontSize: "1.4rem",
+    marginY: "1.6rem",
+  }),
+  confirmDescription: css({
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "center",
+    fontSize: "1.2rem",
+    color: "gray.50",
+    marginY: "1.6rem",
+  }),
+  alertTitle: css({
+    fontSize: "1.6rem",
+  }),
+  alertContent: css({
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "center",
+    fontSize: "1.4rem",
+    marginY: "1.6rem",
   }),
 };

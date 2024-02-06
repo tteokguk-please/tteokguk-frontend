@@ -7,9 +7,9 @@ import { IngredientKey } from "@/types/ingredient";
 
 import Ingredient from "../TteokgukCookingPage/Ingredient";
 
+import { $updateSelectedIngredients } from "@/store/ingredient";
 import Modal from "@/components/common/modal/Modal";
 import Button from "@/components/common/Button";
-import { $updateSelectedIngredients } from "@/store/ingredient";
 
 interface Props {
   isOpen: boolean;

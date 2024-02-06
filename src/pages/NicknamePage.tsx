@@ -23,8 +23,10 @@ const NicknamePage = () => {
         acceptsMarketing: marketing,
       },
       {
-        onSuccess: ({ nickname, primaryIngredient }) => {
+        onSuccess: ({ nickname, primaryIngredient, accessToken, refreshToken }) => {
           localStorage.removeItem("kakaoToken");
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
 
           welcomeModal.open(({ isOpen, close }) => (
             <WelcomeModal
@@ -41,7 +43,7 @@ const NicknamePage = () => {
 
   return (
     <Fragment>
-      <Header hasPreviousPage>닉네임 설정하기</Header>
+      <Header showBackButton>닉네임 설정하기</Header>
       <NicknameForm defaultValues={defaultValues} onSubmit={handleSubmit} />
     </Fragment>
   );
