@@ -10,7 +10,7 @@ import { removeLocalStorage } from "@/utils/localStorage";
 
 import { Link } from "@/routes/Link";
 import useRouter from "@/routes/useRouter";
-import { $deleteLoggedInUser, $getMyDetails } from "@/store/user";
+import { $getMyDetails, $getRandomUserDetails, $deleteLoggedInUser } from "@/store/user";
 import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
@@ -25,7 +25,16 @@ const MyPage = () => {
   const { mutate: deleteLoggedInUser } = useAtomValue($deleteLoggedInUser);
   const { confirm } = useDialog();
   const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
+  const { refetch: refetchRandomUserDetails } = useAtomValue($getRandomUserDetails);
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][primaryIngredient];
+
+  const handleClickRandomVisitButton = async () => {
+    const { data: randomUserDetails } = await refetchRandomUserDetails();
+
+    if (randomUserDetails) {
+      router.push(`/users/${randomUserDetails.id}`);
+    }
+  };
 
   const handleClickLogoutButton = async () => {
     const isLoggedOut = await confirm({
@@ -117,14 +126,16 @@ const MyPage = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <Link to="/users/:id" className={styles.full}>
-            <IconButton color="primary.45" applyColorTo="outline">
-              <IconButton.Icon>
-                <VisitIcon />
-              </IconButton.Icon>
-              랜덤 방문
-            </IconButton>
-          </Link>
+          <IconButton
+            onClick={handleClickRandomVisitButton}
+            color="primary.45"
+            applyColorTo="outline"
+          >
+            <IconButton.Icon>
+              <VisitIcon />
+            </IconButton.Icon>
+            랜덤 방문
+          </IconButton>
           <Link to="/my-page/activity" className={styles.full}>
             <IconButton color="primary.45" applyColorTo="outline">
               <IconButton.Icon>

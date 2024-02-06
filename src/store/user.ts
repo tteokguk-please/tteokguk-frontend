@@ -3,15 +3,18 @@ import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
 
 import {
-  getMyDetails,
-  getSearchedUsers,
   getLoggedInUserDetails,
+  getMyDetails,
+  getRandomUserDetails,
+  getSearchedUsers,
   getUserDetails,
   deleteLoggedInUser,
 } from "@/apis/user";
 
 import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
 import { getLocalStorage } from "@/utils/localStorage";
+
+import { RandomUserResponse } from "@/types/user.dto";
 
 export const $getMyDetails = atomWithSuspenseQuery(() => ({
   queryKey: ["myDetails"],
@@ -36,6 +39,12 @@ export const $getSearchedUsers = atomFamily(() =>
     enabled: !!get($nickname),
   })),
 );
+
+export const $getRandomUserDetails = atomWithQuery<RandomUserResponse>(() => ({
+  queryKey: ["randomUserDetails"],
+  queryFn: getRandomUserDetails,
+  enabled: false,
+}));
 
 export const $deleteLoggedInUser = atomWithMutation(() => {
   return {
