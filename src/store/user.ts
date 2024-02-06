@@ -1,10 +1,12 @@
-import { atomWithMutation, atomWithQuery, atomWithSuspenseQuery } from "jotai-tanstack-query";
+import { atomWithQuery, atomWithSuspenseQuery } from "jotai-tanstack-query";
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
 
 import { getMyDetails, getRandomUserDetails, getSearchedUsers, getUserDetails } from "@/apis/user";
 
 import { atomFamilyWithSuspenseQuery } from "@/utils/jotai";
+
+import { RandomUserResponse } from "@/types/user.dto";
 
 export const $getMyDetails = atomWithSuspenseQuery(() => {
   return {
@@ -26,6 +28,8 @@ export const $getSearchedUsers = atomFamily(() =>
   })),
 );
 
-export const $getRandomUserDetails = atomWithMutation(() => ({
-  mutationFn: getRandomUserDetails,
+export const $getRandomUserDetails = atomWithQuery<RandomUserResponse>(() => ({
+  queryKey: ["randomUserDetails"],
+  queryFn: getRandomUserDetails,
+  enabled: false,
 }));
