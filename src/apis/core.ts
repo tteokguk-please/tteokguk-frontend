@@ -1,6 +1,6 @@
 import ky, { Input, KyResponse } from "ky";
 
-import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
+import { getLocalStorage, removeLocalStorage, setLocalStorage } from "@/utils/localStorage";
 import { isExpiredAccessToken } from "@/utils/token";
 
 import { LoginResponse } from "@/types/auth";
@@ -29,14 +29,29 @@ const kyInstance = ky.create({
 });
 
 const setAuthHeader = async (request: Request) => {
-  const storedToken = getLocalStorage("accessToken");
-  const validToken = isExpiredAccessToken(storedToken)
-    ? await refreshAccessToken(getLocalStorage("refreshToken"))
-    : storedToken;
+  const accessToken = getLocalStorage("accessToken");
+  const refreshToken = getLocalStorage("refreshToken");
 
-  if (validToken) {
-    request.headers.set("Authorization", `Bearer ${validToken}`);
+  const token = await getToken(accessToken, refreshToken);
+
+  if (token) {
+    request.headers.set("Authorization", `Bearer ${token}`);
   }
+};
+
+const getToken = async (accessToken: string, refreshToken: string) => {
+  if (!isExpiredAccessToken(accessToken)) {
+    return accessToken;
+  }
+
+  if (refreshToken && !isExpiredAccessToken(refreshToken)) {
+    return refreshAccessToken(refreshToken);
+  }
+
+  removeLocalStorage("accessToken");
+  removeLocalStorage("refreshToken");
+
+  window.location.href = "/";
 };
 
 const refreshAccessToken = async (token: string) => {
