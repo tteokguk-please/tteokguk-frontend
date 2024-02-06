@@ -58,4 +58,6 @@ export interface PostKakaoUserSignupResponse {
   id: number;
   nickname: string;
   primaryIngredient: IngredientKey;
+  accessToken: string;
+  refreshToken: string;
 }
