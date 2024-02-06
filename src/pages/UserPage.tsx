@@ -5,19 +5,45 @@ import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
+import ErrorFallbackPage from "./ErrorFallbackPage";
+
+import useRouter from "@/routes/useRouter";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
+import Loading from "@/components/common/Loading";
 import UserProfileSection from "@/components/common/UserProfileSection";
 import TteokgukList from "@/components/common/TteokgukList";
-import VisitIcon from "@/assets/svg/visit.svg";
 import { $getRandomUserDetails, $getUserDetail } from "@/store/user";
-import useRouter from "@/routes/useRouter";
+import VisitIcon from "@/assets/svg/visit.svg";
 
 const UserPage = () => {
   const { id } = useParams();
   const router = useRouter();
-  const { data: userDetails } = useAtomValue($getUserDetail(Number(id)));
+  const {
+    data: userDetails,
+    isPending,
+    isError,
+    refetch,
+  } = useAtomValue($getUserDetail(Number(id)));
   const { refetch: refetchRandomUserDetails } = useAtomValue($getRandomUserDetails);
+
+  if (isPending || !userDetails) {
+    return (
+      <Fragment>
+        <Header showBackButton actionIcon="profile">
+          프로필
+        </Header>
+        <div className={styles.container}>
+          <Loading />
+        </div>
+      </Fragment>
+    );
+  }
+
+  if (!userDetails || isError) {
+    return <ErrorFallbackPage retry={refetch} />;
+  }
+
   const { nickname, primaryIngredient: uniqueIngredientKey, tteokguks } = userDetails;
 
   const handleClickRandomVisitButton = async () => {

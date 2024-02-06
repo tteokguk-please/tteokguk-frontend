@@ -3,7 +3,7 @@ import { css } from "@styled-system/css";
 import { Link } from "@/routes/Link";
 import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
-import deliveryDragon from "@/assets/images/delivery-dragon.png";
+import notFound from "@/assets/images/not-found.png";
 
 const NotFoundPage = () => {
   return (
@@ -11,8 +11,8 @@ const NotFoundPage = () => {
       <Header showBackButton />
       <div className={styles.container}>
         <div>
-          <div>
-            <img src={deliveryDragon} />
+          <div className={styles.imageContainer}>
+            <img src={notFound} alt="페이지를 찾을 수 없음" />
           </div>
           <h1 className={styles.content}>
             <div>404</div>
@@ -46,6 +46,10 @@ const styles = {
     width: "100%",
     height: "calc(100vh - 4.8rem)",
     paddingX: "4rem",
+  }),
+  imageContainer: css({
+    display: "flex",
+    justifyContent: "center",
   }),
   content: css({
     fontSize: "3.2rem",
