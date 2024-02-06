@@ -35,13 +35,13 @@ const SendIngredientsToOthersTteokgukModal = ({
   const { itemResponses: ingredientsStocks } = myDetails;
 
   const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
-    console.log(ingredientKey);
     if (!requiredIngredients.includes(ingredientKey)) return;
 
     updateSelectedIngredient(ingredientKey);
   };
 
   const handleClickNextButton = () => {
+    updateSelectedIngredient([]);
     if (!selectedIngredient) return;
 
     createCheerMessageModalOverlay.open(({ isOpen, close }) => (
