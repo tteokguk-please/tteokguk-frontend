@@ -59,7 +59,7 @@ const TteokgukPage = () => {
         <AddIngredientsToMyTteokgukModal
           isOpen={isOpen}
           onClose={close}
-          tteokgukId={Number(id)}
+          tteokgukId={tteokgukId}
           myDetails={loggedInUserDetails}
           requiredIngredients={requiredIngredients}
         />
@@ -71,7 +71,7 @@ const TteokgukPage = () => {
         <SendIngredientsToOthersTteokgukModal
           isOpen={isOpen}
           onClose={close}
-          tteokgukId={Number(id)}
+          tteokgukId={tteokgukId}
           myDetails={loggedInUserDetails}
           requiredIngredients={requiredIngredients}
         />

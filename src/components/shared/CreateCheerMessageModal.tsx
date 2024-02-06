@@ -52,16 +52,17 @@ const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
       },
       {
         onSuccess: ({ rewardIngredient, rewardQuantity }) => {
-          cheerSuccessOverlay.open(({ isOpen, close }) => (
+          cheerSuccessOverlay.open(({ isOpen, close: handleCloseCheerSuccessModal }) => (
             <CheerSuccessModal
               isOpen={isOpen}
-              onClose={close}
+              onClose={() => {
+                handleCloseCheerSuccessModal();
+                onClose();
+              }}
               rewardIngredient={rewardIngredient}
               rewardQuantity={rewardQuantity}
             />
           ));
-
-          onClose();
         },
       },
     );

@@ -44,11 +44,16 @@ const SendIngredientsToOthersTteokgukModal = ({
     updateSelectedIngredient([]);
     if (!selectedIngredient) return;
 
-    createCheerMessageModalOverlay.open(({ isOpen, close }) => (
-      <CreateCheerMessageModal isOpen={isOpen} onClose={close} tteokgukId={tteokgukId} />
+    createCheerMessageModalOverlay.open(({ isOpen, close: handleCloseCheerMessageModal }) => (
+      <CreateCheerMessageModal
+        isOpen={isOpen}
+        onClose={() => {
+          handleCloseCheerMessageModal();
+          onClose();
+        }}
+        tteokgukId={tteokgukId}
+      />
     ));
-
-    onClose();
   };
 
   return (
