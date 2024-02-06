@@ -19,13 +19,16 @@ const MyPage = () => {
   const router = useRouter();
   const { data: myDetails } = useAtomValue($getMyDetails);
   const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
-  const { mutateAsync: randomUserDetails } = useAtomValue($getRandomUserDetails);
+  const { refetch: refetchRandomUserDetails } = useAtomValue($getRandomUserDetails);
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][primaryIngredient];
 
   const handleClickRandomVisitButton = async () => {
     try {
-      const { id = 2 } = await randomUserDetails();
-      router.push(`/users/${id}`);
+      const { data: randomUserDetails } = await refetchRandomUserDetails();
+
+      if (randomUserDetails) {
+        router.push(`/users/${randomUserDetails.id}`);
+      }
     } catch (error) {
       console.error(error);
     }
