@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, MouseEvent } from "react";
 
 import classNames from "classnames";
 
@@ -26,17 +26,22 @@ const Button = ({
   color = "primary.100",
   applyColorTo = "background",
   size = "full",
-  isPending,
+  isPending = false,
 }: Props) => {
   const buttonStyle = classNames(
-    styles.base,
+    styles.base(isPending),
     styles.variants[applyColorTo](color),
     styles.variants[size],
     className,
   );
 
+  const handleClickButton = (event: MouseEvent<HTMLButtonElement>) => {
+    if (isPending) return;
+    onClick?.(event);
+  };
+
   return (
-    <button className={buttonStyle} disabled={disabled} onClick={onClick}>
+    <button className={buttonStyle} disabled={disabled} onClick={handleClickButton}>
       {isPending && <LoadingLottie className={styles.lottie} />}
       {children}
     </button>
@@ -46,24 +51,25 @@ const Button = ({
 export default Button;
 
 const styles = {
-  base: css({
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "5.1rem",
-    fontSize: "1.6rem",
-    fontWeight: 700,
-    borderRadius: "1.2rem",
-    cursor: "pointer",
+  base: (isPending: boolean) =>
+    css({
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "5.1rem",
+      fontSize: "1.6rem",
+      fontWeight: 700,
+      borderRadius: "1.2rem",
+      cursor: isPending ? "not-allowed" : "pointer",
 
-    _disabled: {
-      backgroundColor: "white",
-      cursor: "default",
-      borderWidth: "0.1rem",
-      borderColor: "primary.45",
-      color: "gray.50",
-    },
-  }),
+      _disabled: {
+        backgroundColor: "white",
+        cursor: "default",
+        borderWidth: "0.1rem",
+        borderColor: "primary.45",
+        color: "gray.50",
+      },
+    }),
   variants: {
     background: (color: ButtonColor) => css({ backgroundColor: color }),
     outline: (color: ButtonColor) =>
