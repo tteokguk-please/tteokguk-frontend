@@ -8,7 +8,7 @@ type AlertParams = Omit<DialogModalContextProps, "isOpen" | "type" | "cancelButt
 type ConfirmParams = Omit<DialogModalContextProps, "isOpen" | "type">;
 type OpenDialogModalParams = Omit<DialogModalContextProps, "isOpen">;
 
-export const useDailog = () => {
+export const useDialog = () => {
   const [, setDialogModalProps] = useContext(DialogModalContext);
 
   const handleOpenDialogModal = (params: OpenDialogModalParams) =>

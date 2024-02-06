@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { useAtomValue } from "jotai";
 
-import { useDailog } from "@/hooks/useDialog";
+import { useDialog } from "@/hooks/useDialog";
 
 import { css } from "@styled-system/css";
 
@@ -28,7 +28,7 @@ const EMAIL_REGEX = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w{2,4}([-.]\w+)*$/;
 const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/;
 
 const SignupForm = ({ defaultValues, onSubmit }: Props) => {
-  const { confirm } = useDailog();
+  const { confirm } = useDialog();
   const {
     register,
     watch,

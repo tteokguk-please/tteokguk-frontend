@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
 
-import { useDailog } from "@/hooks/useDialog";
+import { useDialog } from "@/hooks/useDialog";
 
 import { css } from "@styled-system/css";
 
@@ -16,10 +16,10 @@ import AddIngredientsModal from "@/components/shared/AddIngredientsModal";
 import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
 import Ingredient from "@/components/common/Ingredient";
+import TteokgukImage from "@/components/common/TteokgukImage";
 import { $getLoggedInUserDetails } from "@/store/user";
 import { $deleteTteokguk, $getTteokguk } from "@/store/tteokguk";
 import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
-import tteokgukIncomplete from "@/assets/images/tteokguk-incomplete.png";
 import ActivityIcon from "@/assets/svg/activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
 
@@ -28,12 +28,23 @@ const MAX_INGREDIENTS = 5;
 const TteokgukPage = () => {
   const { id } = useParams();
   const router = useRouter();
-  const { confirm } = useDailog();
+  const { confirm } = useDialog();
   const addIngredientModalOverlay = useOverlay();
   const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
   const { mutate: deleteTteokguk } = useAtomValue($deleteTteokguk);
   const { data: tteokguk } = useAtomValue($getTteokguk(Number(id)));
-  const { nickname, wish, ingredients, usedIngredients, memberId, tteokgukId } = tteokguk;
+  const {
+    nickname,
+    wish,
+    ingredients,
+    usedIngredients,
+    completion,
+    backgroundColor,
+    frontGarnish,
+    backGarnish,
+    tteokgukId,
+    memberId,
+  } = tteokguk;
   const isLoggedIn = !!getLocalStorage("accessToken");
   const isMyTteokguk = loggedInUserDetails?.id === memberId;
 
@@ -85,11 +96,14 @@ const TteokgukPage = () => {
             <button className={styles.randomVisitButton}>랜덤 방문</button>
           </div>
           <div className={styles.imageContainer}>
-            <div className={styles.image}>
-              <img src={tteokgukIncomplete} alt="미완성 떡국" />
-            </div>
-            <div className={styles.content}>{wish}</div>
+            <TteokgukImage
+              completion={completion}
+              backgroundColor={backgroundColor}
+              frontGarnish={frontGarnish}
+              backGarnish={backGarnish}
+            />
           </div>
+          <div className={styles.content}>{wish}</div>
         </article>
         <article>
           <div className={styles.titleContainer}>
@@ -178,23 +192,19 @@ const styles = {
     borderRadius: "0.4rem",
   }),
   imageContainer: css({
+    position: "relative",
     borderWidth: "0.1rem",
     borderColor: "primary.45",
-    borderRadius: "0.8rem",
-    overflow: "hidden",
-    marginBottom: "2.7rem",
-  }),
-  image: css({
-    display: "flex",
-    justifyContent: "center",
+    borderTopRadius: "0.8rem",
     height: "17.6rem",
-    backgroundColor: "white",
   }),
   content: css({
     height: "7.1rem",
     fontSize: "1.4rem",
     backgroundColor: "primary.100",
     padding: "1rem 1.6rem",
+    marginBottom: "2.7rem",
+    borderBottomRadius: "0.8rem",
   }),
   meterialContainer: css({
     height: "23.2rem",
