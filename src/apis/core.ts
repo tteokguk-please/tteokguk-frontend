@@ -45,7 +45,7 @@ const getToken = async (accessToken: string, refreshToken: string) => {
   }
 
   if (refreshToken && !isExpiredAccessToken(refreshToken)) {
-    return await refreshAccessToken(refreshToken);
+    return refreshAccessToken(refreshToken);
   }
 
   removeLocalStorage("accessToken");
