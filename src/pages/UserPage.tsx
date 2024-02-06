@@ -21,14 +21,10 @@ const UserPage = () => {
   const { nickname, primaryIngredient: uniqueIngredientKey, tteokguks } = userDetails;
 
   const handleClickRandomVisitButton = async () => {
-    try {
-      const { data: randomUserDetails } = await refetchRandomUserDetails();
+    const { data: randomUserDetails } = await refetchRandomUserDetails();
 
-      if (randomUserDetails) {
-        router.push(`/users/${randomUserDetails.id}`);
-      }
-    } catch (error) {
-      console.error(error);
+    if (randomUserDetails) {
+      router.push(`/users/${randomUserDetails.id}`);
     }
   };
 
