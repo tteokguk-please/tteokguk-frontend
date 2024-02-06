@@ -13,7 +13,6 @@ import { $postTteokguk } from "@/store/tteokguk";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
 import Ingredient from "@/components/common/Ingredient";
-import LoadingLottie from "@/components/common/LoadingLottie";
 import WishIcon from "@/assets/svg/wish.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
 import CheckIcon from "@/assets/svg/check.svg";
@@ -141,11 +140,9 @@ const TteokgukCookingPage = () => {
             disabled={!wishText || selectedIngredients.length !== MAX_INGREDIENTS}
             color="primary.45"
             applyColorTo="outline"
+            isPending={isPending}
           >
-            <div className={styles.lottieContainer}>
-              {isPending && <LoadingLottie className={styles.lottie} />}
-              소원 떡국 만들기
-            </div>
+            소원 떡국 만들기
           </Button>
         </form>
       </div>
