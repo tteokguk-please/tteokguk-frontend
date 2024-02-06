@@ -58,7 +58,13 @@ const refreshAccessToken = async (token: string) => {
   }
 };
 
-const handleResponse = <Response>(response: KyResponse) => response.json<Response>();
+const handleResponse = <Response>(response: KyResponse) => {
+  if (response.status === 204 || response.headers.get("content-length") === "0") {
+    return Promise.resolve({} as Response);
+  }
+
+  return response.json<Response>();
+};
 
 export default {
   get: <Response>(url: Input) => kyInstance.get(url).then(handleResponse<Response>),
@@ -68,6 +74,8 @@ export default {
     kyInstance.patch(url, { json }).then(handleResponse<Response>),
   put: <Response>(url: Input, json: unknown) =>
     kyInstance.patch(url, { json }).then(handleResponse<Response>),
-  delete: <Response>(url: Input, json: unknown) =>
-    kyInstance.patch(url, { json }).then(handleResponse<Response>),
+  delete: <Response>(url: Input, json?: unknown) => {
+    const options = json ? { json } : {};
+    return kyInstance.delete(url, options).then(handleResponse<Response>);
+  },
 };
