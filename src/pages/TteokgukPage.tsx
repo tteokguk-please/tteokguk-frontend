@@ -2,22 +2,30 @@ import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 
 import { useAtomValue } from "jotai";
+import { useOverlay } from "@toss/use-overlay";
 
 import { css } from "@styled-system/css";
 
+import { getLocalStorage } from "@/utils/localStorage";
+
+import { Link } from "@/routes/Link";
+import AddIngredientsModal from "@/components/shared/AddIngredientsModal";
 import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
 import Ingredient from "@/components/common/Ingredient";
-import ActivityIcon from "@/assets/svg/activity.svg";
-import MeterialIcon from "@/assets/svg/material.svg";
+import TteokgukImage from "@/components/common/TteokgukImage";
+import { $getLoggedInUserDetails } from "@/store/user";
 import { $getTteokguk } from "@/store/tteokguk";
 import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
-import TteokgukImage from "@/components/common/TteokgukImage";
+import ActivityIcon from "@/assets/svg/activity.svg";
+import MeterialIcon from "@/assets/svg/material.svg";
 
 const MAX_INGREDIENTS = 5;
 
 const TteokgukPage = () => {
   const { id } = useParams();
+  const addIngredientModalOverlay = useOverlay();
+  const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
   const { data: tteokguk } = useAtomValue($getTteokguk(Number(id)));
   const {
     nickname,
@@ -28,11 +36,26 @@ const TteokgukPage = () => {
     backgroundColor,
     frontGarnish,
     backGarnish,
+    memberId,
   } = tteokguk;
+  const isLoggedIn = !!getLocalStorage("accessToken");
+
+  const handleClickAddIngredientButton = () => {
+    if (!loggedInUserDetails) return;
+
+    addIngredientModalOverlay.open(({ isOpen, close }) => (
+      <AddIngredientsModal
+        isOpen={isOpen}
+        onClose={close}
+        memberId={memberId}
+        loggedInUserDetails={loggedInUserDetails}
+      />
+    ));
+  };
 
   return (
     <Fragment>
-      <Header hasPreviousPage actionIcon="profile">
+      <Header showBackButton actionIcon="profile">
         소원 떡국
       </Header>
       <div className={styles.container}>
@@ -87,9 +110,24 @@ const TteokgukPage = () => {
             </div>
           </div>
         </article>
-        <Button color="primary.45" applyColorTo="outline">
-          떡국 재료 추가하기
-        </Button>
+
+        {!isLoggedIn && (
+          <Link to="/login">
+            <Button color="primary.45" applyColorTo="outline">
+              소원 떡국 만들기
+            </Button>
+          </Link>
+        )}
+        {isLoggedIn && (
+          <Button
+            onClick={handleClickAddIngredientButton}
+            color="primary.45"
+            applyColorTo="outline"
+          >
+            {loggedInUserDetails?.id === memberId ? "떡국 재료 추가하기" : "떡국 재료 보내기"}
+          </Button>
+        )}
+
         <div className={styles.wishDeleteButton}>
           <button>소원 삭제하기</button>
         </div>
