@@ -7,22 +7,25 @@ import { css } from "@styled-system/css";
 
 import ErrorFallbackPage from "./ErrorFallbackPage";
 
+import useRouter from "@/routes/useRouter";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
+import Loading from "@/components/common/Loading";
 import UserProfileSection from "@/components/common/UserProfileSection";
 import TteokgukList from "@/components/common/TteokgukList";
+import { $getRandomUserDetails, $getUserDetail } from "@/store/user";
 import VisitIcon from "@/assets/svg/visit.svg";
-import { $getUserDetail } from "@/store/user";
-import Loading from "@/components/common/Loading";
 
 const UserPage = () => {
   const { id } = useParams();
+  const router = useRouter();
   const {
     data: userDetails,
     isPending,
     isError,
     refetch,
   } = useAtomValue($getUserDetail(Number(id)));
+  const { refetch: refetchRandomUserDetails } = useAtomValue($getRandomUserDetails);
 
   if (isPending || !userDetails) {
     return (
@@ -43,6 +46,14 @@ const UserPage = () => {
 
   const { nickname, primaryIngredient: uniqueIngredientKey, tteokguks } = userDetails;
 
+  const handleClickRandomVisitButton = async () => {
+    const { data: randomUserDetails } = await refetchRandomUserDetails();
+
+    if (randomUserDetails) {
+      router.push(`/users/${randomUserDetails.id}`);
+    }
+  };
+
   return (
     <Fragment>
       <Header showBackButton actionIcon="profile">
@@ -55,7 +66,11 @@ const UserPage = () => {
           color="primary"
         />
         <div className={styles.buttonContainer}>
-          <IconButton color="primary.45" applyColorTo="outline">
+          <IconButton
+            onClick={handleClickRandomVisitButton}
+            color="primary.45"
+            applyColorTo="outline"
+          >
             <IconButton.Icon>
               <VisitIcon />
             </IconButton.Icon>

@@ -2,7 +2,13 @@ import { atomWithInfiniteQuery, atomWithMutation } from "jotai-tanstack-query";
 import { atomFamily } from "jotai/utils";
 import { atom } from "jotai";
 
-import { getTteokguk, getCompletedTteokguks, getNewTteokguks, postTteokguk } from "@/apis/tteokguk";
+import {
+  getTteokguk,
+  getCompletedTteokguks,
+  getNewTteokguks,
+  postTteokguk,
+  deleteTteokguk,
+} from "@/apis/tteokguk";
 
 import { atomFamilyWithQuery } from "@/utils/jotai";
 import { differenceArray } from "@/utils/array";
@@ -82,3 +88,9 @@ export const $postTteokguk = atomWithMutation(() => {
 });
 
 export const $getTteokguk = atomFamilyWithQuery("tteokguk", (id: number) => getTteokguk(id));
+
+export const $deleteTteokguk = atomWithMutation(() => {
+  return {
+    mutationFn: (tteokgukId: number) => deleteTteokguk(tteokgukId),
+  };
+});

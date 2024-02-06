@@ -1,16 +1,20 @@
-import { atomWithQuery } from "jotai-tanstack-query";
+import { atomWithQuery, atomWithMutation } from "jotai-tanstack-query";
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
 
 import {
-  getMyDetails,
-  getSearchedUsers,
   getLoggedInUserDetails,
+  getMyDetails,
+  getRandomUserDetails,
+  getSearchedUsers,
   getUserDetails,
+  deleteLoggedInUser,
 } from "@/apis/user";
 
 import { getLocalStorage } from "@/utils/localStorage";
 import { atomFamilyWithQuery } from "@/utils/jotai";
+
+import { RandomUserResponse } from "@/types/user.dto";
 
 export const $getMyDetails = atomWithQuery(() => ({
   queryKey: ["myDetails"],
@@ -35,3 +39,15 @@ export const $getSearchedUsers = atomFamily(() =>
     enabled: !!get($nickname),
   })),
 );
+
+export const $getRandomUserDetails = atomWithQuery<RandomUserResponse>(() => ({
+  queryKey: ["randomUserDetails"],
+  queryFn: getRandomUserDetails,
+  enabled: false,
+}));
+
+export const $deleteLoggedInUser = atomWithMutation(() => {
+  return {
+    mutationFn: deleteLoggedInUser,
+  };
+});
