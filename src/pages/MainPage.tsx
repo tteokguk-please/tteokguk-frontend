@@ -46,30 +46,35 @@ const MainPage = () => {
       </Header>
       <div className={styles.container}>
         {isPending && <Loading />}
-        <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
-          <TabList className={styles.tabList}>
-            <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
-              새로운 떡국
-            </Tab>
-            <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(1) })}>
-              완성된 떡국
-            </Tab>
-          </TabList>
-          <TabPanel className={styles.tabPanel}>
-            <TteokgukWithCaptionList tteokguks={tteokguks} />
-          </TabPanel>
-          <TabPanel className={styles.tabPanel}>
-            <TteokgukWithCaptionList tteokguks={tteokguks} />
-          </TabPanel>
-        </Tabs>
+        {!isPending && (
+          <>
+            <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
+              <TabList className={styles.tabList}>
+                <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
+                  새로운 떡국
+                </Tab>
+                <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(1) })}>
+                  완성된 떡국
+                </Tab>
+              </TabList>
+              <TabPanel className={styles.tabPanel}>
+                <TteokgukWithCaptionList tteokguks={tteokguks} />
+              </TabPanel>
+              <TabPanel className={styles.tabPanel}>
+                <TteokgukWithCaptionList tteokguks={tteokguks} />
+              </TabPanel>
+            </Tabs>
 
-        <BottomCTA>
-          <Link to="/tteokguk/create" className={styles.link}>
-            <Button color="secondary.100" applyColorTo="background" className={styles.button}>
-              소원 떡국 만들기
-            </Button>
-          </Link>
-        </BottomCTA>
+            <BottomCTA>
+              <Link to="/tteokguk/create" className={styles.link}>
+                <Button color="secondary.100" applyColorTo="background" className={styles.button}>
+                  소원 떡국 만들기
+                </Button>
+              </Link>
+            </BottomCTA>
+          </>
+        )}
+
         {isFetchingNextPage && <Loading />}
         <div ref={fetchMoreRef} />
       </div>
