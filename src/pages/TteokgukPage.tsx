@@ -25,8 +25,6 @@ const MAX_INGREDIENTS = 5;
 
 const TteokgukPage = () => {
   const { id } = useParams();
-  console.log(id);
-
   const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
   const { data: tteokguk } = useAtomValue($getTteokguk(Number(id)));
   const { nickname, wish, ingredients, usedIngredients, memberId, requiredIngredients } = tteokguk;
@@ -98,6 +96,7 @@ const TteokgukPage = () => {
             <div className={styles.ingredientFirstRow}>
               {ingredients.slice(0, 3).map((ingredientKey) => (
                 <Ingredient
+                  key={ingredientKey}
                   IngredientIcon={INGREDIENT_ICON_BY_KEY[40][ingredientKey]}
                   name={INGREDIENT_NAME_BY_KEY[ingredientKey]}
                   isSelected={usedIngredients.includes(ingredientKey)}
@@ -108,6 +107,7 @@ const TteokgukPage = () => {
             <div className={styles.ingredientSecondRow}>
               {ingredients.slice(3, 5).map((ingredientKey) => (
                 <Ingredient
+                  key={ingredientKey}
                   IngredientIcon={INGREDIENT_ICON_BY_KEY[40][ingredientKey]}
                   name={INGREDIENT_NAME_BY_KEY[ingredientKey]}
                   isSelected={usedIngredients.includes(ingredientKey)}
