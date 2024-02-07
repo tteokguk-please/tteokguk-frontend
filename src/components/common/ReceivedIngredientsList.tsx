@@ -36,7 +36,7 @@ const ReceivedIngredientsList = ({ receivedIngredientList }: Props) => {
                 </div>
                 <div>
                   <div className={styles.title}>@{access ? nickname : ANONIMOUS_NICKNAME}</div>
-                  <div>응원의 {INGREDIENT_NAME_BY_KEY[ingredient]}이 도착했어요!</div>
+                  <div>응원의 {INGREDIENT_NAME_BY_KEY[ingredient]}(이/가) 도착했어요!</div>
                 </div>
               </div>
               <div className={styles.buttonContainer}>

@@ -8,3 +8,13 @@ export interface ReceivedIngredient {
   message: string;
   access: boolean;
 }
+
+export interface MySupportedTteokguk {
+  tteokgukId: number;
+  receiverNickname: string;
+  ingredients: IngredientKey[];
+  completion: boolean;
+  frontGarnish: IngredientKey;
+  backGarnish: IngredientKey;
+  backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
+}

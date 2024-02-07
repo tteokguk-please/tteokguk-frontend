@@ -240,7 +240,7 @@ const styles = {
     height: "17.6rem",
   }),
   content: css({
-    height: "7.1rem",
+    minHeight: "7.1rem",
     fontSize: "1.4rem",
     backgroundColor: "primary.100",
     padding: "1rem 1.6rem",

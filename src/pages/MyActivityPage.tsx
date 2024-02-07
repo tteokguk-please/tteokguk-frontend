@@ -10,27 +10,40 @@ import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
 import ReceivedIngredientsList from "@/components/common/ReceivedIngredientsList";
-import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
-import { $receivedIngredients } from "@/store/myActivity";
+import { $mySupportedTteokguks, $receivedIngredients } from "@/store/myActivity";
+import Loading from "@/components/common/Loading";
+import MySupportedTteokgukCardList from "@/components/MyActivity/MySupportedTteokgukCardList";
 
 const MyActivityPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const isSelectedTab = (index: number) => index === tabIndex;
-
+  const {
+    mySupportedTteokguks,
+    isPending: isMySupportedTteokguksPending,
+    handleSupportedTtoekguksIntersect,
+  } = useAtomValue($mySupportedTteokguks);
   const fetchMoreRef = useRef(null);
 
-  const { receivedIngredientList, handleReceivedIngredeintIntersect } =
-    useAtomValue($receivedIngredients);
+  const {
+    receivedIngredientList,
+    handleReceivedIngredeintIntersect,
+    isPending: isReceivedTteokgukPending,
+  } = useAtomValue($receivedIngredients);
 
   useIntersectionObserver({
     target: fetchMoreRef,
-    handleIntersect: () => handleReceivedIngredeintIntersect({ enabled: isSelectedTab(0) }),
+    handleIntersect:
+      tabIndex === 0
+        ? () => handleReceivedIngredeintIntersect({ enabled: isSelectedTab(0) })
+        : () => handleSupportedTtoekguksIntersect({ enabled: isSelectedTab(1) }),
   });
+  console.log(mySupportedTteokguks);
 
   return (
     <Fragment>
       <Header showBackButton>활동 내역</Header>
       <div className={styles.container}>
+        {(isReceivedTteokgukPending || isMySupportedTteokguksPending) && <Loading />}
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList className={styles.tabList}>
             <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
@@ -40,11 +53,15 @@ const MyActivityPage = () => {
               내가 응원한 떡국
             </Tab>
           </TabList>
-          <TabPanel className={styles.tabPanel}>
-            <ReceivedIngredientsList receivedIngredientList={receivedIngredientList} />
+          <TabPanel className={styles.receivedTab}>
+            {receivedIngredientList && (
+              <ReceivedIngredientsList receivedIngredientList={receivedIngredientList} />
+            )}
           </TabPanel>
-          <TabPanel className={styles.tabPanel}>
-            <TteokgukWithCaptionList tteokguks={[]} />
+          <TabPanel className={styles.mySupportedTab}>
+            {mySupportedTteokguks && (
+              <MySupportedTteokgukCardList tteokguks={mySupportedTteokguks} />
+            )}
           </TabPanel>
         </Tabs>
         <div ref={fetchMoreRef} />
@@ -70,12 +87,6 @@ const styles = {
     marginBottom: "2rem",
     cursor: "pointer",
   }),
-  tabPanel: css({
-    display: "flex",
-    flexFlow: "column wrap",
-    paddingX: "1.8rem",
-    width: "100%",
-  }),
   selectedTab: css({
     position: "relative",
     outline: "none",
@@ -89,6 +100,18 @@ const styles = {
       height: "0.4rem",
       backgroundColor: "primary.100",
     },
+  }),
+  receivedTab: css({
+    display: "flex",
+    flexFlow: "column wrap",
+    paddingX: "1.8rem",
+    width: "100%",
+  }),
+  mySupportedTab: css({
+    display: "flex",
+    flexFlow: "column wrap",
+    alignItems: "center",
+    paddingLeft: "1.6rem",
   }),
   tteokgukList: css({
     display: "flex",

@@ -1,9 +1,9 @@
-import { atomWithSuspenseInfiniteQuery } from "jotai-tanstack-query";
+import { atomWithInfiniteQuery } from "jotai-tanstack-query";
 import { atom } from "jotai";
 
-import { getReceivedIngredients } from "@/apis/myActivity";
+import { getReceivedIngredients, getMySupportedTteokguks } from "@/apis/myActivity";
 
-const $getReceivedIngredients = atomWithSuspenseInfiniteQuery(() => ({
+const $getReceivedIngredients = atomWithInfiniteQuery(() => ({
   queryKey: ["receivedIngredients"],
   queryFn: async ({ pageParam }) => getReceivedIngredients(pageParam),
   getNextPageParam: (lastPage, _allPages, lastPageParam) => {
@@ -15,13 +15,9 @@ const $getReceivedIngredients = atomWithSuspenseInfiniteQuery(() => ({
 }));
 
 export const $receivedIngredients = atom(async (get) => {
-  const {
-    data: { pages },
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    ...rest
-  } = await get($getReceivedIngredients);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, ...rest } = await get(
+    $getReceivedIngredients,
+  );
 
   const handleReceivedIngredeintIntersect = ({ enabled }: { enabled: boolean }) => {
     if (hasNextPage && !isFetchingNextPage && enabled) {
@@ -30,11 +26,43 @@ export const $receivedIngredients = atom(async (get) => {
   };
 
   return {
-    receivedIngredientList: pages.flatMap(({ data: receivedIngredients }) => receivedIngredients),
+    receivedIngredientList: data?.pages.flatMap(
+      ({ data: receivedIngredients }) => receivedIngredients,
+    ),
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     handleReceivedIngredeintIntersect,
+    ...rest,
+  };
+});
+
+const $getMySupportedTteokguks = atomWithInfiniteQuery(() => ({
+  queryKey: ["supportedTteokguks"],
+  queryFn: async ({ pageParam }) => getMySupportedTteokguks(pageParam),
+  getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+    if (!lastPage.data.length) return;
+
+    return lastPageParam + 1;
+  },
+  initialPageParam: 1,
+}));
+
+export const $mySupportedTteokguks = atom((get) => {
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, ...rest } =
+    get($getMySupportedTteokguks);
+
+  const handleSupportedTtoekguksIntersect = ({ enabled }: { enabled: boolean }) => {
+    if (hasNextPage && !isFetchingNextPage && enabled) {
+      fetchNextPage();
+    }
+  };
+
+  return {
+    mySupportedTteokguks: data?.pages.flatMap(
+      ({ data: mySupportedTteokguks }) => mySupportedTteokguks,
+    ),
+    handleSupportedTtoekguksIntersect,
     ...rest,
   };
 });
