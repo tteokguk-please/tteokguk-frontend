@@ -11,27 +11,30 @@ import { css } from "@styled-system/css";
 import Header from "@/components/common/Header";
 import ReceivedIngredientsList from "@/components/common/ReceivedIngredientsList";
 import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
-import { $mySupportedTteokguks } from "@/store/myActivity";
+import { $mySupportedTteokguks, $receivedIngredients } from "@/store/myActivity";
 
 const MyActivityPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const isSelectedTab = (index: number) => index === tabIndex;
-  const { mySupportedTteokguks, isPending, handleSupportedTtoekguksIntersect } =
-    useAtomValue($mySupportedTteokguks);
+  const { mySupportedTteokguks } = useAtomValue($mySupportedTteokguks);
   const fetchMoreRef = useRef(null);
 
-  console.log(mySupportedTteokguks);
+  const {
+    receivedIngredientList,
+    handleReceivedIngredeintIntersect,
+    isPending: isReceivedTteokgukPending,
+  } = useAtomValue($receivedIngredients);
 
   useIntersectionObserver({
     target: fetchMoreRef,
-    handleIntersect: handleSupportedTtoekguksIntersect,
+    handleIntersect: () => handleReceivedIngredeintIntersect({ enabled: isSelectedTab(0) }),
   });
 
   return (
     <Fragment>
       <Header showBackButton>활동 내역</Header>
       <div className={styles.container}>
-        {!isPending && (
+        {!isReceivedTteokgukPending && receivedIngredientList && (
           <>
             <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
               <TabList className={styles.tabList}>
@@ -43,7 +46,7 @@ const MyActivityPage = () => {
                 </Tab>
               </TabList>
               <TabPanel className={styles.tabPanel}>
-                <ReceivedIngredientsList />
+                <ReceivedIngredientsList receivedIngredientList={receivedIngredientList} />
               </TabPanel>
               <TabPanel className={styles.tabPanel}>
                 {mySupportedTteokguks && (

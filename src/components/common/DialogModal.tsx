@@ -62,8 +62,8 @@ export const DialogModalProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <DialogModalContext.Provider value={dialogContext}>
-      <DialogModal />
       {children}
+      <DialogModal />
     </DialogModalContext.Provider>
   );
 };
