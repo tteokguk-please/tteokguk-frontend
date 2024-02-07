@@ -76,8 +76,8 @@ const LoginPage = () => {
         <Link to="/">로그인</Link>
       </Header>
       <div className={styles.container}>
-        <div>
-          <img src={deliveryDragon} alt="배달하는 용용이" />
+        <div className={styles.imageContainer}>
+          <img className={styles.image} src={deliveryDragon} alt="배달하는 용용이" />
         </div>
         <div className={styles.buttonContainer}>
           <Link to="/login/email">
@@ -111,6 +111,18 @@ const styles = {
     width: "100%",
     height: "calc(100vh - 4.8rem)",
     padding: "0 4rem",
+  }),
+  imageContainer: css({
+    width: "100%",
+    paddingTop: "101.01%",
+    position: "relative",
+  }),
+  image: css({
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "auto",
   }),
   buttonContainer: css({
     width: "100%",

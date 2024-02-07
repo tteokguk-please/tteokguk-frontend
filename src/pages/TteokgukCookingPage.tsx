@@ -87,7 +87,7 @@ const TteokgukCookingPage = () => {
       <Header showBackButton actionIcon="guide">
         떡국 만들기
       </Header>
-      <div>
+      <div className={styles.imageContainer}>
         <img src={shoppingDragon} alt="쇼핑하는 용용이" />
       </div>
       <div className={styles.container}>
@@ -159,9 +159,14 @@ const styles = {
     paddingX: "2.4rem",
     paddingBottom: "2rem",
   }),
+  imageContainer: css({
+    minHeight: "11.6rem",
+    maxHeight: "11.6rem",
+    objectFit: "contain",
+  }),
   image: css({
-    height: "8.4rem",
-    border: "0.1rem solid",
+    height: "100%",
+    width: "auto",
   }),
   titleContainer: css({
     display: "flex",
