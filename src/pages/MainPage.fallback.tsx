@@ -7,7 +7,6 @@ import Loading from "@/components/common/Loading";
 import { Link } from "@/routes/Link";
 import HeaderLogo from "@/assets/svg/header-logo.svg";
 
-
 const MainPageFallback = () => {
   return (
     <div className={styles.container}>

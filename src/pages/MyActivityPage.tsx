@@ -28,7 +28,10 @@ const MyActivityPage = () => {
     receivedIngredientList,
     handleReceivedIngredeintIntersect,
     isPending: isReceivedTteokgukPending,
+    isFetchingNextPage: isReceivedTteokgukFetchingNextPage,
   } = useAtomValue($receivedIngredients);
+
+  const isPending = isReceivedTteokgukPending || isMySupportedTteokguksPending;
 
   useIntersectionObserver({
     target: fetchMoreRef,
@@ -37,13 +40,11 @@ const MyActivityPage = () => {
         ? () => handleReceivedIngredeintIntersect({ enabled: isSelectedTab(0) })
         : () => handleSupportedTtoekguksIntersect({ enabled: isSelectedTab(1) }),
   });
-  console.log(mySupportedTteokguks);
 
   return (
     <Fragment>
       <Header showBackButton>활동 내역</Header>
       <div className={styles.container}>
-        {(isReceivedTteokgukPending || isMySupportedTteokguksPending) && <Loading />}
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList className={styles.tabList}>
             <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
@@ -64,6 +65,9 @@ const MyActivityPage = () => {
             )}
           </TabPanel>
         </Tabs>
+        {isPending && <Loading />}
+
+        {isReceivedTteokgukFetchingNextPage && <Loading />}
         <div ref={fetchMoreRef} />
       </div>
     </Fragment>
