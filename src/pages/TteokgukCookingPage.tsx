@@ -29,7 +29,7 @@ const MAX_INGREDIENTS = 5;
 
 const TteokgukCookingPage = () => {
   const router = useRouter();
-  const { mutate: createTteokguk } = useAtomValue($postTteokguk);
+  const { mutate: createTteokguk, isPending } = useAtomValue($postTteokguk);
 
   const [wishText, setWishText] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState<IngredientKey[]>([]);
@@ -140,6 +140,7 @@ const TteokgukCookingPage = () => {
             disabled={!wishText || selectedIngredients.length !== MAX_INGREDIENTS}
             color="primary.45"
             applyColorTo="outline"
+            isPending={isPending}
           >
             소원 떡국 만들기
           </Button>
@@ -220,5 +221,14 @@ const styles = {
   }),
   button: css({
     marginBottom: "2rem",
+  }),
+  lottieContainer: css({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }),
+  lottie: css({
+    height: "2rem",
+    marginRight: "0.8rem",
   }),
 };

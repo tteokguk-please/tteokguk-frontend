@@ -1,49 +1,66 @@
 import { useAtom } from "jotai";
+import { useOverlay } from "@toss/use-overlay";
 
 import { css } from "@styled-system/css";
 
 import { LoggedInUserDetailsResponse } from "@/types/user.dto";
 import { IngredientKey } from "@/types/ingredient";
 
+import Modal from "../common/modal/Modal";
 import Ingredient from "../TteokgukCookingPage/Ingredient";
+import Button from "../common/Button";
 
-import { $updateSelectedIngredients } from "@/store/ingredient";
-import Modal from "@/components/common/modal/Modal";
-import Button from "@/components/common/Button";
+import CreateCheerMessageModal from "./CreateCheerMessageModal";
+
+import { $updateSelectedIngredient } from "@/store/ingredient";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  memberId: number;
-  loggedInUserDetails: LoggedInUserDetailsResponse;
+  tteokgukId: number;
+  myDetails: LoggedInUserDetailsResponse;
   requiredIngredients: IngredientKey[];
 }
 
-const AddIngredientsModal = ({
+const SendIngredientsToOthersTteokgukModal = ({
   isOpen,
   onClose,
-  memberId,
-  loggedInUserDetails,
+  tteokgukId,
+  myDetails,
   requiredIngredients,
 }: Props) => {
-  const [selectedIngredients, updateSelectedIngredients] = useAtom($updateSelectedIngredients);
+  const createCheerMessageModalOverlay = useOverlay();
+  const [selectedIngredient, updateSelectedIngredient] = useAtom($updateSelectedIngredient);
 
-  const { itemResponses: ingredientsStocks } = loggedInUserDetails;
-
-  const title = loggedInUserDetails.id === memberId ? "떡국 재료 추가하기" : "떡국 재료 보내기";
-  const buttonText = title === "떡국 재료 추가하기" ? "추가하기" : "다음";
+  const { itemResponses: ingredientsStocks } = myDetails;
 
   const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
     if (!requiredIngredients.includes(ingredientKey)) return;
 
-    updateSelectedIngredients(ingredientKey);
+    updateSelectedIngredient(ingredientKey);
+  };
+
+  const handleClickNextButton = () => {
+    updateSelectedIngredient([]);
+    if (!selectedIngredient) return;
+
+    createCheerMessageModalOverlay.open(({ isOpen, close: handleCloseCheerMessageModal }) => (
+      <CreateCheerMessageModal
+        isOpen={isOpen}
+        onClose={() => {
+          handleCloseCheerMessageModal();
+          onClose();
+        }}
+        tteokgukId={tteokgukId}
+      />
+    ));
   };
 
   return (
     isOpen && (
       <Modal className={styles.container}>
         <Modal.Header onClose={onClose} hasCloseButton className={styles.title}>
-          {title}
+          떡국 재료 보내기
         </Modal.Header>
         <Modal.Body className={styles.contentContainer}>
           <div className={styles.bodyTitle}>내가 가지고 있는 재료</div>
@@ -56,14 +73,14 @@ const AddIngredientsModal = ({
                     ingredientKey={ingredient}
                     handleClickIngredient={handleClickIngredient(ingredient)}
                     stockQuantity={stockQuantity}
-                    isSelected={selectedIngredients.includes(ingredient)}
+                    isSelected={selectedIngredient === ingredient}
                     isDisabled={!requiredIngredients.includes(ingredient)}
                   />
                 ),
             )}
           </ol>
-          <Button onClick={onClose} color="primary.100" applyColorTo="background">
-            {buttonText}
+          <Button onClick={handleClickNextButton} color="primary.100" applyColorTo="background">
+            다음
           </Button>
         </Modal.Body>
       </Modal>
@@ -71,7 +88,7 @@ const AddIngredientsModal = ({
   );
 };
 
-export default AddIngredientsModal;
+export default SendIngredientsToOthersTteokgukModal;
 
 const styles = {
   container: css({

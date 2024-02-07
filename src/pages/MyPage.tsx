@@ -8,6 +8,8 @@ import { css } from "@styled-system/css";
 
 import { removeLocalStorage } from "@/utils/localStorage";
 
+import ErrorFallbackPage from "./ErrorFallbackPage";
+
 import { Link } from "@/routes/Link";
 import useRouter from "@/routes/useRouter";
 import { $getMyDetails, $getRandomUserDetails, $deleteLoggedInUser } from "@/store/user";
@@ -18,14 +20,34 @@ import TteokgukList from "@/components/common/TteokgukList";
 import IngredientList from "@/components/Mypage/IngredientList";
 import VisitIcon from "@/assets/svg/visit.svg";
 import ActivityIcon from "@/assets/svg/activity.svg";
+import Loading from "@/components/common/Loading";
 
 const MyPage = () => {
   const router = useRouter();
-  const { data: myDetails } = useAtomValue($getMyDetails);
+  const { data: myDetails, isPending, isError, refetch } = useAtomValue($getMyDetails);
   const { mutate: deleteLoggedInUser } = useAtomValue($deleteLoggedInUser);
-  const { confirm } = useDialog();
-  const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
   const { refetch: refetchRandomUserDetails } = useAtomValue($getRandomUserDetails);
+  const { confirm } = useDialog();
+
+  if (isPending) {
+    return (
+      <Fragment>
+        <Header showBackButton actionIcon="guide">
+          마이페이지
+        </Header>
+        <div className={styles.container}>
+          <Loading />
+        </div>
+      </Fragment>
+    );
+  }
+
+  if (!myDetails || isError) {
+    return <ErrorFallbackPage retry={refetch} />;
+  }
+
+  const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
+
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][primaryIngredient];
 
   const handleClickRandomVisitButton = async () => {
