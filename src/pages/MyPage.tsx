@@ -29,7 +29,7 @@ const MyPage = () => {
   const { mutate: deleteLoggedInUser } = useAtomValue($deleteLoggedInUser);
   const { refetch: refetchRandomUserDetails } = useAtomValue($getRandomUserDetails);
   const { invalidateQueries } = useAtomValue(queryClientAtom);
-  const { confirm } = useDialog();
+  const { confirm, alert } = useDialog();
 
   if (isPending) {
     return (
