@@ -7,6 +7,7 @@ export interface ReceivedIngredient {
   ingredient: IngredientKey;
   message: string;
   access: boolean;
+  supportedTteokgukId: number;
 }
 
 export interface MySupportedTteokguk {
