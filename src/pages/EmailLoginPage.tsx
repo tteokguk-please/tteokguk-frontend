@@ -100,6 +100,10 @@ const styles = {
     marginBottom: "1.6rem",
   }),
   button: css({
+    position: "absolute",
+    bottom: "-10rem",
+    left: 0,
+    zIndex: 1,
     width: "100%",
     height: "5.1rem",
     backgroundColor: "primary.100",
@@ -109,9 +113,9 @@ const styles = {
   }),
   signupLink: css({
     position: "absolute",
+    bottom: "-12rem",
     left: "50%",
     transform: "translateX(-50%)",
-    bottom: "-2.2rem",
     zIndex: 1,
     textAlign: "center",
   }),
