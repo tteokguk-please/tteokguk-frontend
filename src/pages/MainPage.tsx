@@ -133,7 +133,6 @@ const styles = {
     position: "fixed",
     left: "50%",
     transform: "translateX(-50%)",
-    bottom: "3rem",
     width: "calc(100% - 4.8rem)",
     maxWidth: "45.2rem",
   }),
