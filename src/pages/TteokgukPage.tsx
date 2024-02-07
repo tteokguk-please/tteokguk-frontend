@@ -187,6 +187,7 @@ const TteokgukPage = () => {
             </Button>
           </Link>
         )}
+
         {!isMyTteokguk && !completion && (
           <Button
             onClick={handleClickAddIngredientButton}
@@ -197,9 +198,20 @@ const TteokgukPage = () => {
           </Button>
         )}
         {isMyTteokguk && !completion && (
-          <Button color="primary.45" applyColorTo="outline">
+          <Button
+            onClick={handleClickAddIngredientButton}
+            color="primary.45"
+            applyColorTo="outline"
+          >
             떡국 재료 추가하기
           </Button>
+        )}
+        {isMyTteokguk && completion && (
+          <Link to="/tteokguk/create">
+            <Button color="primary.45" applyColorTo="outline">
+              다른 떡국 만들기
+            </Button>
+          </Link>
         )}
 
         {isMyTteokguk && (
