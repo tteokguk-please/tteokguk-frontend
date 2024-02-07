@@ -1,43 +1,62 @@
+import { useOverlay } from "@toss/use-overlay";
+
 import { css } from "@styled-system/css";
 
-import { Link } from "@/routes/Link";
-import DumplingIcon from "@/assets/svg/ingredients-40/dumpling.svg";
+import { ReceivedIngredient } from "@/types/myActivity";
 
-const ReceivedIngredientsList = () => {
+import { Link } from "@/routes/Link";
+import CheerMessageModal from "@/components/MyActivity/CheerMessageModal";
+import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
+
+interface Props {
+  receivedIngredientList: ReceivedIngredient[];
+}
+
+const ReceivedIngredientsList = ({ receivedIngredientList }: Props) => {
+  const cheerMessageModalOverlay = useOverlay();
+
+  const handleClickMoreButton = (message: string) => () => {
+    cheerMessageModalOverlay.open(({ isOpen, close }) => (
+      <CheerMessageModal isOpen={isOpen} onClose={close} message={message} />
+    ));
+  };
+
   return (
     <ul className={styles.list}>
-      {[...Array(9)].map(() => (
-        <li className={styles.listItem}>
-          <div className={styles.ingredientContainer}>
-            <div className={styles.ingredientContent}>
-              <div className={styles.iconContainer}>
-                <DumplingIcon />
+      {receivedIngredientList.map(({ id, senderId, nickname, ingredient, message, access }) => {
+        const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][ingredient];
+        const ANONIMOUS_NICKNAME = `익명의 ${INGREDIENT_NAME_BY_KEY[ingredient]}`;
+
+        return (
+          <li key={id} className={styles.listItem}>
+            <div className={styles.ingredientContainer}>
+              <div className={styles.ingredientContent}>
+                <div className={styles.iconContainer}>
+                  <IngredientIcon aria-label={INGREDIENT_NAME_BY_KEY[ingredient]} />
+                </div>
+                <div>
+                  <div className={styles.title}>@{access ? nickname : ANONIMOUS_NICKNAME}</div>
+                  <div>응원의 {INGREDIENT_NAME_BY_KEY[ingredient]}이 도착했어요!</div>
+                </div>
               </div>
-              <div>
-                <div className={styles.title}>@떡국을 부탁해</div>
-                <div>응원의 떡이 도착했어요!</div>
+              <div className={styles.buttonContainer}>
+                <Link to={`/tteokguks/${id}`} className={styles.button}>
+                  <button>내 떡국 보러가기</button>
+                </Link>
+                <Link to={`/users/${senderId}`} className={styles.button}>
+                  <button>방문하기</button>
+                </Link>
               </div>
             </div>
-            <div className={styles.buttonContainer}>
-              <Link to="/tteokguks/:id" className={styles.button}>
-                <button>내 떡국 보러가기</button>
-              </Link>
-              <Link to="/users/:id" className={styles.button}>
-                <button>방문하기</button>
-              </Link>
+            <div className={styles.message}>
+              <div className={styles.messageContent}>{message}</div>
+              <button onClick={handleClickMoreButton(message)} className={styles.moreButton}>
+                더보기
+              </button>
             </div>
-          </div>
-          <div className={styles.message}>
-            잘먹고 잘지내야 건강하게 잘 살 수 있다. 건강의 비결은 잘먹고 잘지내야 건강하게 잘 살 수
-            있다. 건강의 비결은 잘먹고 잘지내야 건강하게 잘 살 수 있다. 건강의 비결은 잘먹고
-            잘지내야 건강하게 잘 살 수 있다. 건강의 비결은 잘먹고 잘지내야 건강하게 잘 살 수 있다.
-            건강의 비결은 잘먹고 잘지내야 건강하게 잘 살 수 있다. 건강의 비결은 잘먹고 잘지내야
-            건강하게 잘 살 수 있다. 건강의 비결은 잘먹고 잘지내야 건강하게 잘 살 수 있다. 건강의
-            비결은
-            <button className={styles.moreButton}>더보기</button>
-          </div>
-        </li>
-      ))}
+          </li>
+        );
+      })}
     </ul>
   );
 };
@@ -99,7 +118,10 @@ const styles = {
     padding: "1.6rem",
     paddingRight: "8.7rem",
     overflow: "hidden",
-    whiteSpace: "nowrap",
+  }),
+  messageContent: css({
+    lineClamp: 2,
+    overflow: "hidden",
     textOverflow: "ellipsis",
   }),
   moreButton: css({

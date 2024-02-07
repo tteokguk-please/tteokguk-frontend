@@ -130,7 +130,12 @@ const styles = {
     maxWidth: "45.2rem",
   }),
   button: css({
-    width: "100%",
+    position: "fixed",
+    left: "50%",
+    transform: "translateX(-50%)",
+    bottom: "3rem",
+    width: "calc(100% - 4.8rem)",
+    maxWidth: "45.2rem",
   }),
   buttonHidden: css({
     display: "none",

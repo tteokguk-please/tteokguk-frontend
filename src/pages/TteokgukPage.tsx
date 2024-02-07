@@ -14,7 +14,8 @@ import ErrorFallbackPage from "./ErrorFallbackPage";
 
 import { Link } from "@/routes/Link";
 import useRouter from "@/routes/useRouter";
-import AddIngredientsModal from "@/components/shared/AddIngredientsModal";
+import AddIngredientsToMyTteokgukModal from "@/components/shared/AddIngredientsToMyTteokgukModal";
+import SendIngredientsToOthersTteokgukModal from "@/components/shared/SendIngredientToOthersTteokgukModal";
 import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
 import Ingredient from "@/components/common/Ingredient";
@@ -30,9 +31,10 @@ const MAX_INGREDIENTS = 5;
 
 const TteokgukPage = () => {
   const { id } = useParams();
+  const addIngredientsToMyTteokgukOverlay = useOverlay();
+  const sendIngredientsToOthersTteokgukOverlay = useOverlay();
   const router = useRouter();
   const { confirm } = useDialog();
-  const addIngredientModalOverlay = useOverlay();
   const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
   const { mutate: deleteTteokguk } = useAtomValue($deleteTteokguk);
   const { data: tteokguk, isPending, isError, refetch } = useAtomValue($getTteokguk(Number(id)));
@@ -59,6 +61,7 @@ const TteokgukPage = () => {
     wish,
     ingredients,
     usedIngredients,
+    requiredIngredients,
     completion,
     backgroundColor,
     frontGarnish,
@@ -72,14 +75,29 @@ const TteokgukPage = () => {
   const handleClickAddIngredientButton = () => {
     if (!loggedInUserDetails) return;
 
-    addIngredientModalOverlay.open(({ isOpen, close }) => (
-      <AddIngredientsModal
-        isOpen={isOpen}
-        onClose={close}
-        memberId={memberId}
-        loggedInUserDetails={loggedInUserDetails}
-      />
-    ));
+    if (isMyTteokguk) {
+      addIngredientsToMyTteokgukOverlay.open(({ isOpen, close }) => (
+        <AddIngredientsToMyTteokgukModal
+          isOpen={isOpen}
+          onClose={close}
+          tteokgukId={tteokgukId}
+          myDetails={loggedInUserDetails}
+          requiredIngredients={requiredIngredients}
+        />
+      ));
+    }
+
+    if (!isMyTteokguk) {
+      sendIngredientsToOthersTteokgukOverlay.open(({ isOpen, close }) => (
+        <SendIngredientsToOthersTteokgukModal
+          isOpen={isOpen}
+          onClose={close}
+          tteokgukId={tteokgukId}
+          myDetails={loggedInUserDetails}
+          requiredIngredients={requiredIngredients}
+        />
+      ));
+    }
   };
 
   const handleClickDeleteTteokgukButton = async () => {
@@ -140,6 +158,7 @@ const TteokgukPage = () => {
             <div className={styles.ingredientFirstRow}>
               {ingredients.slice(0, 3).map((ingredientKey) => (
                 <Ingredient
+                  key={ingredientKey}
                   IngredientIcon={INGREDIENT_ICON_BY_KEY[40][ingredientKey]}
                   name={INGREDIENT_NAME_BY_KEY[ingredientKey]}
                   isSelected={usedIngredients.includes(ingredientKey)}
@@ -150,6 +169,7 @@ const TteokgukPage = () => {
             <div className={styles.ingredientSecondRow}>
               {ingredients.slice(3, 5).map((ingredientKey) => (
                 <Ingredient
+                  key={ingredientKey}
                   IngredientIcon={INGREDIENT_ICON_BY_KEY[40][ingredientKey]}
                   name={INGREDIENT_NAME_BY_KEY[ingredientKey]}
                   isSelected={usedIngredients.includes(ingredientKey)}

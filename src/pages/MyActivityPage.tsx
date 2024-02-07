@@ -1,17 +1,31 @@
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 import classNames from "classnames";
+import { useAtomValue } from "jotai";
+
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
 import ReceivedIngredientsList from "@/components/common/ReceivedIngredientsList";
 import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
+import { $receivedIngredients } from "@/store/myActivity";
 
 const MyActivityPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const isSelectedTab = (index: number) => index === tabIndex;
+
+  const fetchMoreRef = useRef(null);
+
+  const { receivedIngredientList, handleReceivedIngredeintIntersect } =
+    useAtomValue($receivedIngredients);
+
+  useIntersectionObserver({
+    target: fetchMoreRef,
+    handleIntersect: () => handleReceivedIngredeintIntersect({ enabled: isSelectedTab(0) }),
+  });
 
   return (
     <Fragment>
@@ -27,12 +41,13 @@ const MyActivityPage = () => {
             </Tab>
           </TabList>
           <TabPanel className={styles.tabPanel}>
-            <ReceivedIngredientsList />
+            <ReceivedIngredientsList receivedIngredientList={receivedIngredientList} />
           </TabPanel>
           <TabPanel className={styles.tabPanel}>
             <TteokgukWithCaptionList tteokguks={[]} />
           </TabPanel>
         </Tabs>
+        <div ref={fetchMoreRef} />
       </div>
     </Fragment>
   );

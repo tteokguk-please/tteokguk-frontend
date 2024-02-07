@@ -9,6 +9,7 @@ export interface Tteokguk {
   completion: boolean;
   ingredients: IngredientKey[];
   usedIngredients: IngredientKey[];
+  requiredIngredients: IngredientKey[];
   backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
   frontGarnish: IngredientKey;
   backGarnish: IngredientKey;
