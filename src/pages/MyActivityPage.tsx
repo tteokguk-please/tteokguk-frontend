@@ -27,11 +27,11 @@ const MyActivityPage = () => {
   const {
     receivedIngredientList,
     handleReceivedIngredeintIntersect,
-    isPending: isReceivedTteokgukPending,
+    isPending: isReceivedIngredeintPending,
     isFetchingNextPage: isReceivedTteokgukFetchingNextPage,
   } = useAtomValue($receivedIngredients);
 
-  const isPending = isReceivedTteokgukPending || isMySupportedTteokguksPending;
+  const isPending = isReceivedIngredeintPending || isMySupportedTteokguksPending;
 
   useIntersectionObserver({
     target: fetchMoreRef,
