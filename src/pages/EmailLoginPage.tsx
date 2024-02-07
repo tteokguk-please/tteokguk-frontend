@@ -72,7 +72,7 @@ const EmailLoginPage = () => {
           </Link>
         </div>
         <div className={styles.imageContainer}>
-          <img src={driveDragon} alt="운전하는 용용이" />
+          <img className={styles.image} src={driveDragon} alt="운전하는 용용이" />
         </div>
       </div>
     </Fragment>
@@ -88,12 +88,12 @@ const styles = {
     justifyContent: "space-between",
     height: "calc(100vh - 4.8rem)",
     padding: "0 4rem",
+    position: "relative",
   }),
   content: css({
     display: "flex",
     flexDirection: "column",
-    marginTop: "auto",
-    marginBottom: "auto",
+    marginY: "auto",
   }),
   emailInput: css({
     marginBottom: "1.6rem",
@@ -110,6 +110,16 @@ const styles = {
     textAlign: "center",
   }),
   imageContainer: css({
+    position: "relative",
     marginX: "-4rem",
+    marginTop: "25rem",
+  }),
+  image: css({
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: "100%",
+    height: "auto",
   }),
 };
