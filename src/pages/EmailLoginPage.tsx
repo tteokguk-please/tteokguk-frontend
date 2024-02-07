@@ -91,6 +91,7 @@ const styles = {
     position: "relative",
   }),
   content: css({
+    position: "relative",
     display: "flex",
     flexDirection: "column",
     marginY: "auto",
@@ -99,6 +100,10 @@ const styles = {
     marginBottom: "1.6rem",
   }),
   button: css({
+    position: "absolute",
+    bottom: "-10rem",
+    left: 0,
+    zIndex: 1,
     width: "100%",
     height: "5.1rem",
     backgroundColor: "primary.100",
@@ -107,6 +112,11 @@ const styles = {
     marginBottom: "2.2rem",
   }),
   signupLink: css({
+    position: "absolute",
+    bottom: "-12rem",
+    left: "50%",
+    transform: "translateX(-50%)",
+    zIndex: 1,
     textAlign: "center",
   }),
   imageContainer: css({
@@ -121,5 +131,6 @@ const styles = {
     bottom: 0,
     width: "100%",
     height: "auto",
+    zIndex: "0",
   }),
 };

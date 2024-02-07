@@ -213,6 +213,7 @@ const styles = {
     height: "calc(100% - 5.9rem)",
     paddingX: "2.4rem",
     marginTop: "1.1rem",
+    paddingBottom: "2rem",
   }),
   titleContainer: css({
     display: "flex",
