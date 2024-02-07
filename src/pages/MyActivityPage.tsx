@@ -19,8 +19,9 @@ const MyActivityPage = () => {
   const isSelectedTab = (index: number) => index === tabIndex;
   const {
     mySupportedTteokguks,
-    isPending: isMySupportedTteokguksPending,
     handleSupportedTtoekguksIntersect,
+    isPending: isMySupportedTteokguksPending,
+    isFetchingNextPage: isMySupportedTteokgukFetchingNextPage,
   } = useAtomValue($mySupportedTteokguks);
   const fetchMoreRef = useRef(null);
 
@@ -65,9 +66,10 @@ const MyActivityPage = () => {
             )}
           </TabPanel>
         </Tabs>
-        {isPending && <Loading />}
+        {isPending && <Loading size="full" />}
 
-        {isReceivedTteokgukFetchingNextPage && <Loading />}
+        {isReceivedTteokgukFetchingNextPage && <Loading size="small" />}
+        {isMySupportedTteokgukFetchingNextPage && <Loading size="small" />}
         <div ref={fetchMoreRef} />
       </div>
     </Fragment>

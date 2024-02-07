@@ -62,6 +62,9 @@ export const $mySupportedTteokguks = atom((get) => {
     mySupportedTteokguks: data?.pages.flatMap(
       ({ data: mySupportedTteokguks }) => mySupportedTteokguks,
     ),
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
     handleSupportedTtoekguksIntersect,
     ...rest,
   };
