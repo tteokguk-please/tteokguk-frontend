@@ -225,7 +225,6 @@ const TteokgukPage = () => {
             </Button>
           </Link>
         )}
-
         {!isMyTteokguk && !completion && (
           <Button
             onClick={handleClickAddIngredientButton}
