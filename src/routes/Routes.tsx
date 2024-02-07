@@ -19,6 +19,7 @@ import MainPageFallback from "@/pages/MainPage.fallback";
 import ProtectedRoute from "./ProtectedRoute";
 
 import Layout from "@/components/layout/Layout";
+import MyActivityPageFallback from "@/pages/MyActivityPage.fallback";
 
 export type RoutePath =
   | "/"
@@ -109,7 +110,9 @@ export const Routes = () => {
           path="/my-page/activity"
           element={
             <ProtectedRoute inaccessibleRole="nonMember" redirectPath="/login">
-              <MyActivityPage />
+              <Suspense fallback={<MyActivityPageFallback />}>
+                <MyActivityPage />
+              </Suspense>
             </ProtectedRoute>
           }
         />
