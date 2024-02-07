@@ -34,7 +34,6 @@ const AddIngredientsModal = ({
   const buttonText = title === "떡국 재료 추가하기" ? "추가하기" : "다음";
 
   const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
-    console.log(ingredientKey);
     if (!requiredIngredients.includes(ingredientKey)) return;
 
     updateSelectedIngredients(ingredientKey);
