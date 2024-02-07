@@ -23,11 +23,18 @@ export const $receivedIngredients = atom(async (get) => {
     ...rest
   } = await get($getReceivedIngredients);
 
+  const handleReceivedIngredeintIntersect = ({ enabled }: { enabled: boolean }) => {
+    if (hasNextPage && !isFetchingNextPage && enabled) {
+      fetchNextPage();
+    }
+  };
+
   return {
     receivedIngredientList: pages.flatMap(({ data: receivedIngredients }) => receivedIngredients),
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    handleReceivedIngredeintIntersect,
     ...rest,
   };
 });

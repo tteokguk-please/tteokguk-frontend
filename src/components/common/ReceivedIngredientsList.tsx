@@ -1,34 +1,19 @@
-import { useRef } from "react";
-
-import { useAtomValue } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
-
-import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 import { css } from "@styled-system/css";
 
+import { ReceivedIngredient } from "@/types/myActivity";
+
 import { Link } from "@/routes/Link";
-import { $receivedIngredients } from "@/store/myActivity";
 import CheerMessageModal from "@/components/MyActivity/CheerMessageModal";
 import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 
-const ReceivedIngredientsList = () => {
+interface Props {
+  receivedIngredientList: ReceivedIngredient[];
+}
+
+const ReceivedIngredientsList = ({ receivedIngredientList }: Props) => {
   const cheerMessageModalOverlay = useOverlay();
-  const fetchMoreRef = useRef(null);
-
-  const { receivedIngredientList, isFetchingNextPage, hasNextPage, fetchNextPage } =
-    useAtomValue($receivedIngredients);
-
-  const handleIntersect = () => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  useIntersectionObserver({
-    target: fetchMoreRef,
-    handleIntersect,
-  });
 
   const handleClickMoreButton = (message: string) => () => {
     cheerMessageModalOverlay.open(({ isOpen, close }) => (
@@ -72,7 +57,7 @@ const ReceivedIngredientsList = () => {
           </li>
         );
       })}
-      <div ref={fetchMoreRef} />
+      {/* <div ref={fetchMoreRef} /> */}
     </ul>
   );
 };
