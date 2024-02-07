@@ -91,6 +91,7 @@ const styles = {
     position: "relative",
   }),
   content: css({
+    position: "relative",
     display: "flex",
     flexDirection: "column",
     marginY: "auto",
@@ -107,6 +108,11 @@ const styles = {
     marginBottom: "2.2rem",
   }),
   signupLink: css({
+    position: "absolute",
+    left: "50%",
+    transform: "translateX(-50%)",
+    bottom: "-2.2rem",
+    zIndex: 1,
     textAlign: "center",
   }),
   imageContainer: css({
@@ -121,5 +127,6 @@ const styles = {
     bottom: 0,
     width: "100%",
     height: "auto",
+    zIndex: "0",
   }),
 };
