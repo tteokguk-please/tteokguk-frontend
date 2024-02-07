@@ -25,7 +25,7 @@ const styles = {
       left: 0,
       width: "100%",
       padding: "1rem 0 4rem 0",
-      transform: isVisible ? "translateY(0%)" : "translateY(100%)",
+      transform: isVisible ? "translateY(0%)" : "translateY(170%)",
       transition: "transform 0.4s",
       zIndex: 100,
     }),
