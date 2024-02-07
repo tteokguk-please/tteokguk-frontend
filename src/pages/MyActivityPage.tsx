@@ -33,6 +33,8 @@ const MyActivityPage = () => {
   } = useAtomValue($receivedIngredients);
 
   const isPending = isReceivedIngredeintPending || isMySupportedTteokguksPending;
+  const isFetchingNextPage =
+    isReceivedTteokgukFetchingNextPage || isMySupportedTteokgukFetchingNextPage;
 
   useIntersectionObserver({
     target: fetchMoreRef,
@@ -66,10 +68,9 @@ const MyActivityPage = () => {
             )}
           </TabPanel>
         </Tabs>
-        {isPending && <Loading size="full" />}
+        {isPending && <Loading />}
 
-        {isReceivedTteokgukFetchingNextPage && <Loading size="small" />}
-        {isMySupportedTteokgukFetchingNextPage && <Loading size="small" />}
+        {isFetchingNextPage && <Loading size="small" />}
         <div ref={fetchMoreRef} />
       </div>
     </Fragment>
