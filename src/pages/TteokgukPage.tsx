@@ -187,15 +187,21 @@ const TteokgukPage = () => {
             </Button>
           </Link>
         )}
-        {isLoggedIn && (
+        {!isMyTteokguk && !completion && (
           <Button
             onClick={handleClickAddIngredientButton}
             color="primary.45"
             applyColorTo="outline"
           >
-            {loggedInUserDetails?.id === memberId ? "떡국 재료 추가하기" : "떡국 재료 보내기"}
+            떡국 재료 보내기
           </Button>
         )}
+        {isMyTteokguk && !completion && (
+          <Button color="primary.45" applyColorTo="outline">
+            떡국 재료 추가하기
+          </Button>
+        )}
+
         {isMyTteokguk && (
           <div className={styles.wishDeleteButton}>
             <button onClick={handleClickDeleteTteokgukButton}>소원 삭제하기</button>
