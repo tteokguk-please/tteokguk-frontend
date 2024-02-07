@@ -32,6 +32,7 @@ export interface GetTteokgukResponse {
   completino: boolean;
   ingredients: IngredientKey[];
   usedIngredients: IngredientKey[];
+  requiredIngredients: IngredientKey[];
 }
 
 export interface PostTteokgukRequest {

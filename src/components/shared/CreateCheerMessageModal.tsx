@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
 import { useOverlay } from "@toss/use-overlay";
+import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
@@ -10,16 +11,20 @@ import Button from "@/components/common/Button";
 import Modal from "@/components/common/modal/Modal";
 import CheckIcon from "@/assets/svg/check.svg";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
+import { $postIngredientToOthersTteokguk, $selectedIngredient } from "@/store/ingredient";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  tteokgukId: number;
 }
 
 const MAX_CHARACTER = 100;
 
-const CreateCheerMessageModal = ({ isOpen, onClose }: Props) => {
+const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
   const cheerSuccessOverlay = useOverlay();
+  const { mutate: postIngredient, isPending } = useAtomValue($postIngredientToOthersTteokguk);
+  const selectedIngredient = useAtomValue($selectedIngredient);
   const [message, setMessage] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
 
@@ -36,11 +41,31 @@ const CreateCheerMessageModal = ({ isOpen, onClose }: Props) => {
   const handleSubmitCheerMessage = (event: FormEvent) => {
     event.preventDefault();
 
-    onClose();
+    if (!selectedIngredient || message.length === 0) return;
 
-    cheerSuccessOverlay.open(({ isOpen, close }) => (
-      <CheerSuccessModal isOpen={isOpen} onClose={close} />
-    ));
+    postIngredient(
+      {
+        tteokgukId,
+        supportIngredient: selectedIngredient,
+        message,
+        access: !isAnonymous,
+      },
+      {
+        onSuccess: ({ rewardIngredient, rewardQuantity }) => {
+          cheerSuccessOverlay.open(({ isOpen, close: handleCloseCheerSuccessModal }) => (
+            <CheerSuccessModal
+              isOpen={isOpen}
+              onClose={() => {
+                handleCloseCheerSuccessModal();
+                onClose();
+              }}
+              rewardIngredient={rewardIngredient}
+              rewardQuantity={rewardQuantity}
+            />
+          ));
+        },
+      },
+    );
   };
 
   return (
@@ -70,7 +95,7 @@ const CreateCheerMessageModal = ({ isOpen, onClose }: Props) => {
               onChange={handleChangeCheckbox}
               className="a11y-hidden"
             />
-            <Button color="primary.100" applyColorTo="background">
+            <Button isPending={isPending} color="primary.100" applyColorTo="background">
               보내기
             </Button>
           </form>

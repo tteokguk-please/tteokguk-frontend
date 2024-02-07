@@ -50,8 +50,6 @@ const getToken = async (accessToken: string, refreshToken: string) => {
 
   removeLocalStorage("accessToken");
   removeLocalStorage("refreshToken");
-
-  window.location.href = "/";
 };
 
 const refreshAccessToken = async (token: string) => {
