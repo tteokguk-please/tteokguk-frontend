@@ -23,7 +23,7 @@ const MAX_CHARACTER = 100;
 
 const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
   const cheerSuccessOverlay = useOverlay();
-  const { mutate: postIngredient } = useAtomValue($postIngredientToOthersTteokguk);
+  const { mutate: postIngredient, isPending } = useAtomValue($postIngredientToOthersTteokguk);
   const selectedIngredient = useAtomValue($selectedIngredient);
   const [message, setMessage] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
@@ -95,7 +95,7 @@ const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
               onChange={handleChangeCheckbox}
               className="a11y-hidden"
             />
-            <Button color="primary.100" applyColorTo="background">
+            <Button isPending={isPending} color="primary.100" applyColorTo="background">
               보내기
             </Button>
           </form>
