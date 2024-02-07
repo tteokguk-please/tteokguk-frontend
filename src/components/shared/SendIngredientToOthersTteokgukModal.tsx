@@ -41,7 +41,6 @@ const SendIngredientsToOthersTteokgukModal = ({
   };
 
   const handleClickNextButton = () => {
-    updateSelectedIngredient([]);
     if (!selectedIngredient) return;
 
     createCheerMessageModalOverlay.open(({ isOpen, close: handleCloseCheerMessageModal }) => (
@@ -56,10 +55,15 @@ const SendIngredientsToOthersTteokgukModal = ({
     ));
   };
 
+  const handleClickClose = () => {
+    updateSelectedIngredient(null);
+    onClose();
+  };
+
   return (
     isOpen && (
       <Modal className={styles.container}>
-        <Modal.Header onClose={onClose} hasCloseButton className={styles.title}>
+        <Modal.Header onClose={handleClickClose} hasCloseButton className={styles.title}>
           떡국 재료 보내기
         </Modal.Header>
         <Modal.Body className={styles.contentContainer}>
