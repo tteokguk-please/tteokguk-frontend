@@ -197,6 +197,7 @@ const styles = {
   container: css({
     height: "calc(100% - 5.6rem)",
     paddingX: "2.4rem",
+    paddingBottom: "2rem",
     marginBottom: "0.8rem",
   }),
   userInfo: css({

@@ -52,6 +52,7 @@ const styles = {
     display: "flex",
     flexFlow: "row wrap",
     gap: "1.6rem",
+    paddingBottom: "2rem",
   }),
   cardContainer: css({
     position: "relative",
