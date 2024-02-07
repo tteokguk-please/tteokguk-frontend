@@ -1,4 +1,4 @@
-import { atomWithMutation } from "jotai-tanstack-query";
+import { atomWithMutation, queryClientAtom } from "jotai-tanstack-query";
 
 import {
   checkEmail,
@@ -35,17 +35,23 @@ export const $signup = atomWithMutation(() => ({
   mutationFn: (body: SignupRequest): Promise<SignupResponse> => postSignup(body),
 }));
 
-export const $login = atomWithMutation(() => ({
+export const $login = atomWithMutation((get) => ({
   mutationFn: (body: LoginRequest): Promise<LoginResponse> => postLogin(body),
+  onSuccess: () => {
+    get(queryClientAtom).invalidateQueries({ queryKey: ["newTteokguks"] });
+  },
 }));
 
 export const $postKakaoToken = atomWithMutation(() => ({
   mutationFn: (code: string): Promise<PostKakaoTokenReponse> => postKakaoToken(code),
 }));
 
-export const $postKakaoLogin = atomWithMutation(() => ({
+export const $postKakaoLogin = atomWithMutation((get) => ({
   mutationFn: (body: PostKakaoLoginRequest): Promise<PostKakaoLoginResponse> =>
     postKakaoLogin(body),
+  onSuccess: () => {
+    get(queryClientAtom).invalidateQueries({ queryKey: ["newTteokguks"] });
+  },
 }));
 
 export const $postKakaoUserSignup = atomWithMutation(() => ({

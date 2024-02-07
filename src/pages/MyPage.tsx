@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 
 import { useAtomValue } from "jotai";
+import { queryClientAtom } from "jotai-tanstack-query";
 
 import { useDialog } from "@/hooks/useDialog";
 
@@ -27,6 +28,7 @@ const MyPage = () => {
   const { data: myDetails, isPending, isError, refetch } = useAtomValue($getMyDetails);
   const { mutate: deleteLoggedInUser } = useAtomValue($deleteLoggedInUser);
   const { refetch: refetchRandomUserDetails } = useAtomValue($getRandomUserDetails);
+  const { invalidateQueries } = useAtomValue(queryClientAtom);
   const { confirm } = useDialog();
 
   if (isPending) {
@@ -83,6 +85,7 @@ const MyPage = () => {
       removeLocalStorage("refreshToken");
 
       router.push("/");
+      invalidateQueries({ queryKey: ["newTteokguks"] });
     }
   };
 
