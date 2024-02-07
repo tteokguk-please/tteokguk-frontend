@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { css } from "@styled-system/css";
 
 import { IngredientKey } from "@/types/ingredient";
-import { PostTteokgukResponse } from "@/types/tteokguk.dto";
 
 import useRouter from "@/routes/useRouter";
 import { $postTteokguk } from "@/store/tteokguk";
@@ -73,10 +72,8 @@ const TteokgukCookingPage = () => {
         access: !isPrivate,
       },
       {
-        onSuccess: (createdTteokguk: PostTteokgukResponse) => {
-          const { tteokgukId } = createdTteokguk;
-
-          router.push(`/tteokguks/${tteokgukId}`);
+        onSuccess: () => {
+          router.push("/tteokguks");
         },
       },
     );
