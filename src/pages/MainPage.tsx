@@ -50,26 +50,26 @@ const MainPage = () => {
         </Link>
       </Header>
       <div className={styles.container}>
-        {isPending && <Loading />}
-        {!isPending && (
-          <>
-            <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
-              <TabList className={styles.tabList}>
-                <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
-                  새로운 떡국
-                </Tab>
-                <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(1) })}>
-                  완성된 떡국
-                </Tab>
-              </TabList>
-              <TabPanel className={styles.tabPanel}>
-                <TteokgukWithCaptionList tteokguks={tteokguks} />
-              </TabPanel>
-              <TabPanel className={styles.tabPanel}>
-                <TteokgukWithCaptionList tteokguks={tteokguks} />
-              </TabPanel>
-            </Tabs>
+        <>
+          <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
+            <TabList className={styles.tabList}>
+              <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
+                새로운 떡국
+              </Tab>
+              <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(1) })}>
+                완성된 떡국
+              </Tab>
+            </TabList>
+            <TabPanel className={styles.tabPanel}>
+              <TteokgukWithCaptionList tteokguks={tteokguks} />
+            </TabPanel>
+            <TabPanel className={styles.tabPanel}>
+              <TteokgukWithCaptionList tteokguks={tteokguks} />
+            </TabPanel>
+          </Tabs>
+          {isPending && <Loading />}
 
+          {!isPending && (
             <BottomCTA>
               <Link to="/tteokguk/create" className={styles.link}>
                 <Button color="secondary.100" applyColorTo="background" className={styles.button}>
@@ -77,10 +77,10 @@ const MainPage = () => {
                 </Button>
               </Link>
             </BottomCTA>
-          </>
-        )}
+          )}
+        </>
 
-        {isFetchingNextPage && <Loading />}
+        {isFetchingNextPage && <Loading size="small" />}
         <div ref={fetchMoreRef} />
       </div>
     </>
@@ -138,5 +138,8 @@ const styles = {
   }),
   buttonHidden: css({
     display: "none",
+  }),
+  isFetchingLoading: css({
+    width: "50%",
   }),
 };

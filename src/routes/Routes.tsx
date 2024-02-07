@@ -1,4 +1,5 @@
 import { Routes as ReactRoutes, Route } from "react-router-dom";
+import { Suspense } from "react";
 
 import HomePage from "@/pages/HomePage";
 import LoginPage from "@/pages/LoginPage";
@@ -13,10 +14,12 @@ import MyActivityPage from "@/pages/MyActivityPage";
 import SearchUserPage from "@/pages/SearchUserPage";
 import UserPage from "@/pages/UserPage";
 import NotFoundPage from "@/pages/NotFoundPage";
+import MainPageFallback from "@/pages/MainPage.fallback";
 
 import ProtectedRoute from "./ProtectedRoute";
 
 import Layout from "@/components/layout/Layout";
+import MyActivityPageFallback from "@/pages/MyActivityPage.fallback";
 
 export type RoutePath =
   | "/"
@@ -78,7 +81,14 @@ export const Routes = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/tteokguks" element={<MainPage />} />
+        <Route
+          path="/tteokguks"
+          element={
+            <Suspense fallback={<MainPageFallback />}>
+              <MainPage />
+            </Suspense>
+          }
+        />
         <Route path="/tteokguks/:id" element={<TteokgukPage />} />
         <Route
           path="/tteokguk/create"
@@ -100,7 +110,9 @@ export const Routes = () => {
           path="/my-page/activity"
           element={
             <ProtectedRoute inaccessibleRole="nonMember" redirectPath="/login">
-              <MyActivityPage />
+              <Suspense fallback={<MyActivityPageFallback />}>
+                <MyActivityPage />
+              </Suspense>
             </ProtectedRoute>
           }
         />
