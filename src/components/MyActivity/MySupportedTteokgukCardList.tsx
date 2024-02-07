@@ -9,7 +9,7 @@ interface Props {
   tteokguks: MySupportedTteokguk[];
 }
 
-const MySupportedTteokgukCard = ({ tteokguks }: Props) => {
+const MySupportedTteokgukCardList = ({ tteokguks }: Props) => {
   return (
     <ul className={styles.container}>
       {tteokguks.map(
@@ -45,7 +45,7 @@ const MySupportedTteokgukCard = ({ tteokguks }: Props) => {
   );
 };
 
-export default MySupportedTteokgukCard;
+export default MySupportedTteokgukCardList;
 
 const styles = {
   container: css({

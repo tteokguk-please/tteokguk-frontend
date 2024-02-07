@@ -12,7 +12,7 @@ import Header from "@/components/common/Header";
 import ReceivedIngredientsList from "@/components/common/ReceivedIngredientsList";
 import { $mySupportedTteokguks, $receivedIngredients } from "@/store/myActivity";
 import Loading from "@/components/common/Loading";
-import MySupportedTteokgukCard from "@/components/MyActivity/MySupportedTteokgukCard";
+import MySupportedTteokgukCardList from "@/components/MyActivity/MySupportedTteokgukCardList";
 
 const MyActivityPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -59,7 +59,9 @@ const MyActivityPage = () => {
             )}
           </TabPanel>
           <TabPanel className={styles.mySupportedTab}>
-            {mySupportedTteokguks && <MySupportedTteokgukCard tteokguks={mySupportedTteokguks} />}
+            {mySupportedTteokguks && (
+              <MySupportedTteokgukCardList tteokguks={mySupportedTteokguks} />
+            )}
           </TabPanel>
         </Tabs>
         <div ref={fetchMoreRef} />
