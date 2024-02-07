@@ -57,7 +57,6 @@ const ReceivedIngredientsList = ({ receivedIngredientList }: Props) => {
           </li>
         );
       })}
-      {/* <div ref={fetchMoreRef} /> */}
     </ul>
   );
 };
