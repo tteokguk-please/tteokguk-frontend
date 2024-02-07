@@ -94,6 +94,7 @@ const styles = {
     position: "relative",
     height: "calc(100% - 4.8rem)",
     overflow: "auto",
+    paddingBottom: "2rem",
   }),
   tabList: css({
     display: "flex",
