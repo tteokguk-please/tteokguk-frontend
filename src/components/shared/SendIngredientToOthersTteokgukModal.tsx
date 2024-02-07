@@ -35,8 +35,6 @@ const SendIngredientsToOthersTteokgukModal = ({
   const { itemResponses: ingredientsStocks } = myDetails;
 
   const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
-    if (!requiredIngredients.includes(ingredientKey)) return;
-
     updateSelectedIngredient(ingredientKey);
   };
 
