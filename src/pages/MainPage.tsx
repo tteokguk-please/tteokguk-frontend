@@ -62,9 +62,11 @@ const MainPage = () => {
             </TabList>
             <TabPanel className={styles.tabPanel}>
               <TteokgukWithCaptionList tteokguks={tteokguks} />
+              {isFetchingNextPage && <Loading size="small" />}
             </TabPanel>
             <TabPanel className={styles.tabPanel}>
               <TteokgukWithCaptionList tteokguks={tteokguks} />
+              {isFetchingNextPage && <Loading size="small" />}
             </TabPanel>
           </Tabs>
           {isPending && <Loading />}
@@ -80,7 +82,6 @@ const MainPage = () => {
           )}
         </>
 
-        {isFetchingNextPage && <Loading />}
         <div ref={fetchMoreRef} />
       </div>
     </>
@@ -138,5 +139,8 @@ const styles = {
   }),
   buttonHidden: css({
     display: "none",
+  }),
+  isFetchingLoading: css({
+    width: "50%",
   }),
 };
