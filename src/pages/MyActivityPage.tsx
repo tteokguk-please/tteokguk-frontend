@@ -50,10 +50,10 @@ const MyActivityPage = () => {
       <div className={styles.container}>
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList className={styles.tabList}>
-            <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
+            <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(0) })}>
               받은 떡국 재료
             </Tab>
-            <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(1) })}>
+            <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(1) })}>
               내가 응원한 떡국
             </Tab>
           </TabList>
@@ -93,6 +93,10 @@ const styles = {
     padding: "0.8rem 0 0.9rem",
     marginBottom: "2rem",
     cursor: "pointer",
+  }),
+  tab: css({
+    width: "50%",
+    textAlign: "center",
   }),
   selectedTab: css({
     position: "relative",

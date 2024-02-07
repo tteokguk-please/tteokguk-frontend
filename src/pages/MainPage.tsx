@@ -53,10 +53,10 @@ const MainPage = () => {
         <>
           <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
             <TabList className={styles.tabList}>
-              <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(0) })}>
+              <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(0) })}>
                 새로운 떡국
               </Tab>
-              <Tab className={classNames({ [styles.selectedTab]: isSelectedTab(1) })}>
+              <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(1) })}>
                 완성된 떡국
               </Tab>
             </TabList>
@@ -92,13 +92,14 @@ export default MainPage;
 const styles = {
   container: css({
     position: "relative",
+    width: "100%",
     height: "calc(100% - 4.8rem)",
     overflow: "auto",
     paddingBottom: "2rem",
   }),
   tabList: css({
     display: "flex",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     fontSize: "1.6rem",
     fontWeight: 700,
     borderBottomWidth: "0.1rem",
@@ -106,6 +107,10 @@ const styles = {
     padding: "0.8rem 0 0.9rem",
     marginBottom: "2rem",
     cursor: "pointer",
+  }),
+  tab: css({
+    width: "50%",
+    textAlign: "center",
   }),
   tabPanel: css({
     display: "flex",
