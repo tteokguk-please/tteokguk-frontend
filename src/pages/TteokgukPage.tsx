@@ -226,7 +226,7 @@ const TteokgukPage = () => {
           </Link>
         )}
 
-        {!isMyTteokguk && !completion && (
+        {isLoggedIn && !isMyTteokguk && !completion && (
           <Button
             onClick={handleClickAddIngredientButton}
             color="primary.45"
