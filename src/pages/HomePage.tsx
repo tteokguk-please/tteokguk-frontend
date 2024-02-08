@@ -53,7 +53,7 @@ const styles = {
     padding: "6.8rem 4rem 11.2rem",
     backgroundPosition: "center",
     backgroundRepeat: "repeat-Y",
-    backgroundImage: `url(/assets/images/home-pattern.png)`,
+    backgroundImage: `url(/assets/home-pattern.png)`,
     overflow: "hidden",
   }),
   logo: css({
