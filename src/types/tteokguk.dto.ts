@@ -1,5 +1,5 @@
 import { IngredientKey } from "./ingredient";
-import { Tteokguk } from "./tteokguk";
+import { Tteokguk, TteokgukBackgroudColor } from "./tteokguk";
 
 export interface GetNewTteokguksReponse {
   data: Tteokguk[];
@@ -18,21 +18,10 @@ export interface GetTteokgukResponse {
   completion: boolean;
   ingredients: IngredientKey[];
   usedIngredients: IngredientKey[];
-  backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
+  requiredIngredients: IngredientKey[];
+  backgroundColor: TteokgukBackgroudColor;
   frontGarnish: IngredientKey;
   backGarnish: IngredientKey;
-}
-
-export interface GetTteokgukResponse {
-  tteokgukId: number;
-  memberId: number;
-  nickname: string;
-  wish: string;
-  access: boolean;
-  completino: boolean;
-  ingredients: IngredientKey[];
-  usedIngredients: IngredientKey[];
-  requiredIngredients: IngredientKey[];
 }
 
 export interface PostTteokgukRequest {
@@ -41,11 +30,4 @@ export interface PostTteokgukRequest {
   access: boolean;
 }
 
-export interface PostTteokgukResponse {
-  tteokgukId: number;
-  memberId: number;
-  wish: string;
-  access: boolean;
-  completion: boolean;
-  ingredients: IngredientKey[];
-}
+export type PostTteokgukResponse = GetTteokgukResponse;

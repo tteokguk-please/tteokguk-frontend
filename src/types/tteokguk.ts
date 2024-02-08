@@ -10,7 +10,7 @@ export interface Tteokguk {
   ingredients: IngredientKey[];
   usedIngredients: IngredientKey[];
   requiredIngredients: IngredientKey[];
-  backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
+  backgroundColor: TteokgukBackgroudColor;
   frontGarnish: IngredientKey;
   backGarnish: IngredientKey;
   hasIngredient: boolean;
@@ -22,7 +22,9 @@ export interface UserTteokguk {
   completion: boolean;
   access: boolean;
   tteokgukIngredients: IngredientKey[];
-  backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
+  backgroundColor: TteokgukBackgroudColor;
   frontGarnish: IngredientKey;
   backGarnish: IngredientKey;
 }
+
+export type TteokgukBackgroudColor = "BLUE" | "GREEN" | "PINK" | "YELLOW";

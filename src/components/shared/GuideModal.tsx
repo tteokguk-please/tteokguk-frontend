@@ -79,11 +79,11 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    width: "100%",
   }),
   content: css({
     fontSize: "1.4rem",
     textAlign: "center",
-    paddingX: "3rem",
     whiteSpace: "pre-line",
   }),
   imageContainer: css({
