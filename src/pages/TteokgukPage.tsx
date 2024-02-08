@@ -147,7 +147,7 @@ const TteokgukPage = () => {
             isCompletion
             tteokgukId={tteokgukId}
             nickname={nickname}
-            backgroundColor={backgroundColor}
+            tteokgukBackgroundColor={backgroundColor}
             frontGarnish={frontGarnish}
             backGarnish={backGarnish}
           />

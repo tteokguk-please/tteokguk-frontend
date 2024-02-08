@@ -1,6 +1,6 @@
 import { css } from "@styled-system/css";
 
-import { BackgroudColor } from "@/types/tteokguk";
+import { TteokgukBackgroudColor } from "@/types/tteokguk";
 import { IngredientKey } from "@/types/ingredient";
 
 import Button from "../common/Button";
@@ -12,10 +12,10 @@ import useRouter from "@/routes/useRouter";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  tteokgukId: number;
+  tteokgukId?: number;
   isCompletion?: boolean;
   nickname?: string;
-  backgroundColor: BackgroudColor;
+  tteokgukBackgroundColor: TteokgukBackgroudColor;
   frontGarnish: IngredientKey;
   backGarnish: IngredientKey;
 }
@@ -26,7 +26,7 @@ const SuccessfulTteokgukCreationModal = ({
   tteokgukId,
   isCompletion = false,
   nickname,
-  backgroundColor,
+  tteokgukBackgroundColor,
   frontGarnish,
   backGarnish,
 }: Props) => {
@@ -54,7 +54,7 @@ const SuccessfulTteokgukCreationModal = ({
             <div className={styles.imageContainer}>
               <TteokgukImage
                 completion
-                backgroundColor={backgroundColor}
+                backgroundColor={tteokgukBackgroundColor}
                 frontGarnish={frontGarnish}
                 backGarnish={backGarnish}
               />

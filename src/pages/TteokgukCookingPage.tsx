@@ -79,7 +79,7 @@ const TteokgukCookingPage = () => {
               isOpen={isOpen}
               onClose={close}
               tteokgukId={tteokgukId}
-              backgroundColor={backgroundColor}
+              tteokgukBackgroundColor={backgroundColor}
               frontGarnish={frontGarnish}
               backGarnish={backGarnish}
             />
