@@ -24,9 +24,7 @@ const Ingredient = ({
   isDisabled,
   handleClickIngredient,
 }: Props) => {
-  const isInfiniteQuantity = stockQuantity >= MAX_INGREDIENT_QUANTITY;
-  const remainQuantity = isSelected ? stockQuantity - 1 : stockQuantity;
-  const quantity = isInfiniteQuantity ? INFINITY : remainQuantity;
+  const quantity = stockQuantity >= MAX_INGREDIENT_QUANTITY ? INFINITY : stockQuantity;
 
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[isDisabled ? "disabled" : 40][ingredientKey];
 
