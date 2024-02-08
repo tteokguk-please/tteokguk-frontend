@@ -5,13 +5,14 @@ import classNames from "classnames";
 import { css } from "@styled-system/css";
 
 import { IngredientKey } from "@/types/ingredient";
+import { BackgroudColor } from "@/types/tteokguk";
 
 import { BACKGROUND_COLOR, GARNISHES } from "@/constants/garnish";
 import { INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 
 interface Props {
   completion: boolean;
-  backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
+  backgroundColor: BackgroudColor;
   frontGarnish: IngredientKey;
   backGarnish: IngredientKey;
 }

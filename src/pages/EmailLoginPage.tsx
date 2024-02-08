@@ -94,7 +94,7 @@ const styles = {
     position: "relative",
     display: "flex",
     flexDirection: "column",
-    marginY: "auto",
+    marginTop: "0.8rem",
   }),
   emailInput: css({
     marginBottom: "1.6rem",

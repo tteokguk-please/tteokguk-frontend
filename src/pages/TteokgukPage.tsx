@@ -21,9 +21,9 @@ import Button from "@/components/common/Button";
 import Ingredient from "@/components/common/Ingredient";
 import TteokgukImage from "@/components/common/TteokgukImage";
 import { $getLoggedInUserDetails } from "@/store/user";
-import { $deleteTteokguk, $getTteokguk } from "@/store/tteokguk";
+import { $deleteTteokguk, $getRandomTteokguk, $getTteokguk } from "@/store/tteokguk";
 import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
-import ActivityIcon from "@/assets/svg/activity.svg";
+import SmallActivityIcon from "@/assets/svg/small-activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
 import Loading from "@/components/common/Loading";
 
@@ -38,6 +38,7 @@ const TteokgukPage = () => {
   const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
   const { mutate: deleteTteokguk } = useAtomValue($deleteTteokguk);
   const { data: tteokguk, isPending, isError, refetch } = useAtomValue($getTteokguk(Number(id)));
+  const { refetch: refetchRandomTteokguk } = useAtomValue($getRandomTteokguk);
 
   if (isPending) {
     return (
@@ -120,6 +121,14 @@ const TteokgukPage = () => {
     });
   };
 
+  const handleClickRandomVisitButton = async () => {
+    const { data: randomTteokguk } = await refetchRandomTteokguk();
+
+    if (randomTteokguk) {
+      router.push(`/tteokguks/${randomTteokguk.tteokgukId}`);
+    }
+  };
+
   return (
     <Fragment>
       <Header showBackButton actionIcon="profile">
@@ -129,10 +138,12 @@ const TteokgukPage = () => {
         <article>
           <div className={styles.titleContainer}>
             <div className={styles.title}>
-              <ActivityIcon />
+              <SmallActivityIcon />
               {nickname}님의 떡국
             </div>
-            <button className={styles.randomVisitButton}>랜덤 방문</button>
+            <button onClick={handleClickRandomVisitButton} className={styles.randomVisitButton}>
+              랜덤 방문
+            </button>
           </div>
           <div className={styles.imageContainer}>
             <TteokgukImage

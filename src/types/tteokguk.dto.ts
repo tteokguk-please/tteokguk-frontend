@@ -18,21 +18,10 @@ export interface GetTteokgukResponse {
   completion: boolean;
   ingredients: IngredientKey[];
   usedIngredients: IngredientKey[];
+  requiredIngredients: IngredientKey[];
   backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
   frontGarnish: IngredientKey;
   backGarnish: IngredientKey;
-}
-
-export interface GetTteokgukResponse {
-  tteokgukId: number;
-  memberId: number;
-  nickname: string;
-  wish: string;
-  access: boolean;
-  completino: boolean;
-  ingredients: IngredientKey[];
-  usedIngredients: IngredientKey[];
-  requiredIngredients: IngredientKey[];
 }
 
 export interface PostTteokgukRequest {
@@ -41,11 +30,4 @@ export interface PostTteokgukRequest {
   access: boolean;
 }
 
-export interface PostTteokgukResponse {
-  tteokgukId: number;
-  memberId: number;
-  wish: string;
-  access: boolean;
-  completion: boolean;
-  ingredients: IngredientKey[];
-}
+export type PostTteokgukResponse = GetTteokgukResponse;
