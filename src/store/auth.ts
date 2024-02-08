@@ -23,6 +23,8 @@ import {
   SignupResponse,
 } from "@/types/auth";
 
+import { $getLoggedInUserDetails } from "./user";
+
 export const $checkEmail = atomWithMutation(() => ({
   mutationFn: (email: string): Promise<CheckEmailNicknameResponse> => checkEmail(email),
 }));
@@ -38,7 +40,7 @@ export const $signup = atomWithMutation(() => ({
 export const $login = atomWithMutation((get) => ({
   mutationFn: (body: LoginRequest): Promise<LoginResponse> => postLogin(body),
   onSuccess: () => {
-    get(queryClientAtom).invalidateQueries({ queryKey: ["newTteokguks"] });
+    get($getLoggedInUserDetails).refetch();
   },
 }));
 
