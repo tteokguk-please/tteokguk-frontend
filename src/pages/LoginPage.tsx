@@ -136,6 +136,7 @@ const styles = {
   }),
   emailLoginButton: css({
     marginBottom: "1rem",
+    paddingLeft: "2.4rem",
   }),
   kakaoLoginButton: css({
     display: "flex",
