@@ -28,4 +28,4 @@ export const deleteTteokguk = (id: number) => http.delete(`api/v1/tteokguk/${id}
 export const getRandomTteokguk = () => http.get<GetTteokgukResponse>("api/v1/tteokguk/random");
 
 export const postCompleteTteokguk = (id: number) =>
-  http.post<GetTteokgukResponse>(`api/v1/completion/${id}`, { tteokgukId: id });
+  http.post<GetTteokgukResponse>(`api/v1/tteokguk/completion/${id}`, { tteokgukId: id });
