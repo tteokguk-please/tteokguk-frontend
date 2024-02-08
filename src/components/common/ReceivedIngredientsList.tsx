@@ -27,6 +27,7 @@ const ReceivedIngredientsList = ({ receivedIngredientList }: Props) => {
         ({ id, senderId, nickname, ingredient, message, access, supportedTteokgukId }) => {
           const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][ingredient];
           const ANONIMOUS_NICKNAME = `익명의 ${INGREDIENT_NAME_BY_KEY[ingredient]}`;
+          const visitableTtoekguk = nickname !== "탈퇴한 사용자" && access;
 
           return (
             <li key={id} className={styles.listItem}>
@@ -44,9 +45,11 @@ const ReceivedIngredientsList = ({ receivedIngredientList }: Props) => {
                   <Link to={`/tteokguks/${supportedTteokgukId}`} className={styles.button}>
                     <button>내 떡국 보러가기</button>
                   </Link>
-                  <Link to={`/users/${senderId}`} className={styles.button}>
-                    <button>방문하기</button>
-                  </Link>
+                  {visitableTtoekguk && (
+                    <Link to={`/users/${senderId}`} className={styles.button}>
+                      <button>방문하기</button>
+                    </Link>
+                  )}
                 </div>
               </div>
               <div className={styles.message}>
