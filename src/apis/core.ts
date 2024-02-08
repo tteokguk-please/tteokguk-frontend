@@ -40,6 +40,10 @@ const setAuthHeader = async (request: Request) => {
 };
 
 const getToken = async (accessToken: string, refreshToken: string) => {
+  if (!accessToken) {
+    return;
+  }
+
   if (!isExpiredToken(accessToken)) {
     return accessToken;
   }
@@ -50,6 +54,8 @@ const getToken = async (accessToken: string, refreshToken: string) => {
 
   removeLocalStorage("accessToken");
   removeLocalStorage("refreshToken");
+
+  window.location.href = "/";
 };
 
 const refreshAccessToken = async (token: string) => {
