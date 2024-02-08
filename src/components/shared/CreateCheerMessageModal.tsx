@@ -52,6 +52,8 @@ const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
       },
       {
         onSuccess: ({ rewardIngredient, rewardQuantity }) => {
+          updateSelectedIngredient(null);
+
           cheerSuccessOverlay.open(({ isOpen, close: handleCloseCheerSuccessModal }) => (
             <CheerSuccessModal
               isOpen={isOpen}
