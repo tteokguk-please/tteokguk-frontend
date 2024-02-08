@@ -50,17 +50,22 @@ const AddIngredientsToMyTteokgukModal = ({
       },
       {
         onSuccess: () => {
-          onClose();
           updateSelectedIngredients([]);
+          onClose();
         },
       },
     );
   };
 
+  const handleClickClose = () => {
+    onClose();
+    updateSelectedIngredients([]);
+  };
+
   return (
     isOpen && (
       <Modal className={styles.container}>
-        <Modal.Header onClose={onClose} hasCloseButton className={styles.title}>
+        <Modal.Header onClose={handleClickClose} hasCloseButton className={styles.title}>
           떡국 재료 추가하기
         </Modal.Header>
         <Modal.Body className={styles.contentContainer}>

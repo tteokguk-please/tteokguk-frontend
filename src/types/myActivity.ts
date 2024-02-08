@@ -1,4 +1,5 @@
 import { IngredientKey } from "./ingredient";
+import { TteokgukBackgroudColor } from "./tteokguk";
 
 export interface ReceivedIngredient {
   id: number;
@@ -7,6 +8,7 @@ export interface ReceivedIngredient {
   ingredient: IngredientKey;
   message: string;
   access: boolean;
+  supportedTteokgukId: number;
 }
 
 export interface MySupportedTteokguk {
@@ -16,5 +18,5 @@ export interface MySupportedTteokguk {
   completion: boolean;
   frontGarnish: IngredientKey;
   backGarnish: IngredientKey;
-  backgroundColor: "BLUE" | "GREEN" | "PINK" | "YELLOW";
+  backgroundColor: TteokgukBackgroudColor;
 }

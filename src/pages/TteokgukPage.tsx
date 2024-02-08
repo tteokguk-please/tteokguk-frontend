@@ -21,11 +21,17 @@ import Button from "@/components/common/Button";
 import Ingredient from "@/components/common/Ingredient";
 import TteokgukImage from "@/components/common/TteokgukImage";
 import { $getLoggedInUserDetails } from "@/store/user";
-import { $deleteTteokguk, $getTteokguk } from "@/store/tteokguk";
+import {
+  $deleteTteokguk,
+  $getRandomTteokguk,
+  $getTteokguk,
+  $postCompleteTteokguk,
+} from "@/store/tteokguk";
 import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
-import ActivityIcon from "@/assets/svg/activity.svg";
+import SmallActivityIcon from "@/assets/svg/small-activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
 import Loading from "@/components/common/Loading";
+import SuccessfulTteokgukCreationModal from "@/components/shared/SuccessfulTteokgukCreationModal";
 
 const MAX_INGREDIENTS = 5;
 
@@ -33,11 +39,14 @@ const TteokgukPage = () => {
   const { id } = useParams();
   const addIngredientsToMyTteokgukOverlay = useOverlay();
   const sendIngredientsToOthersTteokgukOverlay = useOverlay();
+  const successfulTteokgukCreationOverlay = useOverlay();
   const router = useRouter();
   const { confirm } = useDialog();
   const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
   const { mutate: deleteTteokguk } = useAtomValue($deleteTteokguk);
   const { data: tteokguk, isPending, isError, refetch } = useAtomValue($getTteokguk(Number(id)));
+  const { refetch: refetchRandomTteokguk } = useAtomValue($getRandomTteokguk);
+  const { mutate: postCompleteTteokguk } = useAtomValue($postCompleteTteokguk);
 
   if (isPending) {
     return (
@@ -120,6 +129,33 @@ const TteokgukPage = () => {
     });
   };
 
+  const handleClickRandomVisitButton = async () => {
+    const { data: randomTteokguk } = await refetchRandomTteokguk();
+
+    if (randomTteokguk) {
+      router.push(`/tteokguks/${randomTteokguk.tteokgukId}`);
+    }
+  };
+
+  const handleClickCompleteButton = () => {
+    postCompleteTteokguk(tteokgukId, {
+      onSuccess: () => {
+        successfulTteokgukCreationOverlay.open(({ isOpen, close }) => (
+          <SuccessfulTteokgukCreationModal
+            isOpen={isOpen}
+            onClose={close}
+            isCompletion
+            tteokgukId={tteokgukId}
+            nickname={nickname}
+            tteokgukBackgroundColor={backgroundColor}
+            frontGarnish={frontGarnish}
+            backGarnish={backGarnish}
+          />
+        ));
+      },
+    });
+  };
+
   return (
     <Fragment>
       <Header showBackButton actionIcon="profile">
@@ -129,10 +165,12 @@ const TteokgukPage = () => {
         <article>
           <div className={styles.titleContainer}>
             <div className={styles.title}>
-              <ActivityIcon />
+              <SmallActivityIcon />
               {nickname}님의 떡국
             </div>
-            <button className={styles.randomVisitButton}>랜덤 방문</button>
+            <button onClick={handleClickRandomVisitButton} className={styles.randomVisitButton}>
+              랜덤 방문
+            </button>
           </div>
           <div className={styles.imageContainer}>
             <TteokgukImage
@@ -187,15 +225,38 @@ const TteokgukPage = () => {
             </Button>
           </Link>
         )}
-        {isLoggedIn && (
+
+        {!isMyTteokguk && !completion && (
           <Button
             onClick={handleClickAddIngredientButton}
             color="primary.45"
             applyColorTo="outline"
           >
-            {loggedInUserDetails?.id === memberId ? "떡국 재료 추가하기" : "떡국 재료 보내기"}
+            떡국 재료 보내기
           </Button>
         )}
+        {isMyTteokguk && requiredIngredients.length !== 0 && !completion && (
+          <Button
+            onClick={handleClickAddIngredientButton}
+            color="primary.45"
+            applyColorTo="outline"
+          >
+            떡국 재료 추가하기
+          </Button>
+        )}
+        {isMyTteokguk && requiredIngredients.length === 0 && completion && (
+          <Link to="/tteokguk/create">
+            <Button color="primary.45" applyColorTo="outline">
+              다른 떡국 만들기
+            </Button>
+          </Link>
+        )}
+        {isMyTteokguk && requiredIngredients.length === 0 && !completion && (
+          <Button onClick={handleClickCompleteButton} color="primary.45" applyColorTo="outline">
+            완성하기
+          </Button>
+        )}
+
         {isMyTteokguk && (
           <div className={styles.wishDeleteButton}>
             <button onClick={handleClickDeleteTteokgukButton}>소원 삭제하기</button>

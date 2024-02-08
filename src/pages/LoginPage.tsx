@@ -147,6 +147,7 @@ const styles = {
   }),
   kakao: css({
     flexGrow: 1,
+    marginLeft: "-2.4rem",
   }),
   signupLink: css({
     display: "block",

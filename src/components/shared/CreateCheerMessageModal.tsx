@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
 import { useOverlay } from "@toss/use-overlay";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
@@ -11,7 +11,7 @@ import Button from "@/components/common/Button";
 import Modal from "@/components/common/modal/Modal";
 import CheckIcon from "@/assets/svg/check.svg";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
-import { $postIngredientToOthersTteokguk, $selectedIngredient } from "@/store/ingredient";
+import { $postIngredientToOthersTteokguk, $updateSelectedIngredient } from "@/store/ingredient";
 
 interface Props {
   isOpen: boolean;
@@ -24,7 +24,7 @@ const MAX_CHARACTER = 100;
 const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
   const cheerSuccessOverlay = useOverlay();
   const { mutate: postIngredient, isPending } = useAtomValue($postIngredientToOthersTteokguk);
-  const selectedIngredient = useAtomValue($selectedIngredient);
+  const [selectedIngredient, updateSelectedIngredient] = useAtom($updateSelectedIngredient);
   const [message, setMessage] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
 
@@ -52,6 +52,8 @@ const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
       },
       {
         onSuccess: ({ rewardIngredient, rewardQuantity }) => {
+          updateSelectedIngredient(null);
+
           cheerSuccessOverlay.open(({ isOpen, close: handleCloseCheerSuccessModal }) => (
             <CheerSuccessModal
               isOpen={isOpen}
@@ -68,10 +70,15 @@ const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
     );
   };
 
+  const handleClickClose = () => {
+    updateSelectedIngredient(null);
+    onClose();
+  };
+
   return (
     isOpen && (
       <Modal className={styles.container}>
-        <Modal.Header hasCloseButton onClose={onClose}>
+        <Modal.Header hasCloseButton onClose={handleClickClose}>
           응원 메시지 남기기
         </Modal.Header>
         <Modal.Body className={styles.bodyContainer}>

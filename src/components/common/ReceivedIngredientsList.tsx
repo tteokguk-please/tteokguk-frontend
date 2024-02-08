@@ -23,40 +23,42 @@ const ReceivedIngredientsList = ({ receivedIngredientList }: Props) => {
 
   return (
     <ul className={styles.list}>
-      {receivedIngredientList.map(({ id, senderId, nickname, ingredient, message, access }) => {
-        const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][ingredient];
-        const ANONIMOUS_NICKNAME = `익명의 ${INGREDIENT_NAME_BY_KEY[ingredient]}`;
+      {receivedIngredientList.map(
+        ({ id, senderId, nickname, ingredient, message, access, supportedTteokgukId }) => {
+          const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][ingredient];
+          const ANONIMOUS_NICKNAME = `익명의 ${INGREDIENT_NAME_BY_KEY[ingredient]}`;
 
-        return (
-          <li key={id} className={styles.listItem}>
-            <div className={styles.ingredientContainer}>
-              <div className={styles.ingredientContent}>
-                <div className={styles.iconContainer}>
-                  <IngredientIcon aria-label={INGREDIENT_NAME_BY_KEY[ingredient]} />
+          return (
+            <li key={id} className={styles.listItem}>
+              <div className={styles.ingredientContainer}>
+                <div className={styles.ingredientContent}>
+                  <div className={styles.iconContainer}>
+                    <IngredientIcon aria-label={INGREDIENT_NAME_BY_KEY[ingredient]} />
+                  </div>
+                  <div>
+                    <div className={styles.title}>@{access ? nickname : ANONIMOUS_NICKNAME}</div>
+                    <div>응원의 {INGREDIENT_NAME_BY_KEY[ingredient]}(이/가) 도착했어요!</div>
+                  </div>
                 </div>
-                <div>
-                  <div className={styles.title}>@{access ? nickname : ANONIMOUS_NICKNAME}</div>
-                  <div>응원의 {INGREDIENT_NAME_BY_KEY[ingredient]}(이/가) 도착했어요!</div>
+                <div className={styles.buttonContainer}>
+                  <Link to={`/tteokguks/${supportedTteokgukId}`} className={styles.button}>
+                    <button>내 떡국 보러가기</button>
+                  </Link>
+                  <Link to={`/users/${senderId}`} className={styles.button}>
+                    <button>방문하기</button>
+                  </Link>
                 </div>
               </div>
-              <div className={styles.buttonContainer}>
-                <Link to={`/tteokguks/${id}`} className={styles.button}>
-                  <button>내 떡국 보러가기</button>
-                </Link>
-                <Link to={`/users/${senderId}`} className={styles.button}>
-                  <button>방문하기</button>
-                </Link>
+              <div className={styles.message}>
+                <div className={styles.messageContent}>{message}</div>
+                <button onClick={handleClickMoreButton(message)} className={styles.moreButton}>
+                  더보기
+                </button>
               </div>
-            </div>
-            <div className={styles.message}>
-              <div className={styles.messageContent}>{message}</div>
-              <button onClick={handleClickMoreButton(message)} className={styles.moreButton}>
-                더보기
-              </button>
-            </div>
-          </li>
-        );
-      })}
+            </li>
+          );
+        },
+      )}
     </ul>
   );
 };

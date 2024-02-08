@@ -20,7 +20,7 @@ import IconButton from "@/components/common/IconButton";
 import TteokgukList from "@/components/common/TteokgukList";
 import IngredientList from "@/components/Mypage/IngredientList";
 import VisitIcon from "@/assets/svg/visit.svg";
-import ActivityIcon from "@/assets/svg/activity.svg";
+import BigActivityIcon from "@/assets/svg/big-activity.svg";
 import Loading from "@/components/common/Loading";
 
 const MyPage = () => {
@@ -29,7 +29,7 @@ const MyPage = () => {
   const { mutate: deleteLoggedInUser } = useAtomValue($deleteLoggedInUser);
   const { refetch: refetchRandomUserDetails } = useAtomValue($getRandomUserDetails);
   const { invalidateQueries } = useAtomValue(queryClientAtom);
-  const { confirm } = useDialog();
+  const { confirm, alert } = useDialog();
 
   if (isPending) {
     return (
@@ -164,7 +164,7 @@ const MyPage = () => {
           <Link to="/my-page/activity" className={styles.full}>
             <IconButton color="primary.45" applyColorTo="outline">
               <IconButton.Icon>
-                <ActivityIcon />
+                <BigActivityIcon />
               </IconButton.Icon>
               활동 내역
             </IconButton>

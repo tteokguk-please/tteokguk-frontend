@@ -88,6 +88,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    width: "100%",
   }),
   content: css({
     fontSize: "1.4rem",
@@ -106,8 +107,8 @@ const styles = {
     marginBottom: "2rem",
   }),
   icon: css({
-    width: "100%", // 컨테이너의 너비에 맞춤
-    height: "100%", // 컨테이너의 높이에 맞춤
-    objectFit: "contain", // 아이콘의 원래 비율을 유지
+    width: "100%",
+    height: "100%",
+    objectFit: "contain",
   }),
 };
