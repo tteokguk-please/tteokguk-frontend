@@ -12,7 +12,7 @@ import useRouter from "@/routes/useRouter";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  tteokgukId: number;
+  tteokgukId?: number;
   isCompletion?: boolean;
   nickname?: string;
   tteokgukBackgroundColor: TteokgukBackgroudColor;
