@@ -43,12 +43,7 @@ export const $selectedIngredient = atom<IngredientKey | null>(null);
 export const $updateSelectedIngredient = atom(
   (get) => get($selectedIngredient),
   (get, set, selectedIngredient: IngredientKey | null) => {
-    if (selectedIngredient === null) {
-      set($selectedIngredient, null);
-      return;
-    }
-
-    if (get($selectedIngredient) === selectedIngredient) {
+    if (selectedIngredient === null || get($selectedIngredient) === selectedIngredient) {
       set($selectedIngredient, null);
       return;
     }
