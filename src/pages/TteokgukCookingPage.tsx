@@ -2,12 +2,12 @@ import { ChangeEvent, FormEvent, useState } from "react";
 
 import { useAtomValue } from "jotai";
 import { toast } from "sonner";
+import { useOverlay } from "@toss/use-overlay";
 
 import { css } from "@styled-system/css";
 
 import { IngredientKey } from "@/types/ingredient";
 
-import useRouter from "@/routes/useRouter";
 import { $postTteokguk } from "@/store/tteokguk";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
@@ -22,13 +22,14 @@ import {
   INGREDIENT_KEYS,
   INGREDIENT_NAME_BY_KEY,
 } from "@/constants/ingredient";
+import SuccessfulTteokgukCreationModal from "@/components/shared/SuccessfulTteokgukCreationModal";
 
 const MAX_WISH_TEXT_LENGTH = 100;
 const MAX_INGREDIENTS = 5;
 
 const TteokgukCookingPage = () => {
-  const router = useRouter();
   const { mutate: createTteokguk, isPending } = useAtomValue($postTteokguk);
+  const successfulCreationTteokgukOverlay = useOverlay();
 
   const [wishText, setWishText] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState<IngredientKey[]>([]);
@@ -72,8 +73,17 @@ const TteokgukCookingPage = () => {
         access: !isPrivate,
       },
       {
-        onSuccess: () => {
-          router.push("/tteokguks");
+        onSuccess: ({ tteokgukId, backgroundColor, frontGarnish, backGarnish }) => {
+          successfulCreationTteokgukOverlay.open(({ isOpen, close }) => (
+            <SuccessfulTteokgukCreationModal
+              isOpen={isOpen}
+              onClose={close}
+              tteokgukId={tteokgukId}
+              backgroundColor={backgroundColor}
+              frontGarnish={frontGarnish}
+              backGarnish={backGarnish}
+            />
+          ));
         },
       },
     );
