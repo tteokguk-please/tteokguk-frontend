@@ -23,7 +23,7 @@ import TteokgukImage from "@/components/common/TteokgukImage";
 import { $getLoggedInUserDetails } from "@/store/user";
 import { $deleteTteokguk, $getRandomTteokguk, $getTteokguk } from "@/store/tteokguk";
 import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
-import ActivityIcon from "@/assets/svg/activity.svg";
+import SmallActivityIcon from "@/assets/svg/small-activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
 import Loading from "@/components/common/Loading";
 
@@ -138,7 +138,7 @@ const TteokgukPage = () => {
         <article>
           <div className={styles.titleContainer}>
             <div className={styles.title}>
-              <ActivityIcon />
+              <SmallActivityIcon />
               {nickname}님의 떡국
             </div>
             <button onClick={handleClickRandomVisitButton} className={styles.randomVisitButton}>
