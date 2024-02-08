@@ -1,4 +1,9 @@
-import { atomWithInfiniteQuery, atomWithMutation, atomWithQuery } from "jotai-tanstack-query";
+import {
+  atomWithInfiniteQuery,
+  atomWithMutation,
+  atomWithQuery,
+  queryClientAtom,
+} from "jotai-tanstack-query";
 import { atomFamily } from "jotai/utils";
 import { atom } from "jotai";
 
@@ -9,6 +14,7 @@ import {
   postTteokguk,
   deleteTteokguk,
   getRandomTteokguk,
+  postCompleteTteokguk,
 } from "@/apis/tteokguk";
 
 import { atomFamilyWithQuery } from "@/utils/jotai";
@@ -95,4 +101,11 @@ export const $getRandomTteokguk = atomWithQuery<GetTteokgukResponse>(() => ({
   queryKey: ["randomTteokguk"],
   queryFn: getRandomTteokguk,
   enabled: false,
+}));
+
+export const $postCompleteTteokguk = atomWithMutation((get) => ({
+  mutationFn: (id: number) => postCompleteTteokguk(id),
+  onSuccess: () => {
+    get(queryClientAtom).invalidateQueries({ queryKey: ["tteokguk"] });
+  },
 }));

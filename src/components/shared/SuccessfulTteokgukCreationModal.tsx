@@ -12,7 +12,7 @@ import useRouter from "@/routes/useRouter";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  tteokgukId?: number;
+  tteokgukId: number;
   isCompletion?: boolean;
   nickname?: string;
   tteokgukBackgroundColor: TteokgukBackgroudColor;
@@ -33,11 +33,9 @@ const SuccessfulTteokgukCreationModal = ({
   const router = useRouter();
 
   const handleClickButton = () => {
-    onClose();
+    router.replace(`/tteokguks/${tteokgukId}`);
 
-    if (!isCompletion && tteokgukId) {
-      router.push(`/tteokguks/${tteokgukId}`);
-    }
+    onClose();
   };
 
   return (
@@ -77,6 +75,7 @@ const styles = {
   description: css({
     fontSize: "1.4rem",
     marginTop: "0.8rem",
+    textAlign: "center",
   }),
   imageContainer: css({
     position: "relative",

@@ -51,9 +51,10 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     padding: "6.8rem 4rem 11.2rem",
+    backgroundImage: `url("@/assets/images/home-pattern.png")`,
     backgroundPosition: "center",
     backgroundRepeat: "repeat-Y",
-    backgroundImage: `url(src/assets/images/home-pattern.png)`,
+    backgroundSize: "contain",
     overflow: "hidden",
   }),
   logo: css({

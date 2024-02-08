@@ -15,11 +15,11 @@ import SearchUserPage from "@/pages/SearchUserPage";
 import UserPage from "@/pages/UserPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import MainPageFallback from "@/pages/MainPage.fallback";
+import MyActivityPageFallback from "@/pages/MyActivityPage.fallback";
 
 import ProtectedRoute from "./ProtectedRoute";
 
 import Layout from "@/components/layout/Layout";
-import MyActivityPageFallback from "@/pages/MyActivityPage.fallback";
 
 export type RoutePath =
   | "/"
