@@ -9,6 +9,7 @@ import {
   postTteokguk,
   deleteTteokguk,
   getRandomTteokguk,
+  postCompleteTteokguk,
 } from "@/apis/tteokguk";
 
 import { atomFamilyWithQuery } from "@/utils/jotai";
@@ -95,4 +96,8 @@ export const $getRandomTteokguk = atomWithQuery<GetTteokgukResponse>(() => ({
   queryKey: ["randomTteokguk"],
   queryFn: getRandomTteokguk,
   enabled: false,
+}));
+
+export const $postCompleteTteokguk = atomWithMutation(() => ({
+  mutationFn: (id: number) => postCompleteTteokguk(id),
 }));
