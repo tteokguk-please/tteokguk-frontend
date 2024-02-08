@@ -48,11 +48,6 @@ export const $updateSelectedIngredient = atom(
       return;
     }
 
-    if (get($selectedIngredient) === selectedIngredient) {
-      set($selectedIngredient, null);
-      return;
-    }
-
     set($selectedIngredient, selectedIngredient);
   },
 );
