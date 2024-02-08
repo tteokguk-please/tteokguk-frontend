@@ -33,7 +33,7 @@ const SuccessfulTteokgukCreationModal = ({
   const router = useRouter();
 
   const handleClickButton = () => {
-    router.push(`/tteokguks/${tteokgukId}`);
+    router.replace(`/tteokguks/${tteokgukId}`);
 
     onClose();
   };
