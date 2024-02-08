@@ -50,8 +50,6 @@ const AddIngredientsToMyTteokgukModal = ({
       },
       {
         onSuccess: () => {
-          console.log("hi");
-
           updateSelectedIngredients([]);
           onClose();
         },
