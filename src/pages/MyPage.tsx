@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 
 import { useAtomValue } from "jotai";
-import { queryClientAtom } from "jotai-tanstack-query";
 
 import { useDialog } from "@/hooks/useDialog";
 
@@ -13,7 +12,12 @@ import ErrorFallbackPage from "./ErrorFallbackPage";
 
 import { Link } from "@/routes/Link";
 import useRouter from "@/routes/useRouter";
-import { $getMyDetails, $getRandomUserDetails, $deleteLoggedInUser } from "@/store/user";
+import {
+  $getMyDetails,
+  $getRandomUserDetails,
+  $deleteLoggedInUser,
+  $getLoggedInUserDetails,
+} from "@/store/user";
 import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
@@ -28,7 +32,7 @@ const MyPage = () => {
   const { data: myDetails, isPending, isError, refetch } = useAtomValue($getMyDetails);
   const { mutate: deleteLoggedInUser } = useAtomValue($deleteLoggedInUser);
   const { refetch: refetchRandomUserDetails } = useAtomValue($getRandomUserDetails);
-  const { invalidateQueries } = useAtomValue(queryClientAtom);
+  const { refetch: loggedInUser } = useAtomValue($getLoggedInUserDetails);
   const { confirm, alert } = useDialog();
 
   if (isPending) {
@@ -81,11 +85,11 @@ const MyPage = () => {
     });
 
     if (isLoggedOut) {
+      loggedInUser();
       removeLocalStorage("accessToken");
       removeLocalStorage("refreshToken");
 
       router.push("/");
-      invalidateQueries({ queryKey: ["newTteokguks"] });
     }
   };
 
