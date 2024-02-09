@@ -72,7 +72,7 @@ const refreshAccessToken = async (token: string) => {
 
     return accessToken;
   } catch (error) {
-    console.error(error);
+    window.location.href = "/";
     throw new Error("Failed to refresh token");
   }
 };
