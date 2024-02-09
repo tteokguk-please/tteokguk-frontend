@@ -31,6 +31,8 @@ const LoginPage = () => {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
 
+      gtag("event", "login", { event_category: "카카오 로그인" });
+
       if (isInitialized) {
         localStorage.removeItem("kakaoToken");
         router.push("/tteokguks");

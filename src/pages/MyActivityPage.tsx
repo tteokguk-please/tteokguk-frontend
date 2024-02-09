@@ -55,6 +55,14 @@ const MyActivityPage = () => {
         : () => handleSupportedTtoekguksIntersect({ enabled: isSelectedTab(1) }),
   });
 
+  const handleClickReceivedIngredient = () => {
+    gtag("event", "click", { event_category: "받은 떡국 재료 보기" });
+  };
+
+  const handleClickMySupportedTteokguk = () => {
+    gtag("event", "click", { event_category: "내가 응원한 떡국 보기" });
+  };
+
   useEffect(() => {
     setTabIndex(tabIndexByParam === -1 ? 0 : tabIndexByParam);
   }, [tabIndexByParam, setTabIndex]);
@@ -65,10 +73,16 @@ const MyActivityPage = () => {
       <div className={styles.container}>
         <Tabs selectedIndex={tabIndex} onSelect={handleSelectTab}>
           <TabList className={styles.tabList}>
-            <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(0) })}>
+            <Tab
+              onClick={handleClickReceivedIngredient}
+              className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(0) })}
+            >
               받은 떡국 재료
             </Tab>
-            <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(1) })}>
+            <Tab
+              onClick={handleClickMySupportedTteokguk}
+              className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(1) })}
+            >
               내가 응원한 떡국
             </Tab>
           </TabList>

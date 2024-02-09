@@ -50,6 +50,8 @@ const UserPage = () => {
   const handleClickRandomVisitButton = async () => {
     const { data: randomUserDetails } = await refetchRandomUserDetails();
 
+    gtag("event", "click", { event_category: "랜덤 유저 방문" });
+
     if (randomUserDetails) {
       router.push(`/users/${randomUserDetails.id}`);
     }

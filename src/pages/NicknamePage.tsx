@@ -29,6 +29,8 @@ const NicknamePage = () => {
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
 
+          gtag("event", "sign_up", { event_category: "카카오 닉네임 설정" });
+
           welcomeModal.open(({ isOpen, close }) => (
             <WelcomeModal
               isOpen={isOpen}

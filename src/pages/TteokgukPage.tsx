@@ -87,6 +87,7 @@ const TteokgukPage = () => {
     if (!loggedInUserDetails) return;
 
     if (isMyTteokguk) {
+      gtag("event", "click", { event_category: "내 떡국에 재료 추가" });
       addIngredientsToMyTteokgukOverlay.open(({ isOpen, close }) => (
         <AddIngredientsToMyTteokgukModal
           isOpen={isOpen}
@@ -99,6 +100,8 @@ const TteokgukPage = () => {
     }
 
     if (!isMyTteokguk) {
+      gtag("event", "click", { event_category: "다른 사람 떡국에 재료 추가" });
+
       sendIngredientsToOthersTteokgukOverlay.open(({ isOpen, close }) => (
         <SendIngredientsToOthersTteokgukModal
           isOpen={isOpen}
@@ -127,12 +130,18 @@ const TteokgukPage = () => {
     if (!isConfirmedDelete) return;
 
     deleteTteokguk(tteokgukId, {
-      onSuccess: () => router.back(),
+      onSuccess: () => {
+        gtag("event", "click", { event_category: "소원 떡국 삭제" });
+
+        router.back();
+      },
     });
   };
 
   const handleClickRandomVisitButton = async () => {
     const { data: randomTteokguk } = await refetchRandomTteokguk();
+
+    gtag("event", "click", { event_category: "랜덤 떡국 방문" });
 
     if (randomTteokguk) {
       router.push(`/tteokguks/${randomTteokguk.tteokgukId}`);
@@ -142,6 +151,8 @@ const TteokgukPage = () => {
   const handleClickCompleteButton = () => {
     postCompleteTteokguk(tteokgukId, {
       onSuccess: () => {
+        gtag("event", "click", { event_category: "소원 떡국 완성" });
+
         successfulTteokgukCreationOverlay.open(({ isOpen, close }) => (
           <SuccessfulTteokgukCreationModal
             isOpen={isOpen}

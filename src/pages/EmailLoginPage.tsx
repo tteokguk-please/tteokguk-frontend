@@ -33,6 +33,7 @@ const EmailLoginPage = () => {
       },
       {
         onSuccess: ({ accessToken, refreshToken }) => {
+          gtag("event", "login", { event_category: "이메일로 로그인" });
           setLocalStorage("accessToken", accessToken);
           setLocalStorage("refreshToken", refreshToken);
           router.push("/tteokguks");
