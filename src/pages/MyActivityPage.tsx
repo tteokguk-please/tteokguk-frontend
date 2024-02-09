@@ -58,11 +58,29 @@ const MyActivityPage = () => {
             </Tab>
           </TabList>
           <TabPanel className={styles.receivedTab}>
+            {!isPending && receivedIngredientList?.length === 0 && (
+              <div className={styles.noTteokguk}>
+                <div className={styles.noTteokgukTitle}>친구들에게 떡국 재료를 요청해보세요.</div>
+                <div>
+                  <div>내 떡국 주소를 친구들에게 공유하고,</div>
+                  친구들에게 도움을 요청해보세요!
+                </div>
+              </div>
+            )}
             {receivedIngredientList && (
               <ReceivedIngredientsList receivedIngredientList={receivedIngredientList} />
             )}
           </TabPanel>
           <TabPanel className={styles.mySupportedTab}>
+            {!isPending && mySupportedTteokguks?.length === 0 && (
+              <div className={styles.noTteokguk}>
+                <div className={styles.noTteokgukTitle}>아직 응원하신 떡국이 없어요.</div>
+                <div>
+                  <div>메인페이지나 랜덤방문을 통해 다른 사람들에게</div> 응원의 재료를
+                  전달해보세요!
+                </div>
+              </div>
+            )}
             {mySupportedTteokguks && (
               <MySupportedTteokgukCardList tteokguks={mySupportedTteokguks} />
             )}
@@ -129,5 +147,15 @@ const styles = {
     flexFlow: "row wrap",
     gap: "1.6rem",
     width: "100%",
+  }),
+  noTteokguk: css({
+    textAlign: "center",
+    marginTop: "1.6rem",
+    fontSize: "1.4rem",
+  }),
+  noTteokgukTitle: css({
+    fontSize: "1.6rem",
+    fontWeight: 700,
+    marginBottom: "0.8rem",
   }),
 };
