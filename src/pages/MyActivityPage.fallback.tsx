@@ -1,10 +1,11 @@
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 
+import classNames from "classnames";
+
 import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
 import Loading from "@/components/common/Loading";
-import classNames from "classnames";
 
 const MyActivityPageFallback = () => {
   return (
