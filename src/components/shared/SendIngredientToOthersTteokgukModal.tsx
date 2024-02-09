@@ -13,6 +13,7 @@ import Button from "../common/Button";
 import CreateCheerMessageModal from "./CreateCheerMessageModal";
 
 import { $updateSelectedIngredient } from "@/store/ingredient";
+import { useEffect } from "react";
 
 interface Props {
   isOpen: boolean;
@@ -45,6 +46,7 @@ const SendIngredientsToOthersTteokgukModal = ({
       <CreateCheerMessageModal
         isOpen={isOpen}
         onClose={() => {
+          updateSelectedIngredient(null);
           handleCloseCheerMessageModal();
           onClose();
         }}
@@ -57,6 +59,12 @@ const SendIngredientsToOthersTteokgukModal = ({
     updateSelectedIngredient(null);
     onClose();
   };
+
+  useEffect(() => {
+    return () => {
+      updateSelectedIngredient(null);
+    };
+  }, [updateSelectedIngredient]);
 
   return (
     isOpen && (
