@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
-import ViteRadar from "vite-plugin-radar";
+import { VitePluginRadar } from "vite-plugin-radar";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,7 +10,7 @@ export default defineConfig({
     svgr({
       include: "**/*.svg",
     }),
-    ViteRadar({
+    VitePluginRadar({
       enableDev: true,
       analytics: {
         id: process.env.VITE_GA_TRACKING_ID,
