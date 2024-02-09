@@ -109,6 +109,7 @@ const styles = {
   title: css({
     fontSize: "1.6rem",
     fontWeight: 700,
+    userSelect: "none",
   }),
   actionIcon: css({
     display: "flex",
