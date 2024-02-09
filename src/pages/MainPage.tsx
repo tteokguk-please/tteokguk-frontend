@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useSearchParams } from "react-router-dom";
 
 import classNames from "classnames";
 import { useAtomValue } from "jotai";
@@ -20,7 +21,12 @@ import HeaderLogo from "@/assets/svg/header-logo.svg";
 import Loading from "@/components/common/Loading";
 
 const MainPage = () => {
-  const [tabIndex, setTabIndex] = useState(0);
+  const tabParams = ["new", "complete"];
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tabParam = searchParams.get("tab") ?? "";
+  const tabIndexByParam = tabParams.indexOf(tabParam);
+  const [tabIndex, setTabIndex] = useState(tabIndexByParam === -1 ? 0 : tabIndexByParam);
   const isSelectedTab = (index: number) => index === tabIndex;
   const fetchMoreRef = useRef(null);
 
@@ -33,37 +39,70 @@ const MainPage = () => {
     }
   };
 
+  const handleSelectTab = (index: number) => {
+    setSearchParams({ tab: tabParams[index] });
+    setTabIndex(index);
+  };
+
   useIntersectionObserver({
     target: fetchMoreRef,
     handleIntersect,
   });
 
+  useEffect(() => {
+    setTabIndex(tabIndexByParam === -1 ? 0 : tabIndexByParam);
+  }, [tabIndexByParam, setTabIndex]);
+
   if (!tteokguks || isError) {
     return <ErrorFallbackPage retry={refetch} />;
   }
 
+  const handleClickNewTteokguk = () => {
+    gtag("event", "click", { event_category: "새로운 떡국 보기" });
+  };
+
+  const handleClickCompletedTteokguk = () => {
+    gtag("event", "click", { event_category: "완성된 보기" });
+  };
+
   return (
     <>
       <Header showSearchIcon actionIcon="profile">
-        <Link to="/tteokguks">
-          <HeaderLogo aria-label="용용이" />
-        </Link>
+        <HeaderLogo aria-label="용용이" />
       </Header>
       <div className={styles.container}>
         <>
-          <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
+          <Tabs selectedIndex={tabIndex} onSelect={handleSelectTab}>
             <TabList className={styles.tabList}>
-              <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(0) })}>
+              <Tab
+                onClick={handleClickNewTteokguk}
+                className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(0) })}
+              >
                 새로운 떡국
               </Tab>
-              <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(1) })}>
+              <Tab
+                onClick={handleClickCompletedTteokguk}
+                className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(1) })}
+              >
                 완성된 떡국
               </Tab>
             </TabList>
             <TabPanel className={styles.tabPanel}>
+              {!isPending && tteokguks.length === 0 && (
+                <div className={styles.noTteokguk}>
+                  <div className={styles.noTteokgukTitle}>현재 응원을 요청하는 떡국이 없어요.</div>
+                  <div>나만의 떡국을 만들고, 다른 사람들과 재료를 나눠보세요.</div>
+                </div>
+              )}
               <TteokgukWithCaptionList tteokguks={tteokguks} />
             </TabPanel>
             <TabPanel className={styles.tabPanel}>
+              {!isPending && tteokguks.length === 0 && (
+                <div className={styles.noTteokguk}>
+                  <div className={styles.noTteokgukTitle}>아직 만들어진 떡국이 없어요.</div>
+                  <div>도움이 필요한 떡국들에게 재료를 나눠주세요. </div>
+                </div>
+              )}
               <TteokgukWithCaptionList tteokguks={tteokguks} />
             </TabPanel>
           </Tabs>
@@ -111,6 +150,7 @@ const styles = {
   tab: css({
     width: "50%",
     textAlign: "center",
+    outline: "none",
   }),
   tabPanel: css({
     display: "flex",
@@ -147,5 +187,15 @@ const styles = {
   }),
   isFetchingLoading: css({
     width: "50%",
+  }),
+  noTteokguk: css({
+    textAlign: "center",
+    marginTop: "1.6rem",
+    fontSize: "1.4rem",
+  }),
+  noTteokgukTitle: css({
+    fontSize: "1.6rem",
+    fontWeight: 700,
+    marginBottom: "0.8rem",
   }),
 };

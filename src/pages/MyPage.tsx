@@ -12,11 +12,7 @@ import ErrorFallbackPage from "./ErrorFallbackPage";
 
 import { Link } from "@/routes/Link";
 import useRouter from "@/routes/useRouter";
-import {
-  $getMyDetails,
-  $getRandomUserDetails,
-  $deleteLoggedInUser,
-} from "@/store/user";
+import { $getMyDetails, $getRandomUserDetails, $deleteLoggedInUser } from "@/store/user";
 import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
@@ -36,7 +32,7 @@ const MyPage = () => {
   if (isPending) {
     return (
       <Fragment>
-        <Header showBackButton actionIcon="guide">
+        <Header showBackButton showHomeButton actionIcon="guide">
           마이페이지
         </Header>
         <div className={styles.container}>
@@ -56,6 +52,8 @@ const MyPage = () => {
 
   const handleClickRandomVisitButton = async () => {
     const { data: randomUserDetails } = await refetchRandomUserDetails();
+
+    gtag("event", "click", { event_category: "랜덤 유저 방문" });
 
     if (randomUserDetails) {
       router.push(`/users/${randomUserDetails.id}`);
@@ -85,6 +83,7 @@ const MyPage = () => {
     if (isLoggedOut) {
       removeLocalStorage("accessToken");
       removeLocalStorage("refreshToken");
+      gtag("event", "logout", { event_category: "로그아웃" });
 
       router.push("/");
     }
@@ -129,7 +128,10 @@ const MyPage = () => {
             text: "첫 화면으로 이동",
             color: "primary.100",
             applyColorTo: "background",
-            onClick: () => router.push("/"),
+            onClick: () => {
+              gtag("event", "click", { event_category: "유저 탈퇴" });
+              router.push("/");
+            },
           },
         });
       },
@@ -178,6 +180,12 @@ const MyPage = () => {
               <button>소원 떡국 만들기</button>
             </Link>
           </div>
+          {!isPending && tteokguks.length === 0 && (
+            <div className={styles.noTteokguk}>
+              <div className={styles.noTteokgukTitle}>아직 만든 떡국이 없어요.</div>
+              <div>소원 떡국 만들기 버튼을 클릭하여 새 떡국을 만들어보세요.</div>
+            </div>
+          )}
           <TteokgukList tteokguks={tteokguks} />
         </div>
         <div>
@@ -283,5 +291,15 @@ const styles = {
     justifyContent: "center",
     fontSize: "1.4rem",
     marginY: "1.6rem",
+  }),
+  noTteokguk: css({
+    textAlign: "center",
+    marginTop: "1.6rem",
+    fontSize: "1.4rem",
+  }),
+  noTteokgukTitle: css({
+    fontSize: "1.6rem",
+    fontWeight: 700,
+    marginBottom: "0.8rem",
   }),
 };

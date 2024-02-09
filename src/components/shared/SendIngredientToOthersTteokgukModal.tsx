@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { useAtom } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
 
@@ -20,6 +22,7 @@ interface Props {
   tteokgukId: number;
   myDetails: LoggedInUserDetailsResponse;
   requiredIngredients: IngredientKey[];
+  usedIngredients: IngredientKey[];
 }
 
 const SendIngredientsToOthersTteokgukModal = ({
@@ -28,23 +31,32 @@ const SendIngredientsToOthersTteokgukModal = ({
   tteokgukId,
   myDetails,
   requiredIngredients,
+  usedIngredients,
 }: Props) => {
   const createCheerMessageModalOverlay = useOverlay();
   const [selectedIngredient, updateSelectedIngredient] = useAtom($updateSelectedIngredient);
+  const needIngredients = requiredIngredients.filter(
+    (requiredIngredient) => !usedIngredients.includes(requiredIngredient),
+  );
+  const checkNeedIngredient = (ingredientKey: IngredientKey) =>
+    needIngredients.includes(ingredientKey);
 
   const { itemResponses: ingredientsStocks } = myDetails;
 
   const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
-    updateSelectedIngredient(ingredientKey);
+    if (checkNeedIngredient(ingredientKey)) {
+      updateSelectedIngredient(ingredientKey);
+    }
   };
 
   const handleClickNextButton = () => {
-    if (!selectedIngredient) return;
+    if (!selectedIngredient || !checkNeedIngredient(selectedIngredient)) return;
 
     createCheerMessageModalOverlay.open(({ isOpen, close: handleCloseCheerMessageModal }) => (
       <CreateCheerMessageModal
         isOpen={isOpen}
         onClose={() => {
+          updateSelectedIngredient(null);
           handleCloseCheerMessageModal();
           onClose();
         }}
@@ -57,6 +69,12 @@ const SendIngredientsToOthersTteokgukModal = ({
     updateSelectedIngredient(null);
     onClose();
   };
+
+  useEffect(() => {
+    return () => {
+      updateSelectedIngredient(null);
+    };
+  }, [updateSelectedIngredient]);
 
   return (
     isOpen && (
@@ -81,7 +99,12 @@ const SendIngredientsToOthersTteokgukModal = ({
                 ),
             )}
           </ol>
-          <Button onClick={handleClickNextButton} color="primary.100" applyColorTo="background">
+          <Button
+            disabled={!selectedIngredient}
+            onClick={handleClickNextButton}
+            color="primary.100"
+            applyColorTo="background"
+          >
             다음
           </Button>
         </Modal.Body>

@@ -11,6 +11,13 @@ interface Props {
 }
 
 const TteokgukWithCaptionList = ({ tteokguks }: Props) => {
+  const handleClickTteokguk = (tteokgukId: number) => () => {
+    gtag("event", "click", {
+      event_category: "소원 떡국 카드",
+      event_label: `소원 떡국 카드 ${tteokgukId}`,
+    });
+  };
+
   return (
     <ul className={styles.container}>
       {tteokguks.map(
@@ -23,7 +30,11 @@ const TteokgukWithCaptionList = ({ tteokguks }: Props) => {
           frontGarnish,
           backGarnish,
         }) => (
-          <li key={tteokgukId} className={styles.cardContainer}>
+          <li
+            key={tteokgukId}
+            className={styles.cardContainer}
+            onClick={handleClickTteokguk(tteokgukId)}
+          >
             <Link to={`/tteokguks/${tteokgukId}`}>
               <div>
                 {hasIngredient && <div className={styles.badge}>응원요청</div>}

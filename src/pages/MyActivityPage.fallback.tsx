@@ -1,5 +1,7 @@
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 
+import classNames from "classnames";
+
 import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
@@ -7,49 +9,31 @@ import Loading from "@/components/common/Loading";
 
 const MyActivityPageFallback = () => {
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <Header showBackButton>활동 내역</Header>
-        <div className={styles.tabContainer}>
-          <Tabs selectedIndex={0}>
-            <TabList className={styles.tabList}>
-              <Tab className={styles.selectedTab}>받은 떡국 재료</Tab>
-              <Tab>내가 응원한 떡국</Tab>
-            </TabList>
-            <TabPanel className={styles.tabPanel}>
-              <Loading />
-            </TabPanel>
-            <TabPanel className={styles.tabPanel}>
-              <Loading />
-            </TabPanel>
-          </Tabs>
-        </div>
-      </main>
-    </div>
+    <>
+      <Header showBackButton>활동 내역</Header>
+      <div className={styles.tabContainer}>
+        <Tabs selectedIndex={0} onSelect={() => {}}>
+          <TabList className={styles.tabList}>
+            <Tab className={classNames(styles.tab, styles.selectedTab)}>받은 떡국 재료</Tab>
+            <Tab className={styles.tab}>내가 응원한 떡국</Tab>
+          </TabList>
+          <TabPanel className={styles.tabPanel}>
+            <Loading />
+          </TabPanel>
+          <TabPanel className={styles.tabPanel}>
+            <Loading />
+          </TabPanel>
+        </Tabs>
+      </div>
+    </>
   );
 };
 
 export default MyActivityPageFallback;
 
 const styles = {
-  container: css({
-    maxWidth: "50rem",
-    width: "100%",
-    height: "100vh",
-    margin: "0 auto",
-  }),
-
-  main: css({
-    width: "100%",
-    minHeight: "100vh",
-    flexGrow: 1,
-    backgroundColor: "back",
-  }),
-
   tabContainer: css({
-    position: "relative",
     height: "calc(100% - 4.8rem)",
-    overflow: "auto",
   }),
 
   tabList: css({
@@ -62,6 +46,11 @@ const styles = {
     padding: "0.8rem 0 0.9rem",
     marginBottom: "2rem",
     cursor: "pointer",
+  }),
+
+  tab: css({
+    width: "50%",
+    textAlign: "center",
   }),
 
   selectedTab: css({

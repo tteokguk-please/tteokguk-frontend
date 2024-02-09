@@ -1,5 +1,6 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useSearchParams } from "react-router-dom";
 
 import classNames from "classnames";
 import { useAtomValue } from "jotai";
@@ -15,7 +16,12 @@ import Loading from "@/components/common/Loading";
 import MySupportedTteokgukCardList from "@/components/MyActivity/MySupportedTteokgukCardList";
 
 const MyActivityPage = () => {
-  const [tabIndex, setTabIndex] = useState(0);
+  const tabParams = ["ingredient", "support"];
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tabParam = searchParams.get("tab") ?? "";
+  const tabIndexByParam = tabParams.indexOf(tabParam);
+  const [tabIndex, setTabIndex] = useState(tabIndexByParam === -1 ? 0 : tabIndexByParam);
   const isSelectedTab = (index: number) => index === tabIndex;
   const {
     mySupportedTteokguks,
@@ -36,6 +42,11 @@ const MyActivityPage = () => {
   const isFetchingNextPage =
     isReceivedTteokgukFetchingNextPage || isMySupportedTteokgukFetchingNextPage;
 
+  const handleSelectTab = (index: number) => {
+    setSearchParams({ tab: tabParams[index] });
+    setTabIndex(index);
+  };
+
   useIntersectionObserver({
     target: fetchMoreRef,
     handleIntersect:
@@ -44,25 +55,61 @@ const MyActivityPage = () => {
         : () => handleSupportedTtoekguksIntersect({ enabled: isSelectedTab(1) }),
   });
 
+  const handleClickReceivedIngredient = () => {
+    gtag("event", "click", { event_category: "받은 떡국 재료 보기" });
+  };
+
+  const handleClickMySupportedTteokguk = () => {
+    gtag("event", "click", { event_category: "내가 응원한 떡국 보기" });
+  };
+
+  useEffect(() => {
+    setTabIndex(tabIndexByParam === -1 ? 0 : tabIndexByParam);
+  }, [tabIndexByParam, setTabIndex]);
+
   return (
     <Fragment>
       <Header showBackButton>활동 내역</Header>
       <div className={styles.container}>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+        <Tabs selectedIndex={tabIndex} onSelect={handleSelectTab}>
           <TabList className={styles.tabList}>
-            <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(0) })}>
+            <Tab
+              onClick={handleClickReceivedIngredient}
+              className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(0) })}
+            >
               받은 떡국 재료
             </Tab>
-            <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(1) })}>
+            <Tab
+              onClick={handleClickMySupportedTteokguk}
+              className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(1) })}
+            >
               내가 응원한 떡국
             </Tab>
           </TabList>
           <TabPanel className={styles.receivedTab}>
+            {!isPending && receivedIngredientList?.length === 0 && (
+              <div className={styles.noTteokguk}>
+                <div className={styles.noTteokgukTitle}>친구들에게 떡국 재료를 요청해보세요.</div>
+                <div>
+                  <div>내 떡국 주소를 친구들에게 공유하고,</div>
+                  친구들에게 도움을 요청해보세요!
+                </div>
+              </div>
+            )}
             {receivedIngredientList && (
               <ReceivedIngredientsList receivedIngredientList={receivedIngredientList} />
             )}
           </TabPanel>
           <TabPanel className={styles.mySupportedTab}>
+            {!isPending && mySupportedTteokguks?.length === 0 && (
+              <div className={styles.noTteokguk}>
+                <div className={styles.noTteokgukTitle}>아직 응원하신 떡국이 없어요.</div>
+                <div>
+                  <div>메인페이지나 랜덤방문을 통해 다른 사람들에게</div> 응원의 재료를
+                  전달해보세요!
+                </div>
+              </div>
+            )}
             {mySupportedTteokguks && (
               <MySupportedTteokgukCardList tteokguks={mySupportedTteokguks} />
             )}
@@ -129,5 +176,15 @@ const styles = {
     flexFlow: "row wrap",
     gap: "1.6rem",
     width: "100%",
+  }),
+  noTteokguk: css({
+    textAlign: "center",
+    marginTop: "1.6rem",
+    fontSize: "1.4rem",
+  }),
+  noTteokgukTitle: css({
+    fontSize: "1.6rem",
+    fontWeight: 700,
+    marginBottom: "0.8rem",
   }),
 };

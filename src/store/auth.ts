@@ -23,8 +23,6 @@ import {
   SignupResponse,
 } from "@/types/auth";
 
-import { $getLoggedInUserDetails } from "./user";
-
 export const $checkEmail = atomWithMutation(() => ({
   mutationFn: (email: string): Promise<CheckEmailNicknameResponse> => checkEmail(email),
 }));
@@ -37,11 +35,8 @@ export const $signup = atomWithMutation(() => ({
   mutationFn: (body: SignupRequest): Promise<SignupResponse> => postSignup(body),
 }));
 
-export const $login = atomWithMutation((get) => ({
+export const $login = atomWithMutation(() => ({
   mutationFn: (body: LoginRequest): Promise<LoginResponse> => postLogin(body),
-  onSuccess: async () => {
-    (await get($getLoggedInUserDetails)).refetch();
-  },
 }));
 
 export const $postKakaoToken = atomWithMutation(() => ({

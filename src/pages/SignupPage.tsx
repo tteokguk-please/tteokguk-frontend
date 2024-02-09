@@ -35,6 +35,8 @@ const SignupPage = () => {
       },
       {
         onSuccess: ({ nickname, primaryIngredient, accessToken, refreshToken }) => {
+          gtag("event", "sign_up", { event_category: "이메일로 회원가입" });
+
           setLocalStorage("accessToken", accessToken);
           setLocalStorage("refreshToken", refreshToken);
 
