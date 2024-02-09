@@ -18,6 +18,18 @@
     ],
     "*.{css,json,html}": "prettier --check"
   },
+  "reactSnap": {
+    "crawl": true,
+    "include": [
+      "/",
+      "/tteokguks",
+      "/tteokguk/create",
+      "/my-page",
+      "/my-page/activity",
+      "/user/search",
+      "/users"
+    ]
+  },
   "dependencies": {
     "@sentry/react": "^7.100.1",
     "@sentry/tracing": "^7.100.1",
@@ -53,6 +65,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "react-helmet-async": "^2.0.4",
+    "react-snap": "^1.23.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "vite-plugin-radar": "^0.9.3",
