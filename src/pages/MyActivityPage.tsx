@@ -67,14 +67,6 @@ const MyActivityPage = () => {
     setTabIndex(tabIndexByParam === -1 ? 0 : tabIndexByParam);
   }, [tabIndexByParam, setTabIndex]);
 
-  const handleClickReceivedIngredient = () => {
-    gtag("event", "click", { event_category: "받은 떡국 재료 보기" });
-  };
-
-  const handleClickMySupportedTteokguk = () => {
-    gtag("event", "click", { event_category: "내가 응원한 떡국 보기" });
-  };
-
   return (
     <Fragment>
       <Header showBackButton>활동 내역</Header>
