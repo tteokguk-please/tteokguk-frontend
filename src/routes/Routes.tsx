@@ -16,6 +16,7 @@ import UserPage from "@/pages/UserPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import MainPageFallback from "@/pages/MainPage.fallback";
 import MyActivityPageFallback from "@/pages/MyActivityPage.fallback";
+import TteokgukPageFallback from "@/pages/TteokgukPage.fallback";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -89,7 +90,14 @@ export const Routes = () => {
             </Suspense>
           }
         />
-        <Route path="/tteokguks/:id" element={<TteokgukPage />} />
+        <Route
+          path="/tteokguks/:id"
+          element={
+            <Suspense fallback={<TteokgukPageFallback />}>
+              <TteokgukPage />
+            </Suspense>
+          }
+        />
         <Route
           path="/tteokguk/create"
           element={
