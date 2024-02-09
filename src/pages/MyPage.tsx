@@ -32,7 +32,6 @@ const MyPage = () => {
   const { data: myDetails, isPending, isError, refetch } = useAtomValue($getMyDetails);
   const { mutate: deleteLoggedInUser } = useAtomValue($deleteLoggedInUser);
   const { refetch: refetchRandomUserDetails } = useAtomValue($getRandomUserDetails);
-  const { refetch: loggedInUser } = useAtomValue($getLoggedInUserDetails);
   const { confirm, alert } = useDialog();
 
   if (isPending) {
