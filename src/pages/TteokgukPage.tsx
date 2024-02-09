@@ -11,6 +11,7 @@ import { css } from "@styled-system/css";
 import { getLocalStorage } from "@/utils/localStorage";
 
 import ErrorFallbackPage from "./ErrorFallbackPage";
+import Meta from "./Meta";
 
 import { Link } from "@/routes/Link";
 import useRouter from "@/routes/useRouter";
@@ -173,6 +174,11 @@ const TteokgukPage = () => {
 
   return (
     <Fragment>
+      <Meta
+        path={`/tteokguks/${id}`}
+        title="소원 떡국 상세보기 페이지"
+        description="떡국에 어떤 소원과 재료가 들어갔는지 확인해보세요"
+      />
       <Header showBackButton showHomeButton actionIcon="profile">
         소원 떡국
       </Header>

@@ -8,6 +8,8 @@ import { css } from "@styled-system/css";
 
 import { IngredientKey } from "@/types/ingredient";
 
+import Meta from "./Meta";
+
 import { $postTteokguk } from "@/store/tteokguk";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
@@ -93,6 +95,11 @@ const TteokgukCookingPage = () => {
 
   return (
     <div>
+      <Meta
+        path="/tteokguk/create"
+        title="소원 떡국 만들기 페이지"
+        description="넣고 싶은 재료를 골라 새해 소원을 담아 떡국을 만들어보세요"
+      />
       <Header showBackButton actionIcon="guide">
         떡국 만들기
       </Header>

@@ -7,6 +7,8 @@ import { setLocalStorage } from "@/utils/localStorage";
 
 import { SignupFormValues } from "@/types/form";
 
+import Meta from "./Meta";
+
 import Header from "@/components/common/Header";
 import SignupForm from "@/components/Signup/SignupForm";
 import WelcomeModal from "@/components/shared/WelcomeModal";
@@ -55,6 +57,11 @@ const SignupPage = () => {
 
   return (
     <Fragment>
+      <Meta
+        path="/signup"
+        title="회원가입 페이지"
+        description="더 많은 기능을 사용하기 위해 회원가입을 해보세요"
+      />
       <Header showBackButton>회원가입</Header>
       <SignupForm defaultValues={defaultValues} onSubmit={handleSubmit} />
     </Fragment>

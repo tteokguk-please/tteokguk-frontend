@@ -1,14 +1,16 @@
 import { Helmet } from "react-helmet-async";
 
+import { RoutePath } from "@/routes/Routes";
+
 interface Props {
   title: string;
   description: string;
-  imageUrl: string;
-  pageId?: number;
+  imageUrl?: string;
+  path: RoutePath;
 }
 
-const Meta = ({ title, description, imageUrl, pageId }: Props) => {
-  const fullUrl = `${window.location.origin}/${pageId}`;
+const Meta = ({ title, description, imageUrl, path }: Props) => {
+  const fullUrl = `${window.location.origin}/${path}`;
 
   return (
     <Helmet>
