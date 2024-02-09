@@ -226,7 +226,7 @@ const TteokgukPage = () => {
           </Link>
         )}
 
-        {!isMyTteokguk && !completion && (
+        {isLoggedIn && !isMyTteokguk && !completion && (
           <Button
             onClick={handleClickAddIngredientButton}
             color="primary.45"
@@ -320,7 +320,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     gap: "1.8rem",
-    marginBottom: "3rem",
+    marginBottom: "2rem",
     cursor: "default",
   }),
   ingredientSecondRow: css({

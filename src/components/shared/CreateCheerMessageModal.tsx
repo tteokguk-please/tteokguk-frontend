@@ -25,7 +25,7 @@ const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
   const cheerSuccessOverlay = useOverlay();
   const { mutate: postIngredient, isPending } = useAtomValue($postIngredientToOthersTteokguk);
   const [selectedIngredient, updateSelectedIngredient] = useAtom($updateSelectedIngredient);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("새해 복 많이 받으세요");
   const [isAnonymous, setIsAnonymous] = useState(false);
 
   const handleChangeTextarea = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -41,7 +41,7 @@ const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
   const handleSubmitCheerMessage = (event: FormEvent) => {
     event.preventDefault();
 
-    if (!selectedIngredient || message.length === 0) return;
+    if (!selectedIngredient) return;
 
     postIngredient(
       {

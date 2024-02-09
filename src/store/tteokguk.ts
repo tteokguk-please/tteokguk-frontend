@@ -18,6 +18,7 @@ import {
 } from "@/apis/tteokguk";
 
 import { atomFamilyWithQuery } from "@/utils/jotai";
+import { getLocalStorage } from "@/utils/localStorage";
 
 import { GetTteokgukResponse, PostTteokgukRequest } from "@/types/tteokguk.dto";
 import { IngredientKey } from "@/types/ingredient";
@@ -48,24 +49,31 @@ const $getCompletedTteokguks = atomWithInfiniteQuery(() => ({
 
 export const $tteokguksByTab = atomFamily((tabIndex: number) =>
   atom(async (get) => {
-    const { data: loggedInUserDetails } = await get($getLoggedInUserDetails);
-
     const $tteokgukAtom = tabIndex === 0 ? $getNewTteokguks : $getCompletedTteokguks;
     const tteokgukPaginationData = await get($tteokgukAtom);
     const pages = tteokgukPaginationData.data?.pages || [];
 
+    if (!getLocalStorage("accessToken")) {
+      return {
+        tteokguks: pages
+          .flatMap(({ data: tteokguks }) => tteokguks)
+          .map((tteokguk) => ({
+            ...tteokguk,
+            hasIngredient: false,
+          })),
+        ...tteokgukPaginationData,
+      };
+    }
+
+    const userDetail = await get($getLoggedInUserDetails);
+
     const tteokguks = pages
       .flatMap(({ data: tteokguks }) => tteokguks)
       .map((tteokguk) => {
-        const isNonMember = !loggedInUserDetails;
         const { requiredIngredients } = tteokguk;
 
-        if (isNonMember) {
-          return { ...tteokguk, hasIngredient: false };
-        }
-
         const hasOwnIngredient = (ingredient: IngredientKey) =>
-          loggedInUserDetails.itemResponses?.some(
+          userDetail.data?.itemResponses?.some(
             (item) => item.ingredient === ingredient && item.stockQuantity > 0,
           );
         const hasOwnedRequiredIngredient = requiredIngredients.some(hasOwnIngredient);

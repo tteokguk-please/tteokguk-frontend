@@ -7,7 +7,7 @@ import { LoginResponse } from "@/types/auth";
 
 const kyInstance = ky.create({
   prefixUrl: import.meta.env.VITE_BASE_URL,
-  timeout: 10000,
+  retry: 0,
   headers: {
     "Content-Type": "application/json",
   },

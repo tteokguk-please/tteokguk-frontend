@@ -44,7 +44,10 @@ export default HomePage;
 
 const styles = {
   container: css({
-    position: "relative",
+    position: "absolute",
+    width: "100%",
+    maxWidth: "50rem",
+    zIndex: 1,
     height: "100vh",
     display: "flex",
     flexDirection: "column",
@@ -72,16 +75,16 @@ const styles = {
   }),
   leftMountain: css({
     position: "absolute",
-    zIndex: "0",
-    bottom: "-1rem",
-    left: "-1.5rem",
-    width: "13.2rem",
+    zIndex: -1,
+    bottom: "0",
+    left: "0",
+    width: "14.2rem",
   }),
   rightMountain: css({
     position: "absolute",
-    zIndex: "0",
-    bottom: "-1.6rem",
-    right: "-0.5rem",
-    width: "11.2rem",
+    zIndex: -1,
+    bottom: "0",
+    right: "0",
+    width: "14.2rem",
   }),
 };

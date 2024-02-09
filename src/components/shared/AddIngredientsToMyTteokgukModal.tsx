@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 
 import { useAtom, useAtomValue } from "jotai";
 
@@ -58,9 +58,15 @@ const AddIngredientsToMyTteokgukModal = ({
   };
 
   const handleClickClose = () => {
-    onClose();
     updateSelectedIngredients([]);
+    onClose();
   };
+
+  useEffect(() => {
+    return () => {
+      updateSelectedIngredients([]);
+    };
+  }, [updateSelectedIngredients]);
 
   return (
     isOpen && (

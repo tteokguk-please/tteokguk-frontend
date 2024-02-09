@@ -12,16 +12,25 @@ import BeforeIcon from "@/assets/svg/before.svg";
 import ProfileIcon from "@/assets/svg/profile.svg";
 import GuideIcon from "@/assets/svg/guide.svg";
 import SearchIcon from "@/assets/svg/search.svg";
+import HomeIcon from "@/assets/svg/home.svg";
 
 interface Props {
   showSearchIcon?: true;
   showBackButton?: true;
+  showHomeButton?: true;
   actionIcon?: "profile" | "guide";
   className?: string;
   children?: ReactNode;
 }
 
-const Header = ({ showBackButton, showSearchIcon, actionIcon, className, children }: Props) => {
+const Header = ({
+  showBackButton,
+  showSearchIcon,
+  showHomeButton,
+  actionIcon,
+  className,
+  children,
+}: Props) => {
   const navigation = useRouter();
 
   const handleClickBefore = () => {
@@ -44,6 +53,7 @@ const Header = ({ showBackButton, showSearchIcon, actionIcon, className, childre
         <h1>{children}</h1>
       </div>
       <div className={styles.actionIcon}>
+        {showHomeButton && <HomeIconLink />}
         {actionIcon === "profile" && <ProfileIconLink />}
         {actionIcon === "guide" && <GuideModalButton />}
       </div>
@@ -53,10 +63,18 @@ const Header = ({ showBackButton, showSearchIcon, actionIcon, className, childre
 
 export default Header;
 
+const HomeIconLink = () => {
+  return (
+    <Link to="/tteokguks" className={styles.home}>
+      <HomeIcon aria-label="홈" />
+    </Link>
+  );
+};
+
 const ProfileIconLink = () => {
   return (
     <Link to="/my-page">
-      <ProfileIcon />
+      <ProfileIcon aria-label="프로필" />
     </Link>
   );
 };
@@ -70,7 +88,7 @@ const GuideModalButton = () => {
 
   return (
     <button onClick={handleClickGuideIcon}>
-      <GuideIcon />
+      <GuideIcon aria-label="가이드" />
     </button>
   );
 };
@@ -96,5 +114,8 @@ const styles = {
     display: "flex",
     justifyContent: "flex-end",
     flex: 1,
+  }),
+  home: css({
+    marginRight: "1.6rem",
   }),
 };
