@@ -1,8 +1,9 @@
+import { Fragment } from "react";
+
 import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
 import Loading from "@/components/common/Loading";
-import { Fragment } from "react";
 
 const TteokgukPageFallback = () => {
   return (

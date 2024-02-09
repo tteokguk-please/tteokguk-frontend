@@ -1,4 +1,4 @@
-import { atomWithQuery, atomWithMutation, atomWithSuspenseQuery } from "jotai-tanstack-query";
+import { atomWithQuery, atomWithMutation } from "jotai-tanstack-query";
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
 
