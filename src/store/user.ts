@@ -11,8 +11,8 @@ import {
   deleteLoggedInUser,
 } from "@/apis/user";
 
-import { getLocalStorage } from "@/utils/localStorage";
 import { atomFamilyWithQuery } from "@/utils/jotai";
+import { getLocalStorage } from "@/utils/localStorage";
 
 import { RandomUserResponse } from "@/types/user.dto";
 
@@ -29,7 +29,6 @@ export const $getLoggedInUserDetails = atomWithSuspenseQuery(() => ({
   queryKey: ["loggedInUser"],
   queryFn: getLoggedInUserDetails,
   enabled: !!getLocalStorage("accessToken"),
-  refetchOnMount: false,
 }));
 
 export const $nickname = atom("");
