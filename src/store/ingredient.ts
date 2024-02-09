@@ -1,5 +1,6 @@
 import { atom } from "jotai";
 import { atomWithMutation, queryClientAtom } from "jotai-tanstack-query";
+import * as Sentry from "@sentry/react";
 
 import { postIngredientToMyTteokguk, postIngredientToOthersTtoekguk } from "@/apis/ingredient";
 
@@ -60,11 +61,17 @@ export const $postIngredientsToMyTteokguk = atomWithMutation<
   onSuccess: () => {
     get(queryClientAtom).invalidateQueries();
   },
+  onError: (error) => {
+    Sentry.captureException(error);
+  },
 }));
 
 export const $postIngredientToOthersTteokguk = atomWithMutation((get) => ({
   mutationFn: (body: PostIngredientToOthersTteokgukRequest) => postIngredientToOthersTtoekguk(body),
   onSuccess: () => {
     get(queryClientAtom).invalidateQueries();
+  },
+  onError: (error) => {
+    Sentry.captureException(error);
   },
 }));

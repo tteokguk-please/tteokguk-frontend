@@ -6,6 +6,7 @@ import {
 } from "jotai-tanstack-query";
 import { atomFamily } from "jotai/utils";
 import { atom } from "jotai";
+import * as Sentry from "@sentry/react";
 
 import {
   getTteokguk,
@@ -50,8 +51,12 @@ const $getCompletedTteokguks = atomWithInfiniteQuery(() => ({
 export const $tteokguksByTab = atomFamily((tabIndex: number) =>
   atom(async (get) => {
     const $tteokgukAtom = tabIndex === 0 ? $getNewTteokguks : $getCompletedTteokguks;
-    const tteokgukPaginationData = await get($tteokgukAtom);
-    const pages = tteokgukPaginationData.data?.pages || [];
+    const tteokgukPaginationResult = await get($tteokgukAtom);
+    const pages = tteokgukPaginationResult.data?.pages || [];
+
+    if (tteokgukPaginationResult.error) {
+      Sentry.captureException(tteokgukPaginationResult.error);
+    }
 
     if (!getLocalStorage("accessToken")) {
       return {
@@ -61,7 +66,7 @@ export const $tteokguksByTab = atomFamily((tabIndex: number) =>
             ...tteokguk,
             hasIngredient: false,
           })),
-        ...tteokgukPaginationData,
+        ...tteokgukPaginationResult,
       };
     }
 
@@ -86,7 +91,7 @@ export const $tteokguksByTab = atomFamily((tabIndex: number) =>
 
     return {
       tteokguks,
-      ...tteokgukPaginationData,
+      ...tteokgukPaginationResult,
     };
   }),
 );
@@ -94,6 +99,9 @@ export const $tteokguksByTab = atomFamily((tabIndex: number) =>
 export const $postTteokguk = atomWithMutation(() => {
   return {
     mutationFn: (tteokguk: PostTteokgukRequest) => postTteokguk(tteokguk),
+    onError: (error) => {
+      Sentry.captureException(error);
+    },
   };
 });
 
@@ -102,6 +110,9 @@ export const $getTteokguk = atomFamilyWithQuery("tteokguk", (id: number) => getT
 export const $deleteTteokguk = atomWithMutation(() => {
   return {
     mutationFn: (tteokgukId: number) => deleteTteokguk(tteokgukId),
+    onError: (error) => {
+      Sentry.captureException(error);
+    },
   };
 });
 
@@ -115,5 +126,8 @@ export const $postCompleteTteokguk = atomWithMutation((get) => ({
   mutationFn: (id: number) => postCompleteTteokguk(id),
   onSuccess: () => {
     get(queryClientAtom).invalidateQueries({ queryKey: ["tteokguk"] });
+  },
+  onError: (error) => {
+    Sentry.captureException(error);
   },
 }));
