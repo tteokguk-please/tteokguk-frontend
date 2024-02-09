@@ -11,7 +11,7 @@ export default defineConfig({
       include: "**/*.svg",
     }),
     VitePluginRadar({
-      enableDev: true,
+      enableDev: false,
       analytics: {
         id: process.env.VITE_GA_TRACKING_ID,
       },
