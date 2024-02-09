@@ -1,7 +1,8 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 
 import { useOverlay } from "@toss/use-overlay";
 import { useAtomValue } from "jotai";
+import { toast } from "sonner";
 
 import { NicknameFormValues } from "@/types/form";
 
@@ -40,6 +41,10 @@ const NicknamePage = () => {
       },
     );
   };
+
+  useEffect(() => {
+    toast("카카오 로그인이 정상적으로 완료되었습니다");
+  }, []);
 
   return (
     <Fragment>
