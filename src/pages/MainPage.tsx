@@ -136,6 +136,7 @@ const styles = {
   tab: css({
     width: "50%",
     textAlign: "center",
+    outline: "none",
   }),
   tabPanel: css({
     display: "flex",
