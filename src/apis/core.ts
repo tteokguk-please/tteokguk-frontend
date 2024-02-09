@@ -72,6 +72,9 @@ const refreshAccessToken = async (token: string) => {
 
     return accessToken;
   } catch (error) {
+    removeLocalStorage("accessToken");
+    removeLocalStorage("refreshToken");
+
     window.location.href = "/";
     throw new Error("Failed to refresh token");
   }
