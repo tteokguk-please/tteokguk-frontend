@@ -11,7 +11,7 @@ const MyActivityPageFallback = () => {
       <main className={styles.main}>
         <Header showBackButton>활동 내역</Header>
         <div className={styles.tabContainer}>
-          <Tabs selectedIndex={0}>
+          <Tabs selectedIndex={0} onSelect={() => {}}>
             <TabList className={styles.tabList}>
               <Tab className={styles.selectedTab}>받은 떡국 재료</Tab>
               <Tab>내가 응원한 떡국</Tab>

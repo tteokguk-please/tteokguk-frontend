@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useSearchParams } from "react-router-dom";
 
 import classNames from "classnames";
 import { useAtomValue } from "jotai";
@@ -20,7 +21,12 @@ import HeaderLogo from "@/assets/svg/header-logo.svg";
 import Loading from "@/components/common/Loading";
 
 const MainPage = () => {
-  const [tabIndex, setTabIndex] = useState(0);
+  const tabParams = ["new", "complete"];
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tabParam = searchParams.get("tab") ?? "";
+  const tabIndexByParam = tabParams.indexOf(tabParam);
+  const [tabIndex, setTabIndex] = useState(tabIndexByParam === -1 ? 0 : tabIndexByParam);
   const isSelectedTab = (index: number) => index === tabIndex;
   const fetchMoreRef = useRef(null);
 
@@ -33,10 +39,19 @@ const MainPage = () => {
     }
   };
 
+  const handleSelectTab = (index: number) => {
+    setSearchParams({ tab: tabParams[index] });
+    setTabIndex(index);
+  };
+
   useIntersectionObserver({
     target: fetchMoreRef,
     handleIntersect,
   });
+
+  useEffect(() => {
+    setTabIndex(tabIndexByParam === -1 ? 0 : tabIndexByParam);
+  }, [tabIndexByParam, setTabIndex]);
 
   if (!tteokguks || isError) {
     return <ErrorFallbackPage retry={refetch} />;
@@ -59,7 +74,7 @@ const MainPage = () => {
       </Header>
       <div className={styles.container}>
         <>
-          <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
+          <Tabs selectedIndex={tabIndex} onSelect={handleSelectTab}>
             <TabList className={styles.tabList}>
               <Tab
                 onClick={handleClickNewTteokguk}
