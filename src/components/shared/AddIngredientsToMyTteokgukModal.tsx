@@ -92,7 +92,11 @@ const AddIngredientsToMyTteokgukModal = ({
                   ),
               )}
             </ol>
-            <Button color="primary.100" applyColorTo="background">
+            <Button
+              disabled={selectedIngredients.length === 0}
+              color="primary.100"
+              applyColorTo="background"
+            >
               추가하기
             </Button>
           </form>

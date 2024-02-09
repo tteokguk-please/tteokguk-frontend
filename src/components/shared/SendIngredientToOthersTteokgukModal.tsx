@@ -89,7 +89,12 @@ const SendIngredientsToOthersTteokgukModal = ({
                 ),
             )}
           </ol>
-          <Button onClick={handleClickNextButton} color="primary.100" applyColorTo="background">
+          <Button
+            disabled={!selectedIngredient}
+            onClick={handleClickNextButton}
+            color="primary.100"
+            applyColorTo="background"
+          >
             다음
           </Button>
         </Modal.Body>
