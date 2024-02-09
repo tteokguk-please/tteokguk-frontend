@@ -320,7 +320,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     gap: "1.8rem",
-    marginBottom: "3rem",
+    marginBottom: "2rem",
     cursor: "default",
   }),
   ingredientSecondRow: css({
