@@ -39,13 +39,11 @@ const Header = ({
 
   return (
     <header className={classNames(styles.header, className)}>
-      <div className={styles.icon}>
-        {showSearchIcon && (
-          <Link to="/user/search">
-            <SearchIcon aria-label="검색" />
-          </Link>
-        )}
-      </div>
+      {showSearchIcon && (
+        <Link to="/user/search" className={styles.icon}>
+          <SearchIcon aria-label="검색" />
+        </Link>
+      )}
       {showBackButton && (
         <div onClick={handleClickBefore} className={styles.icon} aria-label="뒤로 가기">
           <BeforeIcon />
@@ -75,7 +73,7 @@ const HomeIconLink = () => {
 
 const ProfileIconLink = () => {
   return (
-    <Link to="/my-page" className={styles.profile}>
+    <Link to="/my-page">
       <ProfileIcon aria-label="프로필" />
     </Link>
   );
@@ -105,9 +103,8 @@ const styles = {
     padding: "0 1.6rem",
   }),
   icon: css({
-    display: "flex",
-    justifyContent: "flex-start",
     flex: 1,
+    cursor: "pointer",
   }),
   title: css({
     fontSize: "1.6rem",
@@ -121,8 +118,5 @@ const styles = {
   }),
   home: css({
     marginRight: "1.6rem",
-  }),
-  profile: css({
-    maxWidth: "2.4rem",
   }),
 };
