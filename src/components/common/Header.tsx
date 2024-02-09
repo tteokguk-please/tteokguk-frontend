@@ -39,16 +39,18 @@ const Header = ({
 
   return (
     <header className={classNames(styles.header, className)}>
-      {showSearchIcon && (
-        <Link to="/user/search" className={styles.icon}>
-          <SearchIcon aria-label="검색" />
-        </Link>
-      )}
-      {showBackButton && (
-        <div onClick={handleClickBefore} className={styles.icon} aria-label="뒤로 가기">
-          <BeforeIcon />
-        </div>
-      )}
+      <div className={styles.leftSection}>
+        {showSearchIcon && (
+          <Link to="/user/search" className={styles.icon}>
+            <SearchIcon aria-label="검색" />
+          </Link>
+        )}
+        {showBackButton && (
+          <button onClick={handleClickBefore} className={styles.icon} aria-label="뒤로 가기">
+            <BeforeIcon />
+          </button>
+        )}
+      </div>
       <div className={styles.title}>
         <h1>{children}</h1>
       </div>
@@ -102,8 +104,12 @@ const styles = {
     height: "4.8rem",
     padding: "0 1.6rem",
   }),
-  icon: css({
+  leftSection: css({
+    display: "flex",
     flex: 1,
+    alignItems: "center",
+  }),
+  icon: css({
     cursor: "pointer",
   }),
   title: css({
