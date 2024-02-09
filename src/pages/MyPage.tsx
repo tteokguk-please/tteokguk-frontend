@@ -180,6 +180,12 @@ const MyPage = () => {
               <button>소원 떡국 만들기</button>
             </Link>
           </div>
+          {!isPending && tteokguks.length === 0 && (
+            <div className={styles.noTteokguk}>
+              <div className={styles.noTteokgukTitle}>아직 만든 떡국이 없어요.</div>
+              <div>소원 떡국 만들기 버튼을 클릭하여 새 떡국을 만들어보세요.</div>
+            </div>
+          )}
           <TteokgukList tteokguks={tteokguks} />
         </div>
         <div>
@@ -285,5 +291,15 @@ const styles = {
     justifyContent: "center",
     fontSize: "1.4rem",
     marginY: "1.6rem",
+  }),
+  noTteokguk: css({
+    textAlign: "center",
+    marginTop: "1.6rem",
+    fontSize: "1.4rem",
+  }),
+  noTteokgukTitle: css({
+    fontSize: "1.6rem",
+    fontWeight: 700,
+    marginBottom: "0.8rem",
   }),
 };

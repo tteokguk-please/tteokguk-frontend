@@ -75,9 +75,21 @@ const MainPage = () => {
               </Tab>
             </TabList>
             <TabPanel className={styles.tabPanel}>
+              {!isPending && tteokguks.length === 0 && (
+                <div className={styles.noTteokguk}>
+                  <div className={styles.noTteokgukTitle}>현재 응원을 요청하는 떡국이 없어요.</div>
+                  <div>나만의 떡국을 만들고, 다른 사람들과 재료를 나눠보세요.</div>
+                </div>
+              )}
               <TteokgukWithCaptionList tteokguks={tteokguks} />
             </TabPanel>
             <TabPanel className={styles.tabPanel}>
+              {!isPending && tteokguks.length === 0 && (
+                <div className={styles.noTteokguk}>
+                  <div className={styles.noTteokgukTitle}>아직 만들어진 떡국이 없어요.</div>
+                  <div>도움이 필요한 떡국들에게 재료를 나눠주세요. </div>
+                </div>
+              )}
               <TteokgukWithCaptionList tteokguks={tteokguks} />
             </TabPanel>
           </Tabs>
@@ -161,5 +173,15 @@ const styles = {
   }),
   isFetchingLoading: css({
     width: "50%",
+  }),
+  noTteokguk: css({
+    textAlign: "center",
+    marginTop: "1.6rem",
+    fontSize: "1.4rem",
+  }),
+  noTteokgukTitle: css({
+    fontSize: "1.6rem",
+    fontWeight: 700,
+    marginBottom: "0.8rem",
   }),
 };
