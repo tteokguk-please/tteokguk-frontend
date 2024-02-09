@@ -95,6 +95,7 @@ const TteokgukPage = () => {
           tteokgukId={tteokgukId}
           myDetails={loggedInUserDetails}
           requiredIngredients={requiredIngredients}
+          usedIngredients={usedIngredients}
         />
       ));
     }
@@ -109,6 +110,7 @@ const TteokgukPage = () => {
           tteokgukId={tteokgukId}
           myDetails={loggedInUserDetails}
           requiredIngredients={requiredIngredients}
+          usedIngredients={usedIngredients}
         />
       ));
     }

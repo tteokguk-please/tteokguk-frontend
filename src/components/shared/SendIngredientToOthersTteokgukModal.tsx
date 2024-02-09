@@ -22,6 +22,7 @@ interface Props {
   tteokgukId: number;
   myDetails: LoggedInUserDetailsResponse;
   requiredIngredients: IngredientKey[];
+  usedIngredients: IngredientKey[];
 }
 
 const SendIngredientsToOthersTteokgukModal = ({
@@ -30,20 +31,26 @@ const SendIngredientsToOthersTteokgukModal = ({
   tteokgukId,
   myDetails,
   requiredIngredients,
+  usedIngredients,
 }: Props) => {
   const createCheerMessageModalOverlay = useOverlay();
   const [selectedIngredient, updateSelectedIngredient] = useAtom($updateSelectedIngredient);
+  const needIngredients = requiredIngredients.filter(
+    (requiredIngredient) => !usedIngredients.includes(requiredIngredient),
+  );
+  const checkNeedIngredient = (ingredientKey: IngredientKey) =>
+    needIngredients.includes(ingredientKey);
 
   const { itemResponses: ingredientsStocks } = myDetails;
 
   const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
-    if (requiredIngredients.includes(ingredientKey)) {
+    if (checkNeedIngredient(ingredientKey)) {
       updateSelectedIngredient(ingredientKey);
     }
   };
 
   const handleClickNextButton = () => {
-    if (!selectedIngredient || !requiredIngredients.includes(selectedIngredient)) return;
+    if (!selectedIngredient || !checkNeedIngredient(selectedIngredient)) return;
 
     createCheerMessageModalOverlay.open(({ isOpen, close: handleCloseCheerMessageModal }) => (
       <CreateCheerMessageModal
