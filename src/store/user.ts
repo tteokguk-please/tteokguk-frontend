@@ -1,4 +1,4 @@
-import { atomWithQuery, atomWithMutation } from "jotai-tanstack-query";
+import { atomWithQuery, atomWithMutation, atomWithSuspenseQuery } from "jotai-tanstack-query";
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
 
@@ -25,10 +25,11 @@ export const $getUserDetail = atomFamilyWithQuery("users", (id: number) => {
   return getUserDetails(id);
 });
 
-export const $getLoggedInUserDetails = atomWithQuery(() => ({
+export const $getLoggedInUserDetails = atomWithSuspenseQuery(() => ({
   queryKey: ["loggedInUser"],
   queryFn: getLoggedInUserDetails,
   enabled: !!getLocalStorage("accessToken"),
+  refetchOnMount: false,
 }));
 
 export const $nickname = atom("");

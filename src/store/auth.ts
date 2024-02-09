@@ -39,8 +39,8 @@ export const $signup = atomWithMutation(() => ({
 
 export const $login = atomWithMutation((get) => ({
   mutationFn: (body: LoginRequest): Promise<LoginResponse> => postLogin(body),
-  onSuccess: () => {
-    get($getLoggedInUserDetails).refetch();
+  onSuccess: async () => {
+    (await get($getLoggedInUserDetails)).refetch();
   },
 }));
 

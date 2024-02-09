@@ -85,7 +85,6 @@ const MyPage = () => {
     });
 
     if (isLoggedOut) {
-      loggedInUser();
       removeLocalStorage("accessToken");
       removeLocalStorage("refreshToken");
 

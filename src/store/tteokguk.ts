@@ -47,25 +47,33 @@ const $getCompletedTteokguks = atomWithInfiniteQuery(() => ({
   initialPageParam: 1,
 }));
 
-const $loggedInUserDetails = atom((get) => get($getLoggedInUserDetails));
 export const $tteokguksByTab = atomFamily((tabIndex: number) =>
   atom(async (get) => {
     const $tteokgukAtom = tabIndex === 0 ? $getNewTteokguks : $getCompletedTteokguks;
     const tteokgukPaginationData = await get($tteokgukAtom);
-    const userDetails = get($loggedInUserDetails);
     const pages = tteokgukPaginationData.data?.pages || [];
+
+    if (!getLocalStorage("accessToken")) {
+      return {
+        tteokguks: pages
+          .flatMap(({ data: tteokguks }) => tteokguks)
+          .map((tteokguk) => ({
+            ...tteokguk,
+            hasIngredient: false,
+          })),
+        ...tteokgukPaginationData,
+      };
+    }
+
+    const userDetail = await get($getLoggedInUserDetails);
 
     const tteokguks = pages
       .flatMap(({ data: tteokguks }) => tteokguks)
       .map((tteokguk) => {
         const { requiredIngredients } = tteokguk;
 
-        if (!getLocalStorage("accessToken")) {
-          return { ...tteokguk, hasIngredient: false };
-        }
-
         const hasOwnIngredient = (ingredient: IngredientKey) =>
-          userDetails.data?.itemResponses?.some(
+          userDetail.data?.itemResponses?.some(
             (item) => item.ingredient === ingredient && item.stockQuantity > 0,
           );
         const hasOwnedRequiredIngredient = requiredIngredients.some(hasOwnIngredient);
