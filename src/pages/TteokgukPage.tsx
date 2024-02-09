@@ -42,7 +42,9 @@ const TteokgukPage = () => {
   const successfulTteokgukCreationOverlay = useOverlay();
   const router = useRouter();
   const { confirm } = useDialog();
-  const { data: loggedInUserDetails } = useAtomValue($getLoggedInUserDetails);
+  const { data: loggedInUserDetails } = useAtomValue(
+    $getLoggedInUserDetails(!!getLocalStorage("accessToken")),
+  );
   const { mutate: deleteTteokguk } = useAtomValue($deleteTteokguk);
   const { data: tteokguk, isPending, isError, refetch } = useAtomValue($getTteokguk(Number(id)));
   const { refetch: refetchRandomTteokguk } = useAtomValue($getRandomTteokguk);

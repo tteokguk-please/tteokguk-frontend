@@ -65,7 +65,7 @@ export const $tteokguksByTab = atomFamily((tabIndex: number) =>
       };
     }
 
-    const userDetail = await get($getLoggedInUserDetails);
+    const userDetail = await get($getLoggedInUserDetails(!!getLocalStorage("accessToken")));
 
     const tteokguks = pages
       .flatMap(({ data: tteokguks }) => tteokguks)

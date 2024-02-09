@@ -11,10 +11,9 @@ import {
   deleteLoggedInUser,
 } from "@/apis/user";
 
-import { getLocalStorage } from "@/utils/localStorage";
-import { atomFamilyWithQuery } from "@/utils/jotai";
+import { atomFamilyWithQuery, atomFamilyWithSuspenseQuery } from "@/utils/jotai";
 
-import { RandomUserResponse } from "@/types/user.dto";
+import { LoggedInUserDetailsResponse, RandomUserResponse } from "@/types/user.dto";
 
 export const $getMyDetails = atomWithQuery(() => ({
   queryKey: ["myDetails"],
@@ -25,12 +24,21 @@ export const $getUserDetail = atomFamilyWithQuery("users", (id: number) => {
   return getUserDetails(id);
 });
 
-export const $getLoggedInUserDetails = atomWithSuspenseQuery(() => ({
-  queryKey: ["loggedInUser"],
-  queryFn: getLoggedInUserDetails,
-  enabled: !!getLocalStorage("accessToken"),
-  refetchOnMount: false,
-}));
+export const $getLoggedInUserDetails = atomFamilyWithSuspenseQuery(
+  "loggedInUser",
+  (enabled: boolean) => {
+    const initialReponse: LoggedInUserDetailsResponse = {
+      id: 0,
+      primaryIngredient: "BEEF",
+      nickname: "",
+      itemResponses: [],
+    };
+    if (!enabled) {
+      return Promise.resolve(initialReponse);
+    }
+    return getLoggedInUserDetails();
+  },
+);
 
 export const $nickname = atom("");
 export const $getSearchedUsers = atomFamily(() =>
