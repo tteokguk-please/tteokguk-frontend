@@ -1,6 +1,7 @@
 import { atomWithQuery, atomWithMutation } from "jotai-tanstack-query";
 import { atom } from "jotai";
 import { atomFamily } from "jotai/utils";
+import * as Sentry from "@sentry/react";
 
 import {
   getLoggedInUserDetails,
@@ -58,5 +59,8 @@ export const $getRandomUserDetails = atomWithQuery<RandomUserResponse>(() => ({
 export const $deleteLoggedInUser = atomWithMutation(() => {
   return {
     mutationFn: deleteLoggedInUser,
+    onError: (error) => {
+      Sentry.captureException(error);
+    },
   };
 });

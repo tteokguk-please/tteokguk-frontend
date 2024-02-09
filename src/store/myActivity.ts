@@ -1,5 +1,6 @@
 import { atomWithInfiniteQuery } from "jotai-tanstack-query";
 import { atom } from "jotai";
+import * as Sentry from "@sentry/react";
 
 import { getReceivedIngredients, getMySupportedTteokguks } from "@/apis/myActivity";
 
@@ -15,9 +16,13 @@ const $getReceivedIngredients = atomWithInfiniteQuery(() => ({
 }));
 
 export const $receivedIngredients = atom(async (get) => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, ...rest } = await get(
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, error, ...rest } = await get(
     $getReceivedIngredients,
   );
+
+  if (error) {
+    Sentry.captureException(error);
+  }
 
   const handleReceivedIngredeintIntersect = ({ enabled }: { enabled: boolean }) => {
     if (hasNextPage && !isFetchingNextPage && enabled) {
@@ -49,8 +54,12 @@ const $getMySupportedTteokguks = atomWithInfiniteQuery(() => ({
 }));
 
 export const $mySupportedTteokguks = atom((get) => {
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, ...rest } =
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, error, ...rest } =
     get($getMySupportedTteokguks);
+
+  if (error) {
+    Sentry.captureException(error);
+  }
 
   const handleSupportedTtoekguksIntersect = ({ enabled }: { enabled: boolean }) => {
     if (hasNextPage && !isFetchingNextPage && enabled) {
