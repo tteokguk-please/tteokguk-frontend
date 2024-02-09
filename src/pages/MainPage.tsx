@@ -60,9 +60,7 @@ const MainPage = () => {
   return (
     <>
       <Header showSearchIcon actionIcon="profile">
-        <Link to="/tteokguks">
-          <HeaderLogo aria-label="용용이" />
-        </Link>
+        <HeaderLogo aria-label="용용이" />
       </Header>
       <div className={styles.container}>
         <>
