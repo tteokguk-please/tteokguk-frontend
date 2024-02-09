@@ -16,7 +16,6 @@ import {
   $getMyDetails,
   $getRandomUserDetails,
   $deleteLoggedInUser,
-  $getLoggedInUserDetails,
 } from "@/store/user";
 import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 import Header from "@/components/common/Header";
