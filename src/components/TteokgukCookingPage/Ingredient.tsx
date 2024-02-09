@@ -59,7 +59,7 @@ const styles = {
       height: "5.6rem",
       borderRadius: "50%",
       backgroundColor,
-      cursor: `${backgroundColor === "white" ? "default" : "pointer"}`,
+      cursor: `${backgroundColor === "white" ? "not-allowed" : "pointer"}`,
     }),
   ingredientNumber: css({
     position: "absolute",

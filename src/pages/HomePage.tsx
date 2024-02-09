@@ -15,9 +15,7 @@ const HomePage = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.logo}>
-        <Link to="/">
-          <img src={homeLogo} alt="로고" />
-        </Link>
+        <img src={homeLogo} alt="로고" />
       </h1>
       <div className={styles.dragon}>
         <img src={tryDragon} alt="떡국 권하는 용용이" />
