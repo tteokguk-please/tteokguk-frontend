@@ -53,7 +53,7 @@ const TteokgukPage = () => {
   if (isPending) {
     return (
       <Fragment>
-        <Header showBackButton actionIcon="profile">
+        <Header showBackButton showHomeButton actionIcon="profile">
           소원 떡국
         </Header>
         <div className={styles.container}>
@@ -171,7 +171,7 @@ const TteokgukPage = () => {
 
   return (
     <Fragment>
-      <Header showBackButton actionIcon="profile">
+      <Header showBackButton showHomeButton actionIcon="profile">
         소원 떡국
       </Header>
       <div className={styles.container}>

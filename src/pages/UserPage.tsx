@@ -31,7 +31,7 @@ const UserPage = () => {
   if (isPending || !userDetails) {
     return (
       <Fragment>
-        <Header showBackButton actionIcon="profile">
+        <Header showBackButton showHomeButton actionIcon="profile">
           프로필
         </Header>
         <div className={styles.container}>

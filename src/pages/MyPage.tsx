@@ -32,7 +32,7 @@ const MyPage = () => {
   if (isPending) {
     return (
       <Fragment>
-        <Header showBackButton actionIcon="guide">
+        <Header showBackButton showHomeButton actionIcon="guide">
           마이페이지
         </Header>
         <div className={styles.container}>
