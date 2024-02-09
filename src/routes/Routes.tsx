@@ -20,6 +20,7 @@ import MyActivityPageFallback from "@/pages/MyActivityPage.fallback";
 import ProtectedRoute from "./ProtectedRoute";
 
 import Layout from "@/components/layout/Layout";
+import TteokgukPageFallback from "@/pages/TteokgukPage.fallback";
 
 export type RoutePath =
   | "/"
@@ -89,7 +90,14 @@ export const Routes = () => {
             </Suspense>
           }
         />
-        <Route path="/tteokguks/:id" element={<TteokgukPage />} />
+        <Route
+          path="/tteokguks/:id"
+          element={
+            <Suspense fallback={<TteokgukPageFallback />}>
+              <TteokgukPage />
+            </Suspense>
+          }
+        />
         <Route
           path="/tteokguk/create"
           element={
