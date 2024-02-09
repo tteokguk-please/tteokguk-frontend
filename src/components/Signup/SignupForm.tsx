@@ -25,7 +25,7 @@ interface Props {
 }
 
 const EMAIL_REGEX = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w{2,4}([-.]\w+)*$/;
-const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/;
+const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!*]).*$/;
 
 const SignupForm = ({ defaultValues, onSubmit }: Props) => {
   const { confirm } = useDialog();
