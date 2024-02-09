@@ -17,7 +17,7 @@ const MainPageFallback = () => {
           </Link>
         </Header>
         <div className={styles.tabContainer}>
-          <Tabs selectedIndex={0}>
+          <Tabs selectedIndex={0} onSelect={() => {}}>
             <TabList className={styles.tabList}>
               <Tab className={styles.selectedTab}>새로운 떡국</Tab>
               <Tab>완성된 떡국</Tab>
