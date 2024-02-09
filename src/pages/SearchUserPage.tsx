@@ -21,6 +21,7 @@ const SearchUserPage = () => {
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    gtag("event", "search", { event_category: "유저 검색" });
     const formData = new FormData(event.currentTarget);
     const nickname = formData.get("nickname") as string;
 

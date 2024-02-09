@@ -74,6 +74,8 @@ const TteokgukCookingPage = () => {
       },
       {
         onSuccess: ({ tteokgukId, backgroundColor, frontGarnish, backGarnish }) => {
+          gtag("event", "소원 떡국 생성", { event_category: "새로운 소원 떡국 생성" });
+
           successfulCreationTteokgukOverlay.open(({ isOpen, close }) => (
             <SuccessfulTteokgukCreationModal
               isOpen={isOpen}

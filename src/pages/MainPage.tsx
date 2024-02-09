@@ -42,6 +42,14 @@ const MainPage = () => {
     return <ErrorFallbackPage retry={refetch} />;
   }
 
+  const handleClickNewTteokguk = () => {
+    gtag("event", "click", { event_category: "새로운 떡국 보기" });
+  };
+
+  const handleClickCompletedTteokguk = () => {
+    gtag("event", "click", { event_category: "완성된 보기" });
+  };
+
   return (
     <>
       <Header showSearchIcon actionIcon="profile">
@@ -53,10 +61,16 @@ const MainPage = () => {
         <>
           <Tabs selectedIndex={tabIndex} onSelect={(index: number) => setTabIndex(index)}>
             <TabList className={styles.tabList}>
-              <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(0) })}>
+              <Tab
+                onClick={handleClickNewTteokguk}
+                className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(0) })}
+              >
                 새로운 떡국
               </Tab>
-              <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(1) })}>
+              <Tab
+                onClick={handleClickCompletedTteokguk}
+                className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(1) })}
+              >
                 완성된 떡국
               </Tab>
             </TabList>

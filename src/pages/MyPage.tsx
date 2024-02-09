@@ -12,11 +12,7 @@ import ErrorFallbackPage from "./ErrorFallbackPage";
 
 import { Link } from "@/routes/Link";
 import useRouter from "@/routes/useRouter";
-import {
-  $getMyDetails,
-  $getRandomUserDetails,
-  $deleteLoggedInUser,
-} from "@/store/user";
+import { $getMyDetails, $getRandomUserDetails, $deleteLoggedInUser } from "@/store/user";
 import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
@@ -57,6 +53,8 @@ const MyPage = () => {
   const handleClickRandomVisitButton = async () => {
     const { data: randomUserDetails } = await refetchRandomUserDetails();
 
+    gtag("event", "click", { event_category: "랜덤 유저 방문" });
+
     if (randomUserDetails) {
       router.push(`/users/${randomUserDetails.id}`);
     }
@@ -85,6 +83,7 @@ const MyPage = () => {
     if (isLoggedOut) {
       removeLocalStorage("accessToken");
       removeLocalStorage("refreshToken");
+      gtag("event", "logout", { event_category: "로그아웃" });
 
       router.push("/");
     }
@@ -129,7 +128,10 @@ const MyPage = () => {
             text: "첫 화면으로 이동",
             color: "primary.100",
             applyColorTo: "background",
-            onClick: () => router.push("/"),
+            onClick: () => {
+              gtag("event", "click", { event_category: "유저 탈퇴" });
+              router.push("/");
+            },
           },
         });
       },

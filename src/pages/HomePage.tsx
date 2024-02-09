@@ -8,6 +8,10 @@ import leftMountain from "@/assets/images/left-mountain.png";
 import rightMountain from "@/assets/images/right-mountain.png";
 
 const HomePage = () => {
+  const handleClickGoToTteokguks = () => {
+    gtag("event", "click", { event_category: "떡국 둘러보러 가기" });
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.logo}>
@@ -24,7 +28,7 @@ const HomePage = () => {
             로그인
           </Button>
         </Link>
-        <Link to="/tteokguks">
+        <Link to="/tteokguks" onClick={handleClickGoToTteokguks}>
           <Button color="primary.45" applyColorTo="outline">
             떡국 둘러보기
           </Button>

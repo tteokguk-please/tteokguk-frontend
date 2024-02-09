@@ -72,8 +72,12 @@ const HomeIconLink = () => {
 };
 
 const ProfileIconLink = () => {
+  const handleClickProfile = () => {
+    gtag("event", "click", { event_category: "마이 페이지 가기" });
+  };
+
   return (
-    <Link to="/my-page">
+    <Link to="/my-page" onClick={handleClickProfile}>
       <ProfileIcon aria-label="프로필" />
     </Link>
   );
@@ -83,6 +87,8 @@ const GuideModalButton = () => {
   const guideOverlay = useOverlay();
 
   const handleClickGuideIcon = () => {
+    gtag("event", "click", { event_category: "서비스 가이드 보기" });
+
     guideOverlay.open(({ isOpen, close }) => <GuideModal isOpen={isOpen} onClose={close} />);
   };
 
