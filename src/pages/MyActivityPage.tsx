@@ -1,5 +1,6 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useSearchParams } from "react-router-dom";
 
 import classNames from "classnames";
 import { useAtomValue } from "jotai";
@@ -15,7 +16,12 @@ import Loading from "@/components/common/Loading";
 import MySupportedTteokgukCardList from "@/components/MyActivity/MySupportedTteokgukCardList";
 
 const MyActivityPage = () => {
-  const [tabIndex, setTabIndex] = useState(0);
+  const tabParams = ["ingredient", "support"];
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tabParam = searchParams.get("tab") ?? "";
+  const tabIndexByParam = tabParams.indexOf(tabParam);
+  const [tabIndex, setTabIndex] = useState(tabIndexByParam === -1 ? 0 : tabIndexByParam);
   const isSelectedTab = (index: number) => index === tabIndex;
   const {
     mySupportedTteokguks,
@@ -36,6 +42,11 @@ const MyActivityPage = () => {
   const isFetchingNextPage =
     isReceivedTteokgukFetchingNextPage || isMySupportedTteokgukFetchingNextPage;
 
+  const handleSelectTab = (index: number) => {
+    setSearchParams({ tab: tabParams[index] });
+    setTabIndex(index);
+  };
+
   useIntersectionObserver({
     target: fetchMoreRef,
     handleIntersect:
@@ -44,11 +55,15 @@ const MyActivityPage = () => {
         : () => handleSupportedTtoekguksIntersect({ enabled: isSelectedTab(1) }),
   });
 
+  useEffect(() => {
+    setTabIndex(tabIndexByParam === -1 ? 0 : tabIndexByParam);
+  }, [tabIndexByParam, setTabIndex]);
+
   return (
     <Fragment>
       <Header showBackButton>활동 내역</Header>
       <div className={styles.container}>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+        <Tabs selectedIndex={tabIndex} onSelect={handleSelectTab}>
           <TabList className={styles.tabList}>
             <Tab className={classNames(styles.tab, { [styles.selectedTab]: isSelectedTab(0) })}>
               받은 떡국 재료
