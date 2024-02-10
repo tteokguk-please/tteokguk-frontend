@@ -9,6 +9,8 @@ import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 import { css } from "@styled-system/css";
 
+import Meta from "./Meta";
+
 import Header from "@/components/common/Header";
 import ReceivedIngredientsList from "@/components/common/ReceivedIngredientsList";
 import { $mySupportedTteokguks, $receivedIngredients } from "@/store/myActivity";
@@ -69,6 +71,11 @@ const MyActivityPage = () => {
 
   return (
     <Fragment>
+      <Meta
+        path="/my-page/activity"
+        title="활동내역 페이지"
+        description="내가 응원한 떡국과 받은 재료들을 확인해보세요"
+      />
       <Header showBackButton>활동 내역</Header>
       <div className={styles.container}>
         <Tabs selectedIndex={tabIndex} onSelect={handleSelectTab}>

@@ -7,6 +7,8 @@ import { css } from "@styled-system/css";
 
 import { setLocalStorage } from "@/utils/localStorage";
 
+import Meta from "./Meta";
+
 import { Link } from "@/routes/Link";
 import Label from "@/components/common/Label";
 import Input from "@/components/common/Input";
@@ -45,6 +47,7 @@ const EmailLoginPage = () => {
 
   return (
     <Fragment>
+      <Meta path="/login/email" title="이메일 로그인 페이지" description="이메일로 로그인 하세요" />
       <Header showBackButton>이메일로 로그인</Header>
       <div className={styles.container}>
         <div className={styles.content}>

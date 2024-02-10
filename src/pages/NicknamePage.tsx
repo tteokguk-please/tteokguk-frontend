@@ -6,6 +6,8 @@ import { toast } from "sonner";
 
 import { NicknameFormValues } from "@/types/form";
 
+import Meta from "./Meta";
+
 import Header from "@/components/common/Header";
 import NicknameForm from "@/components/Nickname/NicknameForm";
 import { $postKakaoUserSignup } from "@/store/auth";
@@ -50,6 +52,11 @@ const NicknamePage = () => {
 
   return (
     <Fragment>
+      <Meta
+        path="/nickname/create"
+        title="닉네임 설정 페이지"
+        description="사용할 닉네임을 설정하세요"
+      />
       <Header showBackButton>닉네임 설정하기</Header>
       <NicknameForm defaultValues={defaultValues} onSubmit={handleSubmit} />
     </Fragment>
