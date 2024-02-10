@@ -1,8 +1,9 @@
 import { Fragment } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 import { useAtomValue } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
+import { toast } from "sonner";
 
 import { useDialog } from "@/hooks/useDialog";
 
@@ -37,6 +38,7 @@ const MAX_INGREDIENTS = 5;
 
 const TteokgukPage = () => {
   const { id } = useParams();
+  const location = useLocation();
   const addIngredientsToMyTteokgukOverlay = useOverlay();
   const sendIngredientsToOthersTteokgukOverlay = useOverlay();
   const successfulTteokgukCreationOverlay = useOverlay();
@@ -49,6 +51,7 @@ const TteokgukPage = () => {
   const { data: tteokguk, isPending, isError, refetch } = useAtomValue($getTteokguk(Number(id)));
   const { refetch: refetchRandomTteokguk } = useAtomValue($getRandomTteokguk);
   const { mutate: postCompleteTteokguk } = useAtomValue($postCompleteTteokguk);
+  console.log(location);
 
   if (isPending) {
     return (
@@ -169,6 +172,16 @@ const TteokgukPage = () => {
     });
   };
 
+  const handleClickCopyLinkButton = async () => {
+    try {
+      await navigator.clipboard.writeText(`www.tteokguk-please.com/${location.pathname}`);
+
+      toast("링크 복사가 완료되었습니다.");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Fragment>
       <Header showBackButton showHomeButton actionIcon="profile">
@@ -179,11 +192,11 @@ const TteokgukPage = () => {
           <div className={styles.titleContainer}>
             <div className={styles.title}>
               <SmallActivityIcon />
-              {nickname}님의 떡국
+              {nickname}님
             </div>
-            <button onClick={handleClickRandomVisitButton} className={styles.randomVisitButton}>
-              랜덤 방문
-            </button>
+            <Link to={`/users/${memberId}`} className={styles.profileVisit}>
+              프로필 방문하기
+            </Link>
           </div>
           <div className={styles.imageContainer}>
             <TteokgukImage
@@ -238,7 +251,9 @@ const TteokgukPage = () => {
             </Button>
           </Link>
         )}
-
+        <Button onClick={handleClickCopyLinkButton} color="secondary.100" applyColorTo="background">
+          링크 공유하기
+        </Button>
         {isLoggedIn && !isMyTteokguk && !completion && (
           <Button
             onClick={handleClickAddIngredientButton}
@@ -270,6 +285,15 @@ const TteokgukPage = () => {
           </Button>
         )}
 
+        <Button
+          onClick={handleClickRandomVisitButton}
+          className={styles.randomVisitButton}
+          color="primary.100"
+          applyColorTo="background"
+        >
+          랜덤 떡국 방문하기
+        </Button>
+
         {isMyTteokguk && (
           <div className={styles.wishDeleteButton}>
             <button onClick={handleClickDeleteTteokgukButton}>소원 삭제하기</button>
@@ -300,9 +324,11 @@ const styles = {
     alignItems: "center",
     fontWeight: 700,
   }),
-  randomVisitButton: css({
-    width: "6.8rem",
+  profileVisit: css({
+    display: "flex",
+    alignItems: "center",
     height: "2.6rem",
+    paddingX: "0.8rem",
     backgroundColor: "primary.20",
     fontSize: "1.4rem",
     borderRadius: "0.4rem",
@@ -360,5 +386,8 @@ const styles = {
   }),
   block: css({
     display: "block",
+  }),
+  randomVisitButton: css({
+    marginTop: "1rem",
   }),
 };
