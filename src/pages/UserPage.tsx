@@ -57,6 +57,8 @@ const UserPage = () => {
     }
   };
 
+  if (!id) return <Fragment />;
+
   return (
     <Fragment>
       <Header showBackButton showHomeButton actionIcon="profile">
@@ -64,6 +66,7 @@ const UserPage = () => {
       </Header>
       <div className={styles.container}>
         <UserProfileSection
+          id={Number(id)}
           nickname={nickname}
           uniqueIngredientKey={uniqueIngredientKey}
           color="primary"
