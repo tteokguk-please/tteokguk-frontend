@@ -12,6 +12,7 @@ import Modal from "@/components/common/modal/Modal";
 import CheckIcon from "@/assets/svg/check.svg";
 import NoCheckIcon from "@/assets/svg/no-check.svg";
 import { $postIngredientToOthersTteokguk, $updateSelectedIngredient } from "@/store/ingredient";
+import { $sentMessage } from "@/store/tteokguk";
 
 interface Props {
   isOpen: boolean;
@@ -27,15 +28,18 @@ const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
   const [selectedIngredient, updateSelectedIngredient] = useAtom($updateSelectedIngredient);
   const [message, setMessage] = useState("새해 복 많이 받으세요");
   const [isAnonymous, setIsAnonymous] = useState(false);
+  const [, setSentMessage] = useAtom($sentMessage);
 
   const handleChangeTextarea = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const message = event.target.value;
 
     setMessage(message);
+    setSentMessage((previousState) => ({ ...previousState, message }));
   };
 
   const handleChangeCheckbox = () => {
     setIsAnonymous(!isAnonymous);
+    setSentMessage((previousState) => ({ ...previousState, isAnonymous: !isAnonymous }));
   };
 
   const handleSubmitCheerMessage = (event: FormEvent) => {
@@ -52,8 +56,6 @@ const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
       },
       {
         onSuccess: ({ rewardIngredient, rewardQuantity }) => {
-          updateSelectedIngredient(null);
-
           cheerSuccessOverlay.open(({ isOpen, close: handleCloseCheerSuccessModal }) => (
             <CheerSuccessModal
               isOpen={isOpen}
