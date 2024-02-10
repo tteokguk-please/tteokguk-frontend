@@ -1,10 +1,11 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 
 import { useAtom, useAtomValue } from "jotai";
 import { toast } from "sonner";
-import { useResetAtom } from "jotai/utils";
 
 import { css } from "@styled-system/css";
+
+import { IngredientKey } from "@/types/ingredient";
 
 import Modal from "../common/modal/Modal";
 import Button from "../common/Button";
@@ -16,21 +17,20 @@ import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingr
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  ingredientKey: IngredientKey;
 }
 
-const ViewMessageModal = ({ isOpen, onClose }: Props) => {
+const ViewMessageModal = ({ isOpen, onClose, ingredientKey }: Props) => {
   const [selectedIngredient, setSelectedIngredient] = useAtom($selectedIngredient);
   const { nickname, message, isAnonymous } = useAtomValue($sentMessage);
-  const resetSentMessage = useResetAtom($sentMessage);
 
   useEffect(() => {
+    gtag("event", "page_view", { event_category: "재료 클릭하여 응원 메시지 보기" });
+
     return () => {
       setSelectedIngredient(null);
-      resetSentMessage();
     };
-  }, []);
-
-  if (selectedIngredient === null) return <Fragment />;
+  }, [setSelectedIngredient]);
 
   const handleClickCopyLinkButton = async () => {
     try {
@@ -45,7 +45,7 @@ const ViewMessageModal = ({ isOpen, onClose }: Props) => {
     }
   };
 
-  const IngredientIcon = INGREDIENT_ICON_BY_KEY[28][selectedIngredient];
+  const IngredientIcon = INGREDIENT_ICON_BY_KEY[28][ingredientKey];
 
   return (
     isOpen && (
@@ -59,18 +59,12 @@ const ViewMessageModal = ({ isOpen, onClose }: Props) => {
             <div>
               <div className={styles.nickname}>
                 {!isAnonymous && `@ ${nickname}`}
-                {isAnonymous &&
-                  selectedIngredient &&
-                  `익명의 ${INGREDIENT_NAME_BY_KEY[selectedIngredient]}님`}
+                {isAnonymous && `익명의 ${INGREDIENT_NAME_BY_KEY[ingredientKey]}님`}
               </div>
-              {selectedIngredient && (
-                <div>{`응원의 ${INGREDIENT_NAME_BY_KEY[selectedIngredient]}을/를 보냈어요!`}</div>
-              )}
+              <div>{`응원의 ${INGREDIENT_NAME_BY_KEY[ingredientKey]}을/를 보냈어요!`}</div>
             </div>
             <div className={styles.ingredient}>
-              {selectedIngredient && (
-                <IngredientIcon aria-label={INGREDIENT_NAME_BY_KEY[selectedIngredient]} />
-              )}
+              <IngredientIcon aria-label={INGREDIENT_NAME_BY_KEY[ingredientKey]} />
             </div>
           </div>
           <div className={styles.buttonContainer}>

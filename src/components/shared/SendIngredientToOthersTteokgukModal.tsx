@@ -54,6 +54,7 @@ const SendIngredientsToOthersTteokgukModal = ({
           onClose();
         }}
         tteokgukId={tteokgukId}
+        ingredientKey={selectedIngredient}
       />
     ));
   };

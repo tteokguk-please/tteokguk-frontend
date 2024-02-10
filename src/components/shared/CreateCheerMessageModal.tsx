@@ -5,6 +5,8 @@ import { useAtom, useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
+import { IngredientKey } from "@/types/ingredient";
+
 import CheerSuccessModal from "./CheerSuccessModal";
 
 import Button from "@/components/common/Button";
@@ -18,11 +20,12 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   tteokgukId: number;
+  ingredientKey: IngredientKey;
 }
 
 const MAX_CHARACTER = 100;
 
-const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
+const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId, ingredientKey }: Props) => {
   const cheerSuccessOverlay = useOverlay();
   const { mutate: postIngredient, isPending } = useAtomValue($postIngredientToOthersTteokguk);
   const [selectedIngredient, updateSelectedIngredient] = useAtom($updateSelectedIngredient);
@@ -63,6 +66,7 @@ const CreateCheerMessageModal = ({ isOpen, onClose, tteokgukId }: Props) => {
                 handleCloseCheerSuccessModal();
                 onClose();
               }}
+              ingredientKey={ingredientKey}
               rewardIngredient={rewardIngredient}
               rewardQuantity={rewardQuantity}
             />

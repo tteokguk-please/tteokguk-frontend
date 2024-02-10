@@ -19,9 +19,16 @@ interface Props {
   onClose: () => void;
   rewardIngredient: IngredientKey;
   rewardQuantity: number;
+  ingredientKey: IngredientKey;
 }
 
-const CheerSuccessModal = ({ isOpen, onClose, rewardIngredient, rewardQuantity }: Props) => {
+const CheerSuccessModal = ({
+  isOpen,
+  onClose,
+  rewardIngredient,
+  rewardQuantity,
+  ingredientKey,
+}: Props) => {
   const [step, setStep] = useState(0);
   const RewardIngredientIcon = INGREDIENT_ICON_BY_KEY[80][rewardIngredient];
   const viewMessageOverlay = useOverlay();
@@ -43,6 +50,7 @@ const CheerSuccessModal = ({ isOpen, onClose, rewardIngredient, rewardQuantity }
           handleCloseViewMessageModal();
           onClose();
         }}
+        ingredientKey={ingredientKey}
       />
     ));
   };
