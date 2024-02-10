@@ -30,13 +30,13 @@ export type RoutePath =
   | "/signup"
   | "/tteokguks"
   | "/tteokguks/:id"
-  | `/tteokguks/${string}`
+  | `/tteokguks/${number}`
   | "/tteokguk/create"
   | "/my-page"
   | "/my-page/activity"
   | "/user/search"
   | "/users/:id"
-  | `/users/${string}`;
+  | `/users/${number}`;
 
 export const Routes = () => {
   return (

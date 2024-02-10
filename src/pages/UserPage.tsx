@@ -61,7 +61,7 @@ const UserPage = () => {
   return (
     <Fragment>
       <Meta
-        path={`/users/${id}`}
+        path={`/users/${Number(id)}`}
         title="다른 유저 페이지"
         description="다른 유저들은 어떤 떡국을 만들었는지 확인해보세요"
       />
