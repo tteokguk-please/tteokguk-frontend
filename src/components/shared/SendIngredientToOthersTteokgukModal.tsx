@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { useAtom } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
 
@@ -13,7 +15,6 @@ import Button from "../common/Button";
 import CreateCheerMessageModal from "./CreateCheerMessageModal";
 
 import { $updateSelectedIngredient } from "@/store/ingredient";
-import { useEffect } from "react";
 
 interface Props {
   isOpen: boolean;

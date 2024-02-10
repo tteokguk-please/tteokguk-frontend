@@ -1,12 +1,13 @@
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 
+import classNames from "classnames";
+
 import { css } from "@styled-system/css";
 
 import Header from "@/components/common/Header";
 import Loading from "@/components/common/Loading";
 import { Link } from "@/routes/Link";
 import HeaderLogo from "@/assets/svg/header-logo.svg";
-import classNames from "classnames";
 
 const MainPageFallback = () => {
   return (
