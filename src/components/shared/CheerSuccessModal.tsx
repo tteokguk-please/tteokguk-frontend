@@ -1,8 +1,12 @@
 import { useState } from "react";
 
+import { useOverlay } from "@toss/use-overlay";
+
 import { css } from "@styled-system/css";
 
 import { IngredientKey } from "@/types/ingredient";
+
+import ViewMessageModal from "./ViewMessageModal";
 
 import Modal from "@/components/common/modal/Modal";
 import Button from "@/components/common/Button";
@@ -20,21 +24,7 @@ interface Props {
 const CheerSuccessModal = ({ isOpen, onClose, rewardIngredient, rewardQuantity }: Props) => {
   const [step, setStep] = useState(0);
   const RewardIngredientIcon = INGREDIENT_ICON_BY_KEY[80][rewardIngredient];
-
-  const modalContents = [
-    {
-      title: "응원하기 성공",
-      description: "응원 보상으로 복주머니를 드릴게요.",
-      buttonContent: "복주머니 열기",
-      icon: LuckyBagIcon,
-    },
-    {
-      title: "새로운 떡국 재료 획득",
-      description: `복주머니에서 ${INGREDIENT_NAME_BY_KEY[rewardIngredient]} ${rewardQuantity}개를 획득했어요.`,
-      buttonContent: "확인",
-      icon: INGREDIENT_ICON_BY_KEY[80][rewardIngredient],
-    },
-  ];
+  const viewMessageOverlay = useOverlay();
 
   const handleClickNextButton = () => {
     if (step === 1) {
@@ -44,6 +34,46 @@ const CheerSuccessModal = ({ isOpen, onClose, rewardIngredient, rewardQuantity }
 
     setStep(step + 1);
   };
+
+  const handleClickViewMessage = () => {
+    viewMessageOverlay.open(({ isOpen, close: handleCloseViewMessageModal }) => (
+      <ViewMessageModal
+        isOpen={isOpen}
+        onClose={() => {
+          handleCloseViewMessageModal();
+          onClose();
+        }}
+      />
+    ));
+  };
+
+  const modalContents = [
+    {
+      title: "응원하기 성공",
+      description: "응원 보상으로 복주머니를 드릴게요.",
+      Button: (
+        <Button onClick={handleClickNextButton} color="primary.100" applyColorTo="background">
+          복주머니 열기
+        </Button>
+      ),
+      icon: LuckyBagIcon,
+    },
+    {
+      title: "새로운 떡국 재료 획득",
+      description: `복주머니에서 ${INGREDIENT_NAME_BY_KEY[rewardIngredient]} ${rewardQuantity}개를 획득했어요.`,
+      Button: (
+        <div className={styles.buttonContainer}>
+          <Button onClick={handleClickViewMessage} color="primary.45" applyColorTo="outline">
+            보낸 메시지 보기
+          </Button>
+          <Button onClick={handleClickNextButton} color="primary.100" applyColorTo="background">
+            확인
+          </Button>
+        </div>
+      ),
+      icon: INGREDIENT_ICON_BY_KEY[80][rewardIngredient],
+    },
+  ];
 
   return (
     isOpen && (
@@ -62,9 +92,7 @@ const CheerSuccessModal = ({ isOpen, onClose, rewardIngredient, rewardQuantity }
               )}
             </div>
           </div>
-          <Button onClick={handleClickNextButton} color="primary.100" applyColorTo="background">
-            {modalContents[step].buttonContent}
-          </Button>
+          {modalContents[step].Button}
         </Modal.Body>
       </Modal>
     )
@@ -97,5 +125,10 @@ const styles = {
     position: "absolute",
     left: "10rem",
     bottom: "5.3rem",
+  }),
+  buttonContainer: css({
+    display: "flex",
+    gap: "0.8rem",
+    width: "100%",
   }),
 };
