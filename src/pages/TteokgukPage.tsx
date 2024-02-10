@@ -73,15 +73,9 @@ const TteokgukPage = () => {
     setSelectedIngredient(ingredient);
 
     viewMessageOverlay.open(({ isOpen, close }) => (
-      <ViewMessageModal isOpen={isOpen} onClose={close} />
+      <ViewMessageModal isOpen={isOpen} onClose={close} ingredientKey={ingredientKey} />
     ));
-  }, [
-    ingredientKey,
-    setSelectedIngredient,
-    setSentMessage,
-    tteokgukCheerMessages,
-    viewMessageOverlay,
-  ]);
+  }, []);
 
   if (isPending) {
     return (
@@ -213,6 +207,22 @@ const TteokgukPage = () => {
     }
   };
 
+  const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
+    if (!tteokgukCheerMessages.supporters || !tteokgukCheerMessages.supporters[ingredientKey]) {
+      if (usedIngredients.includes(ingredientKey)) toast("본인이 채운 재료입니다.");
+      return;
+    }
+
+    const { nickname, message, ingredient } = tteokgukCheerMessages.supporters[ingredientKey];
+
+    setSentMessage((previousState) => ({ ...previousState, nickname, message }));
+    setSelectedIngredient(ingredient);
+
+    viewMessageOverlay.open(({ isOpen, close }) => {
+      return <ViewMessageModal isOpen={isOpen} onClose={close} ingredientKey={ingredientKey} />;
+    });
+  };
+
   return (
     <Fragment>
       <Header showBackButton showHomeButton actionIcon="profile">
@@ -258,6 +268,7 @@ const TteokgukPage = () => {
             <div className={styles.ingredientFirstRow}>
               {ingredients.slice(0, 3).map((ingredientKey) => (
                 <Ingredient
+                  onClick={handleClickIngredient(ingredientKey)}
                   key={ingredientKey}
                   IngredientIcon={INGREDIENT_ICON_BY_KEY[40][ingredientKey]}
                   name={INGREDIENT_NAME_BY_KEY[ingredientKey]}
@@ -268,6 +279,7 @@ const TteokgukPage = () => {
             <div className={styles.ingredientSecondRow}>
               {ingredients.slice(3, 5).map((ingredientKey) => (
                 <Ingredient
+                  onClick={handleClickIngredient(ingredientKey)}
                   key={ingredientKey}
                   IngredientIcon={INGREDIENT_ICON_BY_KEY[40][ingredientKey]}
                   name={INGREDIENT_NAME_BY_KEY[ingredientKey]}
