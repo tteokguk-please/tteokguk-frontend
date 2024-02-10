@@ -25,6 +25,7 @@ export default defineConfig({
           60: { value: "#EEE2BE" },
           80: { value: "#EADCB1" },
           100: { value: "#F8D97E" },
+          200: { value: "#FFE597" },
         },
         secondary: {
           50: { value: "#B3D6D4" },
