@@ -51,7 +51,6 @@ const TteokgukPage = () => {
   const { data: tteokguk, isPending, isError, refetch } = useAtomValue($getTteokguk(Number(id)));
   const { refetch: refetchRandomTteokguk } = useAtomValue($getRandomTteokguk);
   const { mutate: postCompleteTteokguk } = useAtomValue($postCompleteTteokguk);
-  console.log(location);
 
   if (isPending) {
     return (
@@ -174,9 +173,10 @@ const TteokgukPage = () => {
 
   const handleClickCopyLinkButton = async () => {
     try {
-      await navigator.clipboard.writeText(`www.tteokguk-please.com/${location.pathname}`);
+      await navigator.clipboard.writeText(`${window.location.origin}/${location.pathname}`);
 
       toast("링크 복사가 완료되었습니다.");
+      gtag("event", "click", { event_category: "소원 떡국 링크 복사" });
     } catch (error) {
       console.error(error);
     }
@@ -206,7 +206,12 @@ const TteokgukPage = () => {
               backGarnish={backGarnish}
             />
           </div>
-          <div className={styles.content}>{wish}</div>
+          <div className={styles.content}>
+            <div className={styles.wish}>{wish}</div>
+            <button onClick={handleClickCopyLinkButton} className={styles.shareLinkButton}>
+              떡국 공유하기
+            </button>
+          </div>
         </article>
         <article>
           <div className={styles.titleContainer}>
@@ -251,9 +256,6 @@ const TteokgukPage = () => {
             </Button>
           </Link>
         )}
-        <Button onClick={handleClickCopyLinkButton} color="secondary.100" applyColorTo="background">
-          링크 공유하기
-        </Button>
         {isLoggedIn && !isMyTteokguk && !completion && (
           <Button
             onClick={handleClickAddIngredientButton}
@@ -344,9 +346,17 @@ const styles = {
     minHeight: "7.1rem",
     fontSize: "1.4rem",
     backgroundColor: "primary.100",
-    padding: "1rem 1.6rem",
     marginBottom: "2.7rem",
-    borderBottomRadius: "0.8rem",
+    borderBottomRadius: "1.2rem",
+  }),
+  wish: css({
+    padding: "1rem 1.6rem",
+  }),
+  shareLinkButton: css({
+    width: "100%",
+    height: "3.6rem",
+    backgroundColor: "primary.200",
+    borderBottomRadius: "1.2rem",
   }),
   meterialContainer: css({
     height: "23.2rem",
