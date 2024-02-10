@@ -31,3 +31,17 @@ export interface PostTteokgukRequest {
 }
 
 export type PostTteokgukResponse = GetTteokgukResponse;
+
+interface CheerInfomation {
+  supportId: number;
+  nickname: string;
+  message: string;
+  ingredient: IngredientKey;
+}
+
+export interface GetTteokgukCheerMessages {
+  tteokgukId: number;
+  supporters: {
+    [key in IngredientKey]: CheerInfomation;
+  };
+}

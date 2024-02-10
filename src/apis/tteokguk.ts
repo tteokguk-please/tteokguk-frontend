@@ -3,6 +3,7 @@ import {
   GetNewTteokguksReponse,
   PostTteokgukRequest,
   PostTteokgukResponse,
+  GetTteokgukCheerMessages,
 } from "@/types/tteokguk.dto";
 
 import http from "./core";
@@ -29,3 +30,6 @@ export const getRandomTteokguk = () => http.get<GetTteokgukResponse>("api/v1/tte
 
 export const postCompleteTteokguk = (id: number) =>
   http.post<GetTteokgukResponse>(`api/v1/tteokguk/completion/${id}`, { tteokgukId: id });
+
+export const getTteokgukCheerMessages = (id: number) =>
+  http.get<GetTteokgukCheerMessages>(`api/v1/tteokguk/${id}/supporters`);
