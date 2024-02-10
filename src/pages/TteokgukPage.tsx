@@ -1,7 +1,7 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
 import { toast } from "sonner";
 
@@ -10,6 +10,8 @@ import { useDialog } from "@/hooks/useDialog";
 import { css } from "@styled-system/css";
 
 import { getLocalStorage } from "@/utils/localStorage";
+
+import { IngredientKey } from "@/types/ingredient";
 
 import ErrorFallbackPage from "./ErrorFallbackPage";
 
@@ -26,22 +28,29 @@ import {
   $deleteTteokguk,
   $getRandomTteokguk,
   $getTteokguk,
+  $getTteokgukCheerMessages,
   $postCompleteTteokguk,
+  $sentMessage,
 } from "@/store/tteokguk";
 import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 import SmallActivityIcon from "@/assets/svg/small-activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
 import Loading from "@/components/common/Loading";
 import SuccessfulTteokgukCreationModal from "@/components/shared/SuccessfulTteokgukCreationModal";
+import { $selectedIngredient } from "@/store/ingredient";
+import ViewMessageModal from "@/components/shared/ViewMessageModal";
 
 const MAX_INGREDIENTS = 5;
 
 const TteokgukPage = () => {
-  const { id } = useParams();
   const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const ingredientKey = searchParams.get("ingredient") as IngredientKey;
+  const { id } = useParams();
   const addIngredientsToMyTteokgukOverlay = useOverlay();
   const sendIngredientsToOthersTteokgukOverlay = useOverlay();
   const successfulTteokgukCreationOverlay = useOverlay();
+  const viewMessageOverlay = useOverlay();
   const router = useRouter();
   const { confirm } = useDialog();
   const { data: loggedInUserDetails } = useAtomValue(
@@ -51,6 +60,28 @@ const TteokgukPage = () => {
   const { data: tteokguk, isPending, isError, refetch } = useAtomValue($getTteokguk(Number(id)));
   const { refetch: refetchRandomTteokguk } = useAtomValue($getRandomTteokguk);
   const { mutate: postCompleteTteokguk } = useAtomValue($postCompleteTteokguk);
+  const { data: tteokgukCheerMessages } = useAtomValue($getTteokgukCheerMessages(Number(id)));
+  const [, setSentMessage] = useAtom($sentMessage);
+  const [, setSelectedIngredient] = useAtom($selectedIngredient);
+
+  useEffect(() => {
+    if (ingredientKey === null) return;
+
+    const { nickname, message, ingredient } = tteokgukCheerMessages.supporters[ingredientKey];
+
+    setSentMessage((previousState) => ({ ...previousState, nickname, message }));
+    setSelectedIngredient(ingredient);
+
+    viewMessageOverlay.open(({ isOpen, close }) => (
+      <ViewMessageModal isOpen={isOpen} onClose={close} />
+    ));
+  }, [
+    ingredientKey,
+    setSelectedIngredient,
+    setSentMessage,
+    tteokgukCheerMessages,
+    viewMessageOverlay,
+  ]);
 
   if (isPending) {
     return (
@@ -173,7 +204,7 @@ const TteokgukPage = () => {
 
   const handleClickCopyLinkButton = async () => {
     try {
-      await navigator.clipboard.writeText(`${window.location.origin}/${location.pathname}`);
+      await navigator.clipboard.writeText(`${window.location.origin}${location.pathname}`);
 
       toast("링크 복사가 완료되었습니다.");
       gtag("event", "click", { event_category: "소원 떡국 링크 복사" });
