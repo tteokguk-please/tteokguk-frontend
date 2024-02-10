@@ -35,7 +35,7 @@ const ViewMessageModal = ({ isOpen, onClose }: Props) => {
   const handleClickCopyLinkButton = async () => {
     try {
       await navigator.clipboard.writeText(
-        `${window.location.origin}/${location.pathname}?ingredient=${selectedIngredient}`,
+        `${window.location.origin}${location.pathname}?ingredient=${selectedIngredient}`,
       );
 
       toast("링크 복사가 완료되었습니다.");
