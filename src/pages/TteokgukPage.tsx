@@ -262,7 +262,6 @@ const TteokgukPage = () => {
                   IngredientIcon={INGREDIENT_ICON_BY_KEY[40][ingredientKey]}
                   name={INGREDIENT_NAME_BY_KEY[ingredientKey]}
                   isSelected={usedIngredients.includes(ingredientKey)}
-                  isPointer={false}
                 />
               ))}
             </div>
@@ -273,7 +272,6 @@ const TteokgukPage = () => {
                   IngredientIcon={INGREDIENT_ICON_BY_KEY[40][ingredientKey]}
                   name={INGREDIENT_NAME_BY_KEY[ingredientKey]}
                   isSelected={usedIngredients.includes(ingredientKey)}
-                  isPointer={false}
                 />
               ))}
             </div>
