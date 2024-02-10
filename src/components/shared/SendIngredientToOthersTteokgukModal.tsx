@@ -15,6 +15,7 @@ import Button from "../common/Button";
 import CreateCheerMessageModal from "./CreateCheerMessageModal";
 
 import { $updateSelectedIngredient } from "@/store/ingredient";
+import { $sentMessage } from "@/store/tteokguk";
 
 interface Props {
   isOpen: boolean;
@@ -33,8 +34,9 @@ const SendIngredientsToOthersTteokgukModal = ({
 }: Props) => {
   const createCheerMessageModalOverlay = useOverlay();
   const [selectedIngredient, updateSelectedIngredient] = useAtom($updateSelectedIngredient);
+  const [, setSentMessage] = useAtom($sentMessage);
 
-  const { itemResponses: ingredientsStocks } = myDetails;
+  const { itemResponses: ingredientsStocks, nickname } = myDetails;
 
   const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
     updateSelectedIngredient(ingredientKey);
@@ -62,10 +64,12 @@ const SendIngredientsToOthersTteokgukModal = ({
   };
 
   useEffect(() => {
+    setSentMessage((previousState) => ({ ...previousState, nickname }));
+
     return () => {
       updateSelectedIngredient(null);
     };
-  }, [updateSelectedIngredient]);
+  }, [updateSelectedIngredient, setSentMessage, nickname]);
 
   return (
     isOpen && (
