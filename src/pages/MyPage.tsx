@@ -13,7 +13,6 @@ import ErrorFallbackPage from "./ErrorFallbackPage";
 import { Link } from "@/routes/Link";
 import useRouter from "@/routes/useRouter";
 import { $getMyDetails, $getRandomUserDetails, $deleteLoggedInUser } from "@/store/user";
-import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 import Header from "@/components/common/Header";
 import IconButton from "@/components/common/IconButton";
 import TteokgukList from "@/components/common/TteokgukList";
@@ -21,6 +20,7 @@ import IngredientList from "@/components/Mypage/IngredientList";
 import VisitIcon from "@/assets/svg/visit.svg";
 import BigActivityIcon from "@/assets/svg/big-activity.svg";
 import Loading from "@/components/common/Loading";
+import UserProfileSection from "@/components/common/UserProfileSection";
 
 const MyPage = () => {
   const router = useRouter();
@@ -46,9 +46,7 @@ const MyPage = () => {
     return <ErrorFallbackPage retry={refetch} />;
   }
 
-  const { nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
-
-  const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][primaryIngredient];
+  const { id, nickname, primaryIngredient, tteokguks, items: ingredients } = myDetails;
 
   const handleClickRandomVisitButton = async () => {
     const { data: randomUserDetails } = await refetchRandomUserDetails();
@@ -144,15 +142,13 @@ const MyPage = () => {
         마이페이지
       </Header>
       <div className={styles.container}>
-        <div className={styles.userInfo}>
-          <div>{nickname}님</div>
-          <div className={styles.uniqueIngredient}>
-            고유재료
-            <div className={styles.ingredientIcon}>
-              <IngredientIcon />
-            </div>
-          </div>
-        </div>
+        <UserProfileSection
+          id={id}
+          nickname={nickname}
+          uniqueIngredientKey={primaryIngredient}
+          color="secondary"
+          isMyPage
+        />
         <div className={styles.buttonContainer}>
           <IconButton
             onClick={handleClickRandomVisitButton}
@@ -235,7 +231,7 @@ const styles = {
     height: "5.2rem",
     borderRadius: "50%",
     backgroundColor: "secondary.50",
-    marginLeft: "1rem",
+    marginRight: "0.8rem",
   }),
   buttonContainer: css({
     display: "flex",
