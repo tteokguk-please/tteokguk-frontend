@@ -10,6 +10,7 @@ import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { css } from "@styled-system/css";
 
 import ErrorFallbackPage from "./ErrorFallbackPage";
+import Meta from "./Meta";
 
 import { Link } from "@/routes/Link";
 import TteokgukWithCaptionList from "@/components/common/TteokgukWithCaptionList";
@@ -67,6 +68,11 @@ const MainPage = () => {
 
   return (
     <>
+      <Meta
+        path="/tteokguks"
+        title="소원 떡국 페이지"
+        description="다른 사람들이 만든 소원 떡국을 확인하세요"
+      />
       <Header showSearchIcon actionIcon="profile">
         <HeaderLogo aria-label="용용이" />
       </Header>

@@ -1,5 +1,7 @@
 import { css } from "@styled-system/css";
 
+import Meta from "./Meta";
+
 import { Link } from "@/routes/Link";
 import Button from "@/components/common/Button";
 import homeLogo from "@/assets/images/home-logo.png";
@@ -13,32 +15,39 @@ const HomePage = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.logo}>
-        <img src={homeLogo} alt="로고" />
-      </h1>
-      <div className={styles.dragon}>
-        <img src={tryDragon} alt="떡국 권하는 용용이" />
+    <>
+      <Meta
+        path="/"
+        title="홈 페이지"
+        description="나만의 재료를 사용해 소원 떡국을 시작해보세요!"
+      />
+      <div className={styles.container}>
+        <h1 className={styles.logo}>
+          <img src={homeLogo} alt="로고" />
+        </h1>
+        <div className={styles.dragon}>
+          <img src={tryDragon} alt="떡국 권하는 용용이" />
+        </div>
+        <div className={styles.buttonContainer}>
+          <Link to="/login">
+            <Button color="primary.100" applyColorTo="background" className={styles.loginButton}>
+              로그인
+            </Button>
+          </Link>
+          <Link to="/tteokguks" onClick={handleClickGoToTteokguks}>
+            <Button color="primary.45" applyColorTo="outline">
+              떡국 둘러보기
+            </Button>
+          </Link>
+        </div>
+        <div className={styles.leftMountain}>
+          <img src={leftMountain} alt="산" />
+        </div>
+        <div className={styles.rightMountain}>
+          <img src={rightMountain} alt="산" />
+        </div>
       </div>
-      <div className={styles.buttonContainer}>
-        <Link to="/login">
-          <Button color="primary.100" applyColorTo="background" className={styles.loginButton}>
-            로그인
-          </Button>
-        </Link>
-        <Link to="/tteokguks" onClick={handleClickGoToTteokguks}>
-          <Button color="primary.45" applyColorTo="outline">
-            떡국 둘러보기
-          </Button>
-        </Link>
-      </div>
-      <div className={styles.leftMountain}>
-        <img src={leftMountain} alt="산" />
-      </div>
-      <div className={styles.rightMountain}>
-        <img src={rightMountain} alt="산" />
-      </div>
-    </div>
+    </>
   );
 };
 

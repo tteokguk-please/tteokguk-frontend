@@ -9,6 +9,7 @@ import { css } from "@styled-system/css";
 import { removeLocalStorage } from "@/utils/localStorage";
 
 import ErrorFallbackPage from "./ErrorFallbackPage";
+import Meta from "./Meta";
 
 import { Link } from "@/routes/Link";
 import useRouter from "@/routes/useRouter";
@@ -138,6 +139,11 @@ const MyPage = () => {
 
   return (
     <Fragment>
+      <Meta
+        path="/my-page"
+        title="마이 페이지"
+        description="내가 가진 재료나 생성한 소원 떡국을 확인해보세요"
+      />
       <Header showBackButton showHomeButton actionIcon="guide">
         마이페이지
       </Header>

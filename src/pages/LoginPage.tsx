@@ -7,6 +7,8 @@ import { css } from "@styled-system/css";
 
 import { PostKakaoLoginResponse, PostKakaoTokenReponse } from "@/types/auth";
 
+import Meta from "./Meta";
+
 import Header from "@/components/common/Header";
 import Button from "@/components/common/Button";
 import { Link } from "@/routes/Link";
@@ -74,6 +76,11 @@ const LoginPage = () => {
 
   return (
     <Fragment>
+      <Meta
+        path="/login"
+        title="로그인 페이지"
+        description="소원 떡국을 만들기 위해 로그인 하세요"
+      />
       <Header showBackButton>
         <Link to="/">로그인</Link>
       </Header>

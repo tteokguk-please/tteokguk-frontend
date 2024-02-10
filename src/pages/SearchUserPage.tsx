@@ -6,6 +6,8 @@ import { css } from "@styled-system/css";
 
 import { IngredientKey } from "@/types/ingredient";
 
+import Meta from "./Meta";
+
 import { Link } from "@/routes/Link";
 import { $getSearchedUsers, $nickname } from "@/store/user";
 import Header from "@/components/common/Header";
@@ -30,6 +32,11 @@ const SearchUserPage = () => {
 
   return (
     <Fragment>
+      <Meta
+        path="/user/search"
+        title="활동내역 페이지"
+        description="내가 가진 재료나 생성한 소원 떡국을 확인해보세요"
+      />
       <Header showBackButton>검색</Header>
       <div className={styles.container}>
         <form onSubmit={handleSubmitForm} className={styles.form}>

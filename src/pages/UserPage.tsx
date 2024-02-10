@@ -6,6 +6,7 @@ import { useAtomValue } from "jotai";
 import { css } from "@styled-system/css";
 
 import ErrorFallbackPage from "./ErrorFallbackPage";
+import Meta from "./Meta";
 
 import useRouter from "@/routes/useRouter";
 import Header from "@/components/common/Header";
@@ -61,6 +62,11 @@ const UserPage = () => {
 
   return (
     <Fragment>
+      <Meta
+        path={`/users/${Number(id)}`}
+        title="다른 유저 페이지"
+        description="다른 유저들은 어떤 떡국을 만들었는지 확인해보세요"
+      />
       <Header showBackButton showHomeButton actionIcon="profile">
         프로필
       </Header>

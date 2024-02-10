@@ -19,6 +19,7 @@ interface Props {
   tteokgukId: number;
   myDetails: LoggedInUserDetailsResponse;
   requiredIngredients: IngredientKey[];
+  usedIngredients: IngredientKey[];
 }
 
 const AddIngredientsToMyTteokgukModal = ({
@@ -27,14 +28,20 @@ const AddIngredientsToMyTteokgukModal = ({
   tteokgukId,
   myDetails,
   requiredIngredients,
+  usedIngredients,
 }: Props) => {
   const { mutate: postIngredients } = useAtomValue($postIngredientsToMyTteokguk);
   const [selectedIngredients, updateSelectedIngredients] = useAtom($updateSelectedIngredients);
+  const needIngredients = requiredIngredients.filter(
+    (requiredIngredient) => !usedIngredients.includes(requiredIngredient),
+  );
+  const checkNeedIngredient = (ingredientKey: IngredientKey) =>
+    needIngredients.includes(ingredientKey);
 
   const { itemResponses: ingredientsStocks } = myDetails;
 
   const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
-    if (!requiredIngredients.includes(ingredientKey)) return;
+    if (!checkNeedIngredient(ingredientKey)) return;
 
     updateSelectedIngredients(ingredientKey);
   };
