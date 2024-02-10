@@ -10,6 +10,7 @@ import { useDialog } from "@/hooks/useDialog";
 import { css } from "@styled-system/css";
 
 import { getLocalStorage } from "@/utils/localStorage";
+import { copyLink } from "@/utils/linkShare";
 
 import { IngredientKey } from "@/types/ingredient";
 
@@ -196,15 +197,8 @@ const TteokgukPage = () => {
     });
   };
 
-  const handleClickCopyLinkButton = async () => {
-    try {
-      await navigator.clipboard.writeText(`${window.location.origin}${location.pathname}`);
-
-      toast("링크 복사가 완료되었습니다.");
-      gtag("event", "click", { event_category: "소원 떡국 링크 복사" });
-    } catch (error) {
-      console.error(error);
-    }
+  const handleClickCopyLinkButton = () => {
+    copyLink({ path: location.pathname, eventCategory: "소원 떡국 링크 복사" });
   };
 
   const handleClickIngredient = (ingredientKey: IngredientKey) => () => {

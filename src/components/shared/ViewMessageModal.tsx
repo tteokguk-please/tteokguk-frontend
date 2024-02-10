@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 
 import { useAtom, useAtomValue } from "jotai";
-import { toast } from "sonner";
 
 import { css } from "@styled-system/css";
+
+import { copyLink } from "@/utils/linkShare";
 
 import { IngredientKey } from "@/types/ingredient";
 
@@ -32,17 +33,11 @@ const ViewMessageModal = ({ isOpen, onClose, ingredientKey }: Props) => {
     };
   }, [setSelectedIngredient]);
 
-  const handleClickCopyLinkButton = async () => {
-    try {
-      await navigator.clipboard.writeText(
-        `${window.location.origin}${location.pathname}?ingredient=${selectedIngredient}`,
-      );
-
-      toast("링크 복사가 완료되었습니다.");
-      gtag("event", "click", { event_category: "작성한 응원 메시지 공유" });
-    } catch (error) {
-      console.error(error);
-    }
+  const handleClickCopyLinkButton = () => {
+    copyLink({
+      path: `${location.pathname}?ingredient=${selectedIngredient}`,
+      eventCategory: "작성한 응원 메시지 공유",
+    });
   };
 
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[28][ingredientKey];
