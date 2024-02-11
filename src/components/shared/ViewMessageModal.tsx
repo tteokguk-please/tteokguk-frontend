@@ -90,14 +90,14 @@ export default ViewMessageModal;
 const styles = {
   sentby: css({
     marginTop: "1.3rem",
-    marginLeft: "1.3rem",
+    marginLeft: "1.4rem",
   }),
   message: css({
     height: "22.4rem",
     backgroundColor: "primary.45",
     borderRadius: "0.8rem",
     marginTop: "0.3rem",
-    padding: "1.9rem 1.3rem",
+    padding: "1.9rem 1.4rem",
   }),
   userInfo: css({
     display: "flex",
