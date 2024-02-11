@@ -206,7 +206,7 @@ const TteokgukPage = () => {
 
   const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
     if (!tteokgukCheerMessages.supporters || !tteokgukCheerMessages.supporters[ingredientKey]) {
-      if (usedIngredients.includes(ingredientKey)) toast("본인이 채운 재료입니다.");
+      if (usedIngredients.includes(ingredientKey)) toast("본인이 추가한 재료입니다.");
       return;
     }
 
