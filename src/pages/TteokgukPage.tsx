@@ -1,14 +1,18 @@
-import { Fragment } from "react";
-import { useParams } from "react-router-dom";
+import { Fragment, useEffect } from "react";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
 
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
+import { toast } from "sonner";
 
 import { useDialog } from "@/hooks/useDialog";
 
 import { css } from "@styled-system/css";
 
 import { getLocalStorage } from "@/utils/localStorage";
+import { copyLink } from "@/utils/linkShare";
+
+import { IngredientKey } from "@/types/ingredient";
 
 import ErrorFallbackPage from "./ErrorFallbackPage";
 import Meta from "./Meta";
@@ -26,21 +30,29 @@ import {
   $deleteTteokguk,
   $getRandomTteokguk,
   $getTteokguk,
+  $getTteokgukCheerMessages,
   $postCompleteTteokguk,
+  $ingredientSupportMessage,
 } from "@/store/tteokguk";
 import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 import SmallActivityIcon from "@/assets/svg/small-activity.svg";
 import MeterialIcon from "@/assets/svg/material.svg";
 import Loading from "@/components/common/Loading";
 import SuccessfulTteokgukCreationModal from "@/components/shared/SuccessfulTteokgukCreationModal";
+import { $selectedIngredient } from "@/store/ingredient";
+import ViewMessageModal from "@/components/shared/ViewMessageModal";
 
 const MAX_INGREDIENTS = 5;
 
 const TteokgukPage = () => {
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const { id } = useParams();
   const addIngredientsToMyTteokgukOverlay = useOverlay();
   const sendIngredientsToOthersTteokgukOverlay = useOverlay();
   const successfulTteokgukCreationOverlay = useOverlay();
+  const viewMessageOverlay = useOverlay();
   const router = useRouter();
   const { confirm } = useDialog();
   const { data: loggedInUserDetails } = useAtomValue(
@@ -50,6 +62,33 @@ const TteokgukPage = () => {
   const { data: tteokguk, isPending, isError, refetch } = useAtomValue($getTteokguk(Number(id)));
   const { refetch: refetchRandomTteokguk } = useAtomValue($getRandomTteokguk);
   const { mutate: postCompleteTteokguk } = useAtomValue($postCompleteTteokguk);
+  const { data: tteokgukCheerMessages } = useAtomValue($getTteokgukCheerMessages(Number(id)));
+  const [, setIngredientSupportMessage] = useAtom($ingredientSupportMessage);
+  const [, setSelectedIngredient] = useAtom($selectedIngredient);
+
+  useEffect(() => {
+    const ingredientKey = searchParams.get("ingredient") as IngredientKey;
+    if (ingredientKey === null) return;
+
+    const { nickname, message, ingredient } = tteokgukCheerMessages.supporters[ingredientKey];
+
+    setIngredientSupportMessage((previousState) => ({ ...previousState, nickname, message }));
+    setSelectedIngredient(ingredient);
+
+    viewMessageOverlay.open(({ isOpen, close }) => (
+      <ViewMessageModal
+        isOpen={isOpen}
+        onClose={() => {
+          searchParams.delete("ingredient");
+          setSearchParams(searchParams, { replace: true });
+          close();
+        }}
+        ingredientKey={ingredientKey}
+      />
+    ));
+    // mount 시에만 실행
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (isPending) {
     return (
@@ -172,6 +211,38 @@ const TteokgukPage = () => {
     });
   };
 
+  const handleClickCopyLinkButton = () => {
+    copyLink({ path: location.pathname, eventCategory: "소원 떡국 링크 복사" });
+  };
+
+  const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
+    if (!tteokgukCheerMessages.supporters || !tteokgukCheerMessages.supporters[ingredientKey]) {
+      if (usedIngredients.includes(ingredientKey)) toast("본인이 추가한 재료입니다.");
+      return;
+    }
+
+    const { nickname, message, ingredient } = tteokgukCheerMessages.supporters[ingredientKey];
+
+    setIngredientSupportMessage((previousState) => ({ ...previousState, nickname, message }));
+    setSelectedIngredient(ingredient);
+
+    setSearchParams(`?ingredient=${ingredientKey}`, { replace: true });
+
+    viewMessageOverlay.open(({ isOpen, close }) => {
+      return (
+        <ViewMessageModal
+          isOpen={isOpen}
+          onClose={() => {
+            searchParams.delete("ingredient");
+            setSearchParams(searchParams, { replace: true });
+            close();
+          }}
+          ingredientKey={ingredientKey}
+        />
+      );
+    });
+  };
+
   return (
     <Fragment>
       <Meta
@@ -187,11 +258,11 @@ const TteokgukPage = () => {
           <div className={styles.titleContainer}>
             <div className={styles.title}>
               <SmallActivityIcon />
-              {nickname}님의 떡국
+              {nickname}님
             </div>
-            <button onClick={handleClickRandomVisitButton} className={styles.randomVisitButton}>
-              랜덤 방문
-            </button>
+            <Link to={`/users/${memberId}`} className={styles.profileVisit}>
+              프로필 방문하기
+            </Link>
           </div>
           <div className={styles.imageContainer}>
             <TteokgukImage
@@ -201,7 +272,12 @@ const TteokgukPage = () => {
               backGarnish={backGarnish}
             />
           </div>
-          <div className={styles.content}>{wish}</div>
+          <div className={styles.content}>
+            <div className={styles.wish}>{wish}</div>
+            <button onClick={handleClickCopyLinkButton} className={styles.shareLinkButton}>
+              떡국 공유하기
+            </button>
+          </div>
         </article>
         <article>
           <div className={styles.titleContainer}>
@@ -217,22 +293,22 @@ const TteokgukPage = () => {
             <div className={styles.ingredientFirstRow}>
               {ingredients.slice(0, 3).map((ingredientKey) => (
                 <Ingredient
+                  onClick={handleClickIngredient(ingredientKey)}
                   key={ingredientKey}
                   IngredientIcon={INGREDIENT_ICON_BY_KEY[40][ingredientKey]}
                   name={INGREDIENT_NAME_BY_KEY[ingredientKey]}
                   isSelected={usedIngredients.includes(ingredientKey)}
-                  isPointer={false}
                 />
               ))}
             </div>
             <div className={styles.ingredientSecondRow}>
               {ingredients.slice(3, 5).map((ingredientKey) => (
                 <Ingredient
+                  onClick={handleClickIngredient(ingredientKey)}
                   key={ingredientKey}
                   IngredientIcon={INGREDIENT_ICON_BY_KEY[40][ingredientKey]}
                   name={INGREDIENT_NAME_BY_KEY[ingredientKey]}
                   isSelected={usedIngredients.includes(ingredientKey)}
-                  isPointer={false}
                 />
               ))}
             </div>
@@ -246,7 +322,6 @@ const TteokgukPage = () => {
             </Button>
           </Link>
         )}
-
         {isLoggedIn && !isMyTteokguk && !completion && (
           <Button
             onClick={handleClickAddIngredientButton}
@@ -278,6 +353,15 @@ const TteokgukPage = () => {
           </Button>
         )}
 
+        <Button
+          onClick={handleClickRandomVisitButton}
+          className={styles.randomVisitButton}
+          color="primary.100"
+          applyColorTo="background"
+        >
+          랜덤 떡국 방문하기
+        </Button>
+
         {isMyTteokguk && (
           <div className={styles.wishDeleteButton}>
             <button onClick={handleClickDeleteTteokgukButton}>소원 삭제하기</button>
@@ -308,9 +392,11 @@ const styles = {
     alignItems: "center",
     fontWeight: 700,
   }),
-  randomVisitButton: css({
-    width: "6.8rem",
+  profileVisit: css({
+    display: "flex",
+    alignItems: "center",
     height: "2.6rem",
+    paddingX: "0.8rem",
     backgroundColor: "primary.20",
     fontSize: "1.4rem",
     borderRadius: "0.4rem",
@@ -326,9 +412,18 @@ const styles = {
     minHeight: "7.1rem",
     fontSize: "1.4rem",
     backgroundColor: "primary.100",
-    padding: "1rem 1.6rem",
     marginBottom: "2.7rem",
-    borderBottomRadius: "0.8rem",
+    borderBottomRadius: "1.2rem",
+  }),
+  wish: css({
+    padding: "1rem 1.6rem",
+  }),
+  shareLinkButton: css({
+    width: "100%",
+    height: "3.6rem",
+    backgroundColor: "primary.200",
+    borderBottomRadius: "1.2rem",
+    borderTop: "0.1rem solid white",
   }),
   meterialContainer: css({
     height: "23.2rem",
@@ -368,5 +463,8 @@ const styles = {
   }),
   block: css({
     display: "block",
+  }),
+  randomVisitButton: css({
+    marginTop: "1rem",
   }),
 };

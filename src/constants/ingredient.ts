@@ -1,3 +1,4 @@
+import * as IngredientIcon28 from "@/assets/svg/ingredients-28";
 import * as IngredientIcon40 from "@/assets/svg/ingredients-40";
 import * as IngredientIcon80 from "@/assets/svg/ingredients-80";
 import * as IngredientIconDisabled from "@/assets/svg/ingredients-disabled";
@@ -33,6 +34,20 @@ export const INGREDIENT_NAME_BY_KEY = {
 } as const;
 
 export const INGREDIENT_ICON_BY_KEY = {
+  28: {
+    RICE_CAKE: IngredientIcon28.RICE_CAKE,
+    EGG: IngredientIcon28.EGG,
+    SEAWEED: IngredientIcon28.SEAWEED,
+    GREEN_ONION: IngredientIcon28.GREEN_ONION,
+    BEEF: IngredientIcon28.BEEF,
+    MUSHROOM: IngredientIcon28.MUSHROOM,
+    TOFU: IngredientIcon28.TOFU,
+    FISH_CAKE: IngredientIcon28.FISH_CAKE,
+    CANDY: IngredientIcon28.CANDY,
+    DUMPLING: IngredientIcon28.DUMPLING,
+    TAIYAKI: IngredientIcon28.TAIYAKI,
+    GARLIC: IngredientIcon28.GARLIC,
+  },
   40: {
     RICE_CAKE: IngredientIcon40.RICE_CAKE,
     EGG: IngredientIcon40.EGG,

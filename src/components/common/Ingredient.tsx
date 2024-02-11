@@ -7,12 +7,11 @@ interface Props {
   name: IngredientName;
   onClick?: () => void;
   isSelected: boolean;
-  isPointer?: boolean;
 }
 
-const Ingredient = ({ IngredientIcon, name, onClick, isSelected, isPointer = true }: Props) => {
+const Ingredient = ({ IngredientIcon, name, onClick, isSelected }: Props) => {
   return (
-    <button type="button" className={styles.ingredientContainer(isPointer)} onClick={onClick}>
+    <button type="button" className={styles.ingredientContainer(isSelected)} onClick={onClick}>
       <div className={styles.ingredientContent}>
         <div className={styles.ingredientIcon(isSelected)} aria-label={name}>
           {<IngredientIcon />}

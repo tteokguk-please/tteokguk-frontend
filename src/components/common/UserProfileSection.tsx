@@ -9,20 +9,28 @@ interface Props {
   uniqueIngredientKey: IngredientKey;
   color: "primary" | "secondary";
   className?: string;
+  onClickShareButton: () => void;
 }
 
-const UserProfileSection = ({ nickname, uniqueIngredientKey, color }: Props) => {
+const UserProfileSection = ({
+  nickname,
+  uniqueIngredientKey,
+  color,
+  onClickShareButton,
+}: Props) => {
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][uniqueIngredientKey];
 
   return (
     <article className={styles.userInfo(color)}>
-      <div>{nickname}님</div>
       <div className={styles.uniqueIngredient}>
-        고유재료
         <div className={styles.ingredientIcon(color)}>
           <IngredientIcon />
         </div>
+        <div>{nickname}님</div>
       </div>
+      <button onClick={onClickShareButton} className={styles.shareButton(color)}>
+        공유하기
+      </button>
     </article>
   );
 };
@@ -55,7 +63,7 @@ const styles = {
       height: "5.2rem",
       borderRadius: "50%",
       backgroundColor: color === "primary" ? "primary.20" : "secondary.50",
-      marginLeft: "1rem",
+      marginRight: "0.6rem",
     }),
   primary: css({
     backgroundColor: "primary.100",
@@ -63,4 +71,13 @@ const styles = {
   secondary: css({
     backgroundColor: "secondary.100",
   }),
+  shareButton: (color: "primary" | "secondary") =>
+    css({
+      fontSize: "1.4rem",
+      fontWeight: 600,
+      width: "6.5rem",
+      backgroundColor: color === "primary" ? "primary.20" : "secondary.50",
+      borderRadius: "0.4rem",
+      paddingY: "0.4rem",
+    }),
 };

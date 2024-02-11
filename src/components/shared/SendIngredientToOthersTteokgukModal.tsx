@@ -15,6 +15,7 @@ import Button from "../common/Button";
 import CreateCheerMessageModal from "./CreateCheerMessageModal";
 
 import { $updateSelectedIngredient } from "@/store/ingredient";
+import { $ingredientSupportMessage } from "@/store/tteokguk";
 
 interface Props {
   isOpen: boolean;
@@ -35,13 +36,14 @@ const SendIngredientsToOthersTteokgukModal = ({
 }: Props) => {
   const createCheerMessageModalOverlay = useOverlay();
   const [selectedIngredient, updateSelectedIngredient] = useAtom($updateSelectedIngredient);
+  const [, setIngredientSupportMessage] = useAtom($ingredientSupportMessage);
   const needIngredients = requiredIngredients.filter(
     (requiredIngredient) => !usedIngredients.includes(requiredIngredient),
   );
   const checkNeedIngredient = (ingredientKey: IngredientKey) =>
     needIngredients.includes(ingredientKey);
 
-  const { itemResponses: ingredientsStocks } = myDetails;
+  const { itemResponses: ingredientsStocks, nickname } = myDetails;
 
   const handleClickIngredient = (ingredientKey: IngredientKey) => () => {
     if (checkNeedIngredient(ingredientKey)) {
@@ -61,6 +63,7 @@ const SendIngredientsToOthersTteokgukModal = ({
           onClose();
         }}
         tteokgukId={tteokgukId}
+        ingredientKey={selectedIngredient}
       />
     ));
   };
@@ -71,10 +74,12 @@ const SendIngredientsToOthersTteokgukModal = ({
   };
 
   useEffect(() => {
+    setIngredientSupportMessage((previousState) => ({ ...previousState, nickname }));
+
     return () => {
       updateSelectedIngredient(null);
     };
-  }, [updateSelectedIngredient]);
+  }, [updateSelectedIngredient, setIngredientSupportMessage, nickname]);
 
   return (
     isOpen && (

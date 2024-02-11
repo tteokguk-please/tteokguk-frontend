@@ -4,7 +4,7 @@ import {
   atomWithQuery,
   queryClientAtom,
 } from "jotai-tanstack-query";
-import { atomFamily } from "jotai/utils";
+import { atomFamily, atomWithReset } from "jotai/utils";
 import { atom } from "jotai";
 
 import {
@@ -15,15 +15,22 @@ import {
   deleteTteokguk,
   getRandomTteokguk,
   postCompleteTteokguk,
+  getTteokgukCheerMessages,
 } from "@/apis/tteokguk";
 
-import { atomFamilyWithQuery } from "@/utils/jotai";
+import { atomFamilyWithQuery, atomFamilyWithSuspenseQuery } from "@/utils/jotai";
 import { getLocalStorage } from "@/utils/localStorage";
 
 import { GetTteokgukResponse, PostTteokgukRequest } from "@/types/tteokguk.dto";
 import { IngredientKey } from "@/types/ingredient";
 
 import { $getLoggedInUserDetails } from "./user";
+
+interface IngredientSupportMessage {
+  nickname: string;
+  message: string;
+  isAnonymous: boolean;
+}
 
 const $getNewTteokguks = atomWithInfiniteQuery(() => ({
   queryKey: ["newTteokguks"],
@@ -117,3 +124,14 @@ export const $postCompleteTteokguk = atomWithMutation((get) => ({
     get(queryClientAtom).invalidateQueries({ queryKey: ["tteokguk"] });
   },
 }));
+
+export const $ingredientSupportMessage = atomWithReset<IngredientSupportMessage>({
+  nickname: "",
+  message: "",
+  isAnonymous: false,
+});
+
+export const $getTteokgukCheerMessages = atomFamilyWithSuspenseQuery(
+  "tteokgukCheerMessages",
+  (id: number) => getTteokgukCheerMessages(id),
+);
