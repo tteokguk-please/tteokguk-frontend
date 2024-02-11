@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { useAtom, useAtomValue } from "jotai";
+import classNames from "classnames";
 
 import { css } from "@styled-system/css";
 
@@ -43,6 +44,7 @@ const ViewMessageModal = ({ isOpen, onClose, ingredientKey }: Props) => {
   };
 
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[28][ingredientKey];
+  console.log(isAnonymous, nickname);
 
   return (
     isOpen && (
@@ -51,13 +53,14 @@ const ViewMessageModal = ({ isOpen, onClose, ingredientKey }: Props) => {
           보낸 메시지
         </Modal.Header>
         <Modal.Body>
+          <div className={classNames(styles.title, styles.sentby)}>
+            보낸이 {!isAnonymous && `@${nickname}`}
+            {isAnonymous && `익명의 ${INGREDIENT_NAME_BY_KEY[ingredientKey]}님`}
+          </div>
           <div className={styles.message}>{message}</div>
           <div className={styles.userInfo}>
             <div>
-              <div className={styles.nickname}>
-                {!isAnonymous && `@ ${nickname}`}
-                {isAnonymous && `익명의 ${INGREDIENT_NAME_BY_KEY[ingredientKey]}님`}
-              </div>
+              <div className={styles.title}>보낸 떡국 재료</div>
               <div>{`응원의 ${INGREDIENT_NAME_BY_KEY[ingredientKey]}을/를 보냈어요!`}</div>
             </div>
             <div className={styles.ingredient}>
@@ -85,12 +88,16 @@ const ViewMessageModal = ({ isOpen, onClose, ingredientKey }: Props) => {
 export default ViewMessageModal;
 
 const styles = {
+  sentby: css({
+    marginTop: "1.3rem",
+    marginLeft: "1.4rem",
+  }),
   message: css({
     height: "22.4rem",
     backgroundColor: "primary.45",
     borderRadius: "0.8rem",
-    marginTop: "1.6rem",
-    padding: "1.9rem 1.3rem",
+    marginTop: "0.3rem",
+    padding: "1.9rem 1.4rem",
   }),
   userInfo: css({
     display: "flex",
@@ -103,9 +110,10 @@ const styles = {
     marginBottom: "1.6rem",
     padding: "1rem 1.5rem",
   }),
-  nickname: css({
+  title: css({
     fontWeight: 700,
     fontSize: "1.4rem",
+    marginBottom: "0.2rem",
   }),
   ingredient: css({
     display: "flex",
