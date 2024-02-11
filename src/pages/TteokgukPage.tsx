@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
 
 import { useAtom, useAtomValue } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
@@ -32,7 +32,7 @@ import {
   $getTteokguk,
   $getTteokgukCheerMessages,
   $postCompleteTteokguk,
-  $sentMessage,
+  $ingredientSupportMessage,
 } from "@/store/tteokguk";
 import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 import SmallActivityIcon from "@/assets/svg/small-activity.svg";
@@ -46,8 +46,8 @@ const MAX_INGREDIENTS = 5;
 
 const TteokgukPage = () => {
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const ingredientKey = searchParams.get("ingredient") as IngredientKey;
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const { id } = useParams();
   const addIngredientsToMyTteokgukOverlay = useOverlay();
   const sendIngredientsToOthersTteokgukOverlay = useOverlay();
@@ -63,20 +63,31 @@ const TteokgukPage = () => {
   const { refetch: refetchRandomTteokguk } = useAtomValue($getRandomTteokguk);
   const { mutate: postCompleteTteokguk } = useAtomValue($postCompleteTteokguk);
   const { data: tteokgukCheerMessages } = useAtomValue($getTteokgukCheerMessages(Number(id)));
-  const [, setSentMessage] = useAtom($sentMessage);
+  const [, setIngredientSupportMessage] = useAtom($ingredientSupportMessage);
   const [, setSelectedIngredient] = useAtom($selectedIngredient);
 
   useEffect(() => {
+    const ingredientKey = searchParams.get("ingredient") as IngredientKey;
     if (ingredientKey === null) return;
 
     const { nickname, message, ingredient } = tteokgukCheerMessages.supporters[ingredientKey];
 
-    setSentMessage((previousState) => ({ ...previousState, nickname, message }));
+    setIngredientSupportMessage((previousState) => ({ ...previousState, nickname, message }));
     setSelectedIngredient(ingredient);
 
     viewMessageOverlay.open(({ isOpen, close }) => (
-      <ViewMessageModal isOpen={isOpen} onClose={close} ingredientKey={ingredientKey} />
+      <ViewMessageModal
+        isOpen={isOpen}
+        onClose={() => {
+          searchParams.delete("ingredient");
+          setSearchParams(searchParams, { replace: true });
+          close();
+        }}
+        ingredientKey={ingredientKey}
+      />
     ));
+    // mount 시에만 실행
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isPending) {
@@ -212,11 +223,23 @@ const TteokgukPage = () => {
 
     const { nickname, message, ingredient } = tteokgukCheerMessages.supporters[ingredientKey];
 
-    setSentMessage((previousState) => ({ ...previousState, nickname, message }));
+    setIngredientSupportMessage((previousState) => ({ ...previousState, nickname, message }));
     setSelectedIngredient(ingredient);
 
+    setSearchParams(`?ingredient=${ingredientKey}`, { replace: true });
+
     viewMessageOverlay.open(({ isOpen, close }) => {
-      return <ViewMessageModal isOpen={isOpen} onClose={close} ingredientKey={ingredientKey} />;
+      return (
+        <ViewMessageModal
+          isOpen={isOpen}
+          onClose={() => {
+            searchParams.delete("ingredient");
+            setSearchParams(searchParams, { replace: true });
+            close();
+          }}
+          ingredientKey={ingredientKey}
+        />
+      );
     });
   };
 

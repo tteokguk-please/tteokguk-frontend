@@ -26,7 +26,7 @@ import { IngredientKey } from "@/types/ingredient";
 
 import { $getLoggedInUserDetails } from "./user";
 
-interface SentMessage {
+interface IngredientSupportMessage {
   nickname: string;
   message: string;
   isAnonymous: boolean;
@@ -125,7 +125,7 @@ export const $postCompleteTteokguk = atomWithMutation((get) => ({
   },
 }));
 
-export const $sentMessage = atomWithReset<SentMessage>({
+export const $ingredientSupportMessage = atomWithReset<IngredientSupportMessage>({
   nickname: "",
   message: "",
   isAnonymous: false,

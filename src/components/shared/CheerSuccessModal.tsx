@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { useOverlay } from "@toss/use-overlay";
 
@@ -29,6 +30,7 @@ const CheerSuccessModal = ({
   rewardQuantity,
   ingredientKey,
 }: Props) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [step, setStep] = useState(0);
   const RewardIngredientIcon = INGREDIENT_ICON_BY_KEY[80][rewardIngredient];
   const viewMessageOverlay = useOverlay();
@@ -43,12 +45,16 @@ const CheerSuccessModal = ({
   };
 
   const handleClickViewMessage = () => {
+    setSearchParams(`?ingredient=${ingredientKey}`, { replace: true });
+
     viewMessageOverlay.open(({ isOpen, close: handleCloseViewMessageModal }) => (
       <ViewMessageModal
         isOpen={isOpen}
         onClose={() => {
           handleCloseViewMessageModal();
           onClose();
+          searchParams.delete("ingredient");
+          setSearchParams(searchParams, { replace: true });
         }}
         ingredientKey={ingredientKey}
       />

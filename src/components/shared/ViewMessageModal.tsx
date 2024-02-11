@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { useAtom, useAtomValue } from "jotai";
 
@@ -12,7 +13,7 @@ import Modal from "../common/modal/Modal";
 import Button from "../common/Button";
 
 import { $selectedIngredient } from "@/store/ingredient";
-import { $sentMessage } from "@/store/tteokguk";
+import { $ingredientSupportMessage } from "@/store/tteokguk";
 import { INGREDIENT_ICON_BY_KEY, INGREDIENT_NAME_BY_KEY } from "@/constants/ingredient";
 
 interface Props {
@@ -22,8 +23,9 @@ interface Props {
 }
 
 const ViewMessageModal = ({ isOpen, onClose, ingredientKey }: Props) => {
+  const [searchParams] = useSearchParams();
   const [selectedIngredient, setSelectedIngredient] = useAtom($selectedIngredient);
-  const { nickname, message, isAnonymous } = useAtomValue($sentMessage);
+  const { nickname, message, isAnonymous } = useAtomValue($ingredientSupportMessage);
 
   useEffect(() => {
     gtag("event", "page_view", { event_category: "재료 클릭하여 응원 메시지 보기" });
@@ -31,7 +33,7 @@ const ViewMessageModal = ({ isOpen, onClose, ingredientKey }: Props) => {
     return () => {
       setSelectedIngredient(null);
     };
-  }, [setSelectedIngredient]);
+  }, [setSelectedIngredient, searchParams]);
 
   const handleClickCopyLinkButton = () => {
     copyLink({
