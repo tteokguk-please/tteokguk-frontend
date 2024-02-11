@@ -400,6 +400,7 @@ const styles = {
     height: "3.6rem",
     backgroundColor: "primary.200",
     borderBottomRadius: "1.2rem",
+    borderTop: "0.1rem solid white",
   }),
   meterialContainer: css({
     height: "23.2rem",
