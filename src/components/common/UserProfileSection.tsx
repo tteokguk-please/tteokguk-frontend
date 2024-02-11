@@ -1,35 +1,24 @@
 import { css } from "@styled-system/css";
 
-import { copyLink } from "@/utils/linkShare";
-
 import { IngredientKey } from "@/types/ingredient";
 
 import { INGREDIENT_ICON_BY_KEY } from "@/constants/ingredient";
 
 interface Props {
-  id: number;
   nickname: string;
   uniqueIngredientKey: IngredientKey;
   color: "primary" | "secondary";
   className?: string;
-  isMyPage?: boolean;
+  onClickShareButton: () => void;
 }
 
 const UserProfileSection = ({
-  id,
   nickname,
   uniqueIngredientKey,
   color,
-  isMyPage = false,
+  onClickShareButton,
 }: Props) => {
   const IngredientIcon = INGREDIENT_ICON_BY_KEY[40][uniqueIngredientKey];
-
-  const handleClickShareButton = () => {
-    copyLink({
-      path: `/users/${id}`,
-      eventCategory: isMyPage ? "마이페이지 링크 공유 클릭" : "다른 유저 페이지 링크 공유 클릭",
-    });
-  };
 
   return (
     <article className={styles.userInfo(color)}>
@@ -39,7 +28,7 @@ const UserProfileSection = ({
         </div>
         <div>{nickname}님</div>
       </div>
-      <button onClick={handleClickShareButton} className={styles.shareButton(color)}>
+      <button onClick={onClickShareButton} className={styles.shareButton(color)}>
         공유하기
       </button>
     </article>

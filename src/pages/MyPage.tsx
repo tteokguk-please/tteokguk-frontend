@@ -7,6 +7,7 @@ import { useDialog } from "@/hooks/useDialog";
 import { css } from "@styled-system/css";
 
 import { removeLocalStorage } from "@/utils/localStorage";
+import { copyLink } from "@/utils/linkShare";
 
 import ErrorFallbackPage from "./ErrorFallbackPage";
 import Meta from "./Meta";
@@ -137,6 +138,13 @@ const MyPage = () => {
     });
   };
 
+  const handleClickShareButton = () => {
+    copyLink({
+      path: `/users/${id}`,
+      eventCategory: "마이페이지 링크 공유 클릭",
+    });
+  };
+
   return (
     <Fragment>
       <Meta
@@ -149,11 +157,10 @@ const MyPage = () => {
       </Header>
       <div className={styles.container}>
         <UserProfileSection
-          id={id}
           nickname={nickname}
           uniqueIngredientKey={primaryIngredient}
           color="secondary"
-          isMyPage
+          onClickShareButton={handleClickShareButton}
         />
         <div className={styles.buttonContainer}>
           <IconButton

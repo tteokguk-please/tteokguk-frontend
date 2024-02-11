@@ -5,6 +5,8 @@ import { useAtomValue } from "jotai";
 
 import { css } from "@styled-system/css";
 
+import { copyLink } from "@/utils/linkShare";
+
 import ErrorFallbackPage from "./ErrorFallbackPage";
 import Meta from "./Meta";
 
@@ -60,6 +62,13 @@ const UserPage = () => {
 
   if (!id) return <Fragment />;
 
+  const handleClickShareButton = () => {
+    copyLink({
+      path: `/users/${id}`,
+      eventCategory: "마이페이지 링크 공유 클릭",
+    });
+  };
+
   return (
     <Fragment>
       <Meta
@@ -72,10 +81,10 @@ const UserPage = () => {
       </Header>
       <div className={styles.container}>
         <UserProfileSection
-          id={Number(id)}
           nickname={nickname}
           uniqueIngredientKey={uniqueIngredientKey}
           color="primary"
+          onClickShareButton={handleClickShareButton}
         />
         <div className={styles.buttonContainer}>
           <IconButton
