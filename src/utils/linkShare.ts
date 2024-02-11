@@ -10,7 +10,7 @@ export const copyLink = async ({
   try {
     await navigator.clipboard.writeText(`${window.location.origin}${path}`);
 
-    toast("링크 복사가 완료되었습니다.");
+    toast("링크가 복사되었습니다.");
     gtag("event", "click", { event_category: eventCategory });
   } catch (error) {
     console.error(error);
