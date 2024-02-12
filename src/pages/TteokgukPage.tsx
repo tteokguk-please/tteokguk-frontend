@@ -67,7 +67,7 @@ const TteokgukPage = () => {
   const [, setSelectedIngredient] = useAtom($selectedIngredient);
 
   useEffect(() => {
-    const ingredientKey = searchParams.get("ingredient")?.toUpperCase() as IngredientKey;
+    const ingredientKey = searchParams.get("ingredient") as IngredientKey;
     if (ingredientKey === null) return;
 
     const { nickname, message, ingredient } = tteokgukCheerMessages.supporters[ingredientKey];
@@ -225,7 +225,7 @@ const TteokgukPage = () => {
     setIngredientSupportMessage((previousState) => ({ ...previousState, nickname, message }));
     setSelectedIngredient(ingredient);
 
-    setSearchParams(`?ingredient=${ingredientKey?.toLowerCase()}`, { replace: true });
+    setSearchParams(`?ingredient=${ingredientKey}`, { replace: true });
 
     viewMessageOverlay.open(({ isOpen, close }) => {
       return (
