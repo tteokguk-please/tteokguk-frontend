@@ -38,7 +38,7 @@ const ViewMessageModal = ({ isOpen, onClose, ingredientKey }: Props) => {
 
   const handleClickCopyLinkButton = () => {
     copyLink({
-      path: `${location.pathname}?ingredient=${ingredientKey.toLowerCase()}`,
+      path: `${location.pathname}?ingredient=${ingredientKey}`,
       eventCategory: "작성한 응원 메시지 공유",
     });
   };
