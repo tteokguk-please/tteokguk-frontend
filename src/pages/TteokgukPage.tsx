@@ -120,7 +120,6 @@ const TteokgukPage = () => {
     tteokgukId,
     memberId,
   } = tteokguk;
-  const isLoggedIn = !!getLocalStorage("accessToken");
   const isMyTteokguk = loggedInUserDetails?.id === memberId;
 
   const handleClickAddIngredientButton = () => {
@@ -315,14 +314,14 @@ const TteokgukPage = () => {
           </div>
         </article>
 
-        {!isLoggedIn && (
+        {!getLocalStorage("accessToken") && (
           <Link to="/login">
             <Button color="primary.45" applyColorTo="outline">
               소원 떡국 만들기
             </Button>
           </Link>
         )}
-        {isLoggedIn && !isMyTteokguk && !completion && (
+        {!!getLocalStorage("accessToken") && !isMyTteokguk && !completion && (
           <Button
             onClick={handleClickAddIngredientButton}
             color="primary.45"
