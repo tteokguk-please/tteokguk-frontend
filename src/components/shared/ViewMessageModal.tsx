@@ -25,7 +25,7 @@ interface Props {
 
 const ViewMessageModal = ({ isOpen, onClose, ingredientKey }: Props) => {
   const [searchParams] = useSearchParams();
-  const [selectedIngredient, setSelectedIngredient] = useAtom($selectedIngredient);
+  const [, setSelectedIngredient] = useAtom($selectedIngredient);
   const { nickname, message, isAnonymous } = useAtomValue($ingredientSupportMessage);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const ViewMessageModal = ({ isOpen, onClose, ingredientKey }: Props) => {
 
   const handleClickCopyLinkButton = () => {
     copyLink({
-      path: `${location.pathname}?ingredient=${selectedIngredient}`,
+      path: `${location.pathname}?ingredient=${ingredientKey.toLowerCase()}`,
       eventCategory: "작성한 응원 메시지 공유",
     });
   };

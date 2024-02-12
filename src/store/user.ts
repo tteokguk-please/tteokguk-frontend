@@ -17,7 +17,7 @@ import { LoggedInUserDetailsResponse, RandomUserResponse } from "@/types/user.dt
 
 export const $getMyDetails = atomWithQuery(() => ({
   queryKey: ["myDetails"],
-  queryFn: async () => getMyDetails(),
+  queryFn: getMyDetails,
 }));
 
 export const $getUserDetail = atomFamilyWithQuery("users", (id: number) => {

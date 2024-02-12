@@ -35,8 +35,11 @@ export const $signup = atomWithMutation(() => ({
   mutationFn: (body: SignupRequest): Promise<SignupResponse> => postSignup(body),
 }));
 
-export const $login = atomWithMutation(() => ({
+export const $login = atomWithMutation((get) => ({
   mutationFn: (body: LoginRequest): Promise<LoginResponse> => postLogin(body),
+  onSuccess: () => {
+    get(queryClientAtom).invalidateQueries();
+  },
 }));
 
 export const $postKakaoToken = atomWithMutation(() => ({

@@ -67,7 +67,7 @@ const TteokgukPage = () => {
   const [, setSelectedIngredient] = useAtom($selectedIngredient);
 
   useEffect(() => {
-    const ingredientKey = searchParams.get("ingredient") as IngredientKey;
+    const ingredientKey = searchParams.get("ingredient")?.toUpperCase() as IngredientKey;
     if (ingredientKey === null) return;
 
     const { nickname, message, ingredient } = tteokgukCheerMessages.supporters[ingredientKey];
@@ -120,7 +120,6 @@ const TteokgukPage = () => {
     tteokgukId,
     memberId,
   } = tteokguk;
-  const isLoggedIn = !!getLocalStorage("accessToken");
   const isMyTteokguk = loggedInUserDetails?.id === memberId;
 
   const handleClickAddIngredientButton = () => {
@@ -226,7 +225,7 @@ const TteokgukPage = () => {
     setIngredientSupportMessage((previousState) => ({ ...previousState, nickname, message }));
     setSelectedIngredient(ingredient);
 
-    setSearchParams(`?ingredient=${ingredientKey}`, { replace: true });
+    setSearchParams(`?ingredient=${ingredientKey?.toLowerCase()}`, { replace: true });
 
     viewMessageOverlay.open(({ isOpen, close }) => {
       return (
@@ -315,14 +314,14 @@ const TteokgukPage = () => {
           </div>
         </article>
 
-        {!isLoggedIn && (
+        {!getLocalStorage("accessToken") && (
           <Link to="/login">
             <Button color="primary.45" applyColorTo="outline">
               소원 떡국 만들기
             </Button>
           </Link>
         )}
-        {isLoggedIn && !isMyTteokguk && !completion && (
+        {!!getLocalStorage("accessToken") && !isMyTteokguk && !completion && (
           <Button
             onClick={handleClickAddIngredientButton}
             color="primary.45"
