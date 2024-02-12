@@ -67,7 +67,7 @@ const TteokgukPage = () => {
   const [, setSelectedIngredient] = useAtom($selectedIngredient);
 
   useEffect(() => {
-    const ingredientKey = searchParams.get("ingredient") as IngredientKey;
+    const ingredientKey = searchParams.get("ingredient")?.toUpperCase() as IngredientKey;
     if (ingredientKey === null) return;
 
     const { nickname, message, ingredient } = tteokgukCheerMessages.supporters[ingredientKey];
