@@ -45,7 +45,7 @@ const CheerSuccessModal = ({
   };
 
   const handleClickViewMessage = () => {
-    setSearchParams(`?ingredient=${ingredientKey}`, { replace: true });
+    setSearchParams(`?ingredient=${ingredientKey?.toLowerCase()}`, { replace: true });
 
     viewMessageOverlay.open(({ isOpen, close: handleCloseViewMessageModal }) => (
       <ViewMessageModal

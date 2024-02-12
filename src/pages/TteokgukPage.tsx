@@ -225,7 +225,7 @@ const TteokgukPage = () => {
     setIngredientSupportMessage((previousState) => ({ ...previousState, nickname, message }));
     setSelectedIngredient(ingredient);
 
-    setSearchParams(`?ingredient=${ingredientKey}`, { replace: true });
+    setSearchParams(`?ingredient=${ingredientKey?.toLowerCase()}`, { replace: true });
 
     viewMessageOverlay.open(({ isOpen, close }) => {
       return (
